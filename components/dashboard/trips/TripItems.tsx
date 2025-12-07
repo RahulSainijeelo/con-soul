@@ -19,7 +19,7 @@ import {
 interface TripItemsProps {
   trips: Trip[];
   openDeleteDialog: (trip: Trip) => void;
-  onStatusChange: (tripId: string, newStatus: 'draft' | 'published' | 'archived') => void;
+  onStatusChange: (tripId: string, newStatus: 'completed' | 'published' | 'archived') => void;
   loading: boolean;
 }
 
@@ -27,7 +27,7 @@ const getStatusColor = (status: string) => {
   switch (status) {
     case 'published':
       return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-    case 'draft':
+    case 'completed':
       return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
     case 'archived':
       return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
@@ -118,13 +118,13 @@ const TripItems: React.FC<TripItemsProps> = ({
 
               <Select
                 value={trip.status}
-                onValueChange={(value) => onStatusChange(trip.id, value as 'draft' | 'published' | 'archived')}
+                onValueChange={(value) => onStatusChange(trip.id, value as 'completed' | 'published' | 'archived')}
               >
                 <SelectTrigger className="w-auto h-7 text-xs bg-black/50 border-white/10 text-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-gray-900 border-white/10">
-                  <SelectItem value="draft" className="text-white hover:bg-white/10">Draft</SelectItem>
+                  <SelectItem value="completed" className="text-white hover:bg-white/10">Completed</SelectItem>
                   <SelectItem value="published" className="text-white hover:bg-white/10">Published</SelectItem>
                   <SelectItem value="archived" className="text-white hover:bg-white/10">Archived</SelectItem>
                 </SelectContent>

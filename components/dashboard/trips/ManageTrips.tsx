@@ -172,7 +172,7 @@ export function ManageTrips() {
     setLoading(false);
   };
 
-  const handleStatusChange = async (tripId: string, newStatus: 'draft' | 'published' | 'archived') => {
+  const handleStatusChange = async (tripId: string, newStatus: 'completed' | 'published' | 'archived') => {
     if (!tripId) {
       toast({
         title: "Error",
@@ -320,7 +320,7 @@ export function ManageTrips() {
               </SelectTrigger>
               <SelectContent className="bg-gray-900 border-white/10">
                 <SelectItem value="all" className="text-white hover:bg-white/10">All Status</SelectItem>
-                <SelectItem value="draft" className="text-white hover:bg-white/10">Draft</SelectItem>
+                <SelectItem value="completed" className="text-white hover:bg-white/10">Completed</SelectItem>
                 <SelectItem value="published" className="text-white hover:bg-white/10">Published</SelectItem>
                 <SelectItem value="archived" className="text-white hover:bg-white/10">Archived</SelectItem>
               </SelectContent>
