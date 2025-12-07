@@ -317,16 +317,6 @@ export default function ProfilePage() {
                             </div>
                             <ChevronRight className="w-5 h-5 text-gray-500" />
                         </a>
-
-                        <a href="/terms" className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400">
-                                    <FileText className="w-5 h-5" />
-                                </div>
-                                <span className="text-white font-medium">Terms & Conditions</span>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-gray-500" />
-                        </a>
                     </div>
 
                     <Button
@@ -339,7 +329,7 @@ export default function ProfilePage() {
                     </Button>
 
                     <p className="text-center text-gray-600 text-sm mt-8">
-                        Con-soul App v1.0.0
+                        Con-Soul App v1.0.0
                     </p>
                 </div>
             </div>

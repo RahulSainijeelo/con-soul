@@ -2,17 +2,15 @@ import { z } from "zod";
 
 export const bookingSchema = z.object({
     tripId: z.string().min(1, "Trip ID is required"),
-    fullName: z.string().min(2, "Full name must be at least 2 characters"),
-    aadhaarNo: z.string().regex(/^\d{12}$/, "Invalid Aadhaar Number (must be 12 digits)"),
-    mobileNo: z.string().regex(/^\d{10}$/, "Invalid Mobile Number (must be 10 digits)"),
+    fullName: z.string().min(3, "Full name must be at least 3 characters"),
     email: z.string().email("Invalid email address"),
-    aadhaarImage: z.string().url("Aadhaar image is required"),
-    paymentScreenshot: z.string().url("Payment screenshot is required"),
-    userId: z.string().optional(), // Will be populated from session
-    status: z.enum(["pending", "confirmed", "rejected"]).default("pending"),
-    amount: z.number().positive(),
-    paymentrefno: z.string().min(1, "Payment Reference Number is required"),
-    bookingDate: z.string().optional(), // ISO string
+    mobileNo: z.string().regex(/^\d{10}$/, "Mobile number must be exactly 10 digits"),
+    aadhaarNo: z.string().regex(/^\d{12}$/, "Aadhaar number must be exactly 12 digits"),
+    aadhaarImage: z.string().url("Valid Aadhaar image URL is required"),
+    paymentrefno: z.string().min(5, "Payment reference number must be at least 5 characters"),
+    paymentScreenshot: z.string().url("Valid payment screenshot URL is required"),
+    amount: z.number().positive("Amount must be positive"),
+    transportMode: z.enum(["3ac", "sleeper"]).optional(), // Optional, only for train trips
 });
 
-export type BookingInput = z.infer<typeof bookingSchema>;
+export type BookingFormData = z.infer<typeof bookingSchema>;

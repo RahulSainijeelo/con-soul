@@ -7,6 +7,7 @@ import JoinTripForm from "@/components/trips/JoinTripForm";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LoginTC from "@/components/auth/LoginTC";
+import BottomTabBar from "@/components/layout/BottomTabBar";
 
 interface Trip {
     id: string;
@@ -19,6 +20,9 @@ interface Trip {
     images: { url: string }[];
     maxParticipants: number;
     currentParticipants?: number;
+    mode:string,
+    price_3ac?:number;
+    price_sleeper?:number
 }
 
 export default function JoinTripPage() {
@@ -120,10 +124,15 @@ export default function JoinTripPage() {
                         tripTitle={trip.title}
                         tripPrice={trip.price}
                         userEmail={session?.user?.email || ""}
+                        mode={trip.mode}
+                        price_3ac={trip.price_3ac}
+                        price_sleeper={trip.price_sleeper}
                     />
                 </div>
             </main>
             <Footer />
+            <BottomTabBar />
+
         </div>
     );
 }

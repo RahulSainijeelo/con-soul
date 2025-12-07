@@ -29,6 +29,7 @@ const tripCategories = [
 ];
 
 const difficultyLevels = ["Easy", "Moderate", "Challenging", "Expert"];
+const transportModes = ["bus", "train"];
 
 export default function CreateTripPage() {
     const router = useRouter();
@@ -50,6 +51,9 @@ export default function CreateTripPage() {
         duration: "",
         included: [],
         notIncluded: [],
+        mode: "bus",
+        price_3ac: 0,
+        price_sleeper: 0,
     });
 
     const [includedItem, setIncludedItem] = useState("");
@@ -111,7 +115,6 @@ export default function CreateTripPage() {
         setUploadingImages(true);
 
         try {
-            // Upload all images to ImgBB
             const uploadPromises = Array.from(files).map((file) =>
                 uploadImageToImgBB(file)
             );
@@ -140,7 +143,6 @@ export default function CreateTripPage() {
             });
         } finally {
             setUploadingImages(false);
-            // Reset file input
             e.target.value = "";
         }
     };
@@ -172,16 +174,22 @@ export default function CreateTripPage() {
         setLoading(true);
 
         try {
-            // TODO: Replace with your actual API endpoint
             const res = await fetch("/api/trips", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-            console.log("this is the response for trip submit", res)
             if (!res.ok) {
                 throw new Error("Failed to create trip");
             }
+
+            // Clear the cache for manage trips
+            const keys = Object.keys(sessionStorage);
+            keys.forEach(key => {
+                if (key.startsWith('dashboard_trips_')) {
+                    sessionStorage.removeItem(key);
+                }
+            });
 
             toast({
                 title: "Success!",
@@ -377,7 +385,7 @@ export default function CreateTripPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <Label htmlFor="duration" className="text-gray-300">
                                         Duration
@@ -393,8 +401,35 @@ export default function CreateTripPage() {
                                 </div>
 
                                 <div>
+                                    <Label htmlFor="mode" className="text-gray-300">
+                                        Mode of Transportation *
+                                    </Label>
+                                    <Select
+                                        value={formData.mode}
+                                        onValueChange={(value) => handleSelectChange("mode", value)}
+                                    >
+                                        <SelectTrigger className="bg-black/50 border-white/10 text-white">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-gray-900 border-white/10">
+                                            {transportModes.map((mode) => (
+                                                <SelectItem
+                                                    key={mode}
+                                                    value={mode}
+                                                    className="text-white hover:bg-white/10 capitalize"
+                                                >
+                                                    {mode.charAt(0).toUpperCase() + mode.slice(1)}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
                                     <Label htmlFor="price" className="text-gray-300">
-                                        Price (USD)
+                                        {formData.mode === "train" ? "Base Price (USD)" : "Price (USD)"} *
                                     </Label>
                                     <Input
                                         id="price"
@@ -406,6 +441,40 @@ export default function CreateTripPage() {
                                         placeholder="0"
                                     />
                                 </div>
+
+                                {formData.mode === "train" && (
+                                    <>
+                                        <div>
+                                            <Label htmlFor="price_3ac" className="text-gray-300">
+                                                3AC Price (USD)
+                                            </Label>
+                                            <Input
+                                                id="price_3ac"
+                                                name="price_3ac"
+                                                type="number"
+                                                value={formData.price_3ac}
+                                                onChange={(e) => handleNumberChange("price_3ac", e.target.value)}
+                                                className="bg-black/50 border-white/10 text-white"
+                                                placeholder="0"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <Label htmlFor="price_sleeper" className="text-gray-300">
+                                                Sleeper Price (USD)
+                                            </Label>
+                                            <Input
+                                                id="price_sleeper"
+                                                name="price_sleeper"
+                                                type="number"
+                                                value={formData.price_sleeper}
+                                                onChange={(e) => handleNumberChange("price_sleeper", e.target.value)}
+                                                className="bg-black/50 border-white/10 text-white"
+                                                placeholder="0"
+                                            />
+                                        </div>
+                                    </>
+                                )}
 
                                 <div>
                                     <Label htmlFor="maxParticipants" className="text-gray-300">

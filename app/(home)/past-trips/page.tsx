@@ -29,12 +29,11 @@ interface Trip {
 async function getPastTrips(): Promise<Trip[]> {
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/trips?completed=true&status=published&limit=50`,
+            `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/trips?status=completed&limit=50`,
             {
                 next: { revalidate: 300 } // Revalidate every 5 minutes
             }
         );
-        console.log("response is this", response)
         if (!response.ok) {
             console.error('Failed to fetch past trips');
             return [];

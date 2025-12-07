@@ -1,9 +1,9 @@
-import { Link, LogIn } from 'lucide-react'
+import { LogIn } from 'lucide-react'
 import React from 'react'
 import BottomTabBar from '../layout/BottomTabBar'
 import Footer from '../layout/Footer'
 import Header from '../layout/Header'
-
+import Link from 'next/link'
 const LoginTC = () => {
     return (
         <div className="min-h-screen bg-black pb-16 md:pb-0">

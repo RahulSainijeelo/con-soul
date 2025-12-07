@@ -21,9 +21,6 @@ export async function POST(request: NextRequest) {
                 { status: 401 }
             );
         }
-        console.log("this is the user", session.user)
-        console.log("this is the body", body)
-        console.log("this is validatation res", validationResult.error?.toString())
         if (!validationResult.success) {
             return NextResponse.json(
                 {

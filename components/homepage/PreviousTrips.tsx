@@ -49,7 +49,7 @@ export function PreviousTrips() {
                 }
 
                 // 2. Fetch Past Trips
-                const tripsRes = await fetch('/api/trips?completed=true&limit=6');
+                const tripsRes = await fetch('/api/trips?status=completed&limit=6');
                 let tripsList: Trip[] = [];
                 let tripsMap: Record<string, string> = {};
 

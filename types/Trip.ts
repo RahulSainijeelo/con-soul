@@ -1,50 +1,27 @@
 export interface Trip {
-    id: string;
-    title: string;
-    destination: string;
-    category: string;
-    description: string;
-    content: string;
-    images: { url: string; deleteUrl: string }[];
-    status: 'draft' | 'published' | 'archived';
-    startDate: string;
-    endDate: string;
-    price: number;
-    maxParticipants: number;
-    currentParticipants?: number;
-    difficulty?: 'Easy' | 'Moderate' | 'Challenging' | 'Expert';
-    duration?: string; // e.g., "5 days 4 nights"
-    included?: string[]; // What's included in the trip
-    notIncluded?: string[]; // What's not included
-    itinerary?: {
-        day: number;
-        title: string;
-        description: string;
-    }[];
-    createdAt: string;
-    updatedAt: string;
-    publishDate?: string;
-    author?: string;
-    featured?: boolean;
-    rating?: number;
-    reviewCount?: number;
-}
-
-export interface TripFormData {
     id?: string;
     title: string;
     destination: string;
     category: string;
     description: string;
     content: string;
-    images: { url: string; deleteUrl: string }[];
-    status: 'draft' | 'published' | 'archived';
+    images: { url: string; deleteUrl?: string }[];
+    status: string;
     startDate: string;
     endDate: string;
     price: number;
     maxParticipants: number;
-    difficulty?: 'Easy' | 'Moderate' | 'Challenging' | 'Expert';
+    difficulty?: string;
     duration?: string;
     included?: string[];
     notIncluded?: string[];
+    itinerary?: { day: number; title: string; description: string }[];
+    featured?: boolean;
+    rating?: number;
+    reviewCount?: number;
+    mode?: "bus" | "train"; // NEW
+    price_3ac?: number; // NEW - for train trips
+    price_sleeper?: number; // NEW - for train trips
 }
+
+export type TripFormData = Trip;

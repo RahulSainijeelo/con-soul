@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Shield, Lock, Eye } from 'lucide-react';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 export const metadata: Metadata = {
   title: "Privacy Policy - ConSol Premium Travel",
@@ -98,6 +99,8 @@ export default function PrivacyPolicyPage() {
       </div>
 
       <Footer />
+      <BottomTabBar />
+
     </div>
   );
 }

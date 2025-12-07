@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import { CheckCircle2, Clock, XCircle } from 'lucide-react';
+import BottomTabBar from '@/components/layout/BottomTabBar';
 
 interface Trip {
   id: string;
@@ -51,6 +52,11 @@ export default function TripPage() {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Lightbox State (copied from PastTripPage)
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -84,6 +90,27 @@ export default function TripPage() {
 
     fetchData();
   }, [params.id, session]);
+
+  // Lightbox handlers (copied from PastTripPage)
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLightboxIndex((prev) => (prev + 1) % lightboxImages.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLightboxIndex((prev) => (prev - 1 + lightboxImages.length) % lightboxImages.length);
+  };
 
   if (loading) {
     return (
@@ -278,12 +305,17 @@ export default function TripPage() {
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {trip.images.slice(1).map((image, index) => (
-                      <div key={index} className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer">
+                      <div
+                        key={index}
+                        className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
+                        onClick={() => openLightbox(trip.images.map(img => img.url), index + 1)}
+                      >
                         <img
                           src={image.url}
                           alt={`${trip.title} - Image ${index + 2}`}
                           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                         />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                       </div>
                     ))}
                   </div>
@@ -427,6 +459,46 @@ export default function TripPage() {
 
         <Footer />
       </div>
+
+      {/* Lightbox (copied from PastTripPage) */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4" onClick={closeLightbox}>
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+          >
+            {/* You can reuse lucide icons if imported, or keep a simple X */}
+            ✕
+          </button>
+
+          <button
+            onClick={prevImage}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors p-2"
+          >
+            ‹
+          </button>
+
+          <img
+            src={lightboxImages[lightboxIndex]}
+            alt="Lightbox"
+            className="max-h-[90vh] max-w-[90vw] object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          <button
+            onClick={nextImage}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors p-2"
+          >
+            ›
+          </button>
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm">
+            {lightboxIndex + 1} / {lightboxImages.length}
+          </div>
+        </div>
+      )}
+            <BottomTabBar />
+      
     </>
   );
 }

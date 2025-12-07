@@ -30,8 +30,8 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
 
                     {/* Floating Category Tag */}
                     <div className="absolute top-4 left-4">
-                        <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-white hover:bg-black/80">
-                            {trip.category}
+                        <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-[green] hover:bg-black/80">
+                            {"Upcoming"}
                         </Badge>
                     </div>
                 </div>

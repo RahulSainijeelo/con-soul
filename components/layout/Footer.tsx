@@ -1,14 +1,11 @@
 import Link from "next/link";
-import { Instagram, Twitter, Facebook, Youtube } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+    { icon: Instagram, href: "https://www.instagram.com/consoul29", label: "Instagram" },
   ];
 
   return (
@@ -32,7 +29,7 @@ export default function Footer() {
             </p>
 
             {/* Social Icons */}
-            <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-4">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -41,10 +38,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gold transition-colors"
+                    className="text-gray-400 hover:text-gold transition-colors flex gap-1 align-baseline"
                     aria-label={social.label}
                   >
-                    <Icon className="h-5 w-5" />
+                    <span className="self-center"><Icon className="h-5 w-5" /></span>
                   </Link>
                 );
               })}

@@ -9,64 +9,74 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { auth, currentUser } from '@clerk/nextjs/server';
+
 // GET /api/trips - List all trips with optional filters
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
 
-        // Validate query parameters
         const queryResult = listTripsSchema.safeParse({
             category: searchParams.get("category") || undefined,
             status: searchParams.get("status") || undefined,
-            page: searchParams.get("page") || undefined,
-            limit: searchParams.get("limit") || undefined,
+            page: searchParams.get("page") || "1",
+            limit: searchParams.get("limit") || "10",
             featured: searchParams.get("featured") || undefined,
         });
 
         if (!queryResult.success) {
             return NextResponse.json(
-                {
-                    error: "Validation failed",
-                    details: queryResult.error.flatten().fieldErrors,
-                },
+                { error: "Invalid query parameters" },
                 { status: 400 }
             );
         }
 
         const { category, status, page, limit, featured } = queryResult.data;
 
-        // Get 'completed' parameter (for past trips)
-        const completed = searchParams.get("completed") === "true";
-
-        // Build Firestore query
         let query = db.collection("trips").orderBy("createdAt", "desc");
 
-        // Apply filters
+        // Apply category filter
         if (category) {
-            query = query.where("category", "==", category) as any;
+            query = query.where("category", "==", category);
         }
+
+        // Apply status filter
         if (status) {
-            query = query.where("status", "==", status) as any;
+            query = query.where("status", "==", status);
         }
-        if (featured !== undefined) {
-            query = query.where("featured", "==", featured) as any;
-        }
-
-        // Filter for completed trips (past endDate)
-        if (completed) {
-            query = query.where("completed", "==", true) as any;
-        } else {
-            query = query.where("completed", "==", false) as any;
-        }
-
         // Execute query
         const snapshot = await query.get();
 
-        // Map documents to array
-        const trips = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        // Map documents to array with all fields including new ones
+        const trips = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                title: data.title || "",
+                destination: data.destination || "",
+                category: data.category || "",
+                description: data.description || "",
+                content: data.content || "",
+                images: data.images || [],
+                status: data.status || "archived",
+                startDate: data.startDate || "",
+                endDate: data.endDate || "",
+                price: data.price || 0,
+                maxParticipants: data.maxParticipants || 0,
+                difficulty: data.difficulty || "",
+                duration: data.duration || "",
+                included: data.included || [],
+                notIncluded: data.notIncluded || [],
+                mode: data.mode || "bus", // NEW
+                price_3ac: data.price_3ac || 0, // NEW
+                price_sleeper: data.price_sleeper || 0, // NEW
+                featured: data.featured || false,
+                rating: data.rating || 0,
+                reviewCount: data.reviewCount || 0,
+                createdAt: data.createdAt,
+                updatedAt: data.updatedAt,
+                currentParticipants: data.currentParticipants || 0,
+            };
+        });
 
         // Apply pagination
         const startIndex = (page - 1) * limit;
@@ -94,10 +104,9 @@ export async function GET(request: NextRequest) {
 // POST /api/trips - Create a new trip
 export async function POST(request: NextRequest) {
     try {
-        // Check authentication
-        const { isAuthenticated } = await auth();
-        const user = await currentUser()
-        if (!isAuthenticated) {
+        const { userId } = await auth();
+
+        if (!userId) {
             return NextResponse.json(
                 { error: "Unauthorized" },
                 { status: 401 }
@@ -106,48 +115,76 @@ export async function POST(request: NextRequest) {
 
         const body = await request.json();
 
-        // Validate request body
-        const validationResult = createTripSchema.safeParse(body);
+        const {
+            title,
+            destination,
+            category,
+            description,
+            content,
+            images,
+            status,
+            startDate,
+            endDate,
+            price,
+            maxParticipants,
+            difficulty,
+            duration,
+            included,
+            notIncluded,
+            mode,
+            price_3ac,
+            price_sleeper,
+        } = body;
 
-        if (!validationResult.success) {
+        if (!title || !destination || !category) {
             return NextResponse.json(
-                {
-                    error: "Validation failed",
-                    details: validationResult.error.flatten().fieldErrors,
-                },
+                { error: "Title, destination, and category are required" },
                 { status: 400 }
             );
         }
 
-        const tripData = validationResult.data;
-
-        // Add metadata
-        const newTrip = {
-            ...tripData,
+        const newTrip: Record<string, unknown> = {
+            title,
+            destination,
+            category,
+            description,
+            content,
+            images: images || [],
+            status: status || "archived",
+            startDate: startDate ? new Date(startDate).toISOString() : null,
+            endDate: endDate ? new Date(endDate).toISOString() : null,
+            price: price || 0,
+            maxParticipants: maxParticipants || 0,
+            difficulty: difficulty || "Moderate",
+            duration: duration || "",
+            included: included || [],
+            notIncluded: notIncluded || [],
+            mode: mode || "bus",
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             currentParticipants: 0,
-            featured: false,
-            rating: 0,
-            reviewCount: 0,
-            author: user?.emailAddresses?.[0]?.emailAddress || "unknown",
         };
 
-        // Save to Firestore
-        const docRef = await db.collection("trips").add(newTrip);
+        // Only add train pricing if mode is train
+        if (mode === "train") {
+            newTrip.price_3ac = price_3ac || 0;
+            newTrip.price_sleeper = price_sleeper || 0;
+        }
+
+        const tripRef = await db.collection("trips").add(newTrip);
 
         return NextResponse.json(
             {
                 message: "Trip created successfully",
-                id: docRef.id,
-                data: { id: docRef.id, ...newTrip },
+                id: tripRef.id,
+                data: { id: tripRef.id, ...newTrip },
             },
             { status: 201 }
         );
     } catch (error) {
         console.error("Error creating trip:", error);
         return NextResponse.json(
-            { error: "Failed to create trip" },
+            { error: error instanceof Error ? error.message : "Failed to create trip" },
             { status: 500 }
         );
     }

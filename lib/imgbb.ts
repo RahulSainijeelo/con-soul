@@ -50,15 +50,6 @@ export async function uploadImageToImgBB(file: File): Promise<{
     }
 }
 
-/**
- * Delete image from ImgBB
- * Note: ImgBB doesn't provide a direct delete API, so we just remove the reference
- * The delete_url from ImgBB can be used manually by the user if needed
- */
 export async function deleteImageFromImgBB(deleteUrl: string): Promise<void> {
-    // ImgBB doesn't provide an API endpoint for deletion
-    // The deleteUrl is meant to be opened in a browser
-    // We'll just resolve immediately since we can't programmatically delete
-    console.log("Image delete URL:", deleteUrl);
     return Promise.resolve();
 }

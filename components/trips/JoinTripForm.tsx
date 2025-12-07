@@ -10,13 +10,23 @@ import { toast } from "@/hooks/use-toast";
 import { Loader2, Upload, X, QrCode, Copy } from "lucide-react";
 import { uploadImageToImgBB } from "@/lib/imgbb";
 import Image from "next/image";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 interface JoinTripFormProps {
     tripId: string;
     tripTitle: string;
     tripPrice: number;
     userEmail?: string;
-    userPhone?: string; // If available from profile
+    userPhone?: string;
+    mode?: string; // "bus" or "train"
+    price_3ac?: number;
+    price_sleeper?: number;
 }
 
 export default function JoinTripForm({
@@ -24,6 +34,9 @@ export default function JoinTripForm({
     tripTitle,
     tripPrice,
     userEmail = "",
+    mode,
+    price_3ac,
+    price_sleeper,
 }: JoinTripFormProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -40,9 +53,23 @@ export default function JoinTripForm({
         aadhaarImage: "",
         paymentrefno: "",
         paymentScreenshot: "",
+        transportMode: mode === "train" ? "3ac" : "", // Only for train trips
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
+
+    // Calculate total amount based on mode
+    const getTotalAmount = (): number => {
+        if (mode === "train") {
+            if (formData.transportMode === "3ac" && price_3ac) {
+                return price_3ac;
+            } else if (formData.transportMode === "sleeper" && price_sleeper) {
+                return price_sleeper;
+            }
+            return price_sleeper || tripPrice; // Default to 3ac or base price
+        }
+        return tripPrice; // For bus or other modes
+    };
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -67,6 +94,13 @@ export default function JoinTripForm({
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+    };
+
+    const handleTransportModeChange = (value: string) => {
+        setFormData((prev) => ({ ...prev, transportMode: value }));
+        if (errors.transportMode) {
+            setErrors((prev) => ({ ...prev, transportMode: "" }));
         }
     };
 
@@ -99,6 +133,11 @@ export default function JoinTripForm({
             newErrors.aadhaarNo = "Aadhaar number is required";
         } else if (!/^\d{12}$/.test(formData.aadhaarNo)) {
             newErrors.aadhaarNo = "Aadhaar number must be exactly 12 digits";
+        }
+
+        // Transport mode validation for train trips
+        if (mode === "train" && !formData.transportMode) {
+            newErrors.transportMode = "Please select a travel class";
         }
 
         // Payment Reference Number validation
@@ -172,14 +211,21 @@ export default function JoinTripForm({
         setLoading(true);
 
         try {
+            const bookingPayload: any = {
+                tripId,
+                ...formData,
+                amount: getTotalAmount(),
+            };
+
+            // Only include transportMode if it's a train trip
+            if (mode === "train") {
+                bookingPayload.transportMode = formData.transportMode;
+            }
+
             const res = await fetch("/api/bookings", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    tripId,
-                    ...formData,
-                    amount: tripPrice,
-                }),
+                body: JSON.stringify(bookingPayload),
             });
 
             const data = await res.json();
@@ -193,7 +239,7 @@ export default function JoinTripForm({
                 description: "Your booking request has been received. We will confirm shortly.",
             });
 
-            router.push("/my-trips"); // Redirect to my trips
+            router.push("/my-trips");
         } catch (error) {
             toast({
                 title: "Booking Failed",
@@ -286,6 +332,32 @@ export default function JoinTripForm({
                             </div>
                         </div>
 
+                        {/* Transport Mode Dropdown - Only for Train */}
+                        {mode === "train" && (
+                            <div>
+                                <Label htmlFor="transportMode" className="text-gray-300">Travel Class</Label>
+                                <Select
+                                    value={formData.transportMode}
+                                    onValueChange={handleTransportModeChange}
+                                >
+                                    <SelectTrigger className={`bg-black/50 border-white/10 text-white mt-1 ${errors.transportMode ? 'border-red-500' : ''}`}>
+                                        <SelectValue placeholder="Select travel class" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-black border-white/10">
+                                        <SelectItem value="3ac" className="text-white hover:bg-white/10">
+                                            3AC {price_3ac && `- ₹${price_3ac.toLocaleString()}`}
+                                        </SelectItem>
+                                        <SelectItem value="sleeper" className="text-white hover:bg-white/10">
+                                            Sleeper {price_sleeper && `- ₹${price_sleeper.toLocaleString()}`}
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                {errors.transportMode && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.transportMode}</p>
+                                )}
+                            </div>
+                        )}
+
                         <div>
                             <Label htmlFor="paymentrefno" className="text-gray-300">Payment Reference Number</Label>
                             <Input
@@ -365,7 +437,12 @@ export default function JoinTripForm({
                     <CardContent className="space-y-6">
                         <div className="bg-black/50 p-6 rounded-lg border border-white/10 text-center">
                             <p className="text-gray-400 mb-2">Total Amount to Pay</p>
-                            <p className="text-4xl font-bold text-gold">₹{tripPrice.toLocaleString()}</p>
+                            <p className="text-4xl font-bold text-gold">₹{getTotalAmount().toLocaleString()}</p>
+                            {mode === "train" && formData.transportMode && (
+                                <p className="text-sm text-gray-400 mt-2">
+                                    ({formData.transportMode === "3ac" ? "3AC" : "Sleeper"} Class)
+                                </p>
+                            )}
                         </div>
 
                         {profileLoading ? (
