@@ -48,7 +48,7 @@ const baseTripSchema = z.object({
         .min(1, "At least one image is required")
         .max(10, "Maximum 10 images allowed"),
 
-    status: z.enum(["draft", "published", "archived"], {
+    status: z.enum(["completed", "published", "archived"], {
         errorMap: () => ({ message: "Invalid status" }),
     }),
 
@@ -159,7 +159,7 @@ export const deleteTripSchema = z.object({
 // Schema for query parameters when listing trips
 export const listTripsSchema = z.object({
     category: z.string().optional(),
-    status: z.enum(["draft", "published", "archived"]).optional(),
+    status: z.enum(["published", "archived", "completed"]).optional(),
     page: z.coerce.number().int().positive().optional().default(1),
     limit: z.coerce.number().int().positive().max(100).optional().default(10),
     featured: z.coerce.boolean().optional(),

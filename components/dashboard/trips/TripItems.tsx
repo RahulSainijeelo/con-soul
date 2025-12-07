@@ -168,7 +168,7 @@ const TripItems: React.FC<TripItemsProps> = ({
             </p>
           </CardContent>
 
-          <CardFooter className="flex justify-between gap-2 pt-3 border-t border-white/10">
+          <CardFooter className="flex justify-between !gap-[0.2rem] !py-[1rem] px-[0.1rem] border-t border-white/10">
             {/* View Trip */}
             <Link href={`/trip/${trip.id}`} target="_blank">
               <Button variant="ghost" size="sm" className="flex items-center gap-2 text-gray-300 hover:text-gold hover:bg-white/5">

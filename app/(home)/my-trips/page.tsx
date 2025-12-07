@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Star, Calendar, Users, MapPin, ArrowRight, Clock, LogIn } from 'lucide-react';
+import { Star, Calendar, Users, MapPin, ArrowRight, Clock, LogIn, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import LoginTC from '@/components/auth/LoginTC';
@@ -25,77 +25,73 @@ interface Trip {
     currentParticipants?: number;
     rating?: number;
     reviewCount?: number;
+    status: string;
 }
 
 interface Booking {
     id: string;
     tripId: string;
-    status: string;
+    status: 'pending' | 'confirmed' | 'rejected';
     createdAt: string;
     trip: Trip;
+    seatNumber?: string;
 }
 
 export default function MyTripsPage() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
-    const [upcomingTrips, setUpcomingTrips] = useState<Booking[]>([]);
-    const [pastTrips, setPastTrips] = useState<Booking[]>([]);
+    const [allBookings, setAllBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
-    const [lastFetch, setLastFetch] = useState<{ upcoming: number; past: number }>({
-        upcoming: 0,
-        past: 0
-    });
+    const [lastFetch, setLastFetch] = useState<number>(0);
 
-    // Fetch trips with 2-minute cache
-    const fetchTrips = async (type: 'upcoming' | 'past') => {
+    // Fetch all bookings with 1-minute cache
+    const fetchBookings = async () => {
         const now = Date.now();
-        const cacheTime = 2 * 60 * 1000; // 2 minutes in milliseconds
+        const cacheTime = 1 * 60 * 1000; // 1 minute in milliseconds
 
-        // Check if we have recent data (within 2 minutes)
-        if (lastFetch[type] && (now - lastFetch[type]) < cacheTime) {
+        if (lastFetch && (now - lastFetch) < cacheTime) {
+            setLoading(false);
             return; // Use cached data
         }
 
         try {
             setLoading(true);
-            const response = await fetch(`/api/user/bookings?type=${type}`);
+            // Fetch all bookings without type filter to get everything at once
+            const response = await fetch(`/api/user/bookings`);
 
             if (!response.ok) {
-                throw new Error('Failed to fetch trips');
+                throw new Error('Failed to fetch bookings');
             }
 
             const result = await response.json();
-
-            if (type === 'upcoming') {
-                setUpcomingTrips(result.data || []);
-                setLastFetch(prev => ({ ...prev, upcoming: now }));
-            } else {
-                setPastTrips(result.data || []);
-                setLastFetch(prev => ({ ...prev, past: now }));
-            }
+            setAllBookings(result.data || []);
+            setLastFetch(now);
         } catch (error) {
-            console.error('Error fetching trips:', error);
+            console.error('Error fetching bookings:', error);
         } finally {
             setLoading(false);
         }
     };
 
-    // Fetch data when tab changes
     useEffect(() => {
         if (status === 'authenticated') {
-            fetchTrips(activeTab);
-        }
-    }, [activeTab, status]);
-
-    // Initial load
-    useEffect(() => {
-        if (status === 'authenticated') {
-            setLoading(false);
+            fetchBookings();
         } else if (status === 'unauthenticated') {
             setLoading(false);
         }
     }, [status]);
+
+    // Filter bookings based on active tab
+    const upcomingTrips = allBookings.filter(booking => {
+        return booking.trip.status === 'published';
+    });
+
+    const pastTrips = allBookings.filter(booking => {
+        return booking.trip.status === 'completed';
+    });
+
+    const currentTrips = activeTab === 'upcoming' ? upcomingTrips : pastTrips;
 
     // Show login prompt if not authenticated
     if (status === 'loading' || loading) {
@@ -117,7 +113,38 @@ export default function MyTripsPage() {
         return <LoginTC />;
     }
 
-    const currentTrips = activeTab === 'upcoming' ? upcomingTrips : pastTrips;
+    const getStatusBadge = (status: string, seatNumber?: string) => {
+        switch (status) {
+            case 'confirmed':
+                return (
+                    <div className="flex flex-col items-end gap-1">
+                        <div className="px-3 py-1 bg-green-900/80 backdrop-blur-sm text-green-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-green-500/30">
+                            <CheckCircle className="w-3 h-3" />
+                            Confirmed
+                        </div>
+                        {seatNumber && (
+                            <div className="text-xs text-green-400 font-mono border border-green-500/30 rounded-2xl px-2 py-1 backdrop-blur-sm bg-black/50">
+                                Seat: {seatNumber}
+                            </div>
+                        )}
+                    </div>
+                );
+            case 'rejected':
+                return (
+                    <div className="px-3 py-1 bg-red-900/80 backdrop-blur-sm text-red-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-red-500/30">
+                        <XCircle className="w-3 h-3" />
+                        Rejected
+                    </div>
+                );
+            default:
+                return (
+                    <div className="px-3 py-1 bg-yellow-900/80 backdrop-blur-sm text-yellow-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-yellow-500/30">
+                        <AlertCircle className="w-3 h-3" />
+                        Pending
+                    </div>
+                );
+        }
+    };
 
     return (
         <div className="min-h-screen bg-black pb-16 md:pb-0">
@@ -171,223 +198,117 @@ export default function MyTripsPage() {
 
             {/* Content */}
             <div className="container mx-auto px-4 py-12">
-                {loading ? (
-                    <div className="text-center py-20">
-                        <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">Loading trips...</p>
-                    </div>
-                ) : (
-                    <>
-                        {/* Upcoming Trips */}
-                        {activeTab === 'upcoming' && (
-                            <div>
-                                {currentTrips.length > 0 ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {currentTrips.map((booking) => {
-                                            const trip = booking.trip;
-                                            const spotsLeft = trip.maxParticipants - (trip.currentParticipants || 0);
+                {currentTrips.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {currentTrips.map((booking) => {
+                            const trip = booking.trip;
+                            const spotsLeft = trip.maxParticipants - (trip.currentParticipants || 0);
 
-                                            return (
-                                                <Card key={booking.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">
-                                                    {/* Trip Image */}
-                                                    <div className="relative h-64 overflow-hidden">
-                                                        {trip.images && trip.images.length > 0 ? (
-                                                            <img
-                                                                src={trip.images[0].url}
-                                                                alt={trip.title}
-                                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                            />
-                                                        ) : (
-                                                            <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900" />
-                                                        )}
-                                                        <div className="absolute top-4 right-4 px-3 py-1 bg-gold text-black text-xs font-semibold rounded-full flex items-center gap-1">
-                                                            <Clock className="w-3 h-3" />
-                                                            Upcoming
-                                                        </div>
-                                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
-                                                            {trip.category}
-                                                        </div>
-                                                        {spotsLeft <= 3 && spotsLeft > 0 && (
-                                                            <div className="absolute bottom-4 right-4 px-3 py-1 bg-red-500/90 text-white text-xs font-semibold rounded-full">
-                                                                Only {spotsLeft} spots left!
-                                                            </div>
-                                                        )}
-                                                    </div>
+                            return (
+                                <Card key={booking.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group flex flex-col h-full">
+                                    {/* Trip Image */}
+                                    <div className="relative h-64 overflow-hidden shrink-0">
+                                        {trip.images && trip.images.length > 0 ? (
+                                            <img
+                                                src={trip.images[0].url}
+                                                alt={trip.title}
+                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            />
+                                        ) : (
+                                            <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                                        )}
 
-                                                    <CardHeader className="pb-3">
-                                                        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
-                                                            {trip.title}
-                                                        </h3>
-                                                        <p className="text-sm text-gray-400 line-clamp-2 mt-2">
-                                                            {trip.description}
-                                                        </p>
-                                                    </CardHeader>
-
-                                                    <CardContent className="pb-3">
-                                                        <div className="space-y-2 text-sm text-gray-400">
-                                                            <div className="flex items-center gap-2">
-                                                                <MapPin className="w-4 h-4 text-gold" />
-                                                                <span>{trip.destination}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-2">
-                                                                <Calendar className="w-4 h-4 text-gold" />
-                                                                <span>
-                                                                    Starts {new Date(trip.startDate).toLocaleDateString('en-US', {
-                                                                        year: 'numeric',
-                                                                        month: 'short',
-                                                                        day: 'numeric'
-                                                                    })}
-                                                                </span>
-                                                            </div>
-                                                            {trip.duration && (
-                                                                <div className="flex items-center gap-2">
-                                                                    <Clock className="w-4 h-4 text-gold" />
-                                                                    <span>{trip.duration}</span>
-                                                                </div>
-                                                            )}
-                                                            <div className="flex items-center gap-2">
-                                                                <Users className="w-4 h-4 text-gold" />
-                                                                <span>{trip.currentParticipants || 0} / {trip.maxParticipants} travelers</span>
-                                                            </div>
-                                                        </div>
-                                                    </CardContent>
-
-                                                    <CardFooter>
-                                                        <Link href={`/trip/${trip.id}`} className="w-full">
-                                                            <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
-                                                                View Trip Details
-                                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                                            </button>
-                                                        </Link>
-                                                    </CardFooter>
-                                                </Card>
-                                            );
-                                        })}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-16">
-                                        <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
-                                            <Calendar className="w-12 h-12 text-gray-600" />
+                                        {/* Status Badge */}
+                                        <div className="absolute top-4 right-4 z-10">
+                                            {getStatusBadge(booking.status, booking.seatNumber)}
                                         </div>
-                                        <h3 className="text-xl font-semibold text-white mb-2">No Upcoming Trips</h3>
-                                        <p className="text-gray-400 mb-6">Start planning your next adventure!</p>
-                                        <Link href="/">
-                                            <button className="bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
-                                                Explore Trips
+
+                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
+                                            {trip.category}
+                                        </div>
+
+                                        {activeTab === 'upcoming' && spotsLeft <= 3 && spotsLeft > 0 && (
+                                            <div className="absolute bottom-4 right-4 px-3 py-1 bg-red-500/90 text-white text-xs font-semibold rounded-full">
+                                                Only {spotsLeft} spots left!
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <CardHeader className="pb-3">
+                                        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
+                                            {trip.title}
+                                        </h3>
+                                        <p className="text-sm text-gray-400 line-clamp-2 mt-2">
+                                            {trip.description}
+                                        </p>
+                                    </CardHeader>
+
+                                    <CardContent className="pb-3 flex-grow">
+                                        <div className="space-y-2 text-sm text-gray-400">
+                                            <div className="flex items-center gap-2">
+                                                <MapPin className="w-4 h-4 text-gold" />
+                                                <span>{trip.destination}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Calendar className="w-4 h-4 text-gold" />
+                                                <span>
+                                                    {activeTab === 'upcoming' ? 'Starts' : 'Completed'}: {new Date(activeTab === 'upcoming' ? trip.startDate : trip.endDate).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric'
+                                                    })}
+                                                </span>
+                                            </div>
+                                            {trip.duration && (
+                                                <div className="flex items-center gap-2">
+                                                    <Clock className="w-4 h-4 text-gold" />
+                                                    <span>{trip.duration}</span>
+                                                </div>
+                                            )}
+                                            {activeTab === 'upcoming' && (
+                                                <div className="flex items-center gap-2">
+                                                    <Users className="w-4 h-4 text-gold" />
+                                                    <span>{trip.currentParticipants || 0} / {trip.maxParticipants} travelers</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </CardContent>
+
+                                    <CardFooter className='flex justify-center p-[1.5rem] mt-auto'>
+                                        <Link href={activeTab === 'upcoming' ? `/trip/${trip.id}` : `/past-trips/${trip.id}`} className="w-full">
+                                            <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                                {activeTab === 'upcoming' ? 'View Trip Details' : 'View Details & Reviews'}
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                             </button>
                                         </Link>
-                                    </div>
-                                )}
-                            </div>
+                                    </CardFooter>
+                                </Card>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="text-center py-16">
+                        <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
+                            {activeTab === 'upcoming' ? (
+                                <Calendar className="w-12 h-12 text-gray-600" />
+                            ) : (
+                                <MapPin className="w-12 h-12 text-gray-600" />
+                            )}
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                            {activeTab === 'upcoming' ? 'No Upcoming Trips' : 'No Past Trips'}
+                        </h3>
+                        <p className="text-gray-400 mb-6">
+                            {activeTab === 'upcoming' ? 'Start planning your next adventure!' : 'Your travel history will appear here.'}
+                        </p>
+                        {activeTab === 'upcoming' && (
+                            <Link href="/">
+                                <button className="bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
+                                    Explore Trips
+                                </button>
+                            </Link>
                         )}
-
-                        {/* Past Trips */}
-                        {activeTab === 'past' && (
-                            <div>
-                                {currentTrips.length > 0 ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {currentTrips.map((booking) => {
-                                            const trip = booking.trip;
-
-                                            return (
-                                                <Card key={booking.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">
-                                                    {/* Trip Image */}
-                                                    <div className="relative h-64 overflow-hidden">
-                                                        {trip.images && trip.images.length > 0 ? (
-                                                            <img
-                                                                src={trip.images[0].url}
-                                                                alt={trip.title}
-                                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                            />
-                                                        ) : (
-                                                            <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900" />
-                                                        )}
-                                                        <div className="absolute top-4 right-4 px-3 py-1 bg-green-900/80 backdrop-blur-sm text-green-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-green-500/30">
-                                                            <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
-                                                            Completed
-                                                        </div>
-                                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
-                                                            {trip.category}
-                                                        </div>
-                                                    </div>
-
-                                                    <CardHeader className="pb-3">
-                                                        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
-                                                            {trip.title}
-                                                        </h3>
-                                                        <p className="text-sm text-gray-400 line-clamp-2 mt-2">
-                                                            {trip.description}
-                                                        </p>
-                                                    </CardHeader>
-
-                                                    <CardContent className="pb-3">
-                                                        {/* Rating */}
-                                                        {trip.rating !== undefined && trip.rating > 0 && (
-                                                            <div className="flex items-center gap-2 mb-4">
-                                                                <div className="flex items-center gap-1">
-                                                                    {[...Array(5)].map((_, i) => (
-                                                                        <Star
-                                                                            key={i}
-                                                                            className={`w-4 h-4 ${i < Math.floor(trip.rating!)
-                                                                                ? 'fill-gold text-gold'
-                                                                                : 'fill-gray-700 text-gray-700'
-                                                                                }`}
-                                                                        />
-                                                                    ))}
-                                                                </div>
-                                                                <span className="text-sm font-semibold text-white">{trip.rating.toFixed(1)}</span>
-                                                                <span className="text-sm text-gray-500">({trip.reviewCount || 0} reviews)</span>
-                                                            </div>
-                                                        )}
-
-                                                        <div className="space-y-2 text-sm text-gray-400">
-                                                            <div className="flex items-center gap-2">
-                                                                <MapPin className="w-4 h-4 text-gold" />
-                                                                <span>{trip.destination}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-2">
-                                                                <Calendar className="w-4 h-4 text-gold" />
-                                                                <span>
-                                                                    Completed: {new Date(trip.endDate).toLocaleDateString('en-US', {
-                                                                        year: 'numeric',
-                                                                        month: 'short',
-                                                                        day: 'numeric'
-                                                                    })}
-                                                                </span>
-                                                            </div>
-                                                            {trip.duration && (
-                                                                <div className="flex items-center gap-2">
-                                                                    <Clock className="w-4 h-4 text-gold" />
-                                                                    <span>{trip.duration}</span>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    </CardContent>
-
-                                                    <CardFooter>
-                                                        <Link href={`/past-trips/${trip.id}`} className="w-full">
-                                                            <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
-                                                                View Details & Reviews
-                                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                                            </button>
-                                                        </Link>
-                                                    </CardFooter>
-                                                </Card>
-                                            );
-                                        })}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-16">
-                                        <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
-                                            <MapPin className="w-12 h-12 text-gray-600" />
-                                        </div>
-                                        <h3 className="text-xl font-semibold text-white mb-2">No Past Trips</h3>
-                                        <p className="text-gray-400 mb-6">Your travel history will appear here.</p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </>
+                    </div>
                 )}
             </div>
             <BottomTabBar />

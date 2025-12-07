@@ -7,8 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, ArrowLeft, Check, X, Download, ExternalLink } from "lucide-react";
+import { Loader2, ArrowLeft, Check, X, Download, ExternalLink, Edit } from "lucide-react";
 import Image from "next/image";
 
 interface BookingDetail {
@@ -24,6 +25,8 @@ interface BookingDetail {
     status: 'pending' | 'confirmed' | 'rejected';
     seatNumber?: string;
     createdAt: string;
+    amount?: number;
+    transportMode?: string;
 }
 
 export default function BookingDetailPage() {
@@ -32,8 +35,10 @@ export default function BookingDetailPage() {
     const [booking, setBooking] = useState<BookingDetail | null>(null);
     const [loading, setLoading] = useState(true);
     const [confirming, setConfirming] = useState(false);
+    const [editing, setEditing] = useState(false);
     const [seatNumber, setSeatNumber] = useState("");
     const [processing, setProcessing] = useState(false);
+    const [newStatus, setNewStatus] = useState<'pending' | 'confirmed' | 'rejected'>('confirmed');
 
     useEffect(() => {
         fetchBooking();
@@ -46,6 +51,7 @@ export default function BookingDetailPage() {
                 const data = await res.json();
                 setBooking(data);
                 if (data.seatNumber) setSeatNumber(data.seatNumber);
+                if (data.status) setNewStatus(data.status);
             } else {
                 toast({
                     title: "Error",
@@ -93,6 +99,39 @@ export default function BookingDetailPage() {
             toast({
                 title: "Error",
                 description: "Failed to update booking status",
+                variant: "destructive"
+            });
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+    const handleEditBooking = async () => {
+        setProcessing(true);
+        try {
+            const body: any = { status: newStatus };
+            if (newStatus === 'confirmed') body.seatNumber = seatNumber;
+
+            const res = await fetch(`/api/bookings/${params.bookingId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+
+            if (res.ok) {
+                toast({
+                    title: "Success",
+                    description: "Booking updated successfully"
+                });
+                setBooking(prev => prev ? { ...prev, status: newStatus, seatNumber: newStatus === 'confirmed' ? seatNumber : undefined } : null);
+                setEditing(false);
+            } else {
+                throw new Error("Failed to update");
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to update booking",
                 variant: "destructive"
             });
         } finally {
@@ -151,14 +190,30 @@ export default function BookingDetailPage() {
                                 </Button>
                             </>
                         )}
-                        {booking.status === 'confirmed' && (
-                            <div className="px-4 py-2 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md font-medium flex items-center gap-2">
-                                <Check className="w-4 h-4" /> Confirmed (Seat: {booking.seatNumber})
-                            </div>
-                        )}
-                        {booking.status === 'rejected' && (
-                            <div className="px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-md font-medium flex items-center gap-2">
-                                <X className="w-4 h-4" /> Rejected
+                        {booking.status !== 'pending' && (
+                            <div className="flex items-center gap-2">
+                                {booking.status === 'confirmed' && (
+                                    <div className="px-4 py-2 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md font-medium flex items-center gap-2">
+                                        <Check className="w-4 h-4" /> Confirmed (Seat: {booking.seatNumber})
+                                    </div>
+                                )}
+                                {booking.status === 'rejected' && (
+                                    <div className="px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-md font-medium flex items-center gap-2">
+                                        <X className="w-4 h-4" /> Rejected
+                                    </div>
+                                )}
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => {
+                                        setNewStatus(booking.status);
+                                        setSeatNumber(booking.seatNumber || "");
+                                        setEditing(true);
+                                    }}
+                                    className="border-white/10 hover:bg-white/10 hover:text-white"
+                                >
+                                    <Edit className="w-4 h-4" />
+                                </Button>
                             </div>
                         )}
                     </div>
@@ -203,6 +258,20 @@ export default function BookingDetailPage() {
                                 <p className="text-white font-mono mt-1 bg-black/30 p-2 rounded border border-white/5">
                                     {booking.paymentrefno}
                                 </p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <Label className="text-gray-400">Amount Paid</Label>
+                                    <p className="text-white font-medium mt-1 text-lg text-gold">
+                                        ₹{booking.amount?.toLocaleString() || 'N/A'}
+                                    </p>
+                                </div>
+                                <div>
+                                    <Label className="text-gray-400">Transportation</Label>
+                                    <p className="text-white font-medium mt-1 capitalize">
+                                        {booking.transportMode || 'Not specified'}
+                                    </p>
+                                </div>
                             </div>
                             <div>
                                 <Label className="text-gray-400">Booking Date</Label>
@@ -279,6 +348,7 @@ export default function BookingDetailPage() {
                 </div>
             </div>
 
+            {/* Confirm Dialog */}
             <Dialog open={confirming} onOpenChange={setConfirming}>
                 <DialogContent className="bg-gray-900 border-white/10 text-white">
                     <DialogHeader>
@@ -307,6 +377,58 @@ export default function BookingDetailPage() {
                             className="bg-gold text-black hover:bg-yellow-600"
                         >
                             {processing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Booking"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Edit Dialog */}
+            <Dialog open={editing} onOpenChange={setEditing}>
+                <DialogContent className="bg-gray-900 border-white/10 text-white">
+                    <DialogHeader>
+                        <DialogTitle>Edit Booking</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                            <Label>Status</Label>
+                            <Select
+                                value={newStatus}
+                                onValueChange={(val: 'pending' | 'confirmed' | 'rejected') => setNewStatus(val)}
+                            >
+                                <SelectTrigger className="bg-black/50 border-white/10 text-white">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-gray-800 border-white/10 text-white">
+                                    <SelectItem value="pending">Pending</SelectItem>
+                                    <SelectItem value="confirmed">Confirmed</SelectItem>
+                                    <SelectItem value="rejected">Rejected</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        {newStatus === 'confirmed' && (
+                            <div className="space-y-2">
+                                <Label htmlFor="edit-seat">Seat Number</Label>
+                                <Input
+                                    id="edit-seat"
+                                    value={seatNumber}
+                                    onChange={(e) => setSeatNumber(e.target.value)}
+                                    placeholder="e.g. A1, 12, etc."
+                                    className="bg-black/50 border-white/10 text-white"
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button variant="ghost" onClick={() => setEditing(false)} className="text-gray-400">
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleEditBooking}
+                            disabled={(newStatus === 'confirmed' && !seatNumber) || processing}
+                            className="bg-gold text-black hover:bg-yellow-600"
+                        >
+                            {processing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Changes"}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

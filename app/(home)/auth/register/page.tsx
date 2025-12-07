@@ -16,6 +16,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState("");
     const [number, setNumber] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
     const { data: session } = useSession();
 
     useEffect(() => {
@@ -27,6 +28,7 @@ export default function RegisterPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+        setError("");
 
         try {
             const res = await fetch("/api/auth/register", {
@@ -51,10 +53,11 @@ export default function RegisterPage() {
             } else {
                 const data = await res.json();
                 console.error("Registration failed:", data.error);
-                // Ideally show an error message to the user
+                setError(data.error || "Registration failed. Please try again.");
             }
         } catch (error) {
             console.error("Registration error:", error);
+            setError("An unexpected error occurred. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -76,6 +79,11 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-gold/5">
+                        {error && (
+                            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-200 text-sm text-center">
+                                {error}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-300 ml-1">Full Name</label>

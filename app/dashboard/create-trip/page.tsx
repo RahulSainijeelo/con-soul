@@ -42,7 +42,7 @@ export default function CreateTripPage() {
         description: "",
         content: "",
         images: [],
-        status: "draft",
+        status: "archived",
         startDate: "",
         endDate: "",
         price: 0,
@@ -665,8 +665,8 @@ export default function CreateTripPage() {
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="bg-gray-900 border-white/10">
-                                    <SelectItem value="draft" className="text-white hover:bg-white/10">
-                                        Draft
+                                    <SelectItem value="archived" className="text-white hover:bg-white/10">
+                                        Archived
                                     </SelectItem>
                                     <SelectItem value="published" className="text-white hover:bg-white/10">
                                         Published

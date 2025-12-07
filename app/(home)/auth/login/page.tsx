@@ -13,6 +13,7 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
     const { data: session } = useSession();
 
     useEffect(() => {
@@ -24,6 +25,7 @@ export default function LoginPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+        setError("");
 
         try {
             const result = await signIn("credentials", {
@@ -34,18 +36,17 @@ export default function LoginPage() {
 
             if (result?.error) {
                 console.error("Login failed:", result.error);
-                // Handle error (show toast/alert)
+                setError("Invalid email or password");
             } else {
                 router.push("/");
             }
         } catch (error) {
             console.error("Login error:", error);
+            setError("An unexpected error occurred");
         } finally {
             setIsLoading(false);
         }
     };
-
-
 
     return (
         <div className="min-h-screen bg-black text-white flex flex-col">
@@ -63,6 +64,11 @@ export default function LoginPage() {
                     </div>
 
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-gold/5">
+                        {error && (
+                            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-200 text-sm text-center">
+                                {error}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-300 ml-1">Email Address</label>

@@ -39,13 +39,12 @@ export async function GET(request: NextRequest) {
             query = query.where("category", "==", category);
         }
 
-        // Apply status filter
         if (status) {
             query = query.where("status", "==", status);
         }
         // Execute query
         const snapshot = await query.get();
-
+        console.log(snapshot);
         // Map documents to array with all fields including new ones
         const trips = snapshot.docs.map((doc) => {
             const data = doc.data();

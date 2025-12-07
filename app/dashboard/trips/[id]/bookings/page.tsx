@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Check, X, User, Phone, Mail, Calendar, ArrowLeft } from "lucide-react";
+import { Loader2, Check, X, User, Phone, Mail, Calendar, ArrowLeft, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
 interface Booking {
@@ -151,8 +151,11 @@ export default function TripBookingsPage() {
                     <h1 className="text-3xl font-bold text-gold">Trip Bookings</h1>
                 </div>
 
-                <Tabs defaultValue="confirmed" className="space-y-6">
+                <Tabs defaultValue="all" className="space-y-6">
                     <TabsList className="bg-white/5 border border-white/10">
+                        <TabsTrigger value="all" className="data-[state=active]:bg-gold data-[state=active]:text-black">
+                            All ({bookings.length})
+                        </TabsTrigger>
                         <TabsTrigger value="confirmed" className="data-[state=active]:bg-gold data-[state=active]:text-black">
                             Confirmed ({confirmedBookings.length})
                         </TabsTrigger>
@@ -160,6 +163,21 @@ export default function TripBookingsPage() {
                             Pending ({pendingBookings.length})
                         </TabsTrigger>
                     </TabsList>
+
+                    <TabsContent value="all">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {bookings.map(booking => (
+                                <BookingCard
+                                    key={booking.id}
+                                    booking={booking}
+                                    type="all"
+                                />
+                            ))}
+                            {bookings.length === 0 && (
+                                <p className="text-gray-400 col-span-full text-center py-12">No bookings found.</p>
+                            )}
+                        </div>
+                    </TabsContent>
 
                     <TabsContent value="confirmed">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -241,10 +259,33 @@ function BookingCard({
     onReject
 }: {
     booking: Booking;
-    type: 'confirmed' | 'pending';
+    type: 'confirmed' | 'pending' | 'all';
     onConfirm?: () => void;
     onReject?: () => void;
 }) {
+    const getStatusBadge = (status: string) => {
+        switch (status) {
+            case 'confirmed':
+                return (
+                    <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded border border-green-500/30 flex items-center gap-1">
+                        <Check className="w-3 h-3" /> Confirmed
+                    </div>
+                );
+            case 'rejected':
+                return (
+                    <div className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded border border-red-500/30 flex items-center gap-1">
+                        <X className="w-3 h-3" /> Rejected
+                    </div>
+                );
+            default:
+                return (
+                    <div className="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded border border-yellow-500/30 flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" /> Pending
+                    </div>
+                );
+        }
+    };
+
     return (
         <Card className="bg-white/5 border-white/10 overflow-hidden">
             <CardHeader className="pb-3">
@@ -252,10 +293,14 @@ function BookingCard({
                     <CardTitle className="text-lg font-semibold text-white truncate">
                         {booking.fullName}
                     </CardTitle>
-                    {type === 'confirmed' && booking.seatNumber && (
-                        <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded border border-green-500/30">
-                            Seat: {booking.seatNumber}
-                        </div>
+                    {type === 'all' ? (
+                        getStatusBadge(booking.status)
+                    ) : (
+                        type === 'confirmed' && booking.seatNumber && (
+                            <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded border border-green-500/30">
+                                Seat: {booking.seatNumber}
+                            </div>
+                        )
                     )}
                 </div>
             </CardHeader>

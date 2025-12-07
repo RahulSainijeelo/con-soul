@@ -335,10 +335,12 @@ export default function TripPage() {
 
                 <div className="space-y-3">
                   {getBookingStatusButton()}
+                  <Link href="/contact">
+                    <button className="w-full bg-transparent hover:bg-white/5 text-gold font-semibold py-3 px-6 rounded-xl border-2 border-gold transition-colors">
+                      Contact Us
+                    </button>
+                  </Link>
 
-                  <button className="w-full bg-transparent hover:bg-white/5 text-gold font-semibold py-3 px-6 rounded-xl border-2 border-gold transition-colors">
-                    Contact Us
-                  </button>
                 </div>
               </div>
 
@@ -497,8 +499,8 @@ export default function TripPage() {
           </div>
         </div>
       )}
-            <BottomTabBar />
-      
+      <BottomTabBar />
+
     </>
   );
 }

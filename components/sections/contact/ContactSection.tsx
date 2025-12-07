@@ -12,7 +12,7 @@ import { ContactForm } from "./ContactForm";
 import { ContactInfo } from "./ContactInfo";
 import { QuickResponseCard } from "./QuickResponseCard";
 import { ContactConfirmationDialog } from "./ContactConfirmationDialog";
-
+import Link from "next/link";
 interface Profile {
   phoneNumbers?: string[];
   email?: string;
@@ -43,15 +43,17 @@ export function ContactSection({ profile, loading }: ContactSectionProps) {
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
-          <h2
-            className="text-3xl md:text-4xl font-bold mb-3"
-            style={{
-              color: "var(--color-text-primary)",
-              fontFamily: "var(--font-heading)",
-            }}
-          >
-            Contact Us
-          </h2>
+          <Link href="/contact">
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-3"
+              style={{
+                color: "var(--color-text-primary)",
+                fontFamily: "var(--font-heading)",
+              }}
+            >
+              Contact Us
+            </h2>
+          </Link>
           <p
             className="text-lg"
             style={{ color: "var(--color-text-secondary)" }}

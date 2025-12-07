@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Shield, Lock, Eye } from 'lucide-react';
 import BottomTabBar from '@/components/layout/BottomTabBar';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: "Privacy Policy - ConSol Premium Travel",
@@ -83,14 +84,16 @@ export default function PrivacyPolicyPage() {
 
             {/* Contact */}
             <section className="pt-8 border-t border-white/10">
-              <h2 className="text-2xl font-bold text-white mb-4">
-                Contact Us
-              </h2>
+              <Link href="/contact">
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  Contact Us
+                </h2>
+              </Link>
               <p className="text-gray-400 mb-4">
                 If you have any questions about our privacy practices, please contact our Data Protection Officer:
               </p>
-              <a href="mailto:privacy@consol.com" className="text-gold hover:text-white transition-colors font-semibold">
-                privacy@consol.com
+              <a href="mailto:mail@con-soul.in" className="text-gold hover:text-white transition-colors font-semibold">
+                mail@con-soul.in
               </a>
             </section>
 

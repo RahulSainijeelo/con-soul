@@ -60,7 +60,7 @@ export function ServiceCard({ service, onView }: ServiceCardProps) {
         </CardDescription>
       </CardContent>
 
-      <CardFooter className="pt-0">
+      <CardFooter className="pt-0 flex justify-center p-[1.5rem]">
         <Button
           variant="outline"
           className="w-full group/btn transition-all duration-300"
