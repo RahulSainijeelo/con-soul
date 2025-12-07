@@ -1,5 +1,4 @@
-export interface Trip {
-    id: string;
+interface BaseTrip {
     title: string;
     destination: string;
     category: string;
@@ -24,4 +23,10 @@ export interface Trip {
     price_sleeper?: number; // NEW - for train trips
 }
 
-export type TripFormData = Trip;
+interface TripWithId extends BaseTrip {
+    id: string;
+}
+
+
+export type CreateTrip = BaseTrip;
+export type EditTrip = TripWithId;

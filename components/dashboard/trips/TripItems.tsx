@@ -1,5 +1,5 @@
 import React from "react";
-import type { Trip } from "@/types/Trip";
+import type { EditTrip } from "@/types/Trip";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pencil, Trash2, Eye, Calendar, MapPin, Users, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/select";
 
 interface TripItemsProps {
-  trips: Trip[];
-  openDeleteDialog: (trip: Trip) => void;
+  trips: EditTrip[];
+  openDeleteDialog: (trip: EditTrip) => void;
   onStatusChange: (tripId: string, newStatus: 'completed' | 'published' | 'archived') => void;
   loading: boolean;
 }

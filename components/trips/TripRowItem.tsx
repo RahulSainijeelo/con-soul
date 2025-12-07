@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
-import { Trip } from "@/types/Trip";
+import { EditTrip } from "@/types/Trip";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ShineBorder } from "../ui/shine-border";
 interface TripRowItemProps {
-    trip: Trip;
+    trip: EditTrip;
     index: number;
 }
 

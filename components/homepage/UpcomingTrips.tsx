@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { Trip } from "@/types/Trip";
+import { EditTrip } from "@/types/Trip";
 import { Badge } from "@/components/ui/badge";
 import { TripRowItem } from "@/components/trips/TripRowItem";
 
 export function UpcomingTrips() {
-    const [trips, setTrips] = useState<Trip[]>([]);
+    const [trips, setTrips] = useState<EditTrip[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

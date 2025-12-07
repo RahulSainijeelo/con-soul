@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import TripItems from "./TripItems";
 import DeleteTripDialog from "./DeleteTripDialog";
-import type { Trip } from "@/types/Trip";
+import type { EditTrip } from "@/types/Trip";
 import Link from "next/link";
 
 const tripCategories = [
@@ -26,9 +26,9 @@ const tripCategories = [
 ];
 
 export function ManageTrips() {
-  const [trips, setTrips] = useState<Trip[]>([]);
+  const [trips, setTrips] = useState<EditTrip[]>([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
+  const [selectedTrip, setSelectedTrip] = useState<EditTrip | null>(null);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -90,7 +90,7 @@ export function ManageTrips() {
 
       const response = await res.json();
 
-      let tripsData: Trip[];
+      let tripsData: EditTrip[];
       if (response.data && Array.isArray(response.data)) {
         tripsData = response.data;
       } else if (Array.isArray(response)) {
@@ -121,7 +121,7 @@ export function ManageTrips() {
     fetchTrips();
   }, [selectedCategory, selectedStatus]);
 
-  const openDeleteDialog = (trip: Trip) => {
+  const openDeleteDialog = (trip: EditTrip) => {
     setSelectedTrip(trip);
     setIsDeleteDialogOpen(true);
   };

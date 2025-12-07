@@ -16,7 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import Link from "next/link";
-import type { TripFormData } from "@/types/Trip";
+import type { CreateTrip } from "@/types/Trip";
 import { uploadImageToImgBB } from "@/lib/imgbb";
 
 const tripCategories = [
@@ -35,7 +35,7 @@ export default function CreateTripPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [uploadingImages, setUploadingImages] = useState(false);
-    const [formData, setFormData] = useState<TripFormData>({
+    const [formData, setFormData] = useState<CreateTrip>({
         title: "",
         destination: "",
         category: "",

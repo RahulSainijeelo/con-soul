@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import type { Trip } from "@/types/Trip";
+import type { EditTrip } from "@/types/Trip";
 import { MapPin, Calendar } from "lucide-react";
 import { format } from "date-fns";
 
@@ -17,7 +17,7 @@ interface DeleteTripDialogProps {
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
   handleDeleteTrip: () => void;
-  selectedTrip: Trip | null;
+  selectedTrip: EditTrip | null;
   loading: boolean;
 }
 
