@@ -5,6 +5,7 @@ import { PreviousTrips } from "@/components/homepage/PreviousTrips";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import BottomTabBar from "@/components/layout/BottomTabBar";
+import Link from "next/link";
 export const metadata: Metadata = {
   title: "Home",
   description: "Welcome to Con-Soul,Find Your Next Adventure",
@@ -32,6 +33,13 @@ export default async function HomePage() {
         <div className="bg-black" style={{ borderRadius: "40px 40px 0 0", boxShadow: "0px -6px 18px 2px rgba(255,255,255,0.62)" }}>
           <UpcomingTrips />
           <PreviousTrips />
+          <div className="flex justify-center pb-10">
+            <Link href="/contact">
+              <button className="bg-transparent hover:bg-white/5 text-gold font-semibold py-3 px-8 rounded-xl border-2 border-gold transition-colors text-lg">
+                Contact Us
+              </button>
+            </Link>
+          </div>
           <Footer />
         </div>
       </div>

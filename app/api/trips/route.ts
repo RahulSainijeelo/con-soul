@@ -44,7 +44,6 @@ export async function GET(request: NextRequest) {
         }
         // Execute query
         const snapshot = await query.get();
-        console.log(snapshot);
         // Map documents to array with all fields including new ones
         const trips = snapshot.docs.map((doc) => {
             const data = doc.data();
