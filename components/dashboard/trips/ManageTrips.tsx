@@ -170,7 +170,7 @@ export function ManageTrips() {
     }
     setLoading(false);
   };
-
+// 
   const handleStatusChange = async (tripId: string, newStatus: 'completed' | 'published' | 'archived') => {
     if (!tripId) {
       toast({
