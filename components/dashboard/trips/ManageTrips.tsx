@@ -160,7 +160,7 @@ export function ManageTrips() {
       sessionStorage.removeItem(`dashboard_trips_${selectedCategory}_${selectedStatus}`);
       sessionStorage.removeItem(`dashboard_trips_${selectedCategory}_${selectedStatus}_at`);
       await fetchTrips(true);
-
+      // 
     } catch (err: any) {
       const errorMessage = err.message || "Failed to delete trip";
       toast({
