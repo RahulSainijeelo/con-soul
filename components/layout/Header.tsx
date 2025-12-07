@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { User } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
-
+import Image from "next/image";
+import logo from "@/public/images/logo.png"
 export default function Header() {
   const session = useSession();
   return (
@@ -13,12 +13,12 @@ export default function Header() {
       <div className="container mx-auto flex items-start justify-between">
         {/* Left Part - Circular Logo (Always visible) */}
         <Link href="/" className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-full bg-black/95 backdrop-blur-md border border-white/10 flex items-center justify-center hover:border-gold/50 transition-all duration-300 shadow-lg hover:shadow-gold/20">
+          <div className="w-16 h-16 rounded-full bg-white/95 backdrop-blur-md border border-black/10 flex items-center justify-center hover:border-gold/50 transition-all duration-300 shadow-lg hover:shadow-gold/20">
             <span
               style={{ fontFamily: 'var(--heading-bold)' }}
               className="text-gold text-lg tracking-wider"
             >
-              CS
+              <Image src={logo} alt="logo"></Image>
             </span>
           </div>
         </Link>

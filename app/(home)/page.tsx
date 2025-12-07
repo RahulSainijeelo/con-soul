@@ -6,12 +6,12 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import BottomTabBar from "@/components/layout/BottomTabBar";
 export const metadata: Metadata = {
-  title: "",
-  description: "",
-  keywords: '',
+  title: "Home",
+  description: "Welcome to Con-Soul,Find Your Next Adventure",
+  keywords: 'Night Life, Travel, Adventure, Fun',
   openGraph: {
-    title: "",
-    description: "",
+    title: "Home",
+    description: "Welcome to Con-Soul,Find Your Next Adventure",
     type: 'website',
     url: process.env.NEXT_PUBLIC_SITE_URL,
   },

@@ -6,7 +6,7 @@ export function HeroSection() {
                 <img
                     src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2021&q=80"
                     alt="Travel Background"
-                    className="h-full w-full object-cover opacity-30"
+                    className="h-full w-full object-cover opacity-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black" />
             </div>

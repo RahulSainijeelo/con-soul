@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 
   title: {
     default: "con-soul | Expeditions for the Soul",
-    template: "%s | con-soul"
+    template: "%s | Con-Soul"
   },
   description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
 
