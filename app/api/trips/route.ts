@@ -32,9 +32,9 @@ export async function GET(request: NextRequest) {
 
         const { category, status, page, limit, featured } = queryResult.data;
 
-        let query = db.collection("trips").orderBy("createdAt", "desc");
+        let query: FirebaseFirestore.Query = db.collection("trips");
 
-        // Apply category filter
+        // Apply filters BEFORE orderBy (Firestore requires where() before orderBy() on different fields)
         if (category) {
             query = query.where("category", "==", category);
         }
@@ -42,6 +42,9 @@ export async function GET(request: NextRequest) {
         if (status) {
             query = query.where("status", "==", status);
         }
+
+        // Apply ordering after filters
+        query = query.orderBy("createdAt", "desc");
         // Execute query
         const snapshot = await query.get();
         // Map documents to array with all fields including new ones

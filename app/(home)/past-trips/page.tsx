@@ -5,11 +5,15 @@ import Footer from '@/components/layout/Footer';
 import { Star, Calendar, Users, MapPin, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import BottomTabBar from '@/components/layout/BottomTabBar';
+import { db } from '@/config/firebase';
 
 export const metadata: Metadata = {
     title: 'Past Trips - ConSoul Travel',
     description: 'Explore our completed trips and read reviews from happy travelers who have experienced amazing adventures with us.',
 };
+
+// Force dynamic rendering so completed trips show up immediately after status change
+export const dynamic = 'force-dynamic';
 
 interface Trip {
     id: string;
@@ -28,19 +32,30 @@ interface Trip {
 
 async function getPastTrips(): Promise<Trip[]> {
     try {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/trips?status=completed&limit=50`,
-            {
-                next: { revalidate: 300 } // Revalidate every 5 minutes
-            }
-        );
-        if (!response.ok) {
-            console.error('Failed to fetch past trips');
-            return [];
-        }
+        // Query Firestore directly instead of self-fetching the API route
+        const snapshot = await db.collection('trips')
+            .where('status', '==', 'completed')
+            .orderBy('createdAt', 'desc')
+            .limit(50)
+            .get();
 
-        const result = await response.json();
-        return result.data || [];
+        return snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                title: data.title || '',
+                destination: data.destination || '',
+                category: data.category || '',
+                description: data.description || '',
+                images: data.images || [],
+                endDate: data.endDate || '',
+                duration: data.duration || '',
+                maxParticipants: data.maxParticipants || 0,
+                currentParticipants: data.currentParticipants || 0,
+                rating: data.rating || 0,
+                reviewCount: data.reviewCount || 0,
+            };
+        });
     } catch (error) {
         console.error('Error fetching past trips:', error);
         return [];
