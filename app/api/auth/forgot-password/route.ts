@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // POST /api/auth/forgot-password — Send reset code to user
 export async function POST(request: NextRequest) {
@@ -38,9 +41,26 @@ export async function POST(request: NextRequest) {
             resetCodeExpiry,
         });
 
-        // In production, you would send this code via email (e.g., Nodemailer, Resend, SendGrid)
-        // For now, we'll log it and return success
-        console.log(`[Password Reset] Code for ${email}: ${resetCode}`);
+        // Send email via Resend
+        await resend.emails.send({
+            from: "Con-Soul Travel <onboarding@resend.dev>", // Using Resend testing domain
+            to: email,
+            subject: "Con-Soul - Password Reset Code",
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaec; border-radius: 10px;">
+                    <h2 style="color: #FFD700; text-align: center; background-color: #000; padding: 15px; border-radius: 5px;">Password Reset Request</h2>
+                    <p style="color: #333; font-size: 16px;">Hello,</p>
+                    <p style="color: #333; font-size: 16px;">We received a request to reset your password. Here is your 6-digit reset code:</p>
+                    <div style="background-color: #f4f4f5; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                        <span style="font-size: 24px; font-weight: bold; letter-spacing: 5px; color: #0a0a0a;">${resetCode}</span>
+                    </div>
+                    <p style="color: #333; font-size: 14px;">This code will expire in 15 minutes.</p>
+                    <p style="color: #71717a; font-size: 12px; margin-top: 30px; text-align: center;">If you didn't request this, you can safely ignore this email.</p>
+                </div>
+            `,
+        });
+
+        console.log(`[Password Reset] Code for ${email} sent via Resend.`);
 
         return NextResponse.json({
             message: "If this email is registered, a reset code has been generated.",
