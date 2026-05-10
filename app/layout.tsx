@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Noto_Sans_Devanagari } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -26,19 +25,6 @@ const HeadingFontBold = localFont({
 const HeartAndLove = localFont({
   src: '../public/fonts/heart.otf',
   variable: '--heart',
-});
-const inter = Inter({
-  subsets: ["latin"],
-  variable: '--font-inter',
-  display: 'swap',
-  preload: true,
-});
-
-const notoSansDevanagari = Noto_Sans_Devanagari({
-  subsets: ["devanagari"],
-  variable: '--font-devanagari',
-  display: 'swap',
-  preload: true,
 });
 
 export const viewport: Viewport = {
@@ -213,11 +199,12 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${notoSansDevanagari.variable} `}>
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+Devanagari:wght@100..900&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://platform.twitter.com" />
         <link rel="preconnect" href="https://www.youtube.com" />
@@ -240,7 +227,7 @@ export default function RootLayout({
         {/* Google Analytics */}
         <GoogleAnalytics />
       </head>
-      <body className={`${inter.className} ${primaryFont.variable} ${HeartAndLove.variable} ${HeadingFontBold.variable} ${primaryFontBold.variable} antialiased`}>
+      <body className={`${primaryFont.variable} ${HeartAndLove.variable} ${HeadingFontBold.variable} ${primaryFontBold.variable} antialiased`}>
         <NextTopLoader showSpinner={false} />
 
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-600 text-white px-4 py-2 rounded-md z-50">
