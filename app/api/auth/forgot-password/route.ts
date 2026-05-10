@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { Resend } from 'resend';
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.NEXT_EMAIL_ADD,
+        pass: process.env.NEXT_EMAIL_SMTP,
+    },
+});
 
 // POST /api/auth/forgot-password — Send reset code to user
 export async function POST(request: NextRequest) {
@@ -41,9 +47,9 @@ export async function POST(request: NextRequest) {
             resetCodeExpiry,
         });
 
-        // Send email via Resend
-        await resend.emails.send({
-            from: "Con-Soul Travel <onboarding@resend.dev>", // Using Resend testing domain
+        // Send email via Nodemailer
+        await transporter.sendMail({
+            from: `"Con-Soul Travel" <${process.env.NEXT_EMAIL_ADD}>`,
             to: email,
             subject: "Con-Soul - Password Reset Code",
             html: `
@@ -60,7 +66,7 @@ export async function POST(request: NextRequest) {
             `,
         });
 
-        console.log(`[Password Reset] Code for ${email} sent via Resend.`);
+        console.log(`[Password Reset] Code for ${email} sent via Nodemailer.`);
 
         return NextResponse.json({
             message: "If this email is registered, a reset code has been generated.",
