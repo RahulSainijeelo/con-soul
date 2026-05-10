@@ -54,7 +54,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://con-soul.online'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://con-soul.in'),
 
   title: {
     default: "con-soul | Expeditions for the Soul",
@@ -164,7 +164,7 @@ export default function RootLayout({
     "@type": "TravelAgency",
     "name": "con-soul",
     "alternateName": "con-soul Expeditions",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.online",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.in",
     "logo": {
       "@type": "ImageObject",
       "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`,
@@ -191,7 +191,7 @@ export default function RootLayout({
       "@type": "ContactPoint",
       "telephone": "+91-9876543210",
       "contactType": "Customer Service",
-      "email": "contact@con-soul.online"
+      "email": "contact@con-soul.in"
     }
   };
 
@@ -199,7 +199,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "con-soul",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.online",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.in",
     "description": "Expeditions for the Soul",
     "inLanguage": ["en-US"],
     "publisher": {

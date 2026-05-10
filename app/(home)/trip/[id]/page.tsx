@@ -293,7 +293,11 @@ export default function TripPage() {
                   About This Trip
                 </h2>
                 <div className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold">
-                  <p>{trip.content}</p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    {trip.content?.split('.').filter(s => s.trim().length > 0).map((sentence, i) => (
+                      <li key={i} className="text-gray-300">{sentence.trim()}.</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
