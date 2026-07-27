@@ -20,12 +20,19 @@ interface BookingDetail {
     mobileNo: string;
     aadhaarNo: string;
     aadhaarImage?: string;
-    paymentrefno: string;
+    // Razorpay payment fields
+    razorpayPaymentId?: string;
+    razorpayOrderId?: string;
+    remainingRazorpayPaymentId?: string;
+    paymentStatus?: string;
+    // Legacy manual payment fields (for old bookings)
+    paymentrefno?: string;
     paymentScreenshot?: string;
     status: 'pending' | 'confirmed' | 'rejected';
     seatNumber?: string;
     createdAt: string;
     amount?: number;
+    amountPaid?: number;
     transportMode?: string;
 }
 
@@ -253,17 +260,54 @@ export default function BookingDetailPage() {
                             <CardTitle className="text-white">Payment Details</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <div>
-                                <Label className="text-gray-400">Payment Reference Number</Label>
-                                <p className="text-white font-mono mt-1 bg-black/30 p-2 rounded border border-white/5">
-                                    {booking.paymentrefno}
-                                </p>
-                            </div>
+                            {/* Payment Status Badge */}
+                            {booking.paymentStatus === 'paid' ? (
+                                <div className="flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-500/20 rounded-lg">
+                                    <Check className="w-4 h-4 text-green-400" />
+                                    <span className="text-green-400 font-medium text-sm">Fully Paid via Razorpay</span>
+                                </div>
+                            ) : booking.paymentStatus === 'partial' ? (
+                                <div className="flex items-center gap-2 px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                                    <Check className="w-4 h-4 text-orange-400" />
+                                    <span className="text-orange-400 font-medium text-sm">
+                                        Partial Payment — ₹{booking.amountPaid?.toLocaleString()} of ₹{booking.amount?.toLocaleString()} paid
+                                    </span>
+                                </div>
+                            ) : booking.paymentrefno ? (
+                                <div>
+                                    <Label className="text-gray-400">Payment Reference Number (Legacy)</Label>
+                                    <p className="text-white font-mono mt-1 bg-black/30 p-2 rounded border border-white/5">
+                                        {booking.paymentrefno}
+                                    </p>
+                                </div>
+                            ) : null}
+
+                            {/* Razorpay IDs */}
+                            {booking.razorpayPaymentId && (
+                                <div>
+                                    <Label className="text-gray-400">Razorpay Payment ID</Label>
+                                    <p className="text-white font-mono mt-1 bg-black/30 p-2 rounded border border-white/5 text-sm break-all">
+                                        {booking.razorpayPaymentId}
+                                    </p>
+                                </div>
+                            )}
+                            {booking.razorpayOrderId && (
+                                <div>
+                                    <Label className="text-gray-400">Razorpay Order ID</Label>
+                                    <p className="text-white font-mono mt-1 bg-black/30 p-2 rounded border border-white/5 text-sm break-all">
+                                        {booking.razorpayOrderId}
+                                    </p>
+                                </div>
+                            )}
+
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <Label className="text-gray-400">Amount Paid</Label>
+                                    <Label className="text-gray-400">{booking.paymentStatus === 'partial' ? 'Amount Paid' : 'Total Amount'}</Label>
                                     <p className="text-white font-medium mt-1 text-lg text-gold">
-                                        ₹{booking.amount?.toLocaleString() || 'N/A'}
+                                        ₹{(booking.amountPaid || booking.amount)?.toLocaleString() || 'N/A'}
+                                        {booking.paymentStatus === 'partial' && booking.amount && (
+                                            <span className="text-sm text-gray-400 ml-1">/ ₹{booking.amount.toLocaleString()}</span>
+                                        )}
                                     </p>
                                 </div>
                                 <div>
@@ -314,10 +358,10 @@ export default function BookingDetailPage() {
                         </CardContent>
                     </Card>
 
-                    {/* Payment Screenshot */}
+                    {/* Payment Screenshot (legacy) or Razorpay status */}
                     <Card className="bg-white/5 border-white/10">
                         <CardHeader>
-                            <CardTitle className="text-white">Payment Screenshot</CardTitle>
+                            <CardTitle className="text-white">{booking.paymentScreenshot ? 'Payment Screenshot (Legacy)' : 'Payment Method'}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             {booking.paymentScreenshot ? (
@@ -340,8 +384,16 @@ export default function BookingDetailPage() {
                                         </a>
                                     </div>
                                 </div>
+                            ) : booking.razorpayPaymentId ? (
+                                <div className="flex flex-col items-center justify-center py-8 gap-3">
+                                    <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center">
+                                        <Check className="w-8 h-8 text-green-400" />
+                                    </div>
+                                    <p className="text-white font-medium">Paid via Razorpay</p>
+                                    <p className="text-gray-400 text-sm text-center">Payment was automatically verified.<br />No manual screenshot required.</p>
+                                </div>
                             ) : (
-                                <p className="text-gray-500 italic">No screenshot uploaded</p>
+                                <p className="text-gray-500 italic">No payment information available</p>
                             )}
                         </CardContent>
                     </Card>

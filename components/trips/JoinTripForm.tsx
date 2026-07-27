@@ -7,9 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Upload, X, QrCode, Copy } from "lucide-react";
+import { Loader2, Upload, X, CreditCard, Shield, CheckCircle2, IndianRupee } from "lucide-react";
 import { uploadImageToImgBB } from "@/lib/imgbb";
-import Image from "next/image";
 import {
     Select,
     SelectContent,
@@ -23,10 +22,16 @@ interface JoinTripFormProps {
     tripTitle: string;
     tripPrice: number;
     userEmail?: string;
-    userPhone?: string;
     mode?: string; // "bus" or "train"
     price_3ac?: number;
     price_sleeper?: number;
+    registrationAmount?: number;
+}
+
+declare global {
+    interface Window {
+        Razorpay: any;
+    }
 }
 
 export default function JoinTripForm({
@@ -37,13 +42,12 @@ export default function JoinTripForm({
     mode,
     price_3ac,
     price_sleeper,
+    registrationAmount,
 }: JoinTripFormProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [uploadingAadhaar, setUploadingAadhaar] = useState(false);
-    const [uploadingPayment, setUploadingPayment] = useState(false);
-    const [profileData, setProfileData] = useState<any>({});
-    const [profileLoading, setProfileLoading] = useState(true);
+    const [paymentStep, setPaymentStep] = useState(false); // true = show payment confirmation
 
     const [formData, setFormData] = useState({
         fullName: "",
@@ -51,9 +55,7 @@ export default function JoinTripForm({
         mobileNo: "",
         email: userEmail,
         aadhaarImage: "",
-        paymentrefno: "",
-        paymentScreenshot: "",
-        transportMode: mode === "train" ? "3ac" : "", // Only for train trips
+        transportMode: mode === "train" ? "3ac" : "",
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -66,32 +68,43 @@ export default function JoinTripForm({
             } else if (formData.transportMode === "sleeper" && price_sleeper) {
                 return price_sleeper;
             }
-            return price_sleeper || tripPrice; // Default to 3ac or base price
+            return price_sleeper || tripPrice;
         }
-        return tripPrice; // For bus or other modes
+        return tripPrice;
     };
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const res = await fetch("/api/profile");
-                if (res.ok) {
-                    const data = await res.json();
-                    setProfileData(data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch profile", error);
-            } finally {
-                setProfileLoading(false);
+    // Amount to charge now (registration or full)
+    const getPayableAmount = (): number => {
+        const total = getTotalAmount();
+        if (registrationAmount && registrationAmount < total) {
+            return registrationAmount;
+        }
+        return total;
+    };
+
+    const isPartialPayment = (): boolean => {
+        const total = getTotalAmount();
+        return !!(registrationAmount && registrationAmount < total);
+    };
+
+    // Load Razorpay script dynamically
+    const loadRazorpayScript = (): Promise<boolean> => {
+        return new Promise((resolve) => {
+            if (window.Razorpay) {
+                resolve(true);
+                return;
             }
-        };
-        fetchProfile();
-    }, []);
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
-        // Clear error when user starts typing
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: "" }));
         }
@@ -107,53 +120,36 @@ export default function JoinTripForm({
     const validateForm = (): boolean => {
         const newErrors: Record<string, string> = {};
 
-        // Full Name validation
         if (!formData.fullName.trim()) {
             newErrors.fullName = "Full name is required";
         } else if (formData.fullName.trim().length < 3) {
             newErrors.fullName = "Name must be at least 3 characters";
         }
 
-        // Email validation
         if (!formData.email.trim()) {
             newErrors.email = "Email is required";
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = "Invalid email format";
         }
 
-        // Mobile number validation
         if (!formData.mobileNo.trim()) {
             newErrors.mobileNo = "Mobile number is required";
         } else if (!/^\d{10}$/.test(formData.mobileNo)) {
             newErrors.mobileNo = "Mobile number must be exactly 10 digits";
         }
 
-        // Aadhaar number validation
         if (!formData.aadhaarNo.trim()) {
             newErrors.aadhaarNo = "Aadhaar number is required";
         } else if (!/^\d{12}$/.test(formData.aadhaarNo)) {
             newErrors.aadhaarNo = "Aadhaar number must be exactly 12 digits";
         }
 
-        // Transport mode validation for train trips
         if (mode === "train" && !formData.transportMode) {
             newErrors.transportMode = "Please select a travel class";
         }
 
-        // Payment Reference Number validation
-        if (!formData.paymentrefno.trim()) {
-            newErrors.paymentrefno = "Payment reference number is required";
-        } else if (formData.paymentrefno.trim().length < 5) {
-            newErrors.paymentrefno = "Reference number must be at least 5 characters";
-        }
-
-        // Image uploads validation
         if (!formData.aadhaarImage) {
             newErrors.aadhaarImage = "Please upload Aadhaar card image";
-        }
-
-        if (!formData.paymentScreenshot) {
-            newErrors.paymentScreenshot = "Please upload payment screenshot";
         }
 
         setErrors(newErrors);
@@ -162,7 +158,6 @@ export default function JoinTripForm({
 
     const handleImageUpload = async (
         e: React.ChangeEvent<HTMLInputElement>,
-        field: "aadhaarImage" | "paymentScreenshot",
         setUploading: (val: boolean) => void
     ) => {
         const file = e.target.files?.[0];
@@ -171,14 +166,13 @@ export default function JoinTripForm({
         setUploading(true);
         try {
             const result = await uploadImageToImgBB(file);
-            setFormData((prev) => ({ ...prev, [field]: result.url }));
-            // Clear error for this field
-            if (errors[field]) {
-                setErrors((prev) => ({ ...prev, [field]: "" }));
+            setFormData((prev) => ({ ...prev, aadhaarImage: result.url }));
+            if (errors.aadhaarImage) {
+                setErrors((prev) => ({ ...prev, aadhaarImage: "" }));
             }
             toast({
                 title: "Image Uploaded",
-                description: "Image uploaded successfully",
+                description: "Aadhaar card uploaded successfully",
             });
         } catch (error) {
             toast({
@@ -191,14 +185,11 @@ export default function JoinTripForm({
         }
     };
 
-    const removeImage = (field: "aadhaarImage" | "paymentScreenshot") => {
-        setFormData((prev) => ({ ...prev, [field]: "" }));
+    const removeImage = () => {
+        setFormData((prev) => ({ ...prev, aadhaarImage: "" }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // Validate form
+    const handleProceedToPayment = async () => {
         if (!validateForm()) {
             toast({
                 title: "Validation Failed",
@@ -207,53 +198,129 @@ export default function JoinTripForm({
             });
             return;
         }
+        setPaymentStep(true);
+    };
 
+    const handleRazorpayPayment = async () => {
         setLoading(true);
 
         try {
-            const bookingPayload: any = {
-                tripId,
-                ...formData,
-                amount: getTotalAmount(),
-            };
-
-            // Only include transportMode if it's a train trip
-            if (mode === "train") {
-                bookingPayload.transportMode = formData.transportMode;
+            // Load Razorpay script
+            const loaded = await loadRazorpayScript();
+            if (!loaded) {
+                throw new Error("Razorpay SDK failed to load. Check your internet connection.");
             }
 
-            const res = await fetch("/api/bookings", {
+            const totalAmount = getTotalAmount();
+            const payableAmount = getPayableAmount();
+
+            // Step 1: Create Razorpay order on backend
+            const orderRes = await fetch("/api/razorpay/order", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(bookingPayload),
+                body: JSON.stringify({ amount: payableAmount, tripId }),
             });
 
-            const data = await res.json();
+            const orderData = await orderRes.json();
 
-            if (!res.ok) {
-                throw new Error(data.error || "Failed to submit booking");
+            if (!orderRes.ok) {
+                throw new Error(orderData.error || "Failed to create payment order");
             }
 
-            toast({
-                title: "Booking Submitted!",
-                description: "Your booking request has been received. We will confirm shortly.",
-            });
+            // Step 2: Open Razorpay checkout
+            await new Promise<void>((resolve, reject) => {
+                const options = {
+                    key: orderData.keyId,
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: "Con-Soul",
+                    description: `Booking for ${tripTitle}`,
+                    order_id: orderData.orderId,
+                    prefill: {
+                        name: formData.fullName,
+                        email: formData.email,
+                        contact: formData.mobileNo,
+                    },
+                    theme: {
+                        color: "#D4AF37",
+                    },
+                    handler: async (response: {
+                        razorpay_payment_id: string;
+                        razorpay_order_id: string;
+                        razorpay_signature: string;
+                    }) => {
+                        try {
+                            // Step 3: Verify payment and create booking
+                            const { transportMode, ...restFormData } = formData;
 
-            router.push("/my-trips");
-        } catch (error) {
-            toast({
-                title: "Booking Failed",
-                description: error instanceof Error ? error.message : "Something went wrong",
-                variant: "destructive",
+                            const bookingPayload: any = {
+                                tripId,
+                                ...restFormData,
+                                amount: totalAmount,
+                                amountPaid: payableAmount,
+                                razorpayPaymentId: response.razorpay_payment_id,
+                                razorpayOrderId: response.razorpay_order_id,
+                                razorpaySignature: response.razorpay_signature,
+                            };
+
+                            if (mode === "train" && transportMode) {
+                                bookingPayload.transportMode = transportMode;
+                            }
+
+                            const bookingRes = await fetch("/api/bookings", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(bookingPayload),
+                            });
+
+                            const bookingData = await bookingRes.json();
+
+                            if (!bookingRes.ok) {
+                                throw new Error(bookingData.error || "Failed to create booking");
+                            }
+
+                            toast({
+                                title: "🎉 Booking Confirmed!",
+                                description: `Payment successful! Booking ID: ${bookingData.id}`,
+                            });
+
+                            resolve();
+                            router.push("/my-trips");
+                        } catch (err) {
+                            reject(err);
+                        }
+                    },
+                    modal: {
+                        ondismiss: () => {
+                            reject(new Error("Payment cancelled by user"));
+                        },
+                    },
+                };
+
+                const rzp = new window.Razorpay(options);
+                rzp.on("payment.failed", (response: any) => {
+                    reject(new Error(response.error?.description || "Payment failed"));
+                });
+                rzp.open();
             });
+        } catch (error) {
+            const errMsg = error instanceof Error ? error.message : "Something went wrong";
+            if (errMsg !== "Payment cancelled by user") {
+                toast({
+                    title: "Payment Failed",
+                    description: errMsg,
+                    variant: "destructive",
+                });
+            } else {
+                toast({
+                    title: "Payment Cancelled",
+                    description: "You cancelled the payment. Your booking was not created.",
+                });
+            }
+            setPaymentStep(false);
         } finally {
             setLoading(false);
         }
-    };
-
-    const copyToClipboard = (text: string) => {
-        navigator.clipboard.writeText(text);
-        toast({ title: "Copied to clipboard" });
     };
 
     return (
@@ -275,6 +342,7 @@ export default function JoinTripForm({
                                 className={`bg-black/50 border-white/10 text-white mt-1 ${errors.fullName ? 'border-red-500' : ''}`}
                                 placeholder="As per Aadhaar"
                                 required
+                                disabled={paymentStep}
                             />
                             {errors.fullName && (
                                 <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
@@ -291,6 +359,7 @@ export default function JoinTripForm({
                                 onChange={handleInputChange}
                                 className={`bg-black/50 border-white/10 text-white mt-1 ${errors.email ? 'border-red-500' : ''}`}
                                 required
+                                disabled={paymentStep}
                             />
                             {errors.email && (
                                 <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -309,6 +378,7 @@ export default function JoinTripForm({
                                     placeholder="10 digits"
                                     pattern="\d{10}"
                                     required
+                                    disabled={paymentStep}
                                 />
                                 {errors.mobileNo && (
                                     <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>
@@ -325,6 +395,7 @@ export default function JoinTripForm({
                                     placeholder="12 digits"
                                     pattern="\d{12}"
                                     required
+                                    disabled={paymentStep}
                                 />
                                 {errors.aadhaarNo && (
                                     <p className="text-red-500 text-sm mt-1">{errors.aadhaarNo}</p>
@@ -339,6 +410,7 @@ export default function JoinTripForm({
                                 <Select
                                     value={formData.transportMode}
                                     onValueChange={handleTransportModeChange}
+                                    disabled={paymentStep}
                                 >
                                     <SelectTrigger className={`bg-black/50 border-white/10 text-white mt-1 ${errors.transportMode ? 'border-red-500' : ''}`}>
                                         <SelectValue placeholder="Select travel class" />
@@ -359,22 +431,6 @@ export default function JoinTripForm({
                         )}
 
                         <div>
-                            <Label htmlFor="paymentrefno" className="text-gray-300">Payment Reference Number</Label>
-                            <Input
-                                id="paymentrefno"
-                                name="paymentrefno"
-                                type="text"
-                                value={formData.paymentrefno}
-                                onChange={handleInputChange}
-                                className={`bg-black/50 border-white/10 text-white mt-1 ${errors.paymentrefno ? 'border-red-500' : ''}`}
-                                required
-                            />
-                            {errors.paymentrefno && (
-                                <p className="text-red-500 text-sm mt-1">{errors.paymentrefno}</p>
-                            )}
-                        </div>
-
-                        <div>
                             <Label className="text-gray-300">Upload Aadhaar Card</Label>
                             {errors.aadhaarImage && (
                                 <p className="text-red-500 text-sm mt-1">{errors.aadhaarImage}</p>
@@ -387,23 +443,25 @@ export default function JoinTripForm({
                                             alt="Aadhaar"
                                             className="w-full h-full object-contain"
                                         />
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="sm"
-                                            onClick={() => removeImage("aadhaarImage")}
-                                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                        >
-                                            <X className="h-4 w-4" />
-                                        </Button>
+                                        {!paymentStep && (
+                                            <Button
+                                                type="button"
+                                                variant="destructive"
+                                                size="sm"
+                                                onClick={removeImage}
+                                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            >
+                                                <X className="h-4 w-4" />
+                                            </Button>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="relative">
                                         <input
                                             type="file"
                                             accept="image/*"
-                                            onChange={(e) => handleImageUpload(e, "aadhaarImage", setUploadingAadhaar)}
-                                            disabled={uploadingAadhaar}
+                                            onChange={(e) => handleImageUpload(e, setUploadingAadhaar)}
+                                            disabled={uploadingAadhaar || paymentStep}
                                             className="hidden"
                                             id="aadhaar-upload"
                                         />
@@ -432,12 +490,36 @@ export default function JoinTripForm({
             <div className="space-y-6">
                 <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                     <CardHeader>
-                        <CardTitle className="text-gold">Payment Details</CardTitle>
+                        <CardTitle className="text-gold flex items-center gap-2">
+                            <CreditCard className="h-5 w-5" />
+                            Payment Summary
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        <div className="bg-black/50 p-6 rounded-lg border border-white/10 text-center">
-                            <p className="text-gray-400 mb-2">Total Amount to Pay</p>
-                            <p className="text-4xl font-bold text-gold">₹{getTotalAmount().toLocaleString()}</p>
+                        {/* Amount Display */}
+                        <div className="bg-gradient-to-br from-gold/10 to-yellow-900/10 p-6 rounded-xl border border-gold/20 text-center">
+                            {isPartialPayment() ? (
+                                <>
+                                    <p className="text-gray-400 mb-1 text-xs uppercase tracking-wide">Total Trip Price</p>
+                                    <p className="text-2xl font-semibold text-gray-300 line-through mb-3">₹{getTotalAmount().toLocaleString()}</p>
+                                    <p className="text-gold mb-2 text-sm uppercase tracking-wide font-semibold">Pay Now — Registration Fee</p>
+                                    <div className="flex items-center justify-center gap-1">
+                                        <IndianRupee className="h-8 w-8 text-gold" />
+                                        <p className="text-5xl font-bold text-gold">{getPayableAmount().toLocaleString()}</p>
+                                    </div>
+                                    <div className="mt-3 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                                        <p className="text-blue-300 text-sm">Remaining ₹{(getTotalAmount() - getPayableAmount()).toLocaleString()} payable later from My Trips</p>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="text-gray-400 mb-2 text-sm uppercase tracking-wide">Total Amount to Pay</p>
+                                    <div className="flex items-center justify-center gap-1">
+                                        <IndianRupee className="h-8 w-8 text-gold" />
+                                        <p className="text-5xl font-bold text-gold">{getTotalAmount().toLocaleString()}</p>
+                                    </div>
+                                </>
+                            )}
                             {mode === "train" && formData.transportMode && (
                                 <p className="text-sm text-gray-400 mt-2">
                                     ({formData.transportMode === "3ac" ? "3AC" : "Sleeper"} Class)
@@ -445,166 +527,106 @@ export default function JoinTripForm({
                             )}
                         </div>
 
-                        {profileLoading ? (
-                            <div className="flex justify-center py-8">
-                                <Loader2 className="h-8 w-8 text-gold animate-spin" />
+                        {/* Payment Info */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                                <Shield className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                                <div>
+                                    <p className="text-white text-sm font-medium">Secure Payment via Razorpay</p>
+                                    <p className="text-gray-400 text-xs">Your payment is protected by 256-bit SSL encryption</p>
+                                </div>
                             </div>
-                        ) : (
-                            <div className="space-y-4">
-                                {profileData.upiId && (
-                                    <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
-                                        <div>
-                                            <p className="text-xs text-gray-400">UPI ID</p>
-                                            <p ref={(node) => {
-                                                if (node) {
-                                                    node.style.setProperty("font-family", "monospace", "important");
-                                                }
-                                            }} className="text-white">{profileData.upiId}</p>
-                                        </div>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            onClick={() => copyToClipboard(profileData.upiId)}
-                                            className="text-gold hover:text-white"
-                                        >
-                                            <Copy className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                )}
 
-                                {(profileData.accountNo || profileData.ifscCode) && (
-                                    <div className="flex items-center justify-between p-3 bg-black/30 rounded border border-white/5">
-                                        <div>
-                                            <p className="text-xs text-gray-400">Bank Account</p>
-                                            {profileData.bankName && <p className="text-xs text-gray-500 mb-1">{profileData.bankName}</p>}
-                                            <p ref={(node) => {
-                                                if (node) {
-                                                    node.style.setProperty("font-family", "monospace", "important");
-                                                }
-                                            }} className="text-white">{profileData.accountNo}</p>
-                                            <p ref={(node) => {
-                                                if (node) {
-                                                    node.style.setProperty("font-family", "monospace", "important");
-                                                }
-                                            }} className="text-xs text-gray-500">IFSC: {profileData.ifscCode}</p>
-                                        </div>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            onClick={() => copyToClipboard(profileData.accountNo)}
-                                            className="text-gold hover:text-white"
-                                        >
-                                            <Copy className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                )}
-
-                                {profileData.upiQrCode ? (
-                                    <div className="flex flex-col items-center py-4 gap-4">
-                                        <div className="bg-white p-4 rounded-lg">
-                                            <img
-                                                src={profileData.upiQrCode}
-                                                alt="UPI QR Code"
-                                                className="h-48 w-48 object-contain"
-                                            />
-                                        </div>
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            className="border-gold text-gold hover:bg-gold hover:text-black"
-                                            onClick={() => {
-                                                const link = document.createElement('a');
-                                                link.href = profileData.upiQrCode;
-                                                link.download = 'payment-qr.png';
-                                                document.body.appendChild(link);
-                                                link.click();
-                                                document.body.removeChild(link);
-                                            }}
-                                        >
-                                            Download QR Code
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <div className="flex justify-center py-4">
-                                        <div className="bg-white p-4 rounded-lg">
-                                            <QrCode className="h-32 w-32 text-black" />
-                                        </div>
-                                    </div>
-                                )}
-                                <p className="text-center text-xs text-gray-500">Scan to pay via any UPI app</p>
+                            <div className="space-y-2 text-sm">
+                                <div className="flex items-center gap-2 text-gray-400">
+                                    <CheckCircle2 className="h-4 w-4 text-green-400" />
+                                    <span>UPI, Net Banking, Credit/Debit Cards accepted</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-gray-400">
+                                    <CheckCircle2 className="h-4 w-4 text-green-400" />
+                                    <span>Instant payment confirmation</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-gray-400">
+                                    <CheckCircle2 className="h-4 w-4 text-green-400" />
+                                    <span>Booking ID sent to your email</span>
+                                </div>
                             </div>
-                        )}
+                        </div>
 
-                        <div>
-                            <Label className="text-gray-300">Upload Payment Screenshot</Label>
-                            {errors.paymentScreenshot && (
-                                <p className="text-red-500 text-sm mt-1">{errors.paymentScreenshot}</p>
+                        {/* Booking summary */}
+                        <div className="bg-black/30 rounded-lg border border-white/5 p-4 space-y-2 text-sm">
+                            <p className="text-gray-400 font-medium mb-3">Booking for: <span className="text-white">{tripTitle}</span></p>
+                            {formData.fullName && (
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Name</span>
+                                    <span className="text-white">{formData.fullName}</span>
+                                </div>
                             )}
-                            <div className="mt-2">
-                                {formData.paymentScreenshot ? (
-                                    <div className="relative group w-full h-48 bg-black/50 rounded-lg border border-white/10 overflow-hidden">
-                                        <img
-                                            src={formData.paymentScreenshot}
-                                            alt="Payment"
-                                            className="w-full h-full object-contain"
-                                        />
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="sm"
-                                            onClick={() => removeImage("paymentScreenshot")}
-                                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                        >
-                                            <X className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <div className="relative">
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={(e) => handleImageUpload(e, "paymentScreenshot", setUploadingPayment)}
-                                            disabled={uploadingPayment}
-                                            className="hidden"
-                                            id="payment-upload"
-                                        />
-                                        <label
-                                            htmlFor="payment-upload"
-                                            className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-gold transition-colors ${uploadingPayment ? 'opacity-50' : ''}`}
-                                        >
-                                            {uploadingPayment ? (
-                                                <Loader2 className="h-8 w-8 text-gold animate-spin" />
-                                            ) : (
-                                                <>
-                                                    <Upload className="h-8 w-8 text-gray-400 mb-2" />
-                                                    <span className="text-sm text-gray-400">Click to upload screenshot</span>
-                                                </>
-                                            )}
-                                        </label>
-                                    </div>
-                                )}
-                            </div>
+                            {formData.email && (
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Email</span>
+                                    <span className="text-white">{formData.email}</span>
+                                </div>
+                            )}
+                            {formData.mobileNo && (
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Mobile</span>
+                                    <span className="text-white">{formData.mobileNo}</span>
+                                </div>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
             </div>
 
-            {/* Submit Button */}
-            <div className="lg:col-span-2 flex justify-end">
-                <Button
-                    onClick={handleSubmit}
-                    disabled={loading || uploadingAadhaar || uploadingPayment}
-                    className="bg-gold hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6 w-full md:w-auto"
-                >
-                    {loading ? (
-                        <>
-                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                            Submitting...
-                        </>
-                    ) : (
-                        "Confirm Booking"
-                    )}
-                </Button>
+            {/* Action Buttons */}
+            <div className="lg:col-span-2 flex justify-end gap-4">
+                {paymentStep ? (
+                    <>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => setPaymentStep(false)}
+                            disabled={loading}
+                            className="border-white/10 text-gray-400 hover:text-white"
+                        >
+                            Edit Details
+                        </Button>
+                        <Button
+                            onClick={handleRazorpayPayment}
+                            disabled={loading}
+                            className="bg-gold hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6"
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                    Processing Payment...
+                                </>
+                            ) : (
+                                <>
+                                    <CreditCard className="mr-2 h-5 w-5" />
+                                    Pay ₹{getPayableAmount().toLocaleString()}
+                                    {isPartialPayment() && <span className="ml-1 text-sm font-normal">(Registration)</span>}
+                                </>
+                            )}
+                        </Button>
+                    </>
+                ) : (
+                    <Button
+                        onClick={handleProceedToPayment}
+                        disabled={uploadingAadhaar}
+                        className="bg-gold hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6 w-full md:w-auto"
+                    >
+                        {uploadingAadhaar ? (
+                            <>
+                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                Uploading...
+                            </>
+                        ) : (
+                            "Proceed to Payment"
+                        )}
+                    </Button>
+                )}
             </div>
         </div>
     );

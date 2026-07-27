@@ -10,6 +10,8 @@ import NextTopLoader from 'nextjs-toploader';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import "./globals.css";
+
+export const dynamic = 'force-dynamic';
 const primaryFont = localFont({
   src: '../public/fonts/seb-neue/SebneueRegular-eAGm.otf',
   variable: '--fpr1',

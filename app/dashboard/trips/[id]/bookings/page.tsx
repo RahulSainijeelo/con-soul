@@ -21,7 +21,10 @@ interface Booking {
     status: 'pending' | 'confirmed' | 'rejected';
     seatNumber?: string;
     createdAt: string;
-    paymentScreenshot?: string;
+    paymentScreenshot?: string; // legacy
+    razorpayPaymentId?: string;
+    razorpayOrderId?: string;
+    paymentStatus?: string;
 }
 
 export default function TripBookingsPage() {

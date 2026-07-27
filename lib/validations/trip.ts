@@ -71,6 +71,8 @@ const baseTripSchema = z.object({
         .positive("Must have at least 1 participant")
         .max(1000, "Maximum 1000 participants allowed"),
 
+    registrationAmount: z.number().positive("Registration amount must be greater than 0").optional(),
+
     currentParticipants: z.number().int().nonnegative().optional(),
 
     difficulty: z

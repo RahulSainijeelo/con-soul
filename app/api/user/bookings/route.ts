@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import type { Query } from "firebase-admin/firestore";
 
 // GET /api/user/bookings - Get user's bookings
 export async function GET(request: NextRequest) {
@@ -23,21 +24,21 @@ export async function GET(request: NextRequest) {
         const checkOnly = searchParams.get("checkOnly") === "true"; // Return minimal data
 
         // Build query
-        let bookingsQuery = db.collection("bookings")
+        let bookingsQuery: Query = db.collection("bookings")
             .where("email", "==", session.user.email);
 
         // Filter by tripId if provided
         if (tripId) {
-            bookingsQuery = bookingsQuery.where("tripId", "==", tripId) as any;
+            bookingsQuery = bookingsQuery.where("tripId", "==", tripId);
         }
 
         // Filter by status if provided
         if (status) {
-            bookingsQuery = bookingsQuery.where("status", "==", status) as any;
+            bookingsQuery = bookingsQuery.where("status", "==", status);
         }
 
         // Order by creation date
-        bookingsQuery = bookingsQuery.orderBy("createdAt", "desc") as any;
+        bookingsQuery = bookingsQuery.orderBy("createdAt", "desc");
 
         const bookingsSnapshot = await bookingsQuery.get();
 

@@ -8,7 +8,7 @@ import {
 } from "@/lib/validations/trip";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { auth } from '@clerk/nextjs/server';
 
 // GET /api/trips - List all trips with optional filters
 export async function GET(request: NextRequest) {
@@ -195,9 +195,8 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
     try {
         // Check authentication
-        const { isAuthenticated } = await auth();
-        const user = await currentUser()
-        if (!isAuthenticated) {
+        const { userId } = await auth();
+        if (!userId) {
             return NextResponse.json(
                 { error: "Unauthorized" },
                 { status: 401 }

@@ -35,6 +35,9 @@ interface Booking {
     createdAt: string;
     trip: Trip;
     seatNumber?: string;
+    paymentStatus?: 'partial' | 'paid';
+    amount?: number;
+    amountPaid?: number;
 }
 
 export default function MyTripsPage() {
@@ -230,6 +233,21 @@ export default function MyTripsPage() {
                                         {activeTab === 'upcoming' && spotsLeft <= 3 && spotsLeft > 0 && (
                                             <div className="absolute bottom-4 right-4 px-3 py-1 bg-red-500/90 text-white text-xs font-semibold rounded-full">
                                                 Only {spotsLeft} spots left!
+                                            </div>
+                                        )}
+
+                                        {/* Payment Status Badge */}
+                                        {booking.paymentStatus && (
+                                            <div className="absolute bottom-4 left-4">
+                                                {booking.paymentStatus === 'partial' ? (
+                                                    <div className="px-3 py-1 bg-orange-900/80 backdrop-blur-sm text-orange-100 text-xs font-semibold rounded-full border border-orange-500/30">
+                                                        Partial Payment
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-3 py-1 bg-emerald-900/80 backdrop-blur-sm text-emerald-100 text-xs font-semibold rounded-full border border-emerald-500/30">
+                                                        Fully Paid
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>
