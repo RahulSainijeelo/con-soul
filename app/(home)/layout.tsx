@@ -2,6 +2,8 @@ import React from 'react'
 import { getServerSession } from 'next-auth';
 import { SessionProvider } from "@/components/auth/SessionProvider"
 
+export const dynamic = 'force-dynamic';
+
 const layout = async ({ children }: { children: React.ReactNode }
 ) => {
     const session = await getServerSession();

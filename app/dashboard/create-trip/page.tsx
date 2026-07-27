@@ -477,6 +477,29 @@ export default function CreateTripPage() {
                                 )}
 
                                 <div>
+                                    <Label htmlFor="registrationAmount" className="text-gray-300">
+                                        Registration Amount (Optional)
+                                    </Label>
+                                    <Input
+                                        id="registrationAmount"
+                                        name="registrationAmount"
+                                        type="number"
+                                        value={formData.registrationAmount ?? ""}
+                                        onChange={(e) =>
+                                            setFormData((prev) => ({
+                                                ...prev,
+                                                registrationAmount: e.target.value ? parseFloat(e.target.value) : undefined,
+                                            }))
+                                        }
+                                        className="bg-black/50 border-white/10 text-white"
+                                        placeholder="Leave empty for full payment"
+                                    />
+                                    <p className="text-xs text-gray-400 mt-1">
+                                        If set, users pay only this amount to register. Remaining is payable later.
+                                    </p>
+                                </div>
+
+                                <div>
                                     <Label htmlFor="maxParticipants" className="text-gray-300">
                                         Max Participants
                                     </Label>

@@ -21,6 +21,7 @@ interface BaseTrip {
     mode?: "bus" | "train"; // NEW
     price_3ac?: number; // NEW - for train trips
     price_sleeper?: number; // NEW - for train trips
+    registrationAmount?: number; // Partial payment: minimum advance to join
 }
 
 interface TripWithId extends BaseTrip {

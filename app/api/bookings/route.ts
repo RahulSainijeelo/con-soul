@@ -1,26 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
-import { bookingSchema } from "@/lib/validations/booking";
-import { auth, currentUser } from '@clerk/nextjs/server';
 import { FieldValue } from "firebase-admin/firestore";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import crypto from "crypto";
+import { z } from "zod";
 
-// POST /api/bookings - Create a new booking
+const bookingSchema = z.object({
+    tripId: z.string().min(1, "Trip ID is required"),
+    fullName: z.string().min(3, "Full name must be at least 3 characters"),
+    email: z.string().email("Invalid email address"),
+    mobileNo: z.string().regex(/^\d{10}$/, "Mobile number must be exactly 10 digits"),
+    aadhaarNo: z.string().regex(/^\d{12}$/, "Aadhaar number must be exactly 12 digits"),
+    aadhaarImage: z.string().url("Valid Aadhaar image URL is required"),
+    amount: z.number().positive("Amount must be positive"),
+    amountPaid: z.number().positive("Amount paid must be positive"),
+    transportMode: z.enum(["3ac", "sleeper"]).optional(),
+    // Razorpay payment fields
+    razorpayPaymentId: z.string().min(1, "Razorpay Payment ID is required"),
+    razorpayOrderId: z.string().min(1, "Razorpay Order ID is required"),
+    razorpaySignature: z.string().min(1, "Razorpay Signature is required"),
+});
+
+// POST /api/bookings - Create a new booking after successful Razorpay payment
 export async function POST(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         const body = await request.json();
 
+        if (!session || !session.user?.email || session.user.email !== body.email) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         // Validate request body
         const validationResult = bookingSchema.safeParse(body);
 
-        if (!session || !session.user?.email || session.user.email !== body.email) {
-            return NextResponse.json(
-                { error: "Unauthorized" },
-                { status: 401 }
-            );
-        }
         if (!validationResult.success) {
             return NextResponse.json(
                 {
@@ -33,39 +47,33 @@ export async function POST(request: NextRequest) {
 
         const bookingData = validationResult.data;
 
-        // Verify trip exists and has capacity
-        const tripRef = db.collection("trips").doc(bookingData.tripId);
-        const tripDoc = await tripRef.get();
+        // Verify Razorpay payment signature
+        const generatedSignature = crypto
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+            .update(`${bookingData.razorpayOrderId}|${bookingData.razorpayPaymentId}`)
+            .digest("hex");
 
-        if (!tripDoc.exists) {
+        if (generatedSignature !== bookingData.razorpaySignature) {
             return NextResponse.json(
-                { error: "Trip not found" },
-                { status: 404 }
-            );
-        }
-
-        const trip = tripDoc.data();
-        const currentParticipants = trip?.currentParticipants || 0;
-        const maxParticipants = trip?.maxParticipants || 0;
-
-        if (maxParticipants > 0 && currentParticipants >= maxParticipants) {
-            return NextResponse.json(
-                { error: "Trip is fully booked" },
+                { error: "Invalid payment signature. Payment verification failed." },
                 { status: 400 }
             );
         }
 
-        // Add metadata
+        // Determine payment status based on amountPaid vs total amount
+        const paymentStatus = bookingData.amountPaid >= bookingData.amount ? "paid" : "partial";
+
+        // Verify trip exists and has capacity (inside transaction)
+        const tripRef = db.collection("trips").doc(bookingData.tripId);
+        const bookingRef = db.collection("bookings").doc();
+
         const newBooking = {
             ...bookingData,
+            paymentStatus,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            status: "pending", // Default status
+            status: "pending", // Admin still needs to confirm seat allocation
         };
-
-        // Save to Firestore
-        // Use a transaction to ensure atomicity (booking + participant count update)
-        const bookingRef = db.collection("bookings").doc();
 
         await db.runTransaction(async (t) => {
             const currentTripDoc = await t.get(tripRef);
@@ -83,7 +91,7 @@ export async function POST(request: NextRequest) {
 
             t.set(bookingRef, newBooking);
             t.update(tripRef, {
-                currentParticipants: FieldValue.increment(1)
+                currentParticipants: FieldValue.increment(1),
             });
         });
 

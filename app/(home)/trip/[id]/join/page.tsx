@@ -22,7 +22,8 @@ interface Trip {
     currentParticipants?: number;
     mode:string,
     price_3ac?:number;
-    price_sleeper?:number
+    price_sleeper?:number;
+    registrationAmount?:number;
 }
 
 export default function JoinTripPage() {
@@ -127,6 +128,7 @@ export default function JoinTripPage() {
                         mode={trip.mode}
                         price_3ac={trip.price_3ac}
                         price_sleeper={trip.price_sleeper}
+                        registrationAmount={trip.registrationAmount}
                     />
                 </div>
             </main>
