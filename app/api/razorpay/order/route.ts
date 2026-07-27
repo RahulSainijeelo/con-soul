@@ -4,15 +4,15 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/config/firebase";
 import Razorpay from "razorpay";
 
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID!,
-    key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
-
 // POST /api/razorpay/order - Create a Razorpay Order
 // Supports both new bookings and remaining payments (via bookingId)
 export async function POST(request: NextRequest) {
     try {
+        const razorpay = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID!,
+            key_secret: process.env.RAZORPAY_KEY_SECRET!,
+        });
+
         const session = await getServerSession(authOptions);
 
         if (!session || !session.user?.email) {
