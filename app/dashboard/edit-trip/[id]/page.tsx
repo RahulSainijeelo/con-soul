@@ -283,7 +283,8 @@ export default function EditTripPage() {
             });
 
             if (!res.ok) {
-                throw new Error("Failed to update trip");
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.error || "Failed to update trip");
             }
 
             // Clear the cache
@@ -300,10 +301,10 @@ export default function EditTripPage() {
             });
 
             router.push("/dashboard");
-        } catch (error) {
+        } catch (error: any) {
             toast({
                 title: "Error",
-                description: "Failed to update trip. Please try again.",
+                description: error?.message || "Failed to update trip. Please try again.",
                 variant: "destructive",
             });
         } finally {

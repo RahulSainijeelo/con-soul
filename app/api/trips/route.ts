@@ -104,12 +104,24 @@ export async function GET(request: NextRequest) {
     }
 }
 
+function parseDateSafe(dateVal: unknown): string | null {
+    if (!dateVal || (typeof dateVal !== "string" && typeof dateVal !== "number")) return null;
+    try {
+        const d = new Date(dateVal);
+        if (isNaN(d.getTime())) return null;
+        return d.toISOString();
+    } catch {
+        return null;
+    }
+}
+
 // POST /api/trips - Create a new trip
 export async function POST(request: NextRequest) {
     try {
         const { userId } = await auth();
+        const session = await getServerSession(authOptions);
 
-        if (!userId) {
+        if (!userId && !session) {
             return NextResponse.json(
                 { error: "Unauthorized" },
                 { status: 401 }
@@ -156,8 +168,8 @@ export async function POST(request: NextRequest) {
             content,
             images: images || [],
             status: status || "archived",
-            startDate: startDate ? new Date(startDate).toISOString() : null,
-            endDate: endDate ? new Date(endDate).toISOString() : null,
+            startDate: parseDateSafe(startDate),
+            endDate: parseDateSafe(endDate),
             price: price || 0,
             maxParticipants: maxParticipants || 0,
             difficulty: difficulty || "Moderate",
@@ -210,7 +222,8 @@ export async function PUT(request: NextRequest) {
     try {
         // Check authentication
         const { userId } = await auth();
-        if (!userId) {
+        const session = await getServerSession(authOptions);
+        if (!userId && !session) {
             return NextResponse.json(
                 { error: "Unauthorized" },
                 { status: 401 }
@@ -274,8 +287,9 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
     try {
         // Check authentication
+        const { userId } = await auth();
         const session = await getServerSession(authOptions);
-        if (!session) {
+        if (!userId && !session) {
             return NextResponse.json(
                 { error: "Unauthorized" },
                 { status: 401 }

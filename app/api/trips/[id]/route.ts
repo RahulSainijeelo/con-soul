@@ -1,6 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import { auth } from "@clerk/nextjs/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+function parseDateSafe(dateVal: unknown, fallback?: unknown): string | null {
+    if (!dateVal || (typeof dateVal !== "string" && typeof dateVal !== "number")) {
+        return typeof fallback === "string" ? fallback : null;
+    }
+    try {
+        const d = new Date(dateVal);
+        if (isNaN(d.getTime())) {
+            return typeof fallback === "string" ? fallback : null;
+        }
+        return d.toISOString();
+    } catch {
+        return typeof fallback === "string" ? fallback : null;
+    }
+}
 
 // GET /api/trips/[id]
 export async function GET(
@@ -47,8 +64,9 @@ export async function PUT(
 ) {
     try {
         const { userId } = await auth();
+        const session = await getServerSession(authOptions);
 
-        if (!userId) {
+        if (!userId && !session) {
             return NextResponse.json(
                 { error: "Unauthorized" },
                 { status: 401 }
@@ -108,12 +126,8 @@ export async function PUT(
             content: content !== undefined ? content : existingData.content,
             images: images !== undefined ? images : existingData.images,
             status: status || existingData.status,
-            startDate: startDate
-                ? new Date(startDate).toISOString()
-                : existingData.startDate,
-            endDate: endDate
-                ? new Date(endDate).toISOString()
-                : existingData.endDate,
+            startDate: parseDateSafe(startDate, existingData.startDate),
+            endDate: parseDateSafe(endDate, existingData.endDate),
             price: price !== undefined ? price : existingData.price,
             maxParticipants: maxParticipants !== undefined ? maxParticipants : existingData.maxParticipants,
             difficulty: difficulty || existingData.difficulty,
