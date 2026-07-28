@@ -307,9 +307,9 @@ export default function MyTripsPage() {
                                     </CardContent>
 
                                     <CardFooter className='flex justify-center p-[1.5rem] mt-auto'>
-                                        <Link href={activeTab === 'upcoming' ? `/trip/${trip.id}` : `/past-trips/${trip.id}`} className="w-full">
+                                        <Link href={activeTab === 'upcoming' ? `/my-trips/${booking.id}` : `/past-trips/${trip.id}`} className="w-full">
                                             <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
-                                                {activeTab === 'upcoming' ? 'View Trip Details' : 'View Details & Reviews'}
+                                                {activeTab === 'upcoming' ? 'View Details' : 'View Details & Reviews'}
                                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                             </button>
                                         </Link>
