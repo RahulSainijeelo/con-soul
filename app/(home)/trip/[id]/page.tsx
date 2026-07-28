@@ -39,6 +39,8 @@ interface Booking {
   id: string;
   status: string;
   tripId: string;
+  paymentStatus?: string;
+  amountPaid?: number;
 }
 
 interface TripPageProps {
@@ -145,6 +147,18 @@ export default function TripPage() {
               Booking Confirmed
             </button>
             <p className="text-xs text-center text-gray-400 mt-2">Your trip is confirmed!</p>
+          </div>
+        );
+      case 'registrationConfirmed':
+        return (
+          <div className="w-full">
+            <Link href={`/my-trips/${booking.id}`} className="w-full">
+              <button className="w-full bg-amber-600 text-black font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-amber-500 transition-colors">
+                <CheckCircle2 className="w-5 h-5" />
+                Registration Confirmed
+              </button>
+            </Link>
+            <p className="text-xs text-center text-gray-400 mt-2">Click to view booking & pay remaining</p>
           </div>
         );
       case 'pending':

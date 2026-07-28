@@ -64,7 +64,9 @@ export async function GET(request: NextRequest) {
                     id: bookings[0].id,
                     status: (bookings[0] as any).status,
                     tripId: (bookings[0] as any).tripId,
-                    createdAt: (bookings[0] as any).createdAt
+                    createdAt: (bookings[0] as any).createdAt,
+                    paymentStatus: (bookings[0] as any).paymentStatus,
+                    amountPaid: (bookings[0] as any).amountPaid,
                 }
             });
         }
