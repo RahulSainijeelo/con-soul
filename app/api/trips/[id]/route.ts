@@ -96,6 +96,7 @@ export async function PUT(
             mode,
             price_3ac,
             price_sleeper,
+            registrationAmount,
         } = body;
 
         const updateData: Record<string, unknown> = {
@@ -126,6 +127,13 @@ export async function PUT(
         if (mode === "train") {
             updateData.price_3ac = price_3ac !== undefined ? price_3ac : existingData.price_3ac;
             updateData.price_sleeper = price_sleeper !== undefined ? price_sleeper : existingData.price_sleeper;
+        }
+
+        // Handle registrationAmount (partial payment)
+        if (registrationAmount !== undefined) {
+            updateData.registrationAmount = registrationAmount > 0 ? registrationAmount : null;
+        } else {
+            updateData.registrationAmount = existingData.registrationAmount || null;
         }
 
         await tripRef.update(updateData);

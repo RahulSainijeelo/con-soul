@@ -4,13 +4,15 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/config/firebase";
 import Razorpay from "razorpay";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/razorpay/order - Create a Razorpay Order
 // Supports both new bookings and remaining payments (via bookingId)
 export async function POST(request: NextRequest) {
     try {
         const razorpay = new Razorpay({
-            key_id: process.env.RAZORPAY_KEY_ID!,
-            key_secret: process.env.RAZORPAY_KEY_SECRET!,
+            key_id: process.env.RAZORPAY_KEY_ID || "dummy_key_id",
+            key_secret: process.env.RAZORPAY_KEY_SECRET || "dummy_key_secret",
         });
 
         const session = await getServerSession(authOptions);

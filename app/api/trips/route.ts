@@ -70,6 +70,7 @@ export async function GET(request: NextRequest) {
                 mode: data.mode || "bus", // NEW
                 price_3ac: data.price_3ac || 0, // NEW
                 price_sleeper: data.price_sleeper || 0, // NEW
+                registrationAmount: data.registrationAmount || null, // NEW
                 featured: data.featured || false,
                 rating: data.rating || 0,
                 reviewCount: data.reviewCount || 0,
@@ -135,6 +136,7 @@ export async function POST(request: NextRequest) {
             mode,
             price_3ac,
             price_sleeper,
+            registrationAmount,
         } = body;
 
         if (!title || !destination || !category) {
@@ -170,6 +172,11 @@ export async function POST(request: NextRequest) {
         if (mode === "train") {
             newTrip.price_3ac = price_3ac || 0;
             newTrip.price_sleeper = price_sleeper || 0;
+        }
+
+        // Add registration amount (partial payment) if provided
+        if (registrationAmount && registrationAmount > 0) {
+            newTrip.registrationAmount = registrationAmount;
         }
 
         const tripRef = await db.collection("trips").add(newTrip);
