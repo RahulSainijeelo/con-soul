@@ -1,7 +1,7 @@
 import React from "react";
 import type { EditTrip } from "@/types/Trip";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pencil, Trash2, Eye, Calendar, MapPin, Users, DollarSign } from "lucide-react";
+import { Pencil, Trash2, Eye, Calendar, MapPin, Users, IndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -156,8 +156,8 @@ const TripItems: React.FC<TripItemsProps> = ({
                   <span>{trip.maxParticipants} max</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-gold" />
-                  <span className="text-gold font-semibold">${trip.price}</span>
+                  <IndianRupee className="w-4 h-4 text-gold" />
+                  <span className="text-gold font-semibold">₹{trip.price}</span>
                 </div>
               </div>
             </div>

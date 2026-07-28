@@ -97,6 +97,7 @@ export async function PUT(
             price_3ac,
             price_sleeper,
             registrationAmount,
+            travelRoute,
         } = body;
 
         const updateData: Record<string, unknown> = {
@@ -134,6 +135,13 @@ export async function PUT(
             updateData.registrationAmount = registrationAmount > 0 ? registrationAmount : null;
         } else {
             updateData.registrationAmount = existingData.registrationAmount || null;
+        }
+
+        // Handle travel route
+        if (travelRoute !== undefined) {
+            updateData.travelRoute = Array.isArray(travelRoute) ? travelRoute : [];
+        } else {
+            updateData.travelRoute = existingData.travelRoute || [];
         }
 
         await tripRef.update(updateData);

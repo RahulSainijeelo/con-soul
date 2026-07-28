@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, ArrowLeft, Check, X, Download, ExternalLink, Edit } from "lucide-react";
+import { Loader2, ArrowLeft, Check, X, ExternalLink, Edit } from "lucide-react";
 import Image from "next/image";
 
 interface BookingDetail {
@@ -28,7 +28,7 @@ interface BookingDetail {
     // Legacy manual payment fields (for old bookings)
     paymentrefno?: string;
     paymentScreenshot?: string;
-    status: 'pending' | 'confirmed' | 'rejected';
+    status: 'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed';
     seatNumber?: string;
     createdAt: string;
     amount?: number;
@@ -45,7 +45,7 @@ export default function BookingDetailPage() {
     const [editing, setEditing] = useState(false);
     const [seatNumber, setSeatNumber] = useState("");
     const [processing, setProcessing] = useState(false);
-    const [newStatus, setNewStatus] = useState<'pending' | 'confirmed' | 'rejected'>('confirmed');
+    const [newStatus, setNewStatus] = useState<'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed'>('confirmed');
 
     useEffect(() => {
         fetchBooking();
@@ -202,6 +202,11 @@ export default function BookingDetailPage() {
                                 {booking.status === 'confirmed' && (
                                     <div className="px-4 py-2 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md font-medium flex items-center gap-2">
                                         <Check className="w-4 h-4" /> Confirmed (Seat: {booking.seatNumber})
+                                    </div>
+                                )}
+                                {booking.status === 'registrationConfirmed' && (
+                                    <div className="px-4 py-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-md font-medium flex items-center gap-2">
+                                        <Check className="w-4 h-4" /> Registration Confirmed
                                     </div>
                                 )}
                                 {booking.status === 'rejected' && (
@@ -445,7 +450,7 @@ export default function BookingDetailPage() {
                             <Label>Status</Label>
                             <Select
                                 value={newStatus}
-                                onValueChange={(val: 'pending' | 'confirmed' | 'rejected') => setNewStatus(val)}
+                                onValueChange={(val: 'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed') => setNewStatus(val)}
                             >
                                 <SelectTrigger className="bg-black/50 border-white/10 text-white">
                                     <SelectValue />
@@ -453,6 +458,7 @@ export default function BookingDetailPage() {
                                 <SelectContent className="bg-gray-800 border-white/10 text-white">
                                     <SelectItem value="pending">Pending</SelectItem>
                                     <SelectItem value="confirmed">Confirmed</SelectItem>
+                                    <SelectItem value="registrationConfirmed">Registration Confirmed</SelectItem>
                                     <SelectItem value="rejected">Rejected</SelectItem>
                                 </SelectContent>
                             </Select>

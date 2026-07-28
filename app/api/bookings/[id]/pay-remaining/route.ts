@@ -3,6 +3,7 @@ import { db } from "@/config/firebase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import crypto from "crypto";
+import { sendBookingConfirmationEmail } from "@/lib/email";
 
 // POST /api/bookings/[id]/pay-remaining - Process remaining payment for a partial booking
 export async function POST(
@@ -71,15 +72,50 @@ export async function POST(
             );
         }
 
-        // Update booking to fully paid
+        // Update booking to fully paid + auto-confirm + auto-assign seat (inside transaction)
         const totalAmount = booking?.amount || 0;
-        await bookingRef.update({
-            amountPaid: totalAmount,
-            paymentStatus: "paid",
-            remainingRazorpayPaymentId: razorpayPaymentId,
-            remainingRazorpayOrderId: razorpayOrderId,
-            updatedAt: new Date().toISOString(),
+        const tripId = booking?.tripId;
+
+        let seatNumber: string = "";
+
+        await db.runTransaction(async (t) => {
+            // Get next seat number inside transaction to prevent race conditions
+            const confirmedBookings = await t.get(
+                db.collection("bookings")
+                    .where("tripId", "==", tripId)
+                    .where("status", "==", "confirmed")
+            );
+            seatNumber = String(confirmedBookings.size + 1);
+
+            t.update(bookingRef, {
+                amountPaid: totalAmount,
+                paymentStatus: "paid",
+                status: "confirmed",
+                seatNumber,
+                remainingRazorpayPaymentId: razorpayPaymentId,
+                remainingRazorpayOrderId: razorpayOrderId,
+                updatedAt: new Date().toISOString(),
+            });
         });
+
+        // Send booking confirmed email — awaited so Vercel lambda doesn't kill it before it sends
+        const tripRef2 = db.collection("trips").doc(tripId);
+        const tripDoc = await tripRef2.get();
+        const tripData = tripDoc.data();
+        await sendBookingConfirmationEmail({
+            email: booking?.email,
+            fullName: booking?.fullName,
+            tripName: tripData?.title || tripData?.name || "Your Trip",
+            tripDestination: tripData?.destination,
+            tripDates: tripData?.startDate && tripData?.endDate
+                ? `${tripData.startDate} – ${tripData.endDate}`
+                : undefined,
+            amount: totalAmount,
+            amountPaid: totalAmount,
+            status: "confirmed",
+            seatNumber,
+            bookingId: id,
+        }).catch((err) => console.error("[Pay-Remaining Email] Failed to send:", err));
 
         return NextResponse.json({
             success: true,
@@ -88,6 +124,8 @@ export async function POST(
                 id,
                 amountPaid: totalAmount,
                 paymentStatus: "paid",
+                status: "confirmed",
+                seatNumber,
             },
         });
     } catch (error) {

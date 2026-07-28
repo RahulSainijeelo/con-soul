@@ -38,7 +38,7 @@ export const demoTrip = {
     duration: "7 days, 6 nights",
     price: {
         amount: 1299,
-        currency: "USD"
+        currency: "INR"
     },
     maxGroupSize: 12,
     difficulty: "Easy to Moderate",

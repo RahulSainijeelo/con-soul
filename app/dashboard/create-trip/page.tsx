@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
+import { ArrowLeft, Upload, X, Loader2, Train, Bus } from "lucide-react";
 import Link from "next/link";
-import type { CreateTrip } from "@/types/Trip";
+import type { CreateTrip, RouteSegment } from "@/types/Trip";
 import { uploadImageToImgBB } from "@/lib/imgbb";
 
 const tripCategories = [
@@ -51,6 +51,7 @@ export default function CreateTripPage() {
         duration: "",
         included: [],
         notIncluded: [],
+        travelRoute: [],
         mode: "bus",
         price_3ac: 0,
         price_sleeper: 0,
@@ -58,6 +59,65 @@ export default function CreateTripPage() {
 
     const [includedItem, setIncludedItem] = useState("");
     const [notIncludedItem, setNotIncludedItem] = useState("");
+
+    const [routeSegment, setRouteSegment] = useState<RouteSegment>({
+        from: "",
+        to: "",
+        mode: "train",
+        classes: [],
+        departureTime: "",
+        arrivalTime: "",
+        duration: "",
+        notes: "",
+    });
+    const [routeClass, setRouteClass] = useState("");
+
+    const addRouteClass = () => {
+        if (routeClass.trim()) {
+            setRouteSegment((prev) => ({
+                ...prev,
+                classes: [...(prev.classes || []), routeClass.trim()],
+            }));
+            setRouteClass("");
+        }
+    };
+
+    const removeRouteClass = (index: number) => {
+        setRouteSegment((prev) => ({
+            ...prev,
+            classes: prev.classes?.filter((_, i) => i !== index) || [],
+        }));
+    };
+
+    const addRouteSegment = () => {
+        if (routeSegment.from && routeSegment.to && routeSegment.departureTime && routeSegment.arrivalTime) {
+            setFormData((prev) => ({
+                ...prev,
+                travelRoute: [...(prev.travelRoute || []), routeSegment],
+            }));
+            setRouteSegment({
+                from: "",
+                to: "",
+                mode: "train",
+                classes: [],
+                departureTime: "",
+                arrivalTime: "",
+            });
+        } else {
+            toast({
+                title: "Incomplete Segment",
+                description: "Please fill in all required segment fields.",
+                variant: "destructive",
+            });
+        }
+    };
+
+    const removeRouteSegment = (index: number) => {
+        setFormData((prev) => ({
+            ...prev,
+            travelRoute: prev.travelRoute?.filter((_, i) => i !== index) || [],
+        }));
+    };
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -429,7 +489,7 @@ export default function CreateTripPage() {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <Label htmlFor="price" className="text-gray-300">
-                                        {formData.mode === "train" ? "Base Price (USD)" : "Price (USD)"} *
+                                        {formData.mode === "train" ? "Base Price (₹)" : "Price (₹)"} *
                                     </Label>
                                     <Input
                                         id="price"
@@ -446,7 +506,7 @@ export default function CreateTripPage() {
                                     <>
                                         <div>
                                             <Label htmlFor="price_3ac" className="text-gray-300">
-                                                3AC Price (USD)
+                                                3AC Price (₹)
                                             </Label>
                                             <Input
                                                 id="price_3ac"
@@ -461,7 +521,7 @@ export default function CreateTripPage() {
 
                                         <div>
                                             <Label htmlFor="price_sleeper" className="text-gray-300">
-                                                Sleeper Price (USD)
+                                                Sleeper Price (₹)
                                             </Label>
                                             <Input
                                                 id="price_sleeper"
@@ -516,6 +576,171 @@ export default function CreateTripPage() {
                                     />
                                 </div>
                             </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Travel Route Builder */}
+                    <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                        <CardHeader>
+                            <CardTitle className="text-gold">Travel Route</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="space-y-4 bg-black/30 p-4 rounded-lg border border-white/5">
+                                <h3 className="text-sm font-semibold text-gray-300 mb-2">Add Route Segment</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <Label className="text-gray-300">From</Label>
+                                        <Input
+                                            value={routeSegment.from}
+                                            onChange={(e) => setRouteSegment((prev) => ({ ...prev, from: e.target.value }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                            placeholder="e.g., Delhi"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300">To</Label>
+                                        <Input
+                                            value={routeSegment.to}
+                                            onChange={(e) => setRouteSegment((prev) => ({ ...prev, to: e.target.value }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                            placeholder="e.g., Manali"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300">Mode</Label>
+                                        <Select
+                                            value={routeSegment.mode}
+                                            onValueChange={(value: "train" | "bus") => setRouteSegment((prev) => ({ ...prev, mode: value }))}
+                                        >
+                                            <SelectTrigger className="bg-black/50 border-white/10 text-white">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-gray-900 border-white/10">
+                                                <SelectItem value="train" className="text-white hover:bg-white/10">Train</SelectItem>
+                                                <SelectItem value="bus" className="text-white hover:bg-white/10">Bus</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300">Classes</Label>
+                                        <div className="flex gap-2">
+                                            <Input
+                                                value={routeClass}
+                                                onChange={(e) => setRouteClass(e.target.value)}
+                                                className="bg-black/50 border-white/10 text-white"
+                                                placeholder="e.g., 3AC"
+                                                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addRouteClass())}
+                                            />
+                                            <Button type="button" onClick={addRouteClass} className="bg-gold hover:bg-yellow-600 text-black">
+                                                Add
+                                            </Button>
+                                        </div>
+                                        {routeSegment.classes && routeSegment.classes.length > 0 && (
+                                            <div className="flex flex-wrap gap-2 mt-2">
+                                                {routeSegment.classes.map((cls, idx) => (
+                                                    <span key={idx} className="inline-flex items-center gap-1 bg-white/10 text-gray-300 text-xs px-2 py-1 rounded">
+                                                        {cls}
+                                                        <button type="button" onClick={() => removeRouteClass(idx)} className="hover:text-red-400">
+                                                            <X className="h-3 w-3" />
+                                                        </button>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300">Departure Time</Label>
+                                        <Input
+                                            type="time"
+                                            value={routeSegment.departureTime}
+                                            onChange={(e) => setRouteSegment((prev) => ({ ...prev, departureTime: e.target.value }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300">Arrival Time</Label>
+                                        <Input
+                                            type="time"
+                                            value={routeSegment.arrivalTime}
+                                            onChange={(e) => setRouteSegment((prev) => ({ ...prev, arrivalTime: e.target.value }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <Label className="text-gray-300">Duration (optional)</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="e.g. 12h"
+                                            value={routeSegment.duration || ""}
+                                            onChange={(e) => setRouteSegment((prev) => ({ ...prev, duration: e.target.value }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300">Notes (optional)</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="e.g. Platform 3"
+                                            value={routeSegment.notes || ""}
+                                            onChange={(e) => setRouteSegment((prev) => ({ ...prev, notes: e.target.value }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex justify-end mt-4">
+                                    <Button type="button" onClick={addRouteSegment} className="bg-gold hover:bg-yellow-600 text-black">
+                                        Add Segment
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Existing Segments Timeline */}
+                            {formData.travelRoute && formData.travelRoute.length > 0 && (
+                                <div className="relative pl-6 space-y-6 mt-6 border-l-2 border-dashed border-gold/50">
+                                    {formData.travelRoute.map((segment, index) => (
+                                        <div key={index} className="relative">
+                                            <div className="absolute -left-[35px] top-1 bg-black border-2 border-gold rounded-full p-1">
+                                                {segment.mode === "train" ? <Train className="h-4 w-4 text-gold" /> : <Bus className="h-4 w-4 text-gold" />}
+                                            </div>
+                                            <div className="bg-black/40 border border-white/10 rounded-lg p-4 flex justify-between items-start">
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <span className="font-semibold text-white">{segment.from}</span>
+                                                        <span className="text-gray-500">→</span>
+                                                        <span className="font-semibold text-white">{segment.to}</span>
+                                                        <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-gray-300 capitalize ml-2">
+                                                            {segment.mode}
+                                                        </span>
+                                                    </div>
+                                                    <div className="text-sm text-gray-400 mb-2">
+                                                        Departs: {segment.departureTime} | Arrives: {segment.arrivalTime}
+                                                    </div>
+                                                    {segment.classes && segment.classes.length > 0 && (
+                                                        <div className="flex gap-2">
+                                                            {segment.classes.map((cls, idx) => (
+                                                                <span key={idx} className="text-xs bg-gold/20 text-gold px-2 py-1 rounded">
+                                                                    {cls}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => removeRouteSegment(index)}
+                                                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                                                >
+                                                    <X className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
 
@@ -694,8 +919,8 @@ export default function CreateTripPage() {
                                     <SelectItem value="published" className="text-white hover:bg-white/10">
                                         Published
                                     </SelectItem>
-                                    <SelectItem value="archived" className="text-white hover:bg-white/10">
-                                        Archived
+                                    <SelectItem value="completed" className="text-white hover:bg-white/10">
+                                        Completed
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
@@ -715,7 +940,7 @@ export default function CreateTripPage() {
                         </Link>
                         <Button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || uploadingImages}
                             className="bg-gold hover:bg-yellow-600 text-black font-semibold"
                         >
                             {loading ? "Creating..." : "Create Trip"}

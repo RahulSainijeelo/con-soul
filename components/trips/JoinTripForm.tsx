@@ -247,11 +247,7 @@ export default function JoinTripForm({
                                 utib: {
                                     name: "UPI",
                                     instruments: [
-                                        // UPI Collect: pay via UPI ID or mobile number
-                                        { method: "upi", flow: "collect" },
-                                        // UPI Intent / QR
-                                        { method: "upi", flow: "qr" },
-                                        { method: "upi", flow: "intent" },
+                                        { method: "upi" },
                                     ],
                                 },
                                 other: {

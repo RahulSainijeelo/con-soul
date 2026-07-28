@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ManageTrips } from "@/components/dashboard/trips/ManageTrips";
-import { TopLoadingBar } from "@/components/ui/TopLoadingBar";
 import { ContactEnquiries } from "@/components/dashboard/contact/ContactEnquiries";
 import { ManageReviews } from "@/components/dashboard/reviews/ManageReviews";
 
