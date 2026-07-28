@@ -10,9 +10,20 @@ export const dynamic = "force-dynamic";
 // Supports both new bookings and remaining payments (via bookingId)
 export async function POST(request: NextRequest) {
     try {
+        const keyId = process.env.RAZORPAY_KEY_ID;
+        const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+        if (!keyId || !keySecret) {
+            console.error("Missing RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET environment variables");
+            return NextResponse.json(
+                { error: "Payment service is not configured. Please contact support." },
+                { status: 500 }
+            );
+        }
+
         const razorpay = new Razorpay({
-            key_id: process.env.RAZORPAY_KEY_ID || "dummy_key_id",
-            key_secret: process.env.RAZORPAY_KEY_SECRET || "dummy_key_secret",
+            key_id: keyId,
+            key_secret: keySecret,
         });
 
         const session = await getServerSession(authOptions);
