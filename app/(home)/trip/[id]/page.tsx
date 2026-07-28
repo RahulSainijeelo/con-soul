@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -29,6 +29,7 @@ interface Trip {
   included?: string[];
   notIncluded?: string[];
   itinerary?: { day: number; title: string; description: string }[];
+  travelRoute?: { from: string; to: string; mode: "train" | "bus"; classes: string[]; departureTime: string; arrivalTime: string; duration?: string; notes?: string }[];
   featured?: boolean;
   rating?: number;
   reviewCount?: number;
@@ -47,7 +48,6 @@ interface TripPageProps {
 export default function TripPage() {
   const { data: session } = useSession();
   const params = useParams();
-  const router = useRouter();
   const [trip, setTrip] = useState<Trip | null>(null);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
@@ -264,6 +264,91 @@ export default function TripPage() {
                 </div>
               </div>
 
+              {/* Travel Route */}
+              {trip.travelRoute && trip.travelRoute.length > 0 && (
+                <div className="bg-gradient-to-br from-gold/5 via-white/5 to-orange-500/5 rounded-2xl border border-gold/20 p-6 md:p-8">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6 flex items-center gap-3">
+                    <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                    Travel Route
+                  </h2>
+
+                  <div className="space-y-0">
+                    {/* Departure Point */}
+                    <div className="flex items-center gap-4">
+                      <div className="relative flex items-center justify-center w-6 h-6">
+                        <div className="w-3 h-3 bg-gold rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)] animate-pulse" />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-white">{trip.travelRoute[0].from}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300 uppercase tracking-wider">Departure</span>
+                      </div>
+                    </div>
+
+                    {trip.travelRoute.map((segment, index) => (
+                      <div key={index} className="relative">
+                        {/* Segment Card Container */}
+                        <div className="pl-[11px] py-2">
+                          <div className="border-l-2 border-dashed border-gold/40 pl-6 py-2">
+                            <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-gold/30 transition-colors">
+                              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <div className="flex items-center gap-4">
+                                  <span className="text-3xl">{segment.mode === 'train' ? '🚂' : '🚌'}</span>
+                                  <div>
+                                    <div className="text-white font-bold text-lg capitalize">{segment.mode}</div>
+                                    <div className="text-gray-400 text-sm">
+                                      <span className="text-white font-semibold">Dep: {segment.departureTime}</span> → <span className="text-white font-semibold">Arr: {segment.arrivalTime}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex flex-col md:items-end gap-2">
+                                  {segment.duration && (
+                                    <div className="text-sm text-gray-400 flex items-center gap-1">
+                                      <Clock className="w-4 h-4" /> {segment.duration}
+                                    </div>
+                                  )}
+                                  <div className="flex flex-wrap gap-2">
+                                    {segment.classes && segment.classes.map((cls, idx) => (
+                                      <span key={idx} className="px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-gold text-xs font-medium">
+                                        {cls}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                              {segment.notes && (
+                                <div className="mt-3 pt-3 border-t border-white/5 text-sm text-gray-400 italic">
+                                  {segment.notes}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Next Point */}
+                        <div className="flex items-center gap-4">
+                          <div className="relative flex items-center justify-center w-6 h-6">
+                            {index === trip.travelRoute!.length - 1 ? (
+                              <div className="w-4 h-4 bg-gold rounded-full shadow-[0_0_15px_rgba(212,175,55,0.8)]" />
+                            ) : (
+                              <div className="w-3 h-3 bg-gold rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg font-bold text-white">{segment.to}</span>
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300 uppercase tracking-wider">
+                              {index === trip.travelRoute!.length - 1 ? 'Destination' : 'Transit'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Itinerary Overview */}
               {trip.itinerary && trip.itinerary.length > 0 && (
                 <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
@@ -294,7 +379,7 @@ export default function TripPage() {
                 </h2>
                 <div className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold">
                   <ul className="list-disc pl-5 space-y-2">
-                    {trip.content?.split('.').filter(s => s.trim().length > 0).map((sentence, i) => (
+                    {(trip.content || '').split('.').filter(s => s.trim().length > 0).map((sentence, i) => (
                       <li key={i} className="text-gray-300">{sentence.trim()}.</li>
                     ))}
                   </ul>

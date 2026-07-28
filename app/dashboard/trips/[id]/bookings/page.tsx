@@ -18,7 +18,7 @@ interface Booking {
     fullName: string;
     email: string;
     mobileNo: string;
-    status: 'pending' | 'confirmed' | 'rejected';
+    status: 'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed';
     seatNumber?: string;
     createdAt: string;
     paymentScreenshot?: string; // legacy
@@ -130,6 +130,7 @@ export default function TripBookingsPage() {
 
     const pendingBookings = bookings.filter(b => b.status === "pending");
     const confirmedBookings = bookings.filter(b => b.status === "confirmed");
+    const registrationConfirmedBookings = bookings.filter(b => b.status === "registrationConfirmed");
 
     if (loading) {
         return (
@@ -164,6 +165,9 @@ export default function TripBookingsPage() {
                         </TabsTrigger>
                         <TabsTrigger value="pending" className="data-[state=active]:bg-gold data-[state=active]:text-black">
                             Pending ({pendingBookings.length})
+                        </TabsTrigger>
+                        <TabsTrigger value="registrationConfirmed" className="data-[state=active]:bg-gold data-[state=active]:text-black">
+                            Registration Paid ({registrationConfirmedBookings.length})
                         </TabsTrigger>
                     </TabsList>
 
@@ -210,6 +214,21 @@ export default function TripBookingsPage() {
                             ))}
                             {pendingBookings.length === 0 && (
                                 <p className="text-gray-400 col-span-full text-center py-12">No pending bookings.</p>
+                            )}
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="registrationConfirmed">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {registrationConfirmedBookings.map(booking => (
+                                <BookingCard
+                                    key={booking.id}
+                                    booking={booking}
+                                    type="all"
+                                />
+                            ))}
+                            {registrationConfirmedBookings.length === 0 && (
+                                <p className="text-gray-400 col-span-full text-center py-12">No registration-paid bookings.</p>
                             )}
                         </div>
                     </TabsContent>
@@ -278,6 +297,12 @@ function BookingCard({
                 return (
                     <div className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded border border-red-500/30 flex items-center gap-1">
                         <X className="w-3 h-3" /> Rejected
+                    </div>
+                );
+            case 'registrationConfirmed':
+                return (
+                    <div className="bg-amber-500/20 text-amber-400 text-xs px-2 py-1 rounded border border-amber-500/30 flex items-center gap-1">
+                        <Check className="w-3 h-3" /> Registration Confirmed
                     </div>
                 );
             default:

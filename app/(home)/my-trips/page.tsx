@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Star, Calendar, Users, MapPin, ArrowRight, Clock, LogIn, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Users, MapPin, ArrowRight, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import LoginTC from '@/components/auth/LoginTC';
@@ -87,11 +87,11 @@ export default function MyTripsPage() {
 
     // Filter bookings based on active tab
     const upcomingTrips = allBookings.filter(booking => {
-        return booking.trip.status === 'published';
+        return ['published', 'ongoing', 'active'].includes(booking.trip.status);
     });
 
     const pastTrips = allBookings.filter(booking => {
-        return booking.trip.status === 'completed';
+        return ['completed', 'cancelled', 'archived'].includes(booking.trip.status);
     });
 
     const currentTrips = activeTab === 'upcoming' ? upcomingTrips : pastTrips;
@@ -113,7 +113,14 @@ export default function MyTripsPage() {
     }
 
     if (status === 'unauthenticated') {
-        return <LoginTC />;
+        return (
+            <div className="min-h-screen bg-black pb-16 md:pb-0">
+                <Header />
+                <LoginTC />
+                <Footer />
+                <BottomTabBar />
+            </div>
+        );
     }
 
     const getStatusBadge = (status: string, seatNumber?: string) => {
@@ -131,6 +138,13 @@ export default function MyTripsPage() {
                             </div>
                         )}
                     </div>
+                );
+            case 'registrationConfirmed':
+                return (
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                        <CheckCircle className="w-3 h-3" /> Registration Confirmed
+                        {seatNumber && (<span className="ml-1 bg-amber-500/30 px-1.5 rounded">Seat: {seatNumber}</span>)}
+                    </span>
                 );
             case 'rejected':
                 return (

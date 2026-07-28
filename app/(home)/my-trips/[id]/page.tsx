@@ -46,7 +46,7 @@ interface Booking {
     amount: number;
     amountPaid?: number;
     paymentStatus?: "partial" | "paid" | string;
-    status: "pending" | "confirmed" | "rejected" | string;
+    status: "pending" | "confirmed" | "rejected" | "registrationConfirmed" | string;
     seatNumber?: string;
     razorpayPaymentId?: string;
     razorpayOrderId?: string;
@@ -168,7 +168,7 @@ export default function MyTripDetailPage() {
                 return;
             }
 
-            const paidSoFar = booking.amountPaid || trip.registrationAmount || 0;
+            const paidSoFar = booking.amountPaid ?? trip.registrationAmount ?? 0;
             const remainingAmount = booking.amount - paidSoFar;
 
             if (remainingAmount <= 0) {
@@ -217,6 +217,8 @@ export default function MyTripDetailPage() {
                             }),
                         });
 
+                        const verifyData = await verifyRes.json();
+                        
                         if (verifyRes.ok) {
                             toast({
                                 title: "Payment Successful!",
@@ -228,14 +230,15 @@ export default function MyTripDetailPage() {
                                         ...prev,
                                         paymentStatus: "paid",
                                         amountPaid: prev.amount,
+                                        status: "confirmed",
+                                        seatNumber: verifyData.data?.seatNumber || verifyData.seatNumber
                                     }
                                     : null
                             );
                         } else {
-                            const errData = await verifyRes.json();
                             toast({
                                 title: "Payment Verification Failed",
-                                description: errData.error || "Failed to verify remaining payment",
+                                description: verifyData.error || "Failed to verify remaining payment",
                                 variant: "destructive",
                             });
                         }
@@ -265,11 +268,7 @@ export default function MyTripDetailPage() {
                             utib: {
                                 name: "UPI",
                                 instruments: [
-                                    // UPI Collect: pay via UPI ID or mobile number
-                                    { method: "upi", flow: "collect" },
-                                    // UPI Intent / QR
-                                    { method: "upi", flow: "qr" },
-                                    { method: "upi", flow: "intent" },
+                                    { method: "upi" },
                                 ],
                             },
                             other: {
@@ -426,6 +425,12 @@ export default function MyTripDetailPage() {
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/90 text-white text-sm font-semibold rounded-full border border-green-400/30 backdrop-blur-sm">
                             <CheckCircle2 className="w-4 h-4" />
                             Confirmed
+                        </div>
+                    )}
+                    {booking.status === "registrationConfirmed" && (
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 text-amber-400 text-sm font-semibold rounded-full border border-amber-500/30 backdrop-blur-sm">
+                            <CheckCircle2 className="w-4 h-4" />
+                            Registration Confirmed ✓
                         </div>
                     )}
                     {booking.status === "pending" && (

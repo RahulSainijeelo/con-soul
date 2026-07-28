@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
                 price_3ac: data.price_3ac || 0, // NEW
                 price_sleeper: data.price_sleeper || 0, // NEW
                 registrationAmount: data.registrationAmount || null, // NEW
+                travelRoute: data.travelRoute || [],
                 featured: data.featured || false,
                 rating: data.rating || 0,
                 reviewCount: data.reviewCount || 0,
@@ -137,6 +138,7 @@ export async function POST(request: NextRequest) {
             price_3ac,
             price_sleeper,
             registrationAmount,
+            travelRoute,
         } = body;
 
         if (!title || !destination || !category) {
@@ -177,6 +179,11 @@ export async function POST(request: NextRequest) {
         // Add registration amount (partial payment) if provided
         if (registrationAmount && registrationAmount > 0) {
             newTrip.registrationAmount = registrationAmount;
+        }
+
+        // Add travel route if provided
+        if (travelRoute && Array.isArray(travelRoute) && travelRoute.length > 0) {
+            newTrip.travelRoute = travelRoute;
         }
 
         const tripRef = await db.collection("trips").add(newTrip);

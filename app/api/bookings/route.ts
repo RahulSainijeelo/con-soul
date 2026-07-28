@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import crypto from "crypto";
 import { z } from "zod";
+import { sendBookingConfirmationEmail } from "@/lib/email";
 
 const bookingSchema = z.object({
     tripId: z.string().min(1, "Trip ID is required"),
@@ -76,12 +77,15 @@ export async function POST(request: NextRequest) {
         const tripRef = db.collection("trips").doc(bookingData.tripId);
         const bookingRef = db.collection("bookings").doc();
 
-        const newBooking = {
+        // Determine booking status based on payment
+        const bookingStatus = paymentStatus === "paid" ? "confirmed" : "registrationConfirmed";
+
+        const newBooking: Record<string, unknown> = {
             ...bookingData,
             paymentStatus,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            status: "pending", // Admin still needs to confirm seat allocation
+            status: bookingStatus,
         };
 
         await db.runTransaction(async (t) => {
@@ -98,11 +102,39 @@ export async function POST(request: NextRequest) {
                 throw new Error("Trip is fully booked");
             }
 
+            // Auto-assign seat number inside transaction to prevent race conditions
+            if (paymentStatus === "paid") {
+                const confirmedBookings = await t.get(
+                    db.collection("bookings")
+                        .where("tripId", "==", bookingData.tripId)
+                        .where("status", "==", "confirmed")
+                );
+                newBooking.seatNumber = String(confirmedBookings.size + 1);
+            }
+
             t.set(bookingRef, newBooking);
             t.update(tripRef, {
                 currentParticipants: FieldValue.increment(1),
             });
         });
+
+        // Send confirmation email — awaited so Vercel lambda doesn't kill it before it sends
+        const tripDoc = await tripRef.get();
+        const tripData = tripDoc.data();
+        await sendBookingConfirmationEmail({
+            email: bookingData.email,
+            fullName: bookingData.fullName,
+            tripName: tripData?.title || tripData?.name || "Your Trip",
+            tripDestination: tripData?.destination,
+            tripDates: tripData?.startDate && tripData?.endDate
+                ? `${tripData.startDate} – ${tripData.endDate}`
+                : undefined,
+            amount: bookingData.amount,
+            amountPaid: bookingData.amountPaid,
+            status: bookingStatus as "registrationConfirmed" | "confirmed",
+            seatNumber: newBooking.seatNumber as string | undefined,
+            bookingId: bookingRef.id,
+        }).catch((err) => console.error("[Booking Email] Failed to send:", err));
 
         return NextResponse.json(
             {

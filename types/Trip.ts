@@ -1,3 +1,14 @@
+export interface RouteSegment {
+    from: string;
+    to: string;
+    mode: "train" | "bus";
+    classes: string[];
+    departureTime: string;
+    arrivalTime: string;
+    duration?: string;
+    notes?: string;
+}
+
 interface BaseTrip {
     title: string;
     destination: string;
@@ -22,6 +33,7 @@ interface BaseTrip {
     price_3ac?: number; // NEW - for train trips
     price_sleeper?: number; // NEW - for train trips
     registrationAmount?: number; // Partial payment: minimum advance to join
+    travelRoute?: RouteSegment[]; // Travel route segments
 }
 
 interface TripWithId extends BaseTrip {
