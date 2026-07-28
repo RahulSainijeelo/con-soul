@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { auth } from "@clerk/nextjs/server";
 
 // GET /api/bookings/pending - Get all pending bookings (Admin only)
 export async function GET(request: NextRequest) {
     try {
+        const { userId } = await auth();
         const session = await getServerSession(authOptions);
-        if (!session) {
+        if (!userId && !session) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
