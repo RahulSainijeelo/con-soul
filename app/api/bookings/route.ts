@@ -48,8 +48,17 @@ export async function POST(request: NextRequest) {
         const bookingData = validationResult.data;
 
         // Verify Razorpay payment signature
+        const keySecret = process.env.RAZORPAY_KEY_SECRET;
+        if (!keySecret) {
+            console.error("RAZORPAY_KEY_SECRET is not set");
+            return NextResponse.json(
+                { error: "Server configuration error" },
+                { status: 500 }
+            );
+        }
+
         const generatedSignature = crypto
-            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+            .createHmac("sha256", keySecret)
             .update(`${bookingData.razorpayOrderId}|${bookingData.razorpayPaymentId}`)
             .digest("hex");
 
