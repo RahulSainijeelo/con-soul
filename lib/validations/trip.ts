@@ -13,6 +13,18 @@ export const itineraryItemSchema = z.object({
     description: z.string().min(1, "Itinerary description is required"),
 });
 
+// Route segment schema
+export const routeSegmentSchema = z.object({
+    from: z.string().min(1, "Origin is required"),
+    to: z.string().min(1, "Destination is required"),
+    mode: z.string().optional(),
+    classes: z.array(z.string()).optional(),
+    departureTime: z.string().optional(),
+    arrivalTime: z.string().optional(),
+    duration: z.string().optional(),
+    notes: z.string().optional(),
+});
+
 // Main trip validation schema
 // Base trip schema without refinements
 const baseTripSchema = z.object({
@@ -71,7 +83,7 @@ const baseTripSchema = z.object({
         .positive("Must have at least 1 participant")
         .max(1000, "Maximum 1000 participants allowed"),
 
-    registrationAmount: z.number().positive("Registration amount must be greater than 0").optional(),
+    registrationAmount: z.number().nullable().optional(),
 
     currentParticipants: z.number().int().nonnegative().optional(),
 
@@ -86,6 +98,14 @@ const baseTripSchema = z.object({
     notIncluded: z.array(z.string()).optional(),
 
     itinerary: z.array(itineraryItemSchema).optional(),
+
+    mode: z.enum(["bus", "train"]).optional(),
+
+    price_3ac: z.number().nonnegative().optional(),
+
+    price_sleeper: z.number().nonnegative().optional(),
+
+    travelRoute: z.array(routeSegmentSchema).optional(),
 
     featured: z.boolean().optional(),
 

@@ -240,7 +240,8 @@ export default function CreateTripPage() {
                 body: JSON.stringify(formData),
             });
             if (!res.ok) {
-                throw new Error("Failed to create trip");
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.error || "Failed to create trip");
             }
 
             // Clear the cache for manage trips
@@ -257,10 +258,10 @@ export default function CreateTripPage() {
             });
 
             router.push("/dashboard");
-        } catch (error) {
+        } catch (error: any) {
             toast({
                 title: "Error",
-                description: "Failed to create trip. Please try again.",
+                description: error?.message || "Failed to create trip. Please try again.",
                 variant: "destructive",
             });
         } finally {
