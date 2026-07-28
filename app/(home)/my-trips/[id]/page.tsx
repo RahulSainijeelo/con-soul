@@ -259,6 +259,34 @@ export default function MyTripDetailPage() {
                     email: booking.email,
                     contact: booking.mobileNo,
                 },
+                config: {
+                    display: {
+                        blocks: {
+                            utib: {
+                                name: "UPI",
+                                instruments: [
+                                    // UPI Collect: pay via UPI ID or mobile number
+                                    { method: "upi", flow: "collect" },
+                                    // UPI Intent / QR
+                                    { method: "upi", flow: "qr" },
+                                    { method: "upi", flow: "intent" },
+                                ],
+                            },
+                            other: {
+                                name: "Other Payment Methods",
+                                instruments: [
+                                    { method: "card" },
+                                    { method: "netbanking" },
+                                    { method: "wallet" },
+                                ],
+                            },
+                        },
+                        sequence: ["block.utib", "block.other"],
+                        preferences: {
+                            show_default_blocks: false,
+                        },
+                    },
+                },
                 theme: {
                     color: "#D4AF37",
                 },

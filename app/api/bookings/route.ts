@@ -14,7 +14,7 @@ const bookingSchema = z.object({
     aadhaarNo: z.string().regex(/^\d{12}$/, "Aadhaar number must be exactly 12 digits"),
     aadhaarImage: z.string().url("Valid Aadhaar image URL is required"),
     amount: z.number().positive("Amount must be positive"),
-    amountPaid: z.number().positive("Amount paid must be positive"),
+    amountPaid: z.number().nonnegative("Amount paid cannot be negative"),
     transportMode: z.enum(["3ac", "sleeper"]).optional(),
     // Razorpay payment fields
     razorpayPaymentId: z.string().min(1, "Razorpay Payment ID is required"),
