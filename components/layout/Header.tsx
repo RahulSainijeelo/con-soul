@@ -10,7 +10,7 @@ import { Instagram } from "lucide-react";
 
 export default function Header() {
   const session = useSession();
-  const insta = { icon: Instagram, href: "https://www.instagram.com/consoul29", label: "Instagram" }
+  const insta = { icon: Instagram, href: "https://www.instagram.com/consoul.in", label: "Instagram" }
   const Icon = insta.icon;
   return (
     <header className="fixed top-0 px-4 py-6 flex justify-end left-0 right-0 z-50 w-full">
@@ -42,6 +42,17 @@ export default function Header() {
 
         {/* Right Part - Navigation (Desktop only) */}
         <nav className="hidden md:flex items-center gap-6 bg-black/95 backdrop-blur-md border border-white/10 rounded-full px-8 py-3 shadow-lg">
+          <Link
+            key={insta.label}
+            href={insta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-gold transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10"
+            aria-label={insta.label}
+          >
+            <Icon className="h-4 w-4" />
+          </Link>
+
           <Link
             href="/past-trips"
             className="text-sm font-medium text-gray-300 hover:text-gold transition-colors"

@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Instagram, href: "https://www.instagram.com/consoul29", label: "Instagram" },
+    { icon: Instagram, href: "https://www.instagram.com/consoul.in", label: "Instagram" },
   ];
 
   return (
