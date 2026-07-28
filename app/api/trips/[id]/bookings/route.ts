@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { auth } from "@clerk/nextjs/server";
 
 // GET /api/trips/[id]/bookings - Get all bookings for a trip (Admin only)
 export async function GET(
@@ -9,8 +10,9 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { userId } = await auth();
         const session = await getServerSession(authOptions);
-        if (!session) {
+        if (!userId && !session) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
