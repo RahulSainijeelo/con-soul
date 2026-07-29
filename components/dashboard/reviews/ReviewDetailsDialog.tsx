@@ -41,28 +41,74 @@ export function ReviewDetailsDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 mt-4">
-          <div>
-            <h3 className="font-semibold">Customer</h3>
-            <p className="mt-1">{review.userName}</p>
-          </div>
-          <div>
-            <h3 className="font-semibold">Rating</h3>
-            <div className="flex mt-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-5 w-5 ${i < review.rating
-                    ? "text-yellow-400 fill-yellow-400"
-                    : "text-gray-300"
-                    }`}
-                />
-              ))}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h3 className="font-semibold text-sm text-gray-500">Customer</h3>
+              <p className="mt-1">{review.userName}</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-sm text-gray-500">Rating</h3>
+              <div className="flex mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-4 w-4 ${i < review.rating
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-300"
+                      }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-          <div>
-            <h3 className="font-semibold">Review</h3>
-            <p className="mt-1 text-gray-700">{review.comment}</p>
+
+          {(review.certifiedHighlight || review.comment) && (
+            <div className="bg-gray-50 p-3 rounded-md">
+              <h3 className="font-semibold text-sm text-gray-500">Certified Highlight / Comment</h3>
+              <p className="mt-1 text-gray-800 italic">"{review.certifiedHighlight || review.comment}"</p>
+            </div>
+          )}
+
+          {review.honestTake && (
+            <div className="bg-red-50 p-3 rounded-md border border-red-100">
+              <h3 className="font-semibold text-sm text-red-600">Honest Take</h3>
+              <p className="mt-1 text-gray-800">{review.honestTake}</p>
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-4">
+            {review.vibeTags && review.vibeTags.length > 0 && (
+              <div>
+                <h3 className="font-semibold text-sm text-gray-500 mb-1">Vibe Tags</h3>
+                <div className="flex flex-wrap gap-1">
+                  {review.vibeTags.map(tag => (
+                    <span key={tag} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {(review.personalityBadge || review.fomoScore) && (
+              <div>
+                <h3 className="font-semibold text-sm text-gray-500 mb-1">Badges</h3>
+                <div className="flex flex-col gap-1">
+                  {review.personalityBadge && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded truncate">{review.personalityBadge.split('—')[0]}</span>}
+                  {review.fomoScore && <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded truncate">{review.fomoScore.split('—')[0]}</span>}
+                </div>
+              </div>
+            )}
           </div>
+
+          {(review.squadChemistry !== undefined || review.consoulHost !== undefined || review.tripVibe !== undefined) && (
+            <div>
+              <h3 className="font-semibold text-sm text-gray-500 mb-2">Metrics</h3>
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between border-b pb-1"><span>Squad Chemistry</span> <strong>{review.squadChemistry?.toFixed(1) || 'N/A'}</strong></div>
+                <div className="flex justify-between border-b pb-1"><span>Consoul Host</span> <strong>{review.consoulHost?.toFixed(1) || 'N/A'}</strong></div>
+                <div className="flex justify-between border-b pb-1"><span>Trip Vibe</span> <strong>{review.tripVibe?.toFixed(1) || 'N/A'}</strong></div>
+              </div>
+            </div>
+          )}
           {review.images && review.images.length > 0 && (
             <div>
               <h3 className="font-semibold">Images</h3>

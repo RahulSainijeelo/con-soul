@@ -8,10 +8,9 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import { CheckCircle2, Clock, XCircle, Star, Image as ImageIcon, Upload, X, ChevronLeft, ChevronRight, UserCheck, Quote } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { ReviewFeed } from '@/components/reviews/v2/ReviewFeed';
+import { ReviewForm } from '@/components/reviews/v2/ReviewForm';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
@@ -57,17 +56,18 @@ interface Review {
     rating: number;
     comment: string;
     images?: string[];
+    vibeTags?: string[];
+    squadChemistry?: number;
+    consoulHost?: number;
+    tripVibe?: number;
+    certifiedHighlight?: string;
+    personalityBadge?: string;
+    fomoScore?: string;
+    honestTake?: string;
+    likes?: number;
     status: string;
     createdAt: string;
 }
-
-const reviewSchema = z.object({
-    rating: z.number().min(1, "Rating is required").max(5),
-    comment: z.string().min(5, "Comment must be at least 5 characters"),
-    images: z.array(z.string()).optional(),
-});
-
-type ReviewFormData = z.infer<typeof reviewSchema>;
 
 export default function PastTripPage() {
     const { data: session } = useSession();
@@ -88,16 +88,6 @@ export default function PastTripPage() {
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const [lightboxImages, setLightboxImages] = useState<string[]>([]);
 
-    const { register, handleSubmit, setValue, watch, formState: { errors }, reset } = useForm<ReviewFormData>({
-        resolver: zodResolver(reviewSchema),
-        defaultValues: {
-            rating: 5,
-            images: []
-        }
-    });
-
-    const watchImages = watch('images');
-    const ratingValue = watch('rating');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -152,77 +142,15 @@ export default function PastTripPage() {
         }
     }, [reviews, session]);
 
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files || e.target.files.length === 0) return;
-
-        setUploadingImages(true);
-        const files = Array.from(e.target.files);
-        const uploadedUrls: string[] = [];
-
-        try {
-            for (const file of files) {
-                const formData = new FormData();
-                formData.append('image', file);
-
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                const data = await response.json();
-                if (data.success) {
-                    uploadedUrls.push(data.data.url);
-                }
-            }
-
-            const currentImages = watchImages || [];
-            setValue('images', [...currentImages, ...uploadedUrls]);
-        } catch (error) {
-            console.error('Error uploading images:', error);
-        } finally {
-            setUploadingImages(false);
+    const fetchReviews = async () => {
+        if (!trip) return;
+        const reviewsRes = await fetch(`/api/reviews?tripId=${trip.id}`);
+        if (reviewsRes.ok) {
+            const reviewsData = await reviewsRes.json();
+            setReviews(reviewsData);
         }
     };
 
-    const onSubmitReview = async (data: ReviewFormData) => {
-        if (!trip || !session) return;
-
-        setSubmittingReview(true);
-        try {
-            const response = await fetch('/api/reviews', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    tripId: trip.id,
-                    rating: data.rating,
-                    comment: data.comment,
-                    images: data.images,
-                }),
-            });
-
-            if (response.ok) {
-                setReviewSuccess(true);
-                setIsReviewDialogOpen(false);
-                reset();
-                // Refresh reviews
-                const reviewsRes = await fetch(`/api/reviews?tripId=${trip.id}`);
-                if (reviewsRes.ok) {
-                    const reviewsData = await reviewsRes.json();
-                    setReviews(reviewsData);
-                }
-            } else {
-                const errorData = await response.json();
-                alert(errorData.message || "Failed to submit review");
-            }
-        } catch (error) {
-            console.error('Error submitting review:', error);
-            alert("An error occurred while submitting your review");
-        } finally {
-            setSubmittingReview(false);
-        }
-    };
 
     const openLightbox = (images: string[], index: number) => {
         setLightboxImages(images);
@@ -328,88 +256,25 @@ export default function PastTripPage() {
                                                 Write a Review
                                             </Button>
                                         </DialogTrigger>
-                                        <DialogContent className="bg-gray-900 border-white/10 text-white sm:max-w-[600px]">
-                                            <DialogHeader>
-                                                <DialogTitle className="text-2xl font-bold text-white">Write a Review</DialogTitle>
-                                                <DialogDescription className="text-gray-400">
-                                                    Tell us about your adventure on {trip.title}.
-                                                </DialogDescription>
-                                            </DialogHeader>
-
-                                            <form onSubmit={handleSubmit(onSubmitReview)} className="space-y-6 mt-4">
-                                                <div className="space-y-2">
-                                                    <Label className="text-gray-200">Rating</Label>
-                                                    <div className="flex gap-2">
-                                                        {[1, 2, 3, 4, 5].map((star) => (
-                                                            <button
-                                                                key={star}
-                                                                type="button"
-                                                                onClick={() => setValue('rating', star)}
-                                                                className="focus:outline-none transition-transform hover:scale-110"
-                                                            >
-                                                                <Star
-                                                                    className={`w-8 h-8 ${ratingValue >= star ? 'fill-gold text-gold' : 'text-gray-600'}`}
-                                                                />
-                                                            </button>
-                                                        ))}
-                                                    </div>
-                                                    {errors.rating && <p className="text-red-500 text-sm">{errors.rating.message}</p>}
-                                                </div>
-
-                                                <div className="space-y-2">
-                                                    <Label htmlFor="comment" className="text-gray-200">Your Experience</Label>
-                                                    <Textarea
-                                                        id="comment"
-                                                        {...register('comment')}
-                                                        rows={5}
-                                                        className="bg-black/50 border-white/10 text-white focus:border-gold"
-                                                        placeholder="What did you enjoy the most? How was the guide?..."
+                                            <DialogContent className="bg-[#09090F] border-white/10 text-white sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+                                                <DialogHeader>
+                                                    <DialogTitle className="text-2xl font-bold text-white">Write a Review</DialogTitle>
+                                                    <DialogDescription className="text-gray-400">
+                                                        Tell us about your adventure on {trip.title}.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <div className="mt-4">
+                                                    <ReviewForm 
+                                                        tripId={trip.id} 
+                                                        isGuest={false} 
+                                                        onSuccess={() => {
+                                                            setIsReviewDialogOpen(false);
+                                                            setReviewSuccess(true);
+                                                            fetchReviews();
+                                                        }} 
                                                     />
-                                                    {errors.comment && <p className="text-red-500 text-sm">{errors.comment.message}</p>}
                                                 </div>
-
-                                                <div className="space-y-2">
-                                                    <Label className="text-gray-200">Add Photos</Label>
-                                                    <div className="grid grid-cols-4 gap-2 mb-2">
-                                                        {watchImages?.map((url, index) => (
-                                                            <div key={index} className="relative aspect-square rounded-lg overflow-hidden border border-white/10 group">
-                                                                <img src={url} alt={`Review ${index}`} className="w-full h-full object-cover" />
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => setValue('images', watchImages.filter((_, i) => i !== index))}
-                                                                    className="absolute top-1 right-1 bg-black/50 p-1 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
-                                                                >
-                                                                    <X className="w-3 h-3" />
-                                                                </button>
-                                                            </div>
-                                                        ))}
-                                                        <label className="aspect-square rounded-lg border-2 border-dashed border-white/20 flex flex-col items-center justify-center cursor-pointer hover:border-gold/50 hover:bg-white/5 transition-colors">
-                                                            <Upload className="w-5 h-5 text-gray-400 mb-1" />
-                                                            <span className="text-[10px] text-gray-400">Upload</span>
-                                                            <input
-                                                                type="file"
-                                                                multiple
-                                                                accept="image/*"
-                                                                className="hidden"
-                                                                onChange={handleImageUpload}
-                                                                disabled={uploadingImages}
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                    {uploadingImages && <p className="text-xs text-gold animate-pulse">Uploading images...</p>}
-                                                </div>
-
-                                                <DialogFooter>
-                                                    <Button
-                                                        type="submit"
-                                                        disabled={submittingReview || uploadingImages}
-                                                        className="bg-gold hover:bg-yellow-600 text-black w-full sm:w-auto"
-                                                    >
-                                                        {submittingReview ? 'Submitting...' : 'Submit Review'}
-                                                    </Button>
-                                                </DialogFooter>
-                                            </form>
-                                        </DialogContent>
+                                            </DialogContent>
                                     </Dialog>
                                 </div>
                             )}
@@ -484,95 +349,7 @@ export default function PastTripPage() {
                                 </div>
                             )}
                             {visibleReviews.length > 0 && (
-                                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                                    <div className="flex items-center justify-between mb-8">
-                                        <h2 className="text-2xl md:text-3xl font-bold text-white">
-                                            Traveler Reviews
-                                        </h2>
-                                        <div className="flex items-center gap-2">
-                                            <Star className="w-6 h-6 fill-gold text-gold" />
-                                            <span className="text-2xl font-bold text-white">
-                                                {(visibleReviews.reduce((acc, r) => acc + r.rating, 0) / visibleReviews.length).toFixed(1)}
-                                            </span>
-                                            <span className="text-gray-400">/ 5.0</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-6">
-                                        {visibleReviews.map((review) => (
-                                            <div key={review.id} className="border-b border-white/10 last:border-0 pb-6 last:pb-0">
-                                                <div className="flex items-start gap-4">
-                                                    {/* Avatar */}
-                                                    <div className="flex-shrink-0">
-                                                        {review.userImage ? (
-                                                            <img
-                                                                src={review.userImage}
-                                                                alt={review.userName}
-                                                                className="w-12 h-12 rounded-full object-cover"
-                                                            />
-                                                        ) : (
-                                                            <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold">
-                                                                {review.userName.charAt(0)}
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    {/* Review Content */}
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center justify-between mb-2">
-                                                            <div>
-                                                                <h4 className="font-semibold text-white flex items-center gap-2">
-                                                                    {review.userName}
-                                                                    {review.email === session?.user?.email && (
-                                                                        <Badge variant="outline" className="text-xs border-gold text-gold">You</Badge>
-                                                                    )}
-                                                                </h4>
-                                                                <p className="text-sm text-gray-400">
-                                                                    {new Date(review.createdAt).toLocaleDateString('en-US', {
-                                                                        year: 'numeric',
-                                                                        month: 'long',
-                                                                        day: 'numeric'
-                                                                    })}
-                                                                </p>
-                                                            </div>
-                                                            <div className="flex items-center gap-1">
-                                                                {[...Array(5)].map((_, i) => (
-                                                                    <Star
-                                                                        key={i}
-                                                                        className={`w-4 h-4 ${i < review.rating
-                                                                            ? 'fill-gold text-gold'
-                                                                            : 'fill-gray-700 text-gray-700'
-                                                                            }`}
-                                                                    />
-                                                                ))}
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="relative">
-                                                            <Quote className="absolute -left-1 -top-1 w-6 h-6 text-gold/20" />
-                                                            <p className="text-gray-300 leading-relaxed pl-6">{review.comment}</p>
-                                                        </div>
-
-                                                        {/* Review Images */}
-                                                        {review.images && review.images.length > 0 && (
-                                                            <div className="mt-4 flex gap-2">
-                                                                {review.images.map((img, idx) => (
-                                                                    <img
-                                                                        key={idx}
-                                                                        src={img}
-                                                                        alt={`Review image ${idx + 1}`}
-                                                                        className="w-24 h-24 rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                                                                        onClick={() => openLightbox(review.images || [], idx)}
-                                                                    />
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                                <ReviewFeed reviews={visibleReviews} tripId={trip.id} />
                             )}
                         </div>
 
