@@ -1,7 +1,7 @@
 import React from "react";
 import type { EditTrip } from "@/types/Trip";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pencil, Trash2, Eye, Calendar, MapPin, Users, IndianRupee } from "lucide-react";
+import { Pencil, Trash2, Eye, Calendar, MapPin, Users, IndianRupee, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "@/hooks/use-toast";
 
 interface TripItemsProps {
   trips: EditTrip[];
@@ -193,6 +194,24 @@ const TripItems: React.FC<TripItemsProps> = ({
                   Bookings
                 </Button>
               </Link>
+
+              {/* Copy Review Link */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const url = `${window.location.origin}/trip/${trip.id}/review`;
+                  navigator.clipboard.writeText(url);
+                  toast({
+                    title: "Link Copied!",
+                    description: "Guest review link copied to clipboard.",
+                  });
+                }}
+                className="flex items-center gap-2 border-white/10 text-gray-300 hover:bg-white/5"
+              >
+                <Copy className="w-4 h-4" />
+                Review Link
+              </Button>
 
               {/* Delete Trip */}
               <Button
