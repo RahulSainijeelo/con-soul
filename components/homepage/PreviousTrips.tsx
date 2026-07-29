@@ -20,6 +20,7 @@ interface Review {
     comment: string;
     tripId: string;
     tripName?: string;
+    certifiedHighlight?: string;
     status: string;
 }
 
@@ -176,7 +177,7 @@ export function PreviousTrips() {
                                                         <div className="relative flex-grow">
                                                             <Quote className="absolute -top-1 -left-1 w-3 h-3 text-gold/20" />
                                                             <p className="text-sm text-gray-300 italic leading-relaxed line-clamp-4 pl-4">
-                                                                "{review.comment}"
+                                                                "{review.certifiedHighlight || review.comment}"
                                                             </p>
                                                         </div>
                                                     </CardContent>

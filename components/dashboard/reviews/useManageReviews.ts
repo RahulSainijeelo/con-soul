@@ -10,6 +10,15 @@ export type ExtendedReview = {
   comment: string;
   time: string;
   images: string[];
+  vibeTags?: string[];
+  squadChemistry?: number;
+  consoulHost?: number;
+  tripVibe?: number;
+  certifiedHighlight?: string;
+  personalityBadge?: string;
+  fomoScore?: string;
+  honestTake?: string;
+  likes?: number;
   status: "approved" | "pending" | "rejected";
 };
 
