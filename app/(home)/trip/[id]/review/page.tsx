@@ -3,9 +3,11 @@ import { db } from "@/config/firebase";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-export default async function GuestReviewPage({ params }: { params: { id: string } }) {
+export default async function GuestReviewPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    
     // Verify trip exists server-side before rendering
-    const tripSnapshot = await db.collection("trips").doc(params.id).get();
+    const tripSnapshot = await db.collection("trips").doc(id).get();
     
     if (!tripSnapshot.exists) {
         notFound();
@@ -39,7 +41,7 @@ export default async function GuestReviewPage({ params }: { params: { id: string
                 </div>
 
                 {/* Form Component */}
-                <ReviewForm tripId={params.id} isGuest={true} />
+                <ReviewForm tripId={id} isGuest={true} />
             </div>
         </div>
     );
