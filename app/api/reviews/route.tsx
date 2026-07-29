@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       return {
         id: doc.id,
         tripId: docData.tripId,
-        name: docData.name || docData.userName || "Anonymous",
+        userName: docData.name || docData.userName || "Anonymous",
         userImage: docData.userImage || null,
         rating: docData.rating,
         comment: docData.comment,
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
       const bookingsSnapshot = await db.collection("bookings")
         .where("email", "==", session.user.email)
         .where("tripId", "==", data.tripId)
-        .where("status", "==", "confirmed")
+        .where("status", "in", ["confirmed", "registrationConfirmed"])
         .get();
 
       if (bookingsSnapshot.empty) {

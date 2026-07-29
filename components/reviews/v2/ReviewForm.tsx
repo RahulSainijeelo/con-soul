@@ -56,7 +56,6 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
     const [honestTake, setHonestTake] = useState('');
     
     // Images
-    const [images, setImages] = useState<File[]>([]);
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [uploadingImages, setUploadingImages] = useState(false);
 
@@ -97,7 +96,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
             
             try {
                 // Assuming standard ImgBB upload path based on codebase context
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=67fbb2ecb62d8479e0f2f3dae5dcb17a`, {
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
                     method: 'POST',
                     body: formData
                 });

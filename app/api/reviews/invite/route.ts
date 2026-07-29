@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
     await db.collection("reviews").add({
       tripId: data.tripId,
       name: data.name,
+      userName: data.name,
       email: data.email,
       phone: data.phone,
       rating: data.rating,

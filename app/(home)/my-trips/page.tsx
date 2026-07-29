@@ -31,7 +31,7 @@ interface Trip {
 interface Booking {
     id: string;
     tripId: string;
-    status: 'pending' | 'confirmed' | 'rejected';
+    status: 'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed';
     createdAt: string;
     trip: Trip;
     seatNumber?: string;
@@ -86,12 +86,15 @@ export default function MyTripsPage() {
     }, [status]);
 
     // Filter bookings based on active tab
-    const upcomingTrips = allBookings.filter(booking => {
-        return ['published', 'ongoing', 'active'].includes(booking.trip.status);
-    });
+    const pastStatuses = ['completed', 'cancelled', 'archived'];
 
     const pastTrips = allBookings.filter(booking => {
-        return ['completed', 'cancelled', 'archived'].includes(booking.trip.status);
+        return booking.trip && pastStatuses.includes(booking.trip.status);
+    });
+
+    // Upcoming = everything that isn't past (so no booking ever falls through the cracks)
+    const upcomingTrips = allBookings.filter(booking => {
+        return booking.trip && !pastStatuses.includes(booking.trip.status);
     });
 
     const currentTrips = activeTab === 'upcoming' ? upcomingTrips : pastTrips;

@@ -102,13 +102,18 @@ export async function POST(
         const tripRef2 = db.collection("trips").doc(tripId);
         const tripDoc = await tripRef2.get();
         const tripData = tripDoc.data();
+        const formatDate = (dateStr: string) => {
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        };
+
         await sendBookingConfirmationEmail({
             email: booking?.email,
             fullName: booking?.fullName,
             tripName: tripData?.title || tripData?.name || "Your Trip",
             tripDestination: tripData?.destination,
             tripDates: tripData?.startDate && tripData?.endDate
-                ? `${tripData.startDate} – ${tripData.endDate}`
+                ? `${formatDate(tripData.startDate)} – ${formatDate(tripData.endDate)}`
                 : undefined,
             amount: totalAmount,
             amountPaid: totalAmount,

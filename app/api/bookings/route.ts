@@ -121,13 +121,18 @@ export async function POST(request: NextRequest) {
         // Send confirmation email — awaited so Vercel lambda doesn't kill it before it sends
         const tripDoc = await tripRef.get();
         const tripData = tripDoc.data();
+        const formatDate = (dateStr: string) => {
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        };
+
         await sendBookingConfirmationEmail({
             email: bookingData.email,
             fullName: bookingData.fullName,
             tripName: tripData?.title || tripData?.name || "Your Trip",
             tripDestination: tripData?.destination,
             tripDates: tripData?.startDate && tripData?.endDate
-                ? `${tripData.startDate} – ${tripData.endDate}`
+                ? `${formatDate(tripData.startDate)} – ${formatDate(tripData.endDate)}`
                 : undefined,
             amount: bookingData.amount,
             amountPaid: bookingData.amountPaid,
