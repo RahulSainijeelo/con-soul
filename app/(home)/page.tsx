@@ -7,14 +7,14 @@ import Header from "@/components/layout/Header";
 import BottomTabBar from "@/components/layout/BottomTabBar";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Welcome to Con-Soul,Find Your Next Adventure",
-  keywords: 'Night Life, Travel, Adventure, Fun',
+  title: "CONSOUL | Youth Group Travel India — Himalayas, Goa, Rajasthan & More",
+  description: "CONSOUL is India's #1 youth group travel platform. Join 300+ young travelers on curated group trips to Himalayas, Goa, Rajasthan, Kerala & more. Book your next adventure at con-soul.in",
+  keywords: 'consoul, con-soul, youth group travel india, group trips india, adventure travel, himalayas trip, goa group trip, rajasthan travel, kerala backpacking, budget travel india, young travelers india',
   openGraph: {
-    title: "Home",
-    description: "Welcome to Con-Soul,Find Your Next Adventure",
+    title: "CONSOUL | Youth Group Travel India",
+    description: "India's youth group travel platform. Join 300+ travelers on curated group trips across Himalayas, Goa, Rajasthan & Kerala.",
     type: 'website',
-    url: process.env.NEXT_PUBLIC_SITE_URL,
+    url: "https://con-soul.in",
   },
 };
 

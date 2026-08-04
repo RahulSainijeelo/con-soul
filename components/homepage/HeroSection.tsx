@@ -19,24 +19,33 @@ export function HeroSection() {
 
             {/* Content */}
             <div className="relative z-10 md:!pt-16 flex h-screen items-center justify-center text-center px-4">
-                {/* Main Heading Only */}
-                <h1
-                    style={{ fontFamily: 'var(--heading-bold)' }}
-                    className="text-5xl sm:text-5xl md:text-8xl lg:text-9xl xl:text-[9.2rem] xl:padding-top-[85px] font-bold tracking-[0.05em] leading-[1.1] animate-slide-up"
-                >
-                    <span className="block text-white mb-6 " style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
-                        Discover Your
-                    </span>
-                    <span
-                        className="block text-gold"
-                        style={{
-                            textShadow: '0 0 30px rgba(255, 215, 0, 0.5), 0 2px 20px rgba(0,0,0,0.5)',
-                            filter: 'brightness(1.2)'
-                        }}
+                <div className="flex flex-col items-center">
+                    {/* Main Heading Only */}
+                    <h1
+                        style={{ fontFamily: 'var(--heading-bold)' }}
+                        className="text-5xl sm:text-5xl md:text-8xl lg:text-9xl xl:text-[9.2rem] xl:padding-top-[85px] font-bold tracking-[0.05em] leading-[1.1] animate-slide-up"
                     >
-                        Next Adventure
-                    </span>
-                </h1>
+                        <span className="block text-white mb-6 " style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
+                            CONSOUL — Discover Your
+                        </span>
+                        <span
+                            className="block text-gold"
+                            style={{
+                                textShadow: '0 0 30px rgba(255, 215, 0, 0.5), 0 2px 20px rgba(0,0,0,0.5)',
+                                filter: 'brightness(1.2)'
+                            }}
+                        >
+                            Next Adventure
+                        </span>
+                    </h1>
+                    
+                    <p className="sr-only">
+                        CONSOUL is India's youth group travel platform organising 
+                        group trips across India. We have served 300+ travelers 
+                        across Himalayas, Goa, Rajasthan and Kerala. 
+                        Book your next group adventure at con-soul.in
+                    </p>
+                </div>
             </div>
         </section>
     );

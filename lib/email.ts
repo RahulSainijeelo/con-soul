@@ -46,8 +46,8 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
     const statusBg = isFullyConfirmed ? "#f0fdf4" : "#fffbeb";
 
     const subject = isFullyConfirmed
-        ? `🎉 Booking Confirmed – ${tripName} | Con-Soul Travel`
-        : `✅ Registration Received – ${tripName} | Con-Soul Travel`;
+        ? `🎉 Booking Confirmed – ${tripName} | CONSOUL Travel`
+        : `✅ Registration Received – ${tripName} | CONSOUL Travel`;
 
     const html = `
 <!DOCTYPE html>
@@ -66,8 +66,8 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
           <!-- HEADER -->
           <tr>
             <td style="background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 100%);padding:32px 40px;text-align:center;border-bottom:1px solid #2a2a2a;">
-              <img src="${logoUrl}" alt="Con-Soul Travel" width="60" height="60" style="border-radius:50%;object-fit:cover;margin-bottom:12px;display:block;margin:0 auto 12px auto;" />
-              <h1 style="margin:0;font-size:24px;font-weight:700;color:#D4AF37;letter-spacing:2px;text-transform:uppercase;">Con-Soul Travel</h1>
+              <img src="${logoUrl}" alt="CONSOUL Travel" width="60" height="60" style="border-radius:50%;object-fit:cover;margin-bottom:12px;display:block;margin:0 auto 12px auto;" />
+              <h1 style="margin:0;font-size:24px;font-weight:700;color:#D4AF37;letter-spacing:2px;text-transform:uppercase;">CONSOUL Travel</h1>
               <p style="margin:4px 0 0;font-size:12px;color:#888;letter-spacing:1px;text-transform:uppercase;">Experience the Journey</p>
             </td>
           </tr>
@@ -87,7 +87,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
               <h2 style="margin:0 0 8px;font-size:22px;color:#ffffff;font-weight:600;">Hey ${fullName}! 👋</h2>
               <p style="margin:0;font-size:15px;color:#aaaaaa;line-height:1.6;">
                 ${isFullyConfirmed
-                    ? "Fantastic news! Your booking is fully confirmed. Get ready for an incredible adventure with Con-Soul Travel!"
+                    ? "Fantastic news! Your booking is fully confirmed. Get ready for an incredible adventure with CONSOUL Travel!"
                     : "Great news! We've received your registration. Your spot is reserved — complete your remaining payment to lock in your booking."
                 }
               </p>
@@ -188,7 +188,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
             <td style="padding:32px 40px;text-align:center;border-top:1px solid #2a2a2a;margin-top:28px;">
               <p style="margin:0 0 8px;font-size:13px;color:#555;">Need help? Contact us at</p>
               <a href="mailto:${process.env.NEXT_EMAIL_ADD}" style="color:#D4AF37;font-size:13px;text-decoration:none;">${process.env.NEXT_EMAIL_ADD}</a>
-              <p style="margin:16px 0 0;font-size:11px;color:#444;">© ${new Date().getFullYear()} Con-Soul Travel. All rights reserved.</p>
+              <p style="margin:16px 0 0;font-size:11px;color:#444;">© ${new Date().getFullYear()} CONSOUL Travel. All rights reserved.</p>
               <p style="margin:4px 0 0;font-size:11px;color:#333;">This is an automated email. Please do not reply directly.</p>
             </td>
           </tr>
@@ -201,7 +201,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
 </html>`;
 
     await transporter.sendMail({
-        from: `"Con-Soul Travel" <${process.env.NEXT_EMAIL_ADD}>`,
+        from: `"CONSOUL Travel" <${process.env.NEXT_EMAIL_ADD}>`,
         to: email,
         subject,
         html,

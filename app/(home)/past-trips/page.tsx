@@ -8,8 +8,8 @@ import BottomTabBar from '@/components/layout/BottomTabBar';
 import { db } from '@/config/firebase';
 
 export const metadata: Metadata = {
-    title: 'Past Trips - ConSoul Travel',
-    description: 'Explore our completed trips and read reviews from happy travelers who have experienced amazing adventures with us.',
+    title: 'Past Trips & Reviews - CONSOUL Travel',
+    description: 'Explore completed group trips by CONSOUL and read reviews from 300+ happy travelers across Himalayas, Goa, Rajasthan and Kerala.',
 };
 
 // Force dynamic rendering so completed trips show up immediately after status change

@@ -49,9 +49,9 @@ export async function POST(request: NextRequest) {
 
         // Send email via Nodemailer
         await transporter.sendMail({
-            from: `"Con-Soul Travel" <${process.env.NEXT_EMAIL_ADD}>`,
+            from: `"CONSOUL Travel" <${process.env.NEXT_EMAIL_ADD}>`,
             to: email,
-            subject: "Con-Soul - Password Reset Code",
+            subject: "CONSOUL - Password Reset Code",
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaec; border-radius: 10px;">
                     <h2 style="color: #FFD700; text-align: center; background-color: #000; padding: 15px; border-radius: 5px;">Password Reset Request</h2>

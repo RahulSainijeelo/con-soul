@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 md:py-16 py-8">
         <div className="flex items-center justify-center">
           <h2 style={{ fontFamily: 'var(--heading-bold)' }} className="text-5xl tracking-[0.5rem] md:text-6xl lg:text-[12rem] font-display font-black text-gold/20">
-            CON-SOUL
+            CONSOUL
           </h2>
         </div>
       </div>
@@ -25,7 +25,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}
             <p className="text-sm text-gray-400">
-              © {currentYear} Consol. All rights reserved.
+              © {currentYear} CONSOUL. All rights reserved.
             </p>
 
             {/* Social Icons */}

@@ -57,7 +57,7 @@ export default function SignInPage() {
       {/* Bottom Branding */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-10">
         <p className="text-sm text-gray-500">
-          © 2025 Con-Soul . All rights reserved.
+          © 2025 CONSOUL . All rights reserved.
         </p>
       </div>
     </div>

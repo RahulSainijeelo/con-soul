@@ -4,7 +4,7 @@ import { db } from "@/config/firebase";
 export async function GET() {
     try {
         const profileData = {
-            name: "Con-Soul Admin",
+            name: "CONSOUL Admin",
             bio: "Expeditions for the Soul",
             photo: "",
             phoneNumbers: ["+91-9876543210"],

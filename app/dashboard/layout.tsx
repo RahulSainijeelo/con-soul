@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { DashboardClientWrapper } from "./DashboardClientWrapper";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Con-Soul",
-  description: "dashboard for managing Con-Soul services and content",
+  title: "Dashboard - CONSOUL",
+  description: "dashboard for managing CONSOUL services and content",
 };
 
 export default function DashboardLayout({

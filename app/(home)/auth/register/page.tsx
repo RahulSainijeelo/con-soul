@@ -74,7 +74,7 @@ export default function RegisterPage() {
 
                 <div className="w-full max-w-md relative z-10">
                     <div className="text-center mb-10">
-                        <h1 className="text-4xl font-display font-bold text-gold mb-2">Join ConSol</h1>
+                        <h1 className="text-4xl font-display font-bold text-gold mb-2">Join CONSOUL</h1>
                         <p className="text-gray-400">Start your journey to exclusive destinations</p>
                     </div>
 

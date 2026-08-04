@@ -11,7 +11,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import "./globals.css";
 
-export const dynamic = 'force-dynamic';
+
 const primaryFont = localFont({
   src: '../public/fonts/seb-neue/SebneueRegular-eAGm.otf',
   variable: '--fpr1',
@@ -42,81 +42,32 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://con-soul.in'),
-
+  metadataBase: new URL('https://con-soul.in'),
   title: {
-    default: "con-soul | Expeditions for the Soul",
-    template: "%s | Con-Soul"
+    default: "CONSOUL | Youth Group Travel India",
+    template: "%s | CONSOUL"
   },
-  description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
-
-  keywords: [
-    "travel", "expeditions", "adventure", "soul journeys", "con-soul", "trips", "tours", "spiritual travel", "cultural expeditions"
-  ],
-
-  authors: [
-    { name: "con-soul Team" },
-    { name: "Antaryah" }
-  ],
-  creator: "con-soul",
-  publisher: "con-soul",
-
+  description: "CONSOUL is India's youth group travel platform. Group trips across Himalayas, Goa, Rajasthan and more. Join 300+ travelers at con-soul.in",
+  keywords: "consoul, con-soul, youth group travel india, group trips india, consoul travel, adventure trips india, himalayas trip, goa group trip, rajasthan travel, kerala backpacking",
+  authors: [{ name: "CONSOUL" }],
+  creator: "CONSOUL",
+  publisher: "CONSOUL",
   alternates: {
-    canonical: '/',
+    canonical: "https://con-soul.in",
   },
-
-  // Open Graph
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: '/',
-    title: "con-soul | Expeditions for the Soul",
-    description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
-    siteName: 'con-soul',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'con-soul Expeditions',
-        type: 'image/jpeg',
-      }
-    ],
+    title: "CONSOUL | Youth Group Travel India",
+    description: "India's youth group travel platform. Group trips across Himalayas, Goa, Rajasthan and more for young explorers.",
+    url: "https://con-soul.in",
+    siteName: "CONSOUL",
+    type: "website",
+    locale: "en_IN",
   },
-
-  // Twitter Card
   twitter: {
     card: 'summary_large_image',
-    site: '@con-soul',
-    creator: '@con-soul',
-    title: "con-soul | Expeditions for the Soul",
-    description: "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
-    images: ['/twitter-image.jpg'],
+    title: "CONSOUL | Youth Group Travel India",
+    description: "India's youth group travel platform. Group trips across Himalayas, Goa, Rajasthan and more for young explorers.",
   },
-
-  // App-specific
-  applicationName: 'con-soul',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'con-soul',
-  },
-
-  // Verification
-  verification: {
-    google: process.env.GOOGLE_VERIFICATION_ID,
-    yandex: process.env.YANDEX_VERIFICATION_ID,
-    other: {
-      'facebook-domain-verification': process.env.FACEBOOK_VERIFICATION_ID || '',
-      'pinterest-site-verification': process.env.PINTEREST_VERIFICATION_ID || '',
-    },
-  },
-
-  // Additional metadata
-  category: 'travel',
-  classification: 'travel agency',
-
-  // Robots
   robots: {
     index: true,
     follow: true,
@@ -124,7 +75,7 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
       'max-video-preview': -1,
-      'max-image-preview': 'large',
+      'max-image-preview': 'large' as const,
       'max-snippet': -1,
     },
   },
@@ -132,15 +83,10 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/site.webmanifest',
-  other: {
-    'google-site-verification': process.env.GOOGLE_VERIFICATION_ID || '',
-    'msvalidate.01': process.env.BING_VERIFICATION_ID || '',
-    'yandex-verification': process.env.YANDEX_VERIFICATION_ID || '',
-    'p:domain_verify': process.env.PINTEREST_VERIFICATION_ID || '',
-  },
-
+  category: 'travel',
 };
+
+
 
 export default function RootLayout({
   children,
@@ -150,8 +96,8 @@ export default function RootLayout({
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
-    "name": "con-soul",
-    "alternateName": "con-soul Expeditions",
+    "name": "CONSOUL",
+    "alternateName": "CONSOUL Expeditions",
     "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.in",
     "logo": {
       "@type": "ImageObject",
@@ -159,16 +105,16 @@ export default function RootLayout({
       "width": 512,
       "height": 512
     },
-    "description": "Join con-soul for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
+    "description": "Join CONSOUL for immersive travel experiences. Discover your next adventure with our curated expeditions and journeys designed for the soul.",
     "foundingDate": "2024",
     "founder": {
       "@type": "Person",
-      "name": "con-soul Team"
+      "name": "CONSOUL Team"
     },
     "sameAs": [
-      "https://instagram.com/con-soul",
-      "https://facebook.com/con-soul",
-      "https://twitter.com/con-soul"
+      "https://instagram.com/consoul.in",
+      "https://facebook.com/consoul.in",
+      "https://twitter.com/consoul"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -186,13 +132,13 @@ export default function RootLayout({
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "con-soul",
+    "name": "CONSOUL",
     "url": process.env.NEXT_PUBLIC_SITE_URL || "https://con-soul.in",
     "description": "Expeditions for the Soul",
     "inLanguage": ["en-US"],
     "publisher": {
       "@type": "Organization",
-      "name": "con-soul",
+      "name": "CONSOUL",
       "logo": {
         "@type": "ImageObject",
         "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`

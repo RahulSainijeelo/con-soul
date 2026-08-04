@@ -4,8 +4,8 @@ import Footer from '@/components/layout/Footer';
 import { Award, Globe, Shield, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: "About Us - ConSol Premium Travel",
-  description: "Experience the world's most exclusive destinations with ConSol. Luxury travel redefined.",
+  title: "About CONSOUL — India's Youth Group Travel Platform",
+  description: "CONSOUL organises curated youth group trips across India — from Himalayas to Goa, Rajasthan to Kerala. Learn about our mission and join 300+ happy travelers.",
 };
 
 export default function AboutPage() {
@@ -37,7 +37,7 @@ export default function AboutPage() {
             </h2>
             <div className="w-24 h-1 bg-gold mb-8" />
             <p className="text-gray-400 text-lg leading-relaxed mb-6">
-              At ConSol, we believe that travel is not just about moving from one place to another; it's about the transformation that happens along the way. Our mission is to provide experiences that touch the soul and create memories that last a lifetime.
+              At CONSOUL, we believe that travel is not just about moving from one place to another; it's about the transformation that happens along the way. Our mission is to provide experiences that touch the soul and create memories that last a lifetime.
             </p>
             <p className="text-gray-400 text-lg leading-relaxed">
               Every trip is meticulously crafted to ensure the highest standards of luxury, safety, and authenticity. From private island retreats to guided expeditions in the world's most remote corners, we open doors to the extraordinary.
