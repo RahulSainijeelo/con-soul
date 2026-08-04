@@ -30,7 +30,7 @@ export default async function HomePage() {
 
       {/* Scrollable Content */}
       <div className="relative z-10" style={{ marginTop: '100vh' }}>
-        <div className="bg-black" style={{ borderRadius: "40px 40px 0 0", boxShadow: "0px -6px 18px 2px rgba(255,255,255,0.62)" }}>
+        <div id="upcoming-trips" className="bg-black" style={{ borderRadius: "40px 40px 0 0", boxShadow: "0px -6px 18px 2px rgba(255,255,255,0.62)" }}>
           <UpcomingTrips />
           <PreviousTrips />
           <div className="flex justify-center pb-10">
