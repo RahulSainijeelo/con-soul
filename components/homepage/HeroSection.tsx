@@ -22,11 +22,14 @@ export function HeroSection() {
                 <div className="flex flex-col items-center">
                     {/* Main Heading Only */}
                     <h1
-                        style={{ fontFamily: 'var(--heading-bold)' }}
-                        className="text-5xl sm:text-5xl md:text-8xl lg:text-9xl xl:text-[9.2rem] xl:padding-top-[85px] font-bold tracking-[0.05em] leading-[1.1] animate-slide-up"
+                        style={{ fontFamily: 'var(--fpr1-bold)' }}
+                        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[7rem] xl:padding-top-[85px] font-bold tracking-tight leading-[1.1] animate-slide-up"
                     >
-                        <span className="block text-white mb-6 " style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
-                            CONSOUL — Discover Your
+                        <span className="block text-gold text-lg sm:text-xl md:text-2xl mb-4 tracking-[0.2em] uppercase" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+                            CONSOUL
+                        </span>
+                        <span className="block text-white mb-2 md:mb-6" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
+                            Discover Your
                         </span>
                         <span
                             className="block text-gold"
