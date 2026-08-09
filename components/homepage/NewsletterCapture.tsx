@@ -25,7 +25,7 @@ export function NewsletterCapture() {
   };
 
   return (
-    <section className="py-24 px-4 md:px-8 bg-zinc-950 relative z-[60] overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+    <section className="py-24 px-4 md:px-8 bg-zinc-900 relative z-[60] overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
       {/* Background Gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-brand/10" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand/10 blur-[120px] rounded-full pointer-events-none" />

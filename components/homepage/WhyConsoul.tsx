@@ -32,7 +32,7 @@ export function WhyConsoul() {
   ];
 
   return (
-    <section className="py-24 px-4 md:px-8 bg-black relative z-30" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+    <section className="py-24 px-4 md:px-8 bg-zinc-950 relative z-30" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
