@@ -23,8 +23,8 @@ export default function BottomTabBar() {
         tabs.push({ name: firstName, href: "/profile", icon: User })
     }
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur border-t border-white/10 md:hidden">
-            <div className="grid grid-cols-4 h-16">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl border-t border-white/10 md:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+            <div className="grid grid-cols-4 h-[68px]">
                 {tabs.map((tab) => {
                     const isActive = pathname === tab.href;
                     const Icon = tab.icon;
@@ -34,14 +34,14 @@ export default function BottomTabBar() {
                             key={tab.name}
                             href={tab.href}
                             className={cn(
-                                "flex flex-col items-center justify-center gap-1 transition-colors",
+                                "flex flex-col items-center justify-center gap-1 transition-colors active:scale-95 active:opacity-70",
                                 isActive
                                     ? "text-gold"
                                     : "text-gray-400 hover:text-gold/80"
                             )}
                         >
                             <Icon className="h-5 w-5" />
-                            <span className="text-xs font-medium">{tab.name}</span>
+                            <span className="text-[11px] font-medium">{tab.name}</span>
                         </Link>
                     );
                 })}

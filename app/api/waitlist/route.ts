@@ -4,6 +4,7 @@ import { z } from "zod";
 
 const waitlistSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
+    destination: z.string().optional(),
 });
 
 // POST /api/waitlist - Subscribe to waitlist
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { email } = result.data;
+        const { email, destination } = result.data;
         const normalizedEmail = email.toLowerCase().trim();
 
         // Check for duplicate
@@ -36,11 +37,11 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Store in Firestore
         await db.collection("waitlist").add({
             email: normalizedEmail,
             createdAt: new Date().toISOString(),
-            source: "hero",
+            source: destination ? `destination_click_${destination}` : "hero",
+            destination: destination || null,
         });
 
         return NextResponse.json(

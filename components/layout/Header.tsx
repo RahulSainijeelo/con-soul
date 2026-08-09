@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
@@ -10,14 +10,25 @@ import { Instagram } from "lucide-react";
 
 export default function Header() {
   const session = useSession();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check initial scroll position
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const insta = { icon: Instagram, href: "https://www.instagram.com/consoul.in", label: "Instagram" }
   const Icon = insta.icon;
   return (
-    <header className="fixed top-0 px-4 py-6 flex justify-end left-0 right-0 z-50 w-full">
-      <div className="container mx-auto flex items-start justify-between">
+    <header className="fixed top-0 px-3 py-3 md:px-4 md:py-6 flex justify-end left-0 right-0 z-50 w-full pointer-events-none">
+      <div className="container mx-auto flex items-start justify-between pointer-events-auto">
         {/* Left Part - Circular Logo (Always visible) */}
-        <Link href="/" className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-full bg-white/95 backdrop-blur-md border border-black/10 flex items-center justify-center hover:border-gold/50 transition-all duration-300 shadow-lg hover:shadow-gold/20">
+        <Link href="/" className="flex-shrink-0 transition-opacity duration-700 opacity-100">
+          <div className="w-11 h-11 md:w-16 md:h-16 rounded-full bg-white/95 backdrop-blur-md border border-black/10 flex items-center justify-center hover:border-gold/50 transition-all duration-300 shadow-lg hover:shadow-gold/20">
             <span
               style={{ fontFamily: 'var(--heading-bold)' }}
               className="text-gold text-lg tracking-wider"

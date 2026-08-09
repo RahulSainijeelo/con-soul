@@ -20,7 +20,7 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
-        brand: '#ea580c',
+        brand: '#e06420',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
