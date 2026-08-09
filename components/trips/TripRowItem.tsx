@@ -4,74 +4,106 @@ import Link from "next/link";
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
 import { EditTrip } from "@/types/Trip";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { ShineBorder } from "../ui/shine-border";
+
 interface TripRowItemProps {
     trip: EditTrip;
     index: number;
 }
 
 export function TripRowItem({ trip, index }: TripRowItemProps) {
+    const formatDate = (dateStr: string) => {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+    };
+
+    const dateRange = `${formatDate(trip.startDate)} - ${formatDate(trip.endDate)}`;
+
     return (
-        <Link href={`/trip/${trip.id}`} className="group block w-full">
-            <div className="flex flex-col md:flex-row gap-8 items-center py-12 border-b border-white/10 last:border-0 group-hover:bg-white/5 transition-colors duration-500 rounded-3xl px-4 md:px-8 relative overflow-hidden">
-                <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} duration={4} borderWidth={3} />
+        <div
+            className="w-full max-w-5xl mx-auto rounded-2xl md:rounded-3xl overflow-hidden border border-white/15"
+            style={{ backgroundColor: "rgba(255, 255, 255, 0.22)", backdropFilter: "blur(20px)" }}
+        >
+            {/* Upcoming badge on wrapper */}
+            <div className="px-3 pt-3 pb-1 md:px-5 md:pt-4 md:pb-2">
+                <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-brand hover:bg-black/80 text-xs font-semibold">
+                    Upcoming
+                </Badge>
+            </div>
 
-                <div className={cn(
-                    "w-full md:w-5/12 overflow-hidden rounded-2xl relative aspect-[4/3] md:aspect-[16/10]",
-                    index % 2 === 1 ? "md:order-2" : "md:order-1"
-                )}>
-                    <img
-                        src={trip.images?.[0]?.url || "/placeholder-trip.jpg"}
-                        alt={trip.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-
-                    {/* Floating Category Tag */}
-                    <div className="absolute top-4 left-4">
-                        <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-[green] hover:bg-black/80">
-                            {"Upcoming"}
-                        </Badge>
+            {/* Two equal cards */}
+            <div className="flex flex-col md:flex-row pt-0 md:pt-2" style={{ gap: '12px', paddingLeft: '12px', paddingRight: '12px', paddingBottom: '12px' }}>
+                {/* Image Card — 50% */}
+                <div className="w-full md:w-1/2">
+                    <div className="rounded-xl md:rounded-2xl overflow-hidden h-full min-h-[180px] md:min-h-[115px]">
+                        <img
+                            src={trip.images?.[0]?.url || "/placeholder-trip.jpg"}
+                            alt={trip.title}
+                            className="w-full h-full object-cover"
+                        />
                     </div>
                 </div>
-                {/* Content Section */}
-                <div className={cn(
-                    "w-full md:w-7/12 space-y-6",
-                    index % 2 === 1 ? "md:order-1 md:pr-12" : "md:order-2 md:pl-12"
-                )}>
-                    <div className="space-y-2">
-                        <div style={{ fontFamily: 'var(--heart)' }} className="flex items-center gap-2 text-gold text-sm font-medium tracking-wider uppercase">
-                            <MapPin className="h-4 w-4" />
-                            <span>{trip.destination}</span>
+
+                {/* Detail Card — 50% */}
+                <div className="w-full md:w-1/2">
+                    <div
+                        className="rounded-xl md:rounded-2xl p-4 md:p-7 h-full flex flex-col justify-between"
+                        style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #0d0906 60%, #1c1008 100%)" }}
+                    >
+                        {/* Destination */}
+                        <div>
+                            <div className="flex items-center gap-2 text-brand text-xs font-semibold tracking-wider uppercase mb-4">
+                                <MapPin className="h-3.5 w-3.5" />
+                                <span style={{ fontFamily: "'Inter', sans-serif" }}>{trip.destination}</span>
+                            </div>
+
+                            {/* Title */}
+                            <h3
+                                className="text-2xl md:text-3xl lg:text-[2.2rem] font-black text-white leading-tight mb-5"
+                                style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif", fontWeight: 900 }}
+                            >
+                                {trip.title}
+                            </h3>
+
+                            {/* Date · Duration · Price */}
+                            <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs text-gray-400 mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
+                                <div className="flex items-center gap-1.5">
+                                    <Calendar className="h-3.5 w-3.5 text-white/30" />
+                                    <span>{dateRange}</span>
+                                </div>
+                                <span className="text-white/15">·</span>
+                                <div className="flex items-center gap-1.5">
+                                    <Clock className="h-3.5 w-3.5 text-white/30" />
+                                    <span>{trip.duration}</span>
+                                </div>
+                                {trip.price && (
+                                    <span className="text-white font-bold text-lg ml-2">
+                                        ₹ {Number(trip.price).toLocaleString("en-IN")}
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
-                        <h3 className="text-3xl md:text-4xl font-display font-bold text-white leading-tight group-hover:text-gold transition-colors duration-300">
-                            {trip.title}
-                        </h3>
-                    </div>
-
-                    <p className="text-gray-400 text-lg leading-relaxed line-clamp-3">
-                        {trip.description}
-                    </p>
-
-                    <div style={{ fontFamily: 'var(--heart)' }} className="flex flex-wrap gap-6 text-sm text-gray-300 pt-4 border-t border-white/10">
-                        <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-gold/70" />
-                            <span>{new Date(trip.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                        {/* CTAs */}
+                        <div className="flex gap-3">
+                            <Link
+                                href={`/trip/${trip.id}`}
+                                className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 text-white text-sm font-bold py-3.5 px-5 md:px-6 rounded-2xl transition-all duration-300 active:scale-95"
+                                style={{ fontFamily: "'Inter', sans-serif", background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)", boxShadow: "0 0 20px rgba(234,88,12,0.3)" }}
+                            >
+                                Book This Trip
+                                <ArrowRight className="h-4 w-4" />
+                            </Link>
+                            <Link
+                                href="/trips"
+                                className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 text-white text-sm font-semibold py-3.5 px-5 md:px-6 rounded-2xl border border-white/15 transition-all duration-300 hover:bg-white/5 active:scale-95"
+                                style={{ fontFamily: "'Inter', sans-serif", backgroundColor: "#111" }}
+                            >
+                                See All Trips
+                            </Link>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4 text-gold/70" />
-                            <span>{trip.duration}</span>
-                        </div>
-                    </div>
-
-                    <div style={{ fontFamily: 'var(--heart)' }} className="pt-4 flex items-center gap-2 text-gold font-medium group/btn">
-                        <span className="group-hover/btn:mr-2 transition-all duration-300">Explore Itinerary</span>
-                        <ArrowRight className="h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" />
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 }

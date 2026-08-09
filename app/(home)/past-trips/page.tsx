@@ -164,12 +164,7 @@ export default async function PastTripsPage() {
                                                 <span>{trip.duration}</span>
                                             </div>
                                         )}
-                                        {trip.currentParticipants && (
-                                            <div className="flex items-center gap-2">
-                                                <Users className="w-4 h-4 text-gold" />
-                                                <span>{trip.currentParticipants} / {trip.maxParticipants} travelers</span>
-                                            </div>
-                                        )}
+
                                     </div>
                                 </CardContent>
 
