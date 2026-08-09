@@ -503,9 +503,6 @@ export default function TripPage() {
                     <div className="flex-1">
                       <p className="text-sm text-gray-400">Group Size</p>
                       <p className="font-medium text-white">Max {trip.maxParticipants} People</p>
-                      {trip.currentParticipants !== undefined && (
-                        <p className="text-xs text-gray-500 mt-1">{trip.currentParticipants} / {trip.maxParticipants} booked</p>
-                      )}
                     </div>
                   </div>
 

@@ -300,12 +300,7 @@ export default function MyTripsPage() {
                                                     <span>{trip.duration}</span>
                                                 </div>
                                             )}
-                                            {activeTab === 'upcoming' && (
-                                                <div className="flex items-center gap-2">
-                                                    <Users className="w-4 h-4 text-gold" />
-                                                    <span>{trip.currentParticipants || 0} / {trip.maxParticipants} travelers</span>
-                                                </div>
-                                            )}
+
                                         </div>
                                     </CardContent>
 

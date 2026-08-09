@@ -4,7 +4,37 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
+
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* Better touch targets */
+a, button {
+  touch-action: manipulation;
+}
+
+/* Custom Scrollbar for horizontal scrolling areas */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 @layer base {
   :root {
     /* Premium Black & Gold Theme */
@@ -44,9 +74,9 @@ html {
     --radius: 0.5rem;
 
     /* Custom Colors */
-    --color-gold: #FFD700;
-    --color-gold-light: #FFE55C;
-    --color-gold-dark: #B8860B;
+    --color-gold: #F0923B;
+    --color-gold-light: #F5A85C;
+    --color-gold-dark: #D4772A;
 
     --color-black: #0a0a0a;
     --color-black-light: #1a1a1a;
@@ -71,12 +101,12 @@ html {
     --color-text-accent: var(--color-gold);
 
     /* Shadows */
-    --shadow-gold: 0 4px 14px 0 rgba(255, 215, 0, 0.39);
+    --shadow-gold: 0 4px 14px 0 rgba(240, 146, 59, 0.35);
 
-    /* Typography */
+    /* Typography — dirham-symbol-font for headings, Inter for body */
     --font-primary: "Inter", sans-serif;
-    --font-heading: "Playfair Display", serif;
-    --font-display: "Cinzel", serif;
+    --font-heading: dirham-symbol-font, Arial, sans-serif;
+    --font-display: dirham-symbol-font, Arial, sans-serif;
   }
 
   .dark {
@@ -139,7 +169,20 @@ p {
 }
 
 .font-display {
-  font-family: var(--heading-bold);
+  font-family: dirham-symbol-font, Arial, sans-serif;
+  font-weight: 800;
+}
+
+/*
+ * Override legacy local-font CSS variables so that any component using
+ * var(--heading-bold), var(--fpr1), var(--fpr1-bold), or var(--heart)
+ * picks up the new unified font system.
+ */
+body {
+  --heading-bold: dirham-symbol-font, Arial, sans-serif;
+  --fpr1: "Inter", sans-serif;
+  --fpr1-bold: "Inter", sans-serif;
+  --heart: "Inter", sans-serif;
 }
 
 .text-gold {

@@ -120,7 +120,7 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
                     {/* Trip Name */}
                     <h1
                         className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-bold text-white leading-[1.1] mb-3 sm:mb-4"
-                        style={{ fontFamily: "'General Sans', var(--fpr1-bold), sans-serif" }}
+                        style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900 }}
                     >
                         {trip.title}
                     </h1>
@@ -236,7 +236,7 @@ function WaitlistState() {
 
                     <h1
                         className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-4"
-                        style={{ fontFamily: "'General Sans', var(--fpr1-bold), sans-serif" }}
+                        style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900 }}
                     >
                         New trips dropping soon
                     </h1>
@@ -387,16 +387,9 @@ export function HeroSection() {
         );
     }
 
-    // Empty state → waitlist
+    // Empty state → hide section entirely (UpcomingTrips below will handle display)
     if (trips.length === 0) {
-        return (
-            <section aria-label="Join waitlist">
-                <WaitlistState />
-                <div className="absolute bottom-6 left-0 right-0 z-20">
-                    <TrustStrip />
-                </div>
-            </section>
-        );
+        return null;
     }
 
     // Single trip → static hero
