@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import {
     Carousel,
     CarouselContent,
@@ -33,78 +32,13 @@ interface Trip {
     category: string;
 }
 
-export function PreviousTrips() {
-    const [reviews, setReviews] = useState<Review[]>([]);
-    const [pastTrips, setPastTrips] = useState<Trip[]>([]);
-    const [loading, setLoading] = useState(true);
+interface PreviousTripsProps {
+    pastTrips: Trip[];
+    reviews: Review[];
+}
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // 1. Fetch Reviews
-                const reviewsRes = await fetch('/api/reviews');
-                let approvedReviews: Review[] = [];
-                if (reviewsRes.ok) {
-                    const data: Review[] = await reviewsRes.json();
-                    approvedReviews = data.filter(r => r.status === 'approved');
-                }
-
-                // 2. Fetch Past Trips
-                const tripsRes = await fetch('/api/trips?status=completed&limit=6');
-                let tripsList: Trip[] = [];
-                let tripsMap: Record<string, string> = {};
-
-                if (tripsRes.ok) {
-                    const tripsData = await tripsRes.json();
-                    tripsList = tripsData.data || [];
-
-                    // Create a map of tripId -> tripTitle for reviews
-                    // Note: We might need to fetch *all* trips to map names for reviews of older trips not in the top 6
-                    // But for now, let's use what we have and maybe fetch specific ones if needed.
-                    // A better approach for reviews is to have the API return trip details or fetch them.
-                    // Let's fetch a larger list for mapping purposes if needed, or just rely on what we get.
-                    // For this implementation, we'll just use the past trips we fetched.
-
-                    // To ensure we have names for reviews, let's fetch a lightweight list of all trips if possible, 
-                    // or just accept that some might be missing if not in the past trips list.
-                    // Actually, let's fetch a separate list for mapping if we want to be robust.
-                    const allTripsRes = await fetch('/api/trips?limit=100');
-                    if (allTripsRes.ok) {
-                        const allTripsData = await allTripsRes.json();
-                        const allTrips = allTripsData.data || [];
-                        allTrips.forEach((t: any) => {
-                            tripsMap[t.id] = t.title;
-                        });
-                    }
-                }
-
-                // Attach trip titles to reviews
-                const reviewsWithTitles = approvedReviews.map(r => ({
-                    ...r,
-                    tripName: tripsMap[r.tripId] || 'A Wonderful Trip'
-                }));
-
-                setReviews(reviewsWithTitles);
-                setPastTrips(tripsList);
-            } catch (error) {
-                console.error("Error loading data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (loading) {
-        return (
-            <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#0a1210] to-[#080e0c] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(16, 185, 129, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
-                <div className="py-20 text-center text-gray-500">Loading memories...</div>
-            </section>
-        );
-    }
-
-    if (reviews.length === 0 && pastTrips.length === 0) {
+export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
+    if (!reviews?.length && !pastTrips?.length) {
         return null;
     }
 
