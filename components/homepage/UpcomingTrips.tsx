@@ -1,48 +1,17 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 import { EditTrip } from "@/types/Trip";
-import { Badge } from "@/components/ui/badge";
 import { TripRowItem } from "@/components/trips/TripRowItem";
 
-export function UpcomingTrips() {
-    const [trips, setTrips] = useState<EditTrip[]>([]);
-    const [loading, setLoading] = useState(true);
+interface UpcomingTripsProps {
+    trips: EditTrip[];
+}
 
-    useEffect(() => {
-        const fetchTrips = async () => {
-            try {
-                const res = await fetch("/api/trips?status=published&limit=5");
-                if (!res.ok) throw new Error("Failed to fetch trips");
-                const data = await res.json();
-                setTrips(data.data || []);
-            } catch (error) {
-                console.error("Error fetching trips:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchTrips();
-    }, []);
-
-    if (loading) {
-        return (
-            <section id="upcoming-trips" className="py-12 md:py-8 bg-[#0a0a0a] relative z-10 min-h-[100svh] md:min-h-[95vh] flex flex-col justify-center" style={{ borderRadius: "20px 20px 0 0" }}>
-                <div className="container mx-auto px-4 flex justify-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-gold" />
-                </div>
-            </section>
-        );
-    }
-
-    if (trips.length === 0) {
-        return null; // Or show a "No upcoming trips" message
+export function UpcomingTrips({ trips }: UpcomingTripsProps) {
+    if (!trips || trips.length === 0) {
+        return null;
     }
 
     return (
-        <section id="upcoming-trips" className="py-12 md:py-8 bg-[#0a0a0a] relative z-10 overflow-hidden min-h-[100svh] md:min-h-[95vh] md:h-auto flex flex-col justify-center" style={{ borderRadius: "20px 20px 0 0" }}>
+        <section id="upcoming-trips" className="py-12 md:py-8 bg-[#0a0a0a] relative z-10 min-h-[100svh] md:min-h-[95vh] flex flex-col justify-center" style={{ borderRadius: "20px 20px 0 0" }}>
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[10%] right-[-10%] w-[600px] h-[600px] bg-gold/5 rounded-full blur-[100px]" />

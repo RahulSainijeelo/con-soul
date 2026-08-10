@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { db } from "@/config/firebase";
 import { StaticHero } from "@/components/homepage/StaticHero";
 import { UpcomingTrips } from "@/components/homepage/UpcomingTrips";
 import { PreviousTrips } from "@/components/homepage/PreviousTrips";
@@ -24,8 +25,55 @@ export const metadata: Metadata = {
   },
 };
 
+// Revalidate this page every 60 seconds so it acts like ISR (Incremental Static Regeneration)
+export const revalidate = 60;
+
+async function getHomepageData() {
+  try {
+    // 1. Fetch Upcoming Trips
+    const upcomingRes = await db.collection("trips")
+      .where("status", "==", "published")
+      .orderBy("createdAt", "desc")
+      .limit(5)
+      .get();
+    const upcomingTrips = upcomingRes.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+
+    // 2. Fetch Past Trips
+    const pastRes = await db.collection("trips")
+      .where("status", "==", "completed")
+      .orderBy("createdAt", "desc")
+      .limit(6)
+      .get();
+    const pastTrips = pastRes.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+
+    // 3. Fetch Reviews
+    const reviewsRes = await db.collection("reviews")
+      .where("status", "==", "approved")
+      .get();
+    
+    // Create a map for trip titles just for the reviews
+    const tripsMap: Record<string, string> = {};
+    pastTrips.forEach((t: any) => { tripsMap[t.id] = t.title; });
+
+    const reviews = reviewsRes.docs.map(doc => {
+      const data = doc.data() as any;
+      return {
+        id: doc.id,
+        ...data,
+        tripName: tripsMap[data.tripId] || 'A Wonderful Trip'
+      };
+    }) as any[];
+
+    return { upcomingTrips, pastTrips, reviews };
+  } catch (error) {
+    console.error("Failed to fetch homepage data:", error);
+    return { upcomingTrips: [], pastTrips: [], reviews: [] };
+  }
+}
 
 export default async function HomePage() {
+  const { upcomingTrips, pastTrips, reviews } = await getHomepageData();
+
   return (
     <main className="relative min-h-screen bg-black">
 
@@ -54,7 +102,7 @@ export default async function HomePage() {
 
           {/* 2. Upcoming Trips List */}
           <div className="mb-12 md:mb-0">
-            <UpcomingTrips />
+            <UpcomingTrips trips={upcomingTrips} />
           </div>
 
           {/* 3. Destination Grid */}
@@ -67,7 +115,7 @@ export default async function HomePage() {
           <StrangersSection />
 
           {/* 6. Past Trips Gallery — Social Proof */}
-          <PreviousTrips />
+          <PreviousTrips pastTrips={pastTrips} reviews={reviews} />
 
           {/* 7. Newsletter / Lead Capture */}
           <NewsletterCapture />
