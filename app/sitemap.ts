@@ -42,7 +42,7 @@ export default async function sitemap() {
   try {
     const tripsSnapshot = await db.collection('trips').get();
     tripPages = tripsSnapshot.docs.map((doc) => ({
-      url: `${baseUrl}/trip/${doc.id}`,
+      url: `${baseUrl}/past-trips/${doc.id}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,

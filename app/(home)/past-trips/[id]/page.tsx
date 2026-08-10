@@ -190,6 +190,30 @@ export default function PastTripPage() {
     return (
         <>
             <div className="min-h-screen bg-black pb-16 md:pb-0">
+                {/* TouristTrip Schema for SEO */}
+                {trip && (
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "TouristTrip",
+                            "name": trip.title,
+                            "description": trip.description,
+                            "touristType": "Youth group travelers",
+                            "offers": {
+                                "@type": "Offer",
+                                "price": trip.price,
+                                "priceCurrency": "INR",
+                                "availability": "https://schema.org/SoldOut"
+                            },
+                            "provider": {
+                                "@type": "TravelAgency",
+                                "name": "CONSOUL",
+                                "url": "https://con-soul.in"
+                            }
+                        }) }}
+                    />
+                )}
                 <Header />
 
                 {/* Hero Image Section */}
