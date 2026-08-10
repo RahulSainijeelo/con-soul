@@ -1,16 +1,16 @@
 {
-  "name": "Cou-Soul",
-  "short_name": "Con-Soul",
-  "description": "Your Trusted Travlling Parner",
+  "name": "CONSOUL",
+  "short_name": "CONSOUL",
+  "description": "India's youth group travel platform. Curated group trips to Himalayas, Goa, Rajasthan & Kerala.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#0c0c0c",
   "theme_color": "#ea580c",
   "orientation": "portrait",
   "categories": [
     "travel",
     "lifestyle",
-    "luxury"
+    "adventure"
   ],
   "lang": "en-IN"
 }
