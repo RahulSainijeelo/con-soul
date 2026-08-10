@@ -105,7 +105,7 @@ export function PreviousTrips() {
     }
 
     return (
-        <section className="py-24 bg-gradient-to-b from-[#0a1210] to-[#080e0c] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(16, 185, 129, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
+        <section className="py-24 -mt-[30px] md:mt-6 bg-gradient-to-b from-[#0a1210] to-[#080e0c] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(16, 185, 129, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]" />
