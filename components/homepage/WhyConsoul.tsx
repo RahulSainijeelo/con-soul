@@ -32,8 +32,10 @@ export function WhyConsoul() {
   ];
 
   return (
-    <section className="py-24 px-4 md:px-8 bg-zinc-950 relative z-30" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 px-4 md:px-8 bg-gradient-to-b from-[#120f0a] to-[#0c0a08] relative z-30 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(234, 88, 12, 0.1)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
             Why Travel With CONSOUL

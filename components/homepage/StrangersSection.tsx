@@ -26,9 +26,9 @@ const stories = [
 
 export function StrangersSection() {
   return (
-    <section className="py-24 bg-zinc-900/60 relative z-40 overflow-hidden backdrop-blur-2xl" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
+    <section className="py-24 bg-gradient-to-b from-[#0f0a12] to-[#0a080d] relative z-40 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(168, 85, 247, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

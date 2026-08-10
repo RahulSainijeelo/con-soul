@@ -105,11 +105,11 @@ export function PreviousTrips() {
     }
 
     return (
-        <section className="py-24 bg-zinc-950/95 relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
+        <section className="py-24 bg-gradient-to-b from-[#0a1210] to-[#080e0c] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(16, 185, 129, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px]" />
+                <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]" />
+                <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]" />
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
