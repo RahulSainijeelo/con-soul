@@ -3,13 +3,6 @@ const nextConfig = {
   images: { unoptimized: true },
   async redirects() {
     return [
-      // www → non-www canonical redirect
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.con-soul.in' }],
-        destination: 'https://con-soul.in/:path*',
-        permanent: true,
-      },
       // Old Firestore ID → SEO keyword slugs
       {
         source: '/past-trips/PTAGBlq6mklnL9OewFAC',
