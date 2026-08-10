@@ -29,7 +29,7 @@ export function UpcomingTrips() {
 
     if (loading) {
         return (
-            <section className="py-20 bg-black" style={{ borderRadius: "10px 10px 0 0" }}>
+            <section id="upcoming-trips" className="py-12 md:py-8 bg-[#0a0a0a] relative z-10 min-h-[100svh] md:min-h-[95vh] flex flex-col justify-center" style={{ borderRadius: "20px 20px 0 0" }}>
                 <div className="container mx-auto px-4 flex justify-center">
                     <Loader2 className="h-8 w-8 animate-spin text-gold" />
                 </div>
