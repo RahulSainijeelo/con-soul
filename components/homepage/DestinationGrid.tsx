@@ -252,8 +252,10 @@ export function DestinationGrid() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-zinc-900/70 backdrop-blur-xl relative z-20" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
-      <div className="px-3 md:px-8 max-w-7xl mx-auto">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-[#0d1117] to-[#0a0e14] relative z-20 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", marginTop: "-30px", borderTop: "1px solid rgba(56, 189, 248, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
+      {/* Background glow */}
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="px-3 md:px-8 max-w-7xl mx-auto relative z-10">
       <div className="text-center mb-8 md:mb-12">
         <h2 className="text-3xl md:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
           Explore India

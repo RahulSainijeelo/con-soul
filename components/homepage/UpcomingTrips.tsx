@@ -42,7 +42,7 @@ export function UpcomingTrips() {
     }
 
     return (
-        <section id="upcoming-trips" className="py-12 md:py-8 bg-black/95 relative overflow-hidden min-h-[100svh] md:min-h-[95vh] md:h-auto flex flex-col justify-center" style={{ borderRadius: "20px 20px 0 0" }}>
+        <section id="upcoming-trips" className="py-12 md:py-8 bg-[#0a0a0a] relative z-10 overflow-hidden min-h-[100svh] md:min-h-[95vh] md:h-auto flex flex-col justify-center" style={{ borderRadius: "20px 20px 0 0" }}>
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[10%] right-[-10%] w-[600px] h-[600px] bg-gold/5 rounded-full blur-[100px]" />
