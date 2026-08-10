@@ -32,7 +32,7 @@ export function WhyConsoul() {
   ];
 
   return (
-    <section className="py-24 px-4 md:px-8 -mt-[30px] md:mt-6 bg-gradient-to-b from-[#120f0a] to-[#0c0a08] relative z-30 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(234, 88, 12, 0.1)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
+    <section className="py-24 md:py-28 px-4 md:px-8 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#120f0a] to-[#0c0a08] relative z-30 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(234, 88, 12, 0.1)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
       {/* Background glow */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="max-w-7xl mx-auto relative z-10">
