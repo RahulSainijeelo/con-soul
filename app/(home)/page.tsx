@@ -24,48 +24,10 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD Structured Data for SEO
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "TravelAgency",
-      "@id": "https://con-soul.in/#organization",
-      "name": "CONSOUL",
-      "url": "https://con-soul.in",
-      "logo": "https://con-soul.in/images/logo.png",
-      "description": "India's #1 youth group travel platform. Curated group trips to Himalayas, Goa, Rajasthan, Kerala & more.",
-      "sameAs": [
-        "https://www.instagram.com/consoul.in"
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "300",
-        "bestRating": "5",
-        "worstRating": "1"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://con-soul.in/#website",
-      "url": "https://con-soul.in",
-      "name": "CONSOUL",
-      "publisher": {
-        "@id": "https://con-soul.in/#organization"
-      }
-    }
-  ]
-};
 
 export default async function HomePage() {
   return (
     <main className="relative min-h-screen bg-black">
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
 
       <Header />
 
