@@ -97,7 +97,11 @@ export function PreviousTrips() {
     }, []);
 
     if (loading) {
-        return <div className="py-20 text-center text-gray-500">Loading memories...</div>;
+        return (
+            <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#0a1210] to-[#080e0c] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(16, 185, 129, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
+                <div className="py-20 text-center text-gray-500">Loading memories...</div>
+            </section>
+        );
     }
 
     if (reviews.length === 0 && pastTrips.length === 0) {
