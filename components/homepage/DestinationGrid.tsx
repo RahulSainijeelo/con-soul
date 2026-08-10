@@ -252,7 +252,7 @@ export function DestinationGrid() {
   };
 
   return (
-    <section className="py-16 md:py-24 -mt-[30px] md:mt-6 bg-gradient-to-b from-[#0d1117] to-[#0a0e14] relative z-20 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(56, 189, 248, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
+    <section className="py-16 md:py-28 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#0d1117] to-[#0a0e14] relative z-20 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(56, 189, 248, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
       {/* Background glow */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="px-3 md:px-8 max-w-7xl mx-auto relative z-10">
