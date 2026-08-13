@@ -1,12 +1,13 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, MapPin, Briefcase, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 
-const tabs = [
+const defaultTabs = [
     { name: "Home", href: "/", icon: Home },
     { name: "Past Trips", href: "/past-trips", icon: MapPin },
     { name: "My Trips", href: "/my-trips", icon: Briefcase },
@@ -16,12 +17,15 @@ const tabs = [
 export default function BottomTabBar() {
     const pathname = usePathname();
     const { data: session } = useSession();
-    let firstName = "";
-    if (session && session.user && session.user.name) firstName = session?.user?.name?.split(" ")[0];
-    if (firstName) {
-        tabs.pop();
-        tabs.push({ name: firstName, href: "/profile", icon: User })
-    }
+
+    const tabs = useMemo(() => {
+        const firstName = session?.user?.name?.split(" ")[0];
+        if (!firstName) return defaultTabs;
+        return defaultTabs.map(tab =>
+            tab.href === "/profile" ? { ...tab, name: firstName } : tab
+        );
+    }, [session]);
+
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl border-t border-white/10 md:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
             <div className="grid grid-cols-4 h-[68px]">
@@ -31,7 +35,7 @@ export default function BottomTabBar() {
 
                     return (
                         <Link
-                            key={tab.name}
+                            key={tab.href}
                             href={tab.href}
                             className={cn(
                                 "flex flex-col items-center justify-center gap-1 transition-colors active:scale-95 active:opacity-70",
@@ -49,3 +53,4 @@ export default function BottomTabBar() {
         </nav>
     );
 }
+

@@ -1,26 +1,26 @@
 import Link from "next/link";
-import { Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const destinations = [
-    { name: "Goa", href: "/trips" },
-    { name: "Himalayas", href: "/trips" },
-    { name: "Rajasthan", href: "/trips" },
-    { name: "Kerala", href: "/trips" },
+    { name: "Goa", href: "/past-trips" },
+    { name: "Himalayas", href: "/past-trips" },
+    { name: "Rajasthan", href: "/past-trips" },
+    { name: "Kerala", href: "/past-trips" },
   ];
 
   const company = [
-    { name: "About Us", href: "/contact" },
+    { name: "About Us", href: "/about" },
     { name: "Past Trips", href: "/past-trips" },
     { name: "Contact", href: "/contact" },
   ];
 
   const legal = [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms & Conditions", href: "/terms" },
-    { name: "Refund Policy", href: "/refund" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/privacy-policy" },
+    { name: "Refund Policy", href: "/privacy-policy" },
   ];
 
   return (
