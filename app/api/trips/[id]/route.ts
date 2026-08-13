@@ -19,13 +19,20 @@ function parseDateSafe(dateVal: unknown, fallback?: unknown): string | null {
     }
 }
 
+// Known slug → Firestore ID mappings (from legacy SEO redirects)
+const SLUG_TO_ID: Record<string, string> = {
+    'uttarakhand-mussoorie-rishikesh-7-days': 'PTAGBlq6mklnL9OewFAC',
+    'vizag-araku-beach-adventure-4-days': 'YYUNS3dPVHiCG3knelGj',
+    'mainpat-shimla-chhattisgarh-2-days': 'ABJeA89QviSylm4iQPWP',
+};
+
 // GET /api/trips/[id]
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = await params;
+        let { id } = await params;
 
         if (!id) {
             return NextResponse.json(
@@ -34,8 +41,17 @@ export async function GET(
             );
         }
 
-        const tripRef = db.collection("trips").doc(id);
-        const tripDoc = await tripRef.get();
+        // Try direct Firestore document lookup first
+        let tripRef = db.collection("trips").doc(id);
+        let tripDoc = await tripRef.get();
+
+        // If not found, check if it's a known SEO slug
+        if (!tripDoc.exists && SLUG_TO_ID[id]) {
+            const realId = SLUG_TO_ID[id];
+            tripRef = db.collection("trips").doc(realId);
+            tripDoc = await tripRef.get();
+            id = realId;
+        }
 
         if (!tripDoc.exists) {
             return NextResponse.json(
@@ -56,6 +72,7 @@ export async function GET(
         );
     }
 }
+
 
 // PUT /api/trips/[id]
 export async function PUT(
