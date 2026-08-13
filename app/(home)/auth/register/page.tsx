@@ -172,7 +172,7 @@ export default function RegisterPage() {
                             <div className="flex items-start gap-2 text-sm text-gray-400">
                                 <input type="checkbox" className="mt-1 rounded border-gray-600 bg-black/50 text-gold focus:ring-gold" required />
                                 <span>
-                                    I agree to the <Link href="/terms" className="text-gold hover:underline">Terms of Service</Link> and <Link href="/privacy-policy" className="text-gold hover:underline">Privacy Policy</Link>
+                                    I agree to the <Link href="/privacy-policy" className="text-gold hover:underline">Terms of Service</Link> and <Link href="/privacy-policy" className="text-gold hover:underline">Privacy Policy</Link>
                                 </span>
                             </div>
 

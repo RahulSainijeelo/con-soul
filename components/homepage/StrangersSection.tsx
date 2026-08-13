@@ -93,7 +93,7 @@ export function StrangersSection() {
             300+ solo travelers have found their tribe with us
           </p>
           <a
-            href="/trips"
+            href="/past-trips"
             className="inline-flex items-center gap-2 text-brand hover:text-brand/80 font-semibold text-sm transition-colors active:scale-95"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
