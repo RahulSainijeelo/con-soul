@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     type: 'website',
     url: "https://con-soul.in",
   },
+  alternates: {
+    canonical: "https://con-soul.in",
+  },
 };
 
 // Render dynamically — homepage fetches live data from Firebase
