@@ -60,10 +60,13 @@ export default function TripPage() {
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
 
   useEffect(() => {
+    const tripId = Array.isArray(params.id) ? params.id[0] : params.id;
+    if (!tripId) return;
+
     const fetchData = async () => {
       try {
         // Fetch trip data
-        const tripRes = await fetch(`/api/trips/${params.id}`);
+        const tripRes = await fetch(`/api/trips/${tripId}`);
         if (!tripRes.ok) {
           setTrip(null);
           setLoading(false);
@@ -73,8 +76,7 @@ export default function TripPage() {
         setTrip(tripData);
 
         // Fetch user's booking if logged in
-        if (session?.user?.email && params?.id) {
-          const tripId = Array.isArray(params.id) ? params.id[0] : params.id;
+        if (session?.user?.email) {
           const bookingsRes = await fetch(`/api/user/bookings?tripId=${tripId}&checkOnly=true`);
           if (bookingsRes.ok) {
             const bookingData = await bookingsRes.json();

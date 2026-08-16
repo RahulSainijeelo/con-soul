@@ -90,11 +90,11 @@ export default function PastTripPage() {
 
 
     useEffect(() => {
+        const tripId = Array.isArray(params.id) ? params.id[0] : params.id;
+        if (!tripId) return;
+
         const fetchData = async () => {
             try {
-                const tripId = Array.isArray(params.id) ? params.id[0] : params.id;
-                if (!tripId) return;
-
                 // Fetch trip data
                 const tripRes = await fetch(`/api/trips/${tripId}`);
                 if (!tripRes.ok) {
