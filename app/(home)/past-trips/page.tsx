@@ -17,6 +17,7 @@ export const dynamic = 'force-dynamic';
 
 interface Trip {
     id: string;
+    slug?: string;
     title: string;
     destination: string;
     category: string;
@@ -43,6 +44,7 @@ async function getPastTrips(): Promise<Trip[]> {
             const data = doc.data();
             return {
                 id: doc.id,
+                slug: data.slug || '',
                 title: data.title || '',
                 destination: data.destination || '',
                 category: data.category || '',
@@ -169,7 +171,7 @@ export default async function PastTripsPage() {
                                 </CardContent>
 
                                 <CardFooter className='flex justify-center p-[1.5rem]'>
-                                    <Link href={`/past-trips/${trip.id}`} className="w-full">
+                                    <Link href={`/past-trips/${trip.slug || trip.id}`} className="w-full">
                                         <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                             View Details & Reviews
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

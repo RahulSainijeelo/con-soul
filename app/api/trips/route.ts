@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { generateSlug } from "@/lib/utils";
 import { db } from "@/config/firebase";
 import {
     createTripSchema,
@@ -160,8 +161,10 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        const slug = generateSlug(title);
         const newTrip: Record<string, unknown> = {
             title,
+            slug,
             destination,
             category,
             description,

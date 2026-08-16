@@ -23,10 +23,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     tripPages = tripsSnapshot.docs.map((doc) => {
       const data = doc.data();
       const status = data.status || 'archived';
-      // Published trips use /trip/[id], completed trips use /past-trips/[id]
+      // Published trips use /trip/[id], completed trips use /past-trips/[slug or id]
       const prefix = status === 'published' ? '/trip' : '/past-trips';
+      const identifier = (status !== 'published' && data.slug) ? data.slug : doc.id;
       return {
-        url: `${base}${prefix}/${doc.id}`,
+        url: `${base}${prefix}/${identifier}`,
         lastModified: data.updatedAt || now,
         changeFrequency: 'monthly' as const,
         priority: status === 'published' ? 0.9 : 0.8,

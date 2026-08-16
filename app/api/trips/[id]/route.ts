@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { generateSlug } from "@/lib/utils";
 import { db } from "@/config/firebase";
 import { auth } from "@clerk/nextjs/server";
 import { getServerSession } from "next-auth";
@@ -19,13 +20,6 @@ function parseDateSafe(dateVal: unknown, fallback?: unknown): string | null {
     }
 }
 
-// Known slug → Firestore ID mappings (from legacy SEO redirects)
-const SLUG_TO_ID: Record<string, string> = {
-    'uttarakhand-mussoorie-rishikesh-7-days': 'PTAGBlq6mklnL9OewFAC',
-    'vizag-araku-beach-adventure-4-days': 'YYUNS3dPVHiCG3knelGj',
-    'mainpat-shimla-chhattisgarh-2-days': 'ABJeA89QviSylm4iQPWP',
-};
-
 // GET /api/trips/[id]
 export async function GET(
     request: NextRequest,
@@ -45,12 +39,17 @@ export async function GET(
         let tripRef = db.collection("trips").doc(id);
         let tripDoc = await tripRef.get();
 
-        // If not found, check if it's a known SEO slug
-        if (!tripDoc.exists && SLUG_TO_ID[id]) {
-            const realId = SLUG_TO_ID[id];
-            tripRef = db.collection("trips").doc(realId);
-            tripDoc = await tripRef.get();
-            id = realId;
+        // If not found by ID, try finding by slug field
+        if (!tripDoc.exists) {
+            const slugQuery = await db.collection("trips")
+                .where("slug", "==", id)
+                .limit(1)
+                .get();
+            if (!slugQuery.empty) {
+                tripDoc = slugQuery.docs[0];
+                tripRef = tripDoc.ref;
+                id = tripDoc.id;
+            }
         }
 
         if (!tripDoc.exists) {
@@ -135,8 +134,10 @@ export async function PUT(
             travelRoute,
         } = body;
 
+        const finalTitle = title || existingData.title;
         const updateData: Record<string, unknown> = {
-            title: title || existingData.title,
+            title: finalTitle,
+            slug: generateSlug(finalTitle),
             destination: destination || existingData.destination,
             category: category || existingData.category,
             description: description !== undefined ? description : existingData.description,
