@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { DashboardClientWrapper } from "./DashboardClientWrapper";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Dashboard - CONSOUL",
   description: "dashboard for managing CONSOUL services and content",

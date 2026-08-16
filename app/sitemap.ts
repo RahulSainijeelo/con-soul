@@ -1,6 +1,7 @@
 // app/sitemap.ts
 import { MetadataRoute } from 'next'
-import { db } from '@/config/firebase';
+
+export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = 'https://con-soul.in'
@@ -19,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic trip pages from Firestore
   let tripPages: MetadataRoute.Sitemap = [];
   try {
+    const { db } = await import('@/config/firebase');
     const tripsSnapshot = await db.collection('trips').get();
     tripPages = tripsSnapshot.docs.map((doc) => {
       const data = doc.data();

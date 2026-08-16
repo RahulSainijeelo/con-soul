@@ -1,3 +1,5 @@
+"use client";
+
 import { UseFormReturn, FieldErrors } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";

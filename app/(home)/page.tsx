@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidate this page every 60 seconds so it acts like ISR (Incremental Static Regeneration)
-export const revalidate = 60;
+// Render dynamically — homepage fetches live data from Firebase
+export const dynamic = 'force-dynamic';
 
 async function getHomepageData() {
   try {
