@@ -31,6 +31,20 @@ export const metadata: Metadata = {
 // Render dynamically — homepage fetches live data from Firebase
 export const dynamic = 'force-dynamic';
 
+function serializeDoc(doc: any) {
+  const data = doc.data();
+  const sanitized: any = { id: doc.id };
+  for (const [key, value] of Object.entries(data)) {
+    if (value && typeof (value as any).toDate === 'function') {
+      sanitized[key] = (value as any).toDate().toISOString();
+    } else {
+      sanitized[key] = value;
+    }
+  }
+  // Deep clone to ensure no class instances remain
+  return JSON.parse(JSON.stringify(sanitized));
+}
+
 async function getHomepageData() {
   try {
     // 1. Fetch Upcoming Trips
@@ -39,7 +53,7 @@ async function getHomepageData() {
       .orderBy("createdAt", "desc")
       .limit(5)
       .get();
-    const upcomingTrips = upcomingRes.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+    const upcomingTrips = upcomingRes.docs.map(serializeDoc);
 
     // 2. Fetch Past Trips
     const pastRes = await db.collection("trips")
@@ -47,7 +61,7 @@ async function getHomepageData() {
       .orderBy("createdAt", "desc")
       .limit(6)
       .get();
-    const pastTrips = pastRes.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+    const pastTrips = pastRes.docs.map(serializeDoc);
 
     // 3. Fetch Reviews
     const reviewsRes = await db.collection("reviews")
@@ -59,9 +73,8 @@ async function getHomepageData() {
     pastTrips.forEach((t: any) => { tripsMap[t.id] = t.title; });
 
     const reviews = reviewsRes.docs.map(doc => {
-      const data = doc.data() as any;
+      const data = serializeDoc(doc);
       return {
-        id: doc.id,
         ...data,
         tripName: tripsMap[data.tripId] || 'A Wonderful Trip'
       };
