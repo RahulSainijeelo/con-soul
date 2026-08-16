@@ -8,6 +8,14 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: "About CONSOUL — India's Youth Group Travel Platform",
   description: "CONSOUL organises curated youth group trips across India — from Himalayas to Goa, Rajasthan to Kerala. Learn about our mission and join 300+ happy travelers.",
+  openGraph: {
+    title: "About CONSOUL — India's Youth Group Travel Platform",
+    description: "Learn about our mission to make group travel affordable and unforgettable for young Indians.",
+    url: 'https://con-soul.in/about',
+  },
+  alternates: {
+    canonical: 'https://con-soul.in/about',
+  },
 };
 
 export default function AboutPage() {

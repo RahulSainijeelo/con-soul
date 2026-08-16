@@ -8,8 +8,18 @@ import BottomTabBar from '@/components/layout/BottomTabBar';
 import { db } from '@/config/firebase';
 
 export const metadata: Metadata = {
-    title: 'Past Trips & Reviews - CONSOUL Travel',
+    title: 'Past Trips & Reviews — CONSOUL Travel',
     description: 'Explore completed group trips by CONSOUL and read reviews from 300+ happy travelers across Himalayas, Goa, Rajasthan and Kerala.',
+    keywords: 'consoul past trips, consoul reviews, group trip reviews india, youth travel reviews, consoul trip gallery',
+    openGraph: {
+        title: 'Past Trips & Reviews — CONSOUL',
+        description: 'See completed group trips and read honest reviews from 300+ happy travelers.',
+        url: 'https://con-soul.in/past-trips',
+        type: 'website',
+    },
+    alternates: {
+        canonical: 'https://con-soul.in/past-trips',
+    },
 };
 
 // Force dynamic rendering so completed trips show up immediately after status change
