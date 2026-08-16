@@ -63,9 +63,6 @@ export const metadata: Metadata = {
   authors: [{ name: "CONSOUL" }],
   creator: "CONSOUL",
   publisher: "CONSOUL",
-  alternates: {
-    canonical: "https://con-soul.in",
-  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
