@@ -33,26 +33,24 @@ export const dynamic = 'force-dynamic';
 
 async function getHomepageData() {
   try {
-    // 1. Fetch Upcoming Trips
-    const upcomingRes = await db.collection("trips")
-      .where("status", "==", "published")
-      .orderBy("createdAt", "desc")
-      .limit(5)
-      .get();
+    // Fetch all data concurrently for better performance
+    const [upcomingRes, pastRes, reviewsRes] = await Promise.all([
+      db.collection("trips")
+        .where("status", "==", "published")
+        .orderBy("createdAt", "desc")
+        .limit(5)
+        .get(),
+      db.collection("trips")
+        .where("status", "==", "completed")
+        .orderBy("createdAt", "desc")
+        .limit(6)
+        .get(),
+      db.collection("reviews")
+        .where("status", "==", "approved")
+        .get(),
+    ]);
     const upcomingTrips = upcomingRes.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
-
-    // 2. Fetch Past Trips
-    const pastRes = await db.collection("trips")
-      .where("status", "==", "completed")
-      .orderBy("createdAt", "desc")
-      .limit(6)
-      .get();
     const pastTrips = pastRes.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
-
-    // 3. Fetch Reviews
-    const reviewsRes = await db.collection("reviews")
-      .where("status", "==", "approved")
-      .get();
     
     // Create a map for trip titles just for the reviews
     const tripsMap: Record<string, string> = {};

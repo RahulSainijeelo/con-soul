@@ -8,11 +8,10 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import NextTopLoader from 'nextjs-toploader';
 import localFont from 'next/font/local';
+import { Inter, Montserrat, Anton } from 'next/font/google';
 import Script from 'next/script';
 import "./globals.css";
 
-// All pages require ClerkProvider which needs env vars at runtime — skip static prerendering
-export const dynamic = 'force-dynamic';
 
 
 const primaryFont = localFont({
@@ -30,6 +29,26 @@ const HeadingFontBold = localFont({
 const HeartAndLove = localFont({
   src: '../public/fonts/heart.otf',
   variable: '--heart',
+});
+
+// Google Fonts — loaded via next/font (no render-blocking link tags)
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
+const anton = Anton({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-anton',
+  display: 'swap',
 });
 
 export const viewport: Viewport = {
@@ -163,11 +182,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Load Google Fonts asynchronously to prevent render-blocking */}
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" />
-        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
 
         {/* Manifest and PWA */}
@@ -190,7 +204,7 @@ export default function RootLayout({
         {/* Google Analytics */}
         <GoogleAnalytics />
       </head>
-      <body className={`${primaryFont.variable} ${HeartAndLove.variable} ${HeadingFontBold.variable} ${primaryFontBold.variable} antialiased`}>
+      <body className={`${primaryFont.variable} ${HeartAndLove.variable} ${HeadingFontBold.variable} ${primaryFontBold.variable} ${inter.variable} ${montserrat.variable} ${anton.variable} antialiased`}>
         <NextTopLoader showSpinner={false} />
 
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-600 text-white px-4 py-2 rounded-md z-50">

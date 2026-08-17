@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       const data = tripDoc.data();
       title = data?.title || title;
       description = data?.description || `Relive ${title} — a completed group trip by CONSOUL. See photos and reviews from fellow travelers.`;
-      image = data?.coverImage || data?.images?.[0] || image;
+      image = data?.coverImage || data?.images?.[0]?.url || image;
     }
   } catch (e) {
     // fallback to defaults

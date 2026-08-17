@@ -2,6 +2,9 @@ import { z } from "zod";
 import { db } from "@/config/firebase"; // Admin SDK
 import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { auth } from "@clerk/nextjs/server";
 // Allowed status values
 const statusEnum = z.enum(["new", "contacted", "completed", "rejected"]);
 
@@ -19,6 +22,11 @@ const enquirySchema = z.object({
 // GET: Fetch all enquiries
 export async function GET() {
   try {
+    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
+    if (!userId && !session) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const snapshot = await db
       .collection("enquiries")
       .orderBy("time", "desc")
@@ -27,7 +35,7 @@ export async function GET() {
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { Message: "Failed to fetch enquiries" },
+      { error: "Failed to fetch enquiries" },
       { status: 500 }
     );
   }
@@ -55,7 +63,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       {
-        Message:
+        error:
           error instanceof z.ZodError
             ? JSON.stringify(error.errors)
             : "Internal Server Error",
@@ -68,18 +76,23 @@ export async function POST(request: NextRequest) {
 // PUT: Update an enquiry (expects id in body)
 export async function PUT(request: NextRequest) {
   try {
+    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
+    if (!userId && !session) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const body = await request.json();
     const { id, ...rest } = body;
 
     if (!id)
       return NextResponse.json(
-        { message: "Missing enquiry id" },
+        { error: "Missing enquiry id" },
         { status: 400 }
       );
 
     if (rest.status && !statusEnum.options.includes(rest.status)) {
       return NextResponse.json(
-        { Message: "Invalid status value" },
+        { error: "Invalid status value" },
         { status: 400 }
       );
     }
@@ -91,7 +104,7 @@ export async function PUT(request: NextRequest) {
       .get();
     if (snapshot.empty) {
       return NextResponse.json(
-        { message: "Enquiry not found" },
+        { error: "Enquiry not found" },
         { status: 404 }
       );
     }
@@ -104,13 +117,13 @@ export async function PUT(request: NextRequest) {
     await batch.commit();
 
     return NextResponse.json(
-      { Message: "Enquiry updated successfully" },
+      { message: "Enquiry updated successfully" },
       { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        message:
+        error:
           error instanceof z.ZodError
             ? JSON.stringify(error.errors)
             : "Internal Server Error",

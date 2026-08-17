@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 import { db } from "@/config/firebase";
-
+import { auth } from "@clerk/nextjs/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 export async function GET() {
     try {
+        const { userId } = await auth();
+        const session = await getServerSession(authOptions);
+        if (!userId && !session) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         const profileData = {
             name: "CONSOUL Admin",
             bio: "Expeditions for the Soul",

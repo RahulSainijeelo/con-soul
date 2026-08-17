@@ -3,9 +3,10 @@ import { db } from "@/config/firebase";
 import { FieldValue } from "firebase-admin/firestore";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import crypto from "crypto";
 import { z } from "zod";
 import { sendBookingConfirmationEmail } from "@/lib/email";
+import { verifyRazorpaySignature } from "@/lib/razorpay";
+import { formatDateIN } from "@/lib/utils";
 
 const bookingSchema = z.object({
     tripId: z.string().min(1, "Trip ID is required"),
@@ -58,12 +59,12 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const generatedSignature = crypto
-            .createHmac("sha256", keySecret)
-            .update(`${bookingData.razorpayOrderId}|${bookingData.razorpayPaymentId}`)
-            .digest("hex");
-
-        if (generatedSignature !== bookingData.razorpaySignature) {
+        if (!verifyRazorpaySignature(
+            bookingData.razorpayOrderId,
+            bookingData.razorpayPaymentId,
+            bookingData.razorpaySignature,
+            keySecret
+        )) {
             return NextResponse.json(
                 { error: "Invalid payment signature. Payment verification failed." },
                 { status: 400 }
@@ -121,10 +122,6 @@ export async function POST(request: NextRequest) {
         // Send confirmation email — awaited so Vercel lambda doesn't kill it before it sends
         const tripDoc = await tripRef.get();
         const tripData = tripDoc.data();
-        const formatDate = (dateStr: string) => {
-            const d = new Date(dateStr + 'T00:00:00');
-            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-        };
 
         await sendBookingConfirmationEmail({
             email: bookingData.email,
@@ -132,7 +129,7 @@ export async function POST(request: NextRequest) {
             tripName: tripData?.title || tripData?.name || "Your Trip",
             tripDestination: tripData?.destination,
             tripDates: tripData?.startDate && tripData?.endDate
-                ? `${formatDate(tripData.startDate)} – ${formatDate(tripData.endDate)}`
+                ? `${formatDateIN(tripData.startDate)} – ${formatDateIN(tripData.endDate)}`
                 : undefined,
             amount: bookingData.amount,
             amountPaid: bookingData.amountPaid,

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Contact Us — CONSOUL Travel',
@@ -14,5 +15,30 @@ export const metadata: Metadata = {
 };
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  const contactJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact CONSOUL Travel",
+    "url": "https://con-soul.in/contact",
+    "description": "Get in touch with CONSOUL for group trip inquiries, bookings, and support.",
+    "mainEntity": {
+      "@type": "TravelAgency",
+      "name": "CONSOUL",
+      "email": "hello@con-soul.in",
+      "url": "https://con-soul.in",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bilaspur",
+        "addressRegion": "Chhattisgarh",
+        "addressCountry": "IN"
+      }
+    }
+  };
+
+  return (
+    <>
+      <JsonLd data={contactJsonLd} />
+      {children}
+    </>
+  );
 }
