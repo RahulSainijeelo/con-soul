@@ -19,3 +19,30 @@ export function generateSlug(text: string): string {
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
 }
+
+/**
+ * Safely parse a date value to ISO string.
+ * Returns null if the value is invalid.
+ */
+export function parseDateSafe(dateVal: unknown, fallback?: unknown): string | null {
+    if (!dateVal || (typeof dateVal !== "string" && typeof dateVal !== "number")) {
+        return typeof fallback === "string" ? fallback : null;
+    }
+    try {
+        const d = new Date(dateVal);
+        if (isNaN(d.getTime())) {
+            return typeof fallback === "string" ? fallback : null;
+        }
+        return d.toISOString();
+    } catch {
+        return typeof fallback === "string" ? fallback : null;
+    }
+}
+
+/**
+ * Format a date string to Indian locale (e.g., "15 Aug 2026").
+ */
+export function formatDateIN(dateStr: string): string {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}

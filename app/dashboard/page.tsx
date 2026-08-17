@@ -1,10 +1,22 @@
 "use client";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ManageTrips } from "@/components/dashboard/trips/ManageTrips";
-import { ContactEnquiries } from "@/components/dashboard/contact/ContactEnquiries";
-import { ManageReviews } from "@/components/dashboard/reviews/ManageReviews";
+
+// Dynamic imports — only load the active tab's JS bundle
+const ManageTrips = dynamic(
+  () => import("@/components/dashboard/trips/ManageTrips").then(mod => mod.ManageTrips),
+  { loading: () => <div className="flex items-center justify-center py-20 text-gray-400">Loading trips…</div> }
+);
+const ContactEnquiries = dynamic(
+  () => import("@/components/dashboard/contact/ContactEnquiries").then(mod => mod.ContactEnquiries),
+  { loading: () => <div className="flex items-center justify-center py-20 text-gray-400">Loading enquiries…</div> }
+);
+const ManageReviews = dynamic(
+  () => import("@/components/dashboard/reviews/ManageReviews").then(mod => mod.ManageReviews),
+  { loading: () => <div className="flex items-center justify-center py-20 text-gray-400">Loading reviews…</div> }
+);
 
 export default function Dashboard() {
   return (

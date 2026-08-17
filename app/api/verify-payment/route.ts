@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
+import { verifyRazorpaySignature } from "@/lib/razorpay";
 
 /**
  * POST /api/verify-payment
@@ -35,13 +35,12 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // HMAC-SHA256(order_id + "|" + payment_id, KEY_SECRET)
-        const generatedSignature = crypto
-            .createHmac("sha256", keySecret)
-            .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-            .digest("hex");
-
-        if (generatedSignature !== razorpay_signature) {
+        if (!verifyRazorpaySignature(
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            keySecret
+        )) {
             return NextResponse.json(
                 {
                     success: false,

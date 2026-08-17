@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug, parseDateSafe } from "@/lib/utils";
 import { db } from "@/config/firebase";
 import {
     createTripSchema,
@@ -46,6 +46,14 @@ export async function GET(request: NextRequest) {
 
         // Apply ordering after filters
         query = query.orderBy("createdAt", "desc");
+        // Get total count for pagination metadata
+        const countSnapshot = await query.count().get();
+        const total = countSnapshot.data().count;
+
+        // Apply server-side pagination
+        const offset = (page - 1) * limit;
+        query = query.offset(offset).limit(limit);
+
         // Execute query
         const snapshot = await query.get();
         // Map documents to array with all fields including new ones
@@ -68,10 +76,10 @@ export async function GET(request: NextRequest) {
                 duration: data.duration || "",
                 included: data.included || [],
                 notIncluded: data.notIncluded || [],
-                mode: data.mode || "bus", // NEW
-                price_3ac: data.price_3ac || 0, // NEW
-                price_sleeper: data.price_sleeper || 0, // NEW
-                registrationAmount: data.registrationAmount || null, // NEW
+                mode: data.mode || "bus",
+                price_3ac: data.price_3ac || 0,
+                price_sleeper: data.price_sleeper || 0,
+                registrationAmount: data.registrationAmount || null,
                 travelRoute: data.travelRoute || [],
                 featured: data.featured || false,
                 rating: data.rating || 0,
@@ -82,18 +90,13 @@ export async function GET(request: NextRequest) {
             };
         });
 
-        // Apply pagination
-        const startIndex = (page - 1) * limit;
-        const endIndex = startIndex + limit;
-        const paginatedTrips = trips.slice(startIndex, endIndex);
-
         return NextResponse.json({
-            data: paginatedTrips,
+            data: trips,
             pagination: {
                 page,
                 limit,
-                total: trips.length,
-                totalPages: Math.ceil(trips.length / limit),
+                total,
+                totalPages: Math.ceil(total / limit),
             },
         });
     } catch (error) {
@@ -105,16 +108,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
-function parseDateSafe(dateVal: unknown): string | null {
-    if (!dateVal || (typeof dateVal !== "string" && typeof dateVal !== "number")) return null;
-    try {
-        const d = new Date(dateVal);
-        if (isNaN(d.getTime())) return null;
-        return d.toISOString();
-    } catch {
-        return null;
-    }
-}
+
 
 // POST /api/trips - Create a new trip
 export async function POST(request: NextRequest) {

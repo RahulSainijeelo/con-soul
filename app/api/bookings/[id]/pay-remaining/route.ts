@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/config/firebase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import crypto from "crypto";
 import { sendBookingConfirmationEmail } from "@/lib/email";
+import { verifyRazorpaySignature } from "@/lib/razorpay";
+import { formatDateIN } from "@/lib/utils";
 
 // POST /api/bookings/[id]/pay-remaining - Process remaining payment for a partial booking
 export async function POST(
@@ -60,12 +61,12 @@ export async function POST(
             );
         }
 
-        const generatedSignature = crypto
-            .createHmac("sha256", keySecret)
-            .update(`${razorpayOrderId}|${razorpayPaymentId}`)
-            .digest("hex");
-
-        if (generatedSignature !== razorpaySignature) {
+        if (!verifyRazorpaySignature(
+            razorpayOrderId,
+            razorpayPaymentId,
+            razorpaySignature,
+            keySecret
+        )) {
             return NextResponse.json(
                 { error: "Invalid payment signature. Payment verification failed." },
                 { status: 400 }
@@ -102,10 +103,6 @@ export async function POST(
         const tripRef2 = db.collection("trips").doc(tripId);
         const tripDoc = await tripRef2.get();
         const tripData = tripDoc.data();
-        const formatDate = (dateStr: string) => {
-            const d = new Date(dateStr + 'T00:00:00');
-            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-        };
 
         await sendBookingConfirmationEmail({
             email: booking?.email,
@@ -113,7 +110,7 @@ export async function POST(
             tripName: tripData?.title || tripData?.name || "Your Trip",
             tripDestination: tripData?.destination,
             tripDates: tripData?.startDate && tripData?.endDate
-                ? `${formatDate(tripData.startDate)} – ${formatDate(tripData.endDate)}`
+                ? `${formatDateIN(tripData.startDate)} – ${formatDateIN(tripData.endDate)}`
                 : undefined,
             amount: totalAmount,
             amountPaid: totalAmount,

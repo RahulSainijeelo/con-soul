@@ -1,24 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug, parseDateSafe } from "@/lib/utils";
 import { db } from "@/config/firebase";
 import { auth } from "@clerk/nextjs/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-function parseDateSafe(dateVal: unknown, fallback?: unknown): string | null {
-    if (!dateVal || (typeof dateVal !== "string" && typeof dateVal !== "number")) {
-        return typeof fallback === "string" ? fallback : null;
-    }
-    try {
-        const d = new Date(dateVal);
-        if (isNaN(d.getTime())) {
-            return typeof fallback === "string" ? fallback : null;
-        }
-        return d.toISOString();
-    } catch {
-        return typeof fallback === "string" ? fallback : null;
-    }
-}
+
 
 // GET /api/trips/[id]
 export async function GET(
