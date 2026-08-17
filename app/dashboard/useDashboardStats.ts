@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 
+interface DashboardStats {
+  totalTrips: number;
+  activeTrips: number;
+  totalEnquiries: number;
+  pendingEnquiries: number;
+  totalReviews: number;
+  pendingReviews: number;
+}
+
 export function useDashboardStats() {
-  const [stats, setStats] = useState({
-    totalNewEnquiries: 0,
+  const [stats, setStats] = useState<DashboardStats>({
+    totalTrips: 0,
+    activeTrips: 0,
+    totalEnquiries: 0,
     pendingEnquiries: 0,
-    totalPortfolio: 0,
-    portfolioThisMonth: 0,
     totalReviews: 0,
     pendingReviews: 0,
   });
@@ -25,61 +34,56 @@ export function useDashboardStats() {
 
     const fetchStats = async () => {
       setLoading(true);
+      try {
+        // Fetch all data in parallel instead of sequentially
+        const [enquiriesRes, tripsRes, reviewsRes] = await Promise.all([
+          fetch("/api/contact"),
+          fetch("/api/trips?limit=100"),
+          fetch("/api/reviews"),
+        ]);
 
-      // Fetch Enquiries
-      const enquiriesRes = await fetch("/api/contact", {
-        next: { revalidate: 360 },
-      });
-      const enquiries = await enquiriesRes.json();
-      const pendingEnquiries = enquiries.filter(
-        (e: any) => e.status === "new"
-      ).length;
-      const contactedEnquiries = enquiries.filter(
-        (e: any) => e.status === "contacted"
-      ).length;
-      const totalNewEnquiries = pendingEnquiries + contactedEnquiries;
+        const [enquiries, tripsData, reviews] = await Promise.all([
+          enquiriesRes.json(),
+          tripsRes.json(),
+          reviewsRes.json(),
+        ]);
 
-      // Fetch Portfolio
-      const portfolioRes = await fetch("/api/portfolio", {
-        next: { revalidate: 360 },
-      });
-      const portfolio = await portfolioRes.json();
-      const totalPortfolio = portfolio.length;
-      const nowDate = new Date();
-      const portfolioThisMonth = portfolio.filter((item: any) => {
-        if (!item.time) return false;
-        const created = new Date(item.time);
-        return (
-          created.getMonth() === nowDate.getMonth() &&
-          created.getFullYear() === nowDate.getFullYear()
-        );
-      }).length;
+        // Process enquiries
+        const enquiriesList = Array.isArray(enquiries) ? enquiries : [];
+        const pendingEnquiries = enquiriesList.filter(
+          (e: { status?: string }) => e.status === "new"
+        ).length;
 
-      // Fetch Reviews
-      const reviewsRes = await fetch("/api/reviews", {
-        next: { revalidate: 360 },
-      });
-      const reviews = await reviewsRes.json();
-      const pendingReviews = reviews.filter(
-        (r: any) => r.status === "pending"
-      ).length;
-      const approvedReviews = reviews.filter(
-        (r: any) => r.status === "approved"
-      ).length;
-      const totalReviews = pendingReviews + approvedReviews;
+        // Process trips
+        const tripsList = tripsData?.data || (Array.isArray(tripsData) ? tripsData : []);
+        const totalTrips = tripsList.length;
+        const activeTrips = tripsList.filter(
+          (t: { status?: string }) => t.status === "published"
+        ).length;
 
-      const newStats = {
-        totalNewEnquiries,
-        pendingEnquiries,
-        totalPortfolio,
-        portfolioThisMonth,
-        totalReviews,
-        pendingReviews,
-      };
-      setStats(newStats);
-      sessionStorage.setItem("dashboardStats", JSON.stringify(newStats));
-      sessionStorage.setItem("dashboardStatsAt", now.toString());
-      setLoading(false);
+        // Process reviews
+        const reviewsList = Array.isArray(reviews) ? reviews : [];
+        const pendingReviews = reviewsList.filter(
+          (r: { status?: string }) => r.status === "pending"
+        ).length;
+        const totalReviews = reviewsList.length;
+
+        const newStats: DashboardStats = {
+          totalTrips,
+          activeTrips,
+          totalEnquiries: enquiriesList.length,
+          pendingEnquiries,
+          totalReviews,
+          pendingReviews,
+        };
+        setStats(newStats);
+        sessionStorage.setItem("dashboardStats", JSON.stringify(newStats));
+        sessionStorage.setItem("dashboardStatsAt", now.toString());
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchStats();

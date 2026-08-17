@@ -1,131 +1,112 @@
 "use client";
+
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDashboardStats } from "./useDashboardStats";
+import { Map, MessageSquare, Star, Plus, ArrowRight, TrendingUp, Users, Eye } from "lucide-react";
 
-// Dynamic imports — only load the active tab's JS bundle
-const ManageTrips = dynamic(
-  () => import("@/components/dashboard/trips/ManageTrips").then(mod => mod.ManageTrips),
-  { loading: () => <div className="flex items-center justify-center py-20 text-gray-400">Loading trips…</div> }
-);
-const ContactEnquiries = dynamic(
-  () => import("@/components/dashboard/contact/ContactEnquiries").then(mod => mod.ContactEnquiries),
-  { loading: () => <div className="flex items-center justify-center py-20 text-gray-400">Loading enquiries…</div> }
-);
-const ManageReviews = dynamic(
-  () => import("@/components/dashboard/reviews/ManageReviews").then(mod => mod.ManageReviews),
-  { loading: () => <div className="flex items-center justify-center py-20 text-gray-400">Loading reviews…</div> }
-);
+export default function DashboardOverview() {
+  const { stats, loading } = useDashboardStats();
 
-export default function Dashboard() {
+  const statCards = [
+    {
+      label: "Total Trips",
+      value: stats.totalTrips,
+      sub: `${stats.activeTrips} active`,
+      icon: Map,
+      color: "from-blue-500/20 to-blue-600/5",
+      border: "border-blue-500/20",
+      iconColor: "text-blue-400",
+      href: "/dashboard/trips",
+    },
+    {
+      label: "Enquiries",
+      value: stats.totalEnquiries,
+      sub: `${stats.pendingEnquiries} pending`,
+      icon: MessageSquare,
+      color: "from-amber-500/20 to-amber-600/5",
+      border: "border-amber-500/20",
+      iconColor: "text-amber-400",
+      href: "/dashboard/enquiries",
+    },
+    {
+      label: "Reviews",
+      value: stats.totalReviews,
+      sub: `${stats.pendingReviews} pending`,
+      icon: Star,
+      color: "from-purple-500/20 to-purple-600/5",
+      border: "border-purple-500/20",
+      iconColor: "text-purple-400",
+      href: "/dashboard/reviews",
+    },
+  ];
+
+  const quickActions = [
+    { label: "Create New Trip", href: "/dashboard/create-trip", icon: Plus, desc: "Add a new travel package" },
+    { label: "View Enquiries", href: "/dashboard/enquiries", icon: MessageSquare, desc: "Check pending messages" },
+    { label: "Manage Reviews", href: "/dashboard/reviews", icon: Star, desc: "Approve or reject reviews" },
+    { label: "View Website", href: "/", icon: Eye, desc: "See the live site" },
+  ];
+
   return (
-    <>
-      <div className="flex min-h-screen flex-col bg-black text-white">
-        <div className="flex-1 space-y-6 p-4 md:p-8 pt-6">
-          {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-white/10">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-display font-bold tracking-tight mb-2 text-gold">
-                Dashboard
-              </h1>
-              <p className="text-base text-gray-400">
-                Manage your trips and content
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                asChild
-                className="bg-gold hover:bg-yellow-600 text-black font-semibold"
-              >
-                <Link href="/">View Website</Link>
-              </Button>
-            </div>
-          </div>
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl md:text-3xl font-bold text-white">Dashboard</h1>
+        <p className="text-sm text-gray-400 mt-1">Welcome back. Here's what's happening.</p>
+      </div>
 
-          {/* Main Content */}
-          <div className="rounded-xl p-6 bg-white/5 border border-white/10 backdrop-blur-sm">
-            <Tabs defaultValue="trips" className="space-y-6">
-              <div className="w-full overflow-x-auto no-scrollbar md:overflow-visible flex justify-center">
-                <TabsList className="flex min-w-max md:min-w-0 p-1 rounded-xl bg-white/5 border border-white/10">
-                  <TabsTrigger
-                    value="enquiries"
-                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 data-[state=active]:bg-gold data-[state=active]:text-black text-gray-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                    Enquiries
-                  </TabsTrigger>
-
-                  <TabsTrigger
-                    value="trips"
-                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 data-[state=active]:bg-gold data-[state=active]:text-black text-gray-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                      />
-                    </svg>
-                    Trips
-                  </TabsTrigger>
-
-                  <TabsTrigger
-                    value="reviews"
-                    className="px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 data-[state=active]:bg-gold data-[state=active]:text-black text-gray-400"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                      />
-                    </svg>
-                    Reviews
-                  </TabsTrigger>
-                </TabsList>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {statCards.map((card) => (
+          <Link
+            key={card.label}
+            href={card.href}
+            className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${card.color} border ${card.border} p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">{card.label}</p>
+                {loading ? (
+                  <div className="mt-2 h-8 w-16 rounded bg-white/10 animate-pulse" />
+                ) : (
+                  <p className="mt-1 text-3xl font-bold text-white">{card.value}</p>
+                )}
+                {!loading && (
+                  <p className="mt-1 text-xs text-gray-400">{card.sub}</p>
+                )}
               </div>
+              <div className={`p-2.5 rounded-xl bg-white/5 ${card.iconColor}`}>
+                <card.icon className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="absolute bottom-3 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              <ArrowRight className="w-4 h-4 text-gray-500" />
+            </div>
+          </Link>
+        ))}
+      </div>
 
-              <TabsContent value="enquiries" className="space-y-4">
-                <ContactEnquiries />
-              </TabsContent>
-              <TabsContent value="trips" className="space-y-4">
-                <ManageTrips />
-              </TabsContent>
-              <TabsContent value="reviews" className="space-y-4">
-                <ManageReviews />
-              </TabsContent>
-            </Tabs>
-          </div>
+      {/* Quick Actions */}
+      <div>
+        <h2 className="text-lg font-semibold text-white mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {quickActions.map((action) => (
+            <Link
+              key={action.label}
+              href={action.href}
+              className="group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-gold/30 hover:bg-white/[0.07] transition-all duration-200"
+            >
+              <div className="p-2 rounded-lg bg-gold/10 text-gold group-hover:bg-gold/20 transition-colors">
+                <action.icon className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white">{action.label}</p>
+                <p className="text-[11px] text-gray-500">{action.desc}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
