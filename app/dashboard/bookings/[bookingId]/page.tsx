@@ -46,6 +46,14 @@ export default function BookingDetailPage() {
     const [seatNumber, setSeatNumber] = useState("");
     const [processing, setProcessing] = useState(false);
     const [newStatus, setNewStatus] = useState<'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed'>('confirmed');
+    const [showRecordPayment, setShowRecordPayment] = useState(false);
+    const [recordPaymentData, setRecordPaymentData] = useState({
+        amount: '',
+        method: 'cash',
+        reference: '',
+        note: '',
+    });
+    const [recordingPayment, setRecordingPayment] = useState(false);
 
     useEffect(() => {
         fetchBooking();
@@ -146,6 +154,39 @@ export default function BookingDetailPage() {
         }
     };
 
+    const handleRecordPayment = async () => {
+        if (!recordPaymentData.amount || Number(recordPaymentData.amount) <= 0) {
+            toast({ title: 'Error', description: 'Enter a valid amount', variant: 'destructive' });
+            return;
+        }
+        setRecordingPayment(true);
+        try {
+            const res = await fetch(`/api/bookings/${params.bookingId}/record-payment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: Number(recordPaymentData.amount),
+                    method: recordPaymentData.method,
+                    reference: recordPaymentData.reference || undefined,
+                    note: recordPaymentData.note || undefined,
+                }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                toast({ title: 'Payment Recorded', description: `₹${recordPaymentData.amount} recorded. Remaining: ₹${data.data.remaining}` });
+                setShowRecordPayment(false);
+                setRecordPaymentData({ amount: '', method: 'cash', reference: '', note: '' });
+                fetchBooking(); // refresh data
+            } else {
+                toast({ title: 'Error', description: data.error || 'Failed to record payment', variant: 'destructive' });
+            }
+        } catch (error) {
+            toast({ title: 'Error', description: 'Failed to record payment', variant: 'destructive' });
+        } finally {
+            setRecordingPayment(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
@@ -225,6 +266,16 @@ export default function BookingDetailPage() {
                                     className="border-white/10 hover:bg-white/10 hover:text-white"
                                 >
                                     <Edit className="w-4 h-4" />
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        const remaining = (booking.amount || 0) - (booking.amountPaid || 0);
+                                        setRecordPaymentData(prev => ({ ...prev, amount: String(remaining > 0 ? remaining : '') }));
+                                        setShowRecordPayment(true);
+                                    }}
+                                    className="bg-green-600 hover:bg-green-700 text-white"
+                                >
+                                    💰 Record Payment
                                 </Button>
                             </div>
                         )}
@@ -487,6 +538,69 @@ export default function BookingDetailPage() {
                             className="bg-gold text-black hover:bg-yellow-600"
                         >
                             {processing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Changes"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Record Payment Dialog */}
+            <Dialog open={showRecordPayment} onOpenChange={setShowRecordPayment}>
+                <DialogContent className="bg-black border-white/10 text-white max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Record Offline Payment</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div>
+                            <Label className="text-gray-400">Amount (₹)</Label>
+                            <Input
+                                type="number"
+                                value={recordPaymentData.amount}
+                                onChange={(e) => setRecordPaymentData(prev => ({ ...prev, amount: e.target.value }))}
+                                className="bg-white/5 border-white/10 text-white mt-1"
+                                placeholder="Enter amount received"
+                            />
+                        </div>
+                        <div>
+                            <Label className="text-gray-400">Payment Method</Label>
+                            <select
+                                value={recordPaymentData.method}
+                                onChange={(e) => setRecordPaymentData(prev => ({ ...prev, method: e.target.value }))}
+                                className="w-full mt-1 px-3 py-2 rounded-md bg-white/5 border border-white/10 text-white"
+                            >
+                                <option value="cash">Cash</option>
+                                <option value="bank_transfer">Bank Transfer</option>
+                                <option value="upi_direct">UPI Direct</option>
+                            </select>
+                        </div>
+                        <div>
+                            <Label className="text-gray-400">Reference / UTR (optional)</Label>
+                            <Input
+                                value={recordPaymentData.reference}
+                                onChange={(e) => setRecordPaymentData(prev => ({ ...prev, reference: e.target.value }))}
+                                className="bg-white/5 border-white/10 text-white mt-1"
+                                placeholder="UTR or transaction reference"
+                            />
+                        </div>
+                        <div>
+                            <Label className="text-gray-400">Note (optional)</Label>
+                            <Input
+                                value={recordPaymentData.note}
+                                onChange={(e) => setRecordPaymentData(prev => ({ ...prev, note: e.target.value }))}
+                                className="bg-white/5 border-white/10 text-white mt-1"
+                                placeholder="e.g., Cash received at office"
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="ghost" onClick={() => setShowRecordPayment(false)} className="text-gray-400">
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleRecordPayment}
+                            disabled={recordingPayment}
+                            className="bg-green-600 hover:bg-green-700 text-white"
+                        >
+                            {recordingPayment ? 'Recording...' : 'Record Payment'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

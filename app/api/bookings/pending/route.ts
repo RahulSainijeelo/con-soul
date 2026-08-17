@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
         }
 
         const bookingsRef = db.collection("bookings");
-        const snapshot = await bookingsRef.where("status", "in", ["pending", "registrationConfirmed"]).orderBy("createdAt", "desc").get();
+        const snapshot = await bookingsRef.where("status", "in", ["pending", "registrationConfirmed", "admin_registered"]).orderBy("createdAt", "desc").get();
 
         const bookings = snapshot.docs.map(doc => ({
             id: doc.id,

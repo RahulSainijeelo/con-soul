@@ -18,7 +18,7 @@ interface Booking {
     fullName: string;
     email: string;
     mobileNo: string;
-    status: 'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed';
+    status: 'pending' | 'confirmed' | 'rejected' | 'registrationConfirmed' | 'admin_registered';
     seatNumber?: string;
     createdAt: string;
     paymentScreenshot?: string; // legacy
@@ -35,6 +35,18 @@ export default function TripBookingsPage() {
     const [confirmingBooking, setConfirmingBooking] = useState<Booking | null>(null);
     const [seatNumber, setSeatNumber] = useState("");
     const [processing, setProcessing] = useState(false);
+    const [showAddBooking, setShowAddBooking] = useState(false);
+    const [addingBooking, setAddingBooking] = useState(false);
+    const [newBooking, setNewBooking] = useState({
+        fullName: '',
+        email: '',
+        mobileNo: '',
+        aadhaarNo: '',
+        transportMode: '',
+        amountPaid: '',
+        paymentMethod: 'cash',
+        note: '',
+    });
 
     useEffect(() => {
         fetchBookings();
@@ -128,6 +140,44 @@ export default function TripBookingsPage() {
         }
     };
 
+    const handleAddBooking = async () => {
+        if (!newBooking.fullName || !newBooking.email || !newBooking.mobileNo) {
+            toast({ title: 'Error', description: 'Name, email, and mobile are required', variant: 'destructive' });
+            return;
+        }
+        setAddingBooking(true);
+        try {
+            const res = await fetch('/api/bookings/admin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tripId: params.id,
+                    fullName: newBooking.fullName,
+                    email: newBooking.email,
+                    mobileNo: newBooking.mobileNo,
+                    aadhaarNo: newBooking.aadhaarNo || undefined,
+                    transportMode: newBooking.transportMode || undefined,
+                    amountPaid: Number(newBooking.amountPaid) || 0,
+                    paymentMethod: newBooking.paymentMethod,
+                    note: newBooking.note || undefined,
+                }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                toast({ title: 'Booking Created', description: `${newBooking.fullName} has been registered` });
+                setShowAddBooking(false);
+                setNewBooking({ fullName: '', email: '', mobileNo: '', aadhaarNo: '', transportMode: '', amountPaid: '', paymentMethod: 'cash', note: '' });
+                fetchBookings(); // refresh list
+            } else {
+                toast({ title: 'Error', description: data.error || 'Failed to create booking', variant: 'destructive' });
+            }
+        } catch (error) {
+            toast({ title: 'Error', description: 'Failed to create booking', variant: 'destructive' });
+        } finally {
+            setAddingBooking(false);
+        }
+    };
+
     const pendingBookings = bookings.filter(b => b.status === "pending");
     const confirmedBookings = bookings.filter(b => b.status === "confirmed");
     const registrationConfirmedBookings = bookings.filter(b => b.status === "registrationConfirmed");
@@ -152,7 +202,13 @@ export default function TripBookingsPage() {
                         <ArrowLeft className="w-4 h-4 mr-2" />
                         Back
                     </Button>
-                    <h1 className="text-3xl font-bold text-gold">Trip Bookings</h1>
+                    <h1 className="text-3xl font-bold text-gold flex-1">Trip Bookings</h1>
+                    <Button
+                        onClick={() => setShowAddBooking(true)}
+                        className="bg-gold hover:bg-yellow-600 text-black font-semibold"
+                    >
+                        + Add Booking
+                    </Button>
                 </div>
 
                 <Tabs defaultValue="all" className="space-y-6">
@@ -270,6 +326,108 @@ export default function TripBookingsPage() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
+            <Dialog open={showAddBooking} onOpenChange={setShowAddBooking}>
+                <DialogContent className="bg-black border-white/10 text-white max-w-lg max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Add Manual Booking</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <Label className="text-gray-400">Full Name *</Label>
+                                <Input
+                                    value={newBooking.fullName}
+                                    onChange={(e) => setNewBooking(prev => ({ ...prev, fullName: e.target.value }))}
+                                    className="bg-white/5 border-white/10 text-white mt-1"
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-400">Mobile No *</Label>
+                                <Input
+                                    value={newBooking.mobileNo}
+                                    onChange={(e) => setNewBooking(prev => ({ ...prev, mobileNo: e.target.value }))}
+                                    className="bg-white/5 border-white/10 text-white mt-1"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <Label className="text-gray-400">Email *</Label>
+                            <Input
+                                value={newBooking.email}
+                                onChange={(e) => setNewBooking(prev => ({ ...prev, email: e.target.value }))}
+                                className="bg-white/5 border-white/10 text-white mt-1"
+                            />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <Label className="text-gray-400">Aadhaar No (Optional)</Label>
+                                <Input
+                                    value={newBooking.aadhaarNo}
+                                    onChange={(e) => setNewBooking(prev => ({ ...prev, aadhaarNo: e.target.value }))}
+                                    className="bg-white/5 border-white/10 text-white mt-1"
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-400">Transport Mode (Optional)</Label>
+                                <select
+                                    value={newBooking.transportMode}
+                                    onChange={(e) => setNewBooking(prev => ({ ...prev, transportMode: e.target.value }))}
+                                    className="w-full mt-1 px-3 py-2 rounded-md bg-white/5 border border-white/10 text-white"
+                                >
+                                    <option value="">None</option>
+                                    <option value="sleeper">Sleeper</option>
+                                    <option value="3ac">3AC</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <Label className="text-gray-400">Initial Payment (₹)</Label>
+                                <Input
+                                    type="number"
+                                    value={newBooking.amountPaid}
+                                    onChange={(e) => setNewBooking(prev => ({ ...prev, amountPaid: e.target.value }))}
+                                    className="bg-white/5 border-white/10 text-white mt-1"
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-400">Payment Method</Label>
+                                <select
+                                    value={newBooking.paymentMethod}
+                                    onChange={(e) => setNewBooking(prev => ({ ...prev, paymentMethod: e.target.value }))}
+                                    className="w-full mt-1 px-3 py-2 rounded-md bg-white/5 border border-white/10 text-white"
+                                >
+                                    <option value="cash">Cash</option>
+                                    <option value="bank_transfer">Bank Transfer</option>
+                                    <option value="upi_direct">UPI Direct</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <Label className="text-gray-400">Note (Optional)</Label>
+                            <Input
+                                value={newBooking.note}
+                                onChange={(e) => setNewBooking(prev => ({ ...prev, note: e.target.value }))}
+                                className="bg-white/5 border-white/10 text-white mt-1"
+                                placeholder="e.g. Paid cash at office"
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="ghost" onClick={() => setShowAddBooking(false)} className="text-gray-400">
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleAddBooking}
+                            disabled={addingBooking}
+                            className="bg-gold hover:bg-yellow-600 text-black font-semibold"
+                        >
+                            {addingBooking ? 'Creating...' : 'Create Booking'}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
@@ -303,6 +461,12 @@ function BookingCard({
                 return (
                     <div className="bg-amber-500/20 text-amber-400 text-xs px-2 py-1 rounded border border-amber-500/30 flex items-center gap-1">
                         <Check className="w-3 h-3" /> Registration Confirmed
+                    </div>
+                );
+            case 'admin_registered':
+                return (
+                    <div className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/30 flex items-center gap-1">
+                        <User className="w-3 h-3" /> Admin Registered
                     </div>
                 );
             default:
