@@ -48,6 +48,14 @@ export default function TripBookingsPage() {
         note: '',
     });
 
+    const [showAllotSeats, setShowAllotSeats] = useState(false);
+    const [ticketFile, setTicketFile] = useState<File | null>(null);
+    const [ticketText, setTicketText] = useState("");
+    const [parsingTicket, setParsingTicket] = useState(false);
+    const [parsedPassengers, setParsedPassengers] = useState<any[]>([]);
+    const [seatMappings, setSeatMappings] = useState<Record<number, string>>({}); // srNo -> bookingId
+    const [allottingSeats, setAllottingSeats] = useState(false);
+
     useEffect(() => {
         fetchBookings();
     }, [params.id]);
@@ -178,6 +186,83 @@ export default function TripBookingsPage() {
         }
     };
 
+    const handleParseTicket = async () => {
+        if (!ticketFile && !ticketText.trim()) {
+            toast({ title: "Error", description: "Provide a PDF file or paste text", variant: "destructive" });
+            return;
+        }
+        setParsingTicket(true);
+        try {
+            const formData = new FormData();
+            if (ticketFile) formData.append("file", ticketFile);
+            if (ticketText) formData.append("text", ticketText);
+
+            const res = await fetch("/api/admin/parse-ticket", {
+                method: "POST",
+                body: formData,
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setParsedPassengers(data.passengers);
+                toast({ title: "Success", description: `Parsed ${data.passengers.length} passengers` });
+            } else {
+                toast({ title: "Error", description: data.error || "Failed to parse", variant: "destructive" });
+            }
+        } catch (error) {
+            toast({ title: "Error", description: "Failed to parse ticket", variant: "destructive" });
+        } finally {
+            setParsingTicket(false);
+        }
+    };
+
+    const handleAllotSeats = async () => {
+        const allotments = parsedPassengers
+            .filter(p => seatMappings[p.srNo])
+            .map(p => ({
+                bookingId: seatMappings[p.srNo],
+                seatNumber: p.seatNumber,
+                name: p.name,
+                age: p.age
+            }));
+
+        if (allotments.length === 0) {
+            toast({ title: "Error", description: "Please map at least one passenger to a booking", variant: "destructive" });
+            return;
+        }
+
+        setAllottingSeats(true);
+        try {
+            const res = await fetch("/api/bookings/allot-seats", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    tripId: params.id,
+                    allotments
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                toast({ title: "Success", description: data.message });
+                setShowAllotSeats(false);
+                setParsedPassengers([]);
+                setSeatMappings({});
+                setTicketFile(null);
+                setTicketText("");
+                fetchBookings(); // refresh list
+            } else {
+                toast({ title: "Error", description: data.error || "Failed to allot", variant: "destructive" });
+            }
+        } catch (error) {
+            toast({ title: "Error", description: "Failed to allot seats", variant: "destructive" });
+        } finally {
+            setAllottingSeats(false);
+        }
+    };
+
+    const updatePassenger = (srNo: number, field: string, value: any) => {
+        setParsedPassengers(prev => prev.map(p => p.srNo === srNo ? { ...p, [field]: value } : p));
+    };
+
     const pendingBookings = bookings.filter(b => b.status === "pending");
     const confirmedBookings = bookings.filter(b => b.status === "confirmed");
     const registrationConfirmedBookings = bookings.filter(b => b.status === "registrationConfirmed");
@@ -203,12 +288,17 @@ export default function TripBookingsPage() {
                         Back
                     </Button>
                     <h1 className="text-3xl font-bold text-gold flex-1">Trip Bookings</h1>
-                    <Button
-                        onClick={() => setShowAddBooking(true)}
-                        className="bg-gold hover:bg-yellow-600 text-black font-semibold"
-                    >
-                        + Add Booking
-                    </Button>
+                    <div className="flex gap-2">
+                        <Button onClick={() => setShowAllotSeats(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">
+                            🎟️ Allot Train Seats
+                        </Button>
+                        <Button
+                            onClick={() => setShowAddBooking(true)}
+                            className="bg-gold hover:bg-yellow-600 text-black font-semibold"
+                        >
+                            + Add Booking
+                        </Button>
+                    </div>
                 </div>
 
                 <Tabs defaultValue="all" className="space-y-6">
@@ -424,6 +514,99 @@ export default function TripBookingsPage() {
                             className="bg-gold hover:bg-yellow-600 text-black font-semibold"
                         >
                             {addingBooking ? 'Creating...' : 'Create Booking'}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={showAllotSeats} onOpenChange={setShowAllotSeats}>
+                <DialogContent className="bg-black border-white/10 text-white max-w-4xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Allot Train Seats</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <Label className="text-gray-400">Upload Ticket PDF</Label>
+                                <Input
+                                    type="file"
+                                    accept="application/pdf"
+                                    onChange={(e) => setTicketFile(e.target.files?.[0] || null)}
+                                    className="bg-white/5 border-white/10 text-white mt-1"
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-400">Or Paste Ticket Text</Label>
+                                <textarea
+                                    className="w-full mt-1 px-3 py-2 rounded-md bg-white/5 border border-white/10 text-white h-24 resize-none"
+                                    placeholder="Paste PNR/Passenger details..."
+                                    value={ticketText}
+                                    onChange={(e) => setTicketText(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <Button onClick={handleParseTicket} disabled={parsingTicket} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white">
+                            {parsingTicket ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                            Parse Ticket
+                        </Button>
+
+                        {parsedPassengers.length > 0 && (
+                            <div className="mt-6 border border-white/10 rounded-md overflow-hidden">
+                                <table className="w-full text-sm text-left text-gray-300">
+                                    <thead className="text-xs text-gray-400 uppercase bg-white/5 border-b border-white/10">
+                                        <tr>
+                                            <th className="px-4 py-3">Sr</th>
+                                            <th className="px-4 py-3">Name</th>
+                                            <th className="px-4 py-3 w-16">Age</th>
+                                            <th className="px-4 py-3">Seat No</th>
+                                            <th className="px-4 py-3">Assign To Booking</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {parsedPassengers.map((p) => (
+                                            <tr key={p.srNo} className="border-b border-white/5 last:border-0 hover:bg-white/5">
+                                                <td className="px-4 py-2">{p.srNo}</td>
+                                                <td className="px-4 py-2">
+                                                    <Input value={p.name} onChange={(e) => updatePassenger(p.srNo, 'name', e.target.value)} className="h-8 bg-transparent border-white/10" />
+                                                </td>
+                                                <td className="px-4 py-2">
+                                                    <Input type="number" value={p.age} onChange={(e) => updatePassenger(p.srNo, 'age', parseInt(e.target.value))} className="h-8 bg-transparent border-white/10 w-16 px-2" />
+                                                </td>
+                                                <td className="px-4 py-2">
+                                                    <Input value={p.seatNumber} onChange={(e) => updatePassenger(p.srNo, 'seatNumber', e.target.value)} className="h-8 bg-transparent border-white/10" />
+                                                </td>
+                                                <td className="px-4 py-2">
+                                                    <select
+                                                        value={seatMappings[p.srNo] || ""}
+                                                        onChange={(e) => setSeatMappings(prev => ({ ...prev, [p.srNo]: e.target.value }))}
+                                                        className="w-full h-8 px-2 rounded bg-black border border-white/10 text-white text-xs"
+                                                    >
+                                                        <option value="">-- Select Booking --</option>
+                                                        {bookings
+                                                            .filter(b => ['registrationConfirmed', 'pending', 'confirmed'].includes(b.status) && !b.seatNumber)
+                                                            .map(b => (
+                                                                <option key={b.id} value={b.id}>{b.fullName} ({b.status})</option>
+                                                            ))}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button variant="ghost" onClick={() => setShowAllotSeats(false)} className="text-gray-400">
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleAllotSeats}
+                            disabled={allottingSeats || parsedPassengers.length === 0}
+                            className="bg-gold text-black hover:bg-yellow-600 font-semibold"
+                        >
+                            {allottingSeats ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                            Confirm Allotment
                         </Button>
                     </DialogFooter>
                 </DialogContent>

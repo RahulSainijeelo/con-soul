@@ -87,6 +87,7 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^8.0.0",
-    "@types/nprogress": "^0.2.3"
+    "@types/nprogress": "^0.2.3",
+    "@types/pdf-parse": "^1.1.5"
   }
 }
