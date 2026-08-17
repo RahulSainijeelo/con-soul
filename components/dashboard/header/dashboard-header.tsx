@@ -35,7 +35,7 @@ export function DashboardHeader() {
         <div className="flex items-center">
           <Link href="/dashboard" className="font-bold text-2xl ml-7 text-white hover:text-gold transition-colors">
             {/* <Image src={logo} width={70} alt="CONSOUL"/> */}
-            Con-Sol
+            CONSOUL
           </Link>
         </div>
         {/* Desktop navigation */}

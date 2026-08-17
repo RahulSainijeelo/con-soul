@@ -166,31 +166,39 @@ export default function ContactPage() {
                         )}
                     </div>
 
-                    {/* Additional Info */}
-                    {(profile.bio || profile.description) && (
-                        <div className="mt-16 bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
-                            <div className="flex flex-col md:flex-row items-center gap-8">
-                                {profile.photo && (
-                                    <img
-                                        src={profile.photo}
-                                        alt={profile.name}
-                                        className="w-32 h-32 rounded-full object-cover border-4 border-gold/20"
-                                    />
-                                )}
-                                <div className="text-center md:text-left">
-                                    <h2 className="text-2xl font-bold text-white mb-4">About {profile.name}</h2>
-                                    <p className="text-gray-300 leading-relaxed">
-                                        {profile.bio || profile.description}
-                                    </p>
-                                    {profile.experience && (
-                                        <div className="mt-4 inline-block px-4 py-2 bg-gold/10 rounded-full border border-gold/20 text-gold text-sm font-semibold">
-                                            {profile.experience} Experience
-                                        </div>
-                                    )}
+                    {/* About CONSOUL — Founders */}
+                    <div className="mt-16 bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
+                        <div className="text-center mb-10">
+                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">About CONSOUL</h2>
+                            <p className="text-gray-400 max-w-2xl mx-auto">
+                                India&apos;s youth group travel platform — curating unforgettable adventures across the Himalayas, Goa, Rajasthan, Kerala &amp; more.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                            {/* Founder 1 */}
+                            <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/5 border border-white/10">
+                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gold to-yellow-600 flex items-center justify-center mb-4">
+                                    <span className="text-black font-bold text-xl">DK</span>
                                 </div>
+                                <h3 className="text-lg font-bold text-white">Dipanshu Kumar</h3>
+                                <p className="text-gold text-sm font-medium mt-1">Co-Founder</p>
+                                <p className="text-gray-400 text-sm mt-3">
+                                    Passionate about building communities through travel and creating experiences that turn strangers into lifelong friends.
+                                </p>
+                            </div>
+                            {/* Founder 2 */}
+                            <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/5 border border-white/10">
+                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gold to-yellow-600 flex items-center justify-center mb-4">
+                                    <span className="text-black font-bold text-xl">HK</span>
+                                </div>
+                                <h3 className="text-lg font-bold text-white">Himanshu Kumar</h3>
+                                <p className="text-gold text-sm font-medium mt-1">Co-Founder</p>
+                                <p className="text-gray-400 text-sm mt-3">
+                                    Dedicated to crafting seamless travel experiences and ensuring every CONSOUL trip is safe, exciting, and unforgettable.
+                                </p>
                             </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </main>
 
