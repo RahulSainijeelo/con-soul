@@ -106,3 +106,47 @@ export async function PUT(
         );
     }
 }
+
+// DELETE /api/bookings/[id] - Delete a booking
+export async function DELETE(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const { userId } = await auth();
+        const session = await getServerSession(authOptions);
+        if (!userId && !session) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const { id } = await params;
+        const bookingRef = db.collection("bookings").doc(id);
+        const bookingDoc = await bookingRef.get();
+
+        if (!bookingDoc.exists) {
+            return NextResponse.json({ error: "Booking not found" }, { status: 404 });
+        }
+
+        const bookingData = bookingDoc.data();
+        const tripId = bookingData?.tripId;
+        const status = bookingData?.status;
+
+        // If booking was not already rejected, decrement participant count
+        if (tripId && status !== 'rejected') {
+            const tripRef = db.collection("trips").doc(tripId);
+            await tripRef.update({
+                currentParticipants: FieldValue.increment(-1)
+            });
+        }
+
+        await bookingRef.delete();
+
+        return NextResponse.json({ message: "Booking deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting booking:", error);
+        return NextResponse.json(
+            { error: "Failed to delete booking" },
+            { status: 500 }
+        );
+    }
+}

@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, ArrowLeft, Check, X, ExternalLink, Edit } from "lucide-react";
+import { Loader2, ArrowLeft, Check, X, ExternalLink, Edit, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 interface BookingDetail {
     id: string;
@@ -54,6 +55,7 @@ export default function BookingDetailPage() {
         note: '',
     });
     const [recordingPayment, setRecordingPayment] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         fetchBooking();
@@ -187,6 +189,32 @@ export default function BookingDetailPage() {
         }
     };
 
+    const handleDeleteBooking = async () => {
+        setDeleting(true);
+        try {
+            const res = await fetch(`/api/bookings/${params.bookingId}`, {
+                method: "DELETE",
+            });
+            if (res.ok) {
+                toast({
+                    title: "Deleted",
+                    description: "Booking has been deleted successfully",
+                });
+                router.back();
+            } else {
+                throw new Error("Failed to delete");
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to delete booking",
+                variant: "destructive",
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
@@ -277,6 +305,38 @@ export default function BookingDetailPage() {
                                 >
                                     💰 Record Payment
                                 </Button>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button
+                                            variant="destructive"
+                                            size="sm"
+                                            className="bg-red-600 hover:bg-red-700 text-white"
+                                            disabled={deleting}
+                                        >
+                                            {deleting ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <Trash2 className="w-4 h-4 mr-1" />}
+                                            Delete
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent className="bg-gray-900 border-white/10 text-white">
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Delete Booking</AlertDialogTitle>
+                                            <AlertDialogDescription className="text-gray-400">
+                                                Are you sure you want to permanently delete this booking for <strong className="text-white">{booking.fullName}</strong>? This action cannot be undone.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel className="bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white">
+                                                Cancel
+                                            </AlertDialogCancel>
+                                            <AlertDialogAction
+                                                onClick={handleDeleteBooking}
+                                                className="bg-red-600 hover:bg-red-700 text-white"
+                                            >
+                                                Delete Permanently
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                             </div>
                         )}
                     </div>

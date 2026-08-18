@@ -82,6 +82,20 @@ export const authOptions: NextAuthOptions = {
                     return false;
                 }
             }
+            // Record login activity
+            if (user?.email) {
+                try {
+                    await db.collection('loginActivity').add({
+                        email: user.email,
+                        name: user.name || 'Unknown',
+                        image: user.image || null,
+                        provider: account?.provider || 'credentials',
+                        loginAt: new Date().toISOString(),
+                    });
+                } catch (err) {
+                    console.error('Failed to record login activity:', err);
+                }
+            }
             return true;
         },
         async session({ session, token }) {

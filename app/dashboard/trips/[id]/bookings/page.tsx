@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Check, X, User, Phone, Mail, Calendar, ArrowLeft, AlertCircle } from "lucide-react";
+import { Loader2, Check, X, User, Phone, Mail, Calendar, ArrowLeft, AlertCircle, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 interface Booking {
@@ -25,6 +25,8 @@ interface Booking {
     razorpayPaymentId?: string;
     razorpayOrderId?: string;
     paymentStatus?: string;
+    amount?: number;
+    amountPaid?: number;
 }
 
 export default function TripBookingsPage() {
@@ -33,6 +35,7 @@ export default function TripBookingsPage() {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
     const [confirmingBooking, setConfirmingBooking] = useState<Booking | null>(null);
+    const [deletingBookingId, setDeletingBookingId] = useState<string | null>(null);
     const [seatNumber, setSeatNumber] = useState("");
     const [processing, setProcessing] = useState(false);
     const [showAddBooking, setShowAddBooking] = useState(false);
@@ -145,6 +148,35 @@ export default function TripBookingsPage() {
                 description: "Failed to reject booking",
                 variant: "destructive"
             });
+        }
+    };
+
+    const handleDelete = async (bookingId: string) => {
+        if (!confirm("Are you sure you want to permanently delete this booking? This cannot be undone.")) return;
+
+        setDeletingBookingId(bookingId);
+        try {
+            const res = await fetch(`/api/bookings/${bookingId}`, {
+                method: "DELETE",
+            });
+
+            if (res.ok) {
+                toast({
+                    title: "Deleted",
+                    description: "Booking has been deleted",
+                });
+                setBookings(prev => prev.filter(b => b.id !== bookingId));
+            } else {
+                throw new Error("Failed to delete");
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to delete booking",
+                variant: "destructive",
+            });
+        } finally {
+            setDeletingBookingId(null);
         }
     };
 
@@ -267,6 +299,12 @@ export default function TripBookingsPage() {
     const confirmedBookings = bookings.filter(b => b.status === "confirmed");
     const registrationConfirmedBookings = bookings.filter(b => b.status === "registrationConfirmed");
 
+    const adminRegisteredBookings = bookings.filter(b => b.status === 'admin_registered');
+    const nonRejectedBookings = bookings.filter(b => b.status !== 'rejected');
+    const totalCollected = nonRejectedBookings.reduce((sum, b: any) => sum + (b.amountPaid || 0), 0);
+    const totalExpected = nonRejectedBookings.reduce((sum, b: any) => sum + (b.amount || 0), 0);
+    const pendingAmount = totalExpected - totalCollected;
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
@@ -301,6 +339,31 @@ export default function TripBookingsPage() {
                     </div>
                 </div>
 
+                {/* Collection Stats */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="rounded-xl bg-gradient-to-br from-green-500/20 to-green-600/5 border border-green-500/20 p-4">
+                        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Total Collected</p>
+                        <p className="text-2xl font-bold text-green-400 mt-1">₹{totalCollected.toLocaleString()}</p>
+                        <p className="text-[11px] text-gray-500 mt-0.5">{nonRejectedBookings.length} bookings</p>
+                    </div>
+                    <div className="rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/5 border border-blue-500/20 p-4">
+                        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Total Expected</p>
+                        <p className="text-2xl font-bold text-blue-400 mt-1">₹{totalExpected.toLocaleString()}</p>
+                    </div>
+                    <div className="rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/20 p-4">
+                        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Pending Amount</p>
+                        <p className="text-2xl font-bold text-amber-400 mt-1">₹{pendingAmount.toLocaleString()}</p>
+                    </div>
+                    <div className="rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/5 border border-purple-500/20 p-4">
+                        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Status Breakdown</p>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+                            <span className="text-[11px] text-green-400">{confirmedBookings.length} confirmed</span>
+                            <span className="text-[11px] text-amber-400">{registrationConfirmedBookings.length} registered</span>
+                            <span className="text-[11px] text-yellow-400">{pendingBookings.length} pending</span>
+                        </div>
+                    </div>
+                </div>
+
                 <Tabs defaultValue="all" className="space-y-6">
                     <TabsList className="bg-white/5 border border-white/10">
                         <TabsTrigger value="all" className="data-[state=active]:bg-gold data-[state=active]:text-black">
@@ -324,6 +387,7 @@ export default function TripBookingsPage() {
                                     key={booking.id}
                                     booking={booking}
                                     type="all"
+                                    onDelete={() => handleDelete(booking.id)}
                                 />
                             ))}
                             {bookings.length === 0 && (
@@ -339,6 +403,7 @@ export default function TripBookingsPage() {
                                     key={booking.id}
                                     booking={booking}
                                     type="confirmed"
+                                    onDelete={() => handleDelete(booking.id)}
                                 />
                             ))}
                             {confirmedBookings.length === 0 && (
@@ -356,6 +421,7 @@ export default function TripBookingsPage() {
                                     type="pending"
                                     onConfirm={() => setConfirmingBooking(booking)}
                                     onReject={() => handleReject(booking.id)}
+                                    onDelete={() => handleDelete(booking.id)}
                                 />
                             ))}
                             {pendingBookings.length === 0 && (
@@ -371,6 +437,7 @@ export default function TripBookingsPage() {
                                     key={booking.id}
                                     booking={booking}
                                     type="all"
+                                    onDelete={() => handleDelete(booking.id)}
                                 />
                             ))}
                             {registrationConfirmedBookings.length === 0 && (
@@ -619,12 +686,14 @@ function BookingCard({
     booking,
     type,
     onConfirm,
-    onReject
+    onReject,
+    onDelete
 }: {
     booking: Booking;
     type: 'confirmed' | 'pending' | 'all';
     onConfirm?: () => void;
     onReject?: () => void;
+    onDelete?: () => void;
 }) {
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -700,6 +769,16 @@ function BookingCard({
                         View Details
                     </Button>
                 </Link>
+
+                {onDelete && (
+                    <Button
+                        size="sm"
+                        onClick={onDelete}
+                        className="bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30"
+                    >
+                        <Trash2 className="w-4 h-4" />
+                    </Button>
+                )}
 
                 {type === 'pending' && (
                     <>

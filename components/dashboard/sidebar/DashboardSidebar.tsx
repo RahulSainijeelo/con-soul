@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   Loader2,
+  Activity,
 } from "lucide-react";
 
 const navItems = [
@@ -23,6 +24,7 @@ const navItems = [
   { label: "Trips", href: "/dashboard/trips", icon: Map },
   { label: "Enquiries", href: "/dashboard/enquiries", icon: MessageSquare },
   { label: "Reviews", href: "/dashboard/reviews", icon: Star },
+  { label: "Login Activity", href: "/dashboard/login-activity", icon: Activity },
   { label: "Profile", href: "/dashboard/profile", icon: User },
 ];
 
