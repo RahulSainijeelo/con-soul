@@ -13,8 +13,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/about`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/contact`,        lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${base}/privacy-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${base}/terms`,           lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${base}/refund-policy`,  lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     // ❌ DO NOT include: /auth/login, /my-trips, /profile (auth-gated — will 302 redirect)
-    // ❌ DO NOT include: /trips, /terms, /refund (routes do not exist)
   ]
 
   // Dynamic trip pages from Firestore

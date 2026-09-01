@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { auth } from "@clerk/nextjs/server";
 import { FieldValue } from "firebase-admin/firestore";
+import { sendBookingConfirmationEmail } from "@/lib/email";
+import { formatDateIN } from "@/lib/utils";
 
 // POST /api/bookings/[id]/record-payment — Admin records cash/bank payment
 export async function POST(
@@ -76,6 +78,26 @@ export async function POST(
         }
 
         await bookingRef.update(updates);
+
+        // Send confirmation email — awaited so Vercel lambda doesn't kill it before it sends
+        const tripRef = db.collection("trips").doc(booking.tripId);
+        const tripDoc = await tripRef.get();
+        const tripData = tripDoc.data();
+
+        await sendBookingConfirmationEmail({
+            email: booking.email,
+            fullName: booking.fullName,
+            tripName: tripData?.title || tripData?.name || "Your Trip",
+            tripDestination: tripData?.destination,
+            tripDates: tripData?.startDate && tripData?.endDate
+                ? `${formatDateIN(tripData.startDate)} – ${formatDateIN(tripData.endDate)}`
+                : undefined,
+            amount: totalAmount,
+            amountPaid: newAmountPaid,
+            status: isFullyPaid ? "confirmed" : "registrationConfirmed",
+            seatNumber: booking.seatNumber as string | undefined,
+            bookingId: id,
+        }).catch((err) => console.error("[Record-Payment Email] Failed to send:", err));
 
         return NextResponse.json({
             message: "Payment recorded successfully",

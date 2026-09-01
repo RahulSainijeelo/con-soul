@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
-import { CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { CheckCircle2, Clock, XCircle, ShieldAlert, FileText } from 'lucide-react';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 
 interface Trip {
@@ -399,6 +399,47 @@ export default function TripPage() {
                       <li key={i} className="text-gray-300">{sentence.trim()}.</li>
                     ))}
                   </ul>
+                </div>
+              </div>
+
+              {/* Cancellation & Refund Policy */}
+              <div className="bg-gradient-to-br from-amber-500/10 via-white/5 to-white/5 rounded-2xl border border-amber-500/30 p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                    <ShieldAlert className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-display font-bold text-white">
+                      Cancellation & Refund Policy
+                    </h2>
+                    <p className="text-xs text-amber-400 font-medium">Important Booking Condition</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 text-gray-300">
+                  <div className="p-4 bg-black/40 border border-amber-500/20 rounded-xl">
+                    <p className="text-sm md:text-base leading-relaxed">
+                      ⚠️ <strong className="text-white">Registration Fee is Non-Refundable:</strong> The registration amount is strictly <strong className="text-gold">non-refundable within 15 days prior to the scheduled trip departure date</strong>, as train tickets, resort allotments, and local transit are locked in advance.
+                    </p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-3 text-sm">
+                    <div className="p-3.5 bg-black/20 rounded-lg border border-white/10">
+                      <p className="font-semibold text-green-400 mb-1">✓ &gt; 15 Days Before Trip</p>
+                      <p className="text-xs text-gray-400">Eligible for remaining balance refund or trip transfer to another date.</p>
+                    </div>
+                    <div className="p-3.5 bg-black/20 rounded-lg border border-white/10">
+                      <p className="font-semibold text-red-400 mb-1">✕ ≤ 15 Days Before Trip</p>
+                      <p className="text-xs text-gray-400">Registration deposit is 100% non-refundable due to locked vendor bookings.</p>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-between items-center text-xs text-gray-400">
+                    <span>Have questions about your booking?</span>
+                    <Link href="/refund-policy" className="text-gold hover:underline font-medium inline-flex items-center gap-1">
+                      Read Full Policy →
+                    </Link>
+                  </div>
                 </div>
               </div>
 

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Upload, X, CreditCard, Shield, CheckCircle2, IndianRupee } from "lucide-react";
+import { Loader2, Upload, X, CreditCard, Shield, CheckCircle2, IndianRupee, ShieldAlert } from "lucide-react";
 import { uploadImageToImgBB } from "@/lib/imgbb";
 import {
     Select,
@@ -573,6 +573,22 @@ export default function JoinTripForm({
                                 <div className="flex items-center gap-2 text-gray-400">
                                     <CheckCircle2 className="h-4 w-4 text-green-400" />
                                     <span>Booking ID sent to your email</span>
+                                </div>
+                            </div>
+
+                            {/* Refund Policy Box */}
+                            <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-1">
+                                <div className="flex items-center gap-2 text-amber-400 font-semibold text-xs uppercase tracking-wide">
+                                    <ShieldAlert className="h-4 w-4" />
+                                    Refund Policy Notice
+                                </div>
+                                <p className="text-gray-300 text-xs leading-relaxed">
+                                    The registration fee is <strong className="text-white font-medium">strictly non-refundable within 15 days</strong> prior to the trip departure date due to advance travel logistics.
+                                </p>
+                                <div className="pt-1">
+                                    <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-gold text-[11px] hover:underline font-medium inline-block">
+                                        Read complete cancellation policy →
+                                    </a>
                                 </div>
                             </div>
                         </div>

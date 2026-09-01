@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { auth } from "@clerk/nextjs/server";
 import { FieldValue } from "firebase-admin/firestore";
+import { sendBookingConfirmationEmail } from "@/lib/email";
+import { formatDateIN } from "@/lib/utils";
 
 // POST /api/bookings/admin — Admin creates a booking without Razorpay
 export async function POST(request: NextRequest) {
@@ -97,7 +99,7 @@ export async function POST(request: NextRequest) {
         }
 
         const now = new Date().toISOString();
-        const bookingData = {
+        const bookingData: Record<string, unknown> = {
             tripId,
             fullName,
             email: email.toLowerCase().trim(),
@@ -126,6 +128,16 @@ export async function POST(request: NextRequest) {
                 throw new Error("Trip is full. No more spots available.");
             }
 
+            // Auto-assign seat number inside transaction if fully paid
+            if (paymentStatus === "paid") {
+                const confirmedBookings = await transaction.get(
+                    db.collection("bookings")
+                        .where("tripId", "==", tripId)
+                        .where("status", "==", "confirmed")
+                );
+                bookingData.seatNumber = String(confirmedBookings.size + 1);
+            }
+
             const newBookingRef = db.collection("bookings").doc();
             transaction.set(newBookingRef, bookingData);
             transaction.update(tripRef, {
@@ -134,6 +146,22 @@ export async function POST(request: NextRequest) {
 
             return newBookingRef.id;
         });
+
+        // Send confirmation email — awaited so Vercel lambda doesn't kill it before it sends
+        await sendBookingConfirmationEmail({
+            email: bookingData.email as string,
+            fullName: bookingData.fullName as string,
+            tripName: trip.title || trip.name || "Your Trip",
+            tripDestination: trip.destination,
+            tripDates: trip.startDate && trip.endDate
+                ? `${formatDateIN(trip.startDate)} – ${formatDateIN(trip.endDate)}`
+                : undefined,
+            amount: totalAmount,
+            amountPaid: amountPaid,
+            status: (bookingStatus === "confirmed" ? "confirmed" : "registrationConfirmed"),
+            seatNumber: bookingData.seatNumber as string | undefined,
+            bookingId: bookingId,
+        }).catch((err) => console.error("[Admin Booking Email] Failed to send:", err));
 
         return NextResponse.json({
             message: "Booking created successfully",

@@ -26,7 +26,8 @@ import {
     ArrowLeft,
     Check,
     X,
-    Loader2
+    Loader2,
+    ShieldAlert
 } from "lucide-react";
 
 declare global {
@@ -743,6 +744,22 @@ export default function MyTripDetailPage() {
                                         </div>
                                     </div>
                                 )}
+                            </div>
+                        </Card>
+
+                        {/* Refund Policy Card */}
+                        <Card className="bg-amber-500/5 border-amber-500/20 rounded-2xl p-5 space-y-2">
+                            <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm">
+                                <ShieldAlert className="w-4 h-4" />
+                                <span>Cancellation & Refund Policy</span>
+                            </div>
+                            <p className="text-xs text-gray-300 leading-relaxed">
+                                Please note that the registration deposit is <strong className="text-white">strictly non-refundable within 15 days</strong> prior to the trip departure date due to advance vendor bookings.
+                            </p>
+                            <div className="pt-1">
+                                <Link href="/refund-policy" className="text-gold text-xs hover:underline font-medium inline-block">
+                                    View Full Refund Policy →
+                                </Link>
                             </div>
                         </Card>
 

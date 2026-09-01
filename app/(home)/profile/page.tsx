@@ -22,7 +22,8 @@ import {
     Info,
     FileText,
     Camera,
-    Loader2
+    Loader2,
+    ShieldAlert
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { uploadImageToImgBB } from "@/lib/imgbb";
@@ -314,6 +315,26 @@ export default function ProfilePage() {
                                     <Shield className="w-5 h-5" />
                                 </div>
                                 <span className="text-white font-medium">Privacy Policy</span>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-gray-500" />
+                        </a>
+
+                        <a href="/terms" className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors border-b border-white/5">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400">
+                                    <FileText className="w-5 h-5" />
+                                </div>
+                                <span className="text-white font-medium">Terms & Conditions</span>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-gray-500" />
+                        </a>
+
+                        <a href="/refund-policy" className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-amber-500/10 rounded-lg text-amber-400">
+                                    <ShieldAlert className="w-5 h-5" />
+                                </div>
+                                <span className="text-white font-medium">Cancellation & Refund Policy</span>
                             </div>
                             <ChevronRight className="w-5 h-5 text-gray-500" />
                         </a>
