@@ -754,7 +754,7 @@ export default function MyTripDetailPage() {
                                 <span>Cancellation & Refund Policy</span>
                             </div>
                             <p className="text-xs text-gray-300 leading-relaxed">
-                                Please note that the registration deposit is <strong className="text-white">strictly non-refundable within 15 days</strong> prior to the trip departure date due to advance vendor bookings.
+                                Cancellations between <strong className="text-gold">15 to 10 days</strong> prior to departure receive <strong className="text-gold">10% refund</strong> of registration fee. Cancellations <strong className="text-white">under 10 days</strong> are strictly non-refundable.
                             </p>
                             <div className="pt-1">
                                 <Link href="/refund-policy" className="text-gold text-xs hover:underline font-medium inline-block">

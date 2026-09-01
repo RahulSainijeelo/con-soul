@@ -583,7 +583,7 @@ export default function JoinTripForm({
                                     Refund Policy Notice
                                 </div>
                                 <p className="text-gray-300 text-xs leading-relaxed">
-                                    The registration fee is <strong className="text-white font-medium">strictly non-refundable within 15 days</strong> prior to the trip departure date due to advance travel logistics.
+                                    Cancellations between <strong className="text-gold font-medium">15 to 10 days</strong> prior to departure receive only <strong className="text-gold font-medium">10% refund</strong> of registration fee. Cancellations <strong className="text-white font-medium">less than 10 days</strong> are strictly non-refundable.
                                 </p>
                                 <div className="pt-1">
                                     <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-gold text-[11px] hover:underline font-medium inline-block">

@@ -419,18 +419,22 @@ export default function TripPage() {
                 <div className="space-y-4 text-gray-300">
                   <div className="p-4 bg-black/40 border border-amber-500/20 rounded-xl">
                     <p className="text-sm md:text-base leading-relaxed">
-                      ⚠️ <strong className="text-white">Registration Fee is Non-Refundable:</strong> The registration amount is strictly <strong className="text-gold">non-refundable within 15 days prior to the scheduled trip departure date</strong>, as train tickets, resort allotments, and local transit are locked in advance.
+                      ⚠️ <strong className="text-white">Registration Refund Policy:</strong> Cancellations between <strong className="text-gold">15 to 10 days</strong> receive only <strong className="text-gold">10% refund</strong> of registration fee. Cancellations <strong className="text-red-400">under 10 days</strong> prior to departure are <strong className="text-red-400">100% non-refundable</strong>.
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-3 text-sm">
-                    <div className="p-3.5 bg-black/20 rounded-lg border border-white/10">
-                      <p className="font-semibold text-green-400 mb-1">✓ &gt; 15 Days Before Trip</p>
-                      <p className="text-xs text-gray-400">Eligible for remaining balance refund or trip transfer to another date.</p>
+                  <div className="grid md:grid-cols-3 gap-3 text-sm">
+                    <div className="p-3 bg-black/20 rounded-lg border border-white/10">
+                      <p className="font-semibold text-green-400 text-xs mb-1">✓ &gt; 15 Days Prior</p>
+                      <p className="text-[11px] text-gray-400">Full refund (minus bank fees) or 100% trip transfer.</p>
                     </div>
-                    <div className="p-3.5 bg-black/20 rounded-lg border border-white/10">
-                      <p className="font-semibold text-red-400 mb-1">✕ ≤ 15 Days Before Trip</p>
-                      <p className="text-xs text-gray-400">Registration deposit is 100% non-refundable due to locked vendor bookings.</p>
+                    <div className="p-3 bg-black/20 rounded-lg border border-amber-500/20">
+                      <p className="font-semibold text-amber-400 text-xs mb-1">ℹ 15 – 10 Days Prior</p>
+                      <p className="text-[11px] text-gray-400"><strong className="text-white">10% registration refunded</strong> (90% retained for bookings).</p>
+                    </div>
+                    <div className="p-3 bg-black/20 rounded-lg border border-red-500/20">
+                      <p className="font-semibold text-red-400 text-xs mb-1">✕ &lt; 10 Days Prior</p>
+                      <p className="text-[11px] text-gray-400"><strong className="text-white">0% refund</strong>. Strictly non-refundable.</p>
                     </div>
                   </div>
 

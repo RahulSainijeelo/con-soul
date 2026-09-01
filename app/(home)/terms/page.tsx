@@ -86,8 +86,13 @@ export default function TermsPage() {
               </div>
               <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl space-y-2 mb-4">
                 <p className="text-sm md:text-base text-gray-200">
-                  ⚠️ <strong className="text-gold">15-Day Non-Refundable Window:</strong> The registration deposit is <strong className="text-white font-semibold">strictly non-refundable within 15 days</strong> prior to the scheduled trip departure date, as train tickets (IRCTC), resort allotments, and ground logistics are booked in advance under passenger names.
+                  ⚠️ <strong className="text-gold">Cancellation &amp; Registration Refund Tiers:</strong>
                 </p>
+                <ul className="text-xs md:text-sm text-gray-300 space-y-1 pl-4 list-disc">
+                  <li><strong className="text-white">&gt; 15 Days Prior:</strong> Full balance refund / 100% credit transfer.</li>
+                  <li><strong className="text-white">15 to 10 Days Prior:</strong> Only <strong className="text-gold">10% of the registration fee</strong> is refundable (90% retained for vendor bookings).</li>
+                  <li><strong className="text-white">&lt; 10 Days Prior:</strong> Registration fee is <strong className="text-red-400">100% non-refundable</strong>.</li>
+                </ul>
               </div>
               <p className="text-gray-400 text-sm">
                 For complete cancellation rules, timeline details, and transfer options, please refer to our dedicated{" "}

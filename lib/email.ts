@@ -188,7 +188,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
             <td style="padding:16px 40px 0;">
               <div style="background-color:#111111;border:1px solid #2a2a2a;border-radius:8px;padding:12px 16px;">
                 <p style="margin:0;font-size:12px;color:#888888;line-height:1.4;">
-                  <strong style="color:#D4AF37;">Cancellation & Refund Policy:</strong> The registration deposit is strictly non-refundable if cancelled within 15 days prior to the trip departure date due to advance transport & accommodation bookings.
+                  <strong style="color:#D4AF37;">Cancellation & Refund Policy:</strong> Cancellations between 15 to 10 days prior to departure receive 10% refund of registration fee. Cancellations less than 10 days before the trip are non-refundable.
                 </p>
               </div>
             </td>

@@ -41,10 +41,10 @@ export default function RefundPolicyPage() {
               </div>
               <div>
                 <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-                  Key Policy Notice: Non-Refundable Registration
+                  Key Registration Refund Policy
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  The trip registration fee is <strong className="text-gold font-semibold">strictly non-refundable within 15 days prior to the scheduled departure date</strong>. Because train/transport tickets, accommodation allotments, and ground logistics are pre-booked and locked with third-party vendors well in advance, we cannot issue registration refunds for cancellations made inside this 15-day window.
+                  For cancellations made <strong className="text-gold font-semibold">between 15 days and 10 days prior to departure</strong>, only <strong className="text-gold font-semibold">10% of the registration amount is refundable</strong> (90% is retained for advance vendor commitments). For cancellations made <strong className="text-red-400 font-semibold">less than 10 days prior to departure</strong>, the registration fee is <strong className="text-red-400 font-semibold">100% strictly non-refundable</strong>.
                 </p>
               </div>
             </div>
@@ -64,53 +64,92 @@ export default function RefundPolicyPage() {
                 </h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-6 mt-6">
-                {/* More than 15 days */}
-                <div className="bg-black/40 border border-green-500/20 rounded-xl p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-bl-lg">
-                    Eligible
+              <div className="grid md:grid-cols-3 gap-5 mt-6">
+                {/* Tier 1: > 15 days */}
+                <div className="bg-black/40 border border-green-500/20 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+                  <div className="absolute top-0 right-0 px-2.5 py-0.5 bg-green-500/20 text-green-400 text-[11px] font-bold rounded-bl-lg">
+                    Full Refund / Transfer
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-green-400" />
-                    More than 15 Days Before Departure
-                  </h3>
-                  <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                    If you notify us of cancellation more than 15 days before the trip start date:
-                  </p>
-                  <ul className="space-y-2 text-sm text-gray-300">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 font-bold">✓</span>
-                      <span>Full remaining balance refunded (if paid in full).</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-400 font-bold">✓</span>
-                      <span>Registration fee can be transferred to a future CONSOUL trip or refunded minus standard administrative/banking charges.</span>
-                    </li>
-                  </ul>
+                  <div>
+                    <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-green-400" />
+                      &gt; 15 Days Prior
+                    </h3>
+                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                      Cancellations made more than 15 days before the departure date:
+                    </p>
+                    <ul className="space-y-1.5 text-xs text-gray-300">
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-green-400 font-bold">✓</span>
+                        <span>Full registration &amp; trip balance refund (minus nominal bank fees).</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-green-400 font-bold">✓</span>
+                        <span>100% credit transfer to any future trip.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/5 text-xs font-semibold text-green-400">
+                    Refund: 100% of balance
+                  </div>
                 </div>
 
-                {/* 15 days or less */}
-                <div className="bg-black/40 border border-red-500/20 rounded-xl p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 px-3 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-bl-lg">
+                {/* Tier 2: 15 to 10 days */}
+                <div className="bg-black/40 border border-amber-500/30 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+                  <div className="absolute top-0 right-0 px-2.5 py-0.5 bg-amber-500/20 text-amber-400 text-[11px] font-bold rounded-bl-lg">
+                    10% Refundable
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                      <ShieldAlert className="w-4 h-4 text-amber-400" />
+                      15 to 10 Days Prior
+                    </h3>
+                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                      Cancellations made between 15 days and 10 days before departure:
+                    </p>
+                    <ul className="space-y-1.5 text-xs text-gray-300">
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-amber-400 font-bold">ℹ</span>
+                        <span><strong className="text-white">Only 10% of registration fee is refunded</strong> (90% retained for vendor bookings).</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-green-400 font-bold">✓</span>
+                        <span>Full refund of remaining balance (if paid in full).</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/5 text-xs font-semibold text-amber-400">
+                    Refund: 10% Registration Fee
+                  </div>
+                </div>
+
+                {/* Tier 3: < 10 days */}
+                <div className="bg-black/40 border border-red-500/30 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between">
+                  <div className="absolute top-0 right-0 px-2.5 py-0.5 bg-red-500/20 text-red-400 text-[11px] font-bold rounded-bl-lg">
                     Non-Refundable
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                    <ShieldAlert className="w-5 h-5 text-red-400" />
-                    15 Days or Less Prior to Departure
-                  </h3>
-                  <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                    If cancelled within 15 days of the scheduled departure date:
-                  </p>
-                  <ul className="space-y-2 text-sm text-gray-300">
-                    <li className="flex items-start gap-2">
-                      <span className="text-red-400 font-bold">✕</span>
-                      <span><strong className="text-white">Registration fee is 100% non-refundable.</strong></span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-amber-400 font-bold">ℹ</span>
-                      <span>Any uncommitted non-transport portions of full payments may be evaluated on a case-by-case basis.</span>
-                    </li>
-                  </ul>
+                  <div>
+                    <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                      <ShieldAlert className="w-4 h-4 text-red-400" />
+                      &lt; 10 Days Prior
+                    </h3>
+                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                      Cancellations made less than 10 days before departure:
+                    </p>
+                    <ul className="space-y-1.5 text-xs text-gray-300">
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-red-400 font-bold">✕</span>
+                        <span><strong className="text-white">0% Registration Refund.</strong> Non-refundable and non-transferable.</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-gray-400 font-bold">•</span>
+                        <span>Train tickets and hotel blocks cannot be cancelled at this stage.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/5 text-xs font-semibold text-red-400">
+                    Refund: 0% (Non-Refundable)
+                  </div>
                 </div>
               </div>
             </section>
