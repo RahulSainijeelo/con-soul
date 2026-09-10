@@ -95,8 +95,8 @@ export default function PrivacyPolicyPage() {
               <p className="text-gray-400 mb-4">
                 If you have any questions about our privacy practices, please contact our Data Protection Officer:
               </p>
-              <a href="mailto:mail@con-soul.in" className="text-gold hover:text-white transition-colors font-semibold">
-                mail@con-soul.in
+              <a href="mailto:con.sol.082025@gmail.com" className="text-gold hover:text-white transition-colors font-semibold">
+                info@consoul.in
               </a>
             </section>
 

@@ -24,7 +24,7 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
     "mainEntity": {
       "@type": "TravelAgency",
       "name": "CONSOUL",
-      "email": "hello@con-soul.in",
+      "email": "con.sol.082025@gmail.com",
       "url": "https://con-soul.in",
       "address": {
         "@type": "PostalAddress",

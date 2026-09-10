@@ -224,7 +224,7 @@ export default function AboutPage() {
               <Link href="https://www.instagram.com/consoul.in" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-brand transition-colors">
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="mailto:hello@con-soul.in" className="text-gray-500 hover:text-brand transition-colors">
+              <Link href="mailto:con.sol.082025@gmail.com" className="text-gray-500 hover:text-brand transition-colors">
                 <Mail className="w-5 h-5" />
               </Link>
             </div>

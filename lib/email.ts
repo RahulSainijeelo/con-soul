@@ -198,7 +198,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
           <tr>
             <td style="padding:32px 40px;text-align:center;border-top:1px solid #2a2a2a;margin-top:28px;">
               <p style="margin:0 0 8px;font-size:13px;color:#555;">Need help? Contact us at</p>
-              <a href="mailto:${process.env.NEXT_EMAIL_ADD}" style="color:#D4AF37;font-size:13px;text-decoration:none;">${process.env.NEXT_EMAIL_ADD}</a>
+              <a href="mailto:con.sol.082025@gmail.com" style="color:#D4AF37;font-size:13px;text-decoration:none;">info@consoul.in</a>
               <p style="margin:16px 0 0;font-size:11px;color:#444;">© ${new Date().getFullYear()} CONSOUL Travel. All rights reserved.</p>
               <p style="margin:4px 0 0;font-size:11px;color:#333;">This is an automated email. Please do not reply directly.</p>
             </td>

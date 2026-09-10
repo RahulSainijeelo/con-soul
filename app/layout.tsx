@@ -136,7 +136,7 @@ export default function RootLayout({
     "sameAs": ["https://www.instagram.com/consoul.in"],
     "contactPoint": {
       "@type": "ContactPoint",
-      "email": "hello@con-soul.in",
+      "email": "con.sol.082025@gmail.com",
       "contactType": "customer service",
       "areaServed": "IN",
       "availableLanguage": ["English","Hindi"]
@@ -148,7 +148,7 @@ export default function RootLayout({
     "@type": "TravelAgency",
     "name": "CONSOUL",
     "url": "https://con-soul.in",
-    "email": "hello@con-soul.in",
+    "email": "con.sol.082025@gmail.com",
     "description": "India's youth group travel platform. Starting from Bilaspur, Chhattisgarh.",
     "address": {
       "@type": "PostalAddress",

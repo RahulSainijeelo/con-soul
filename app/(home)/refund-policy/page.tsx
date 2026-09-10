@@ -204,10 +204,10 @@ export default function RefundPolicyPage() {
                   </button>
                 </Link>
                 <a
-                  href="mailto:mail@con-soul.in"
+                  href="mailto:con.sol.082025@gmail.com"
                   className="inline-flex items-center gap-2 border border-white/20 hover:border-gold px-6 py-3 rounded-xl text-white hover:text-gold transition-colors"
                 >
-                  Email: mail@con-soul.in
+                  Email: info@consoul.in
                 </a>
               </div>
             </section>

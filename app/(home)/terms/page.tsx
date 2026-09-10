@@ -158,10 +158,10 @@ export default function TermsPage() {
                   </button>
                 </Link>
                 <a
-                  href="mailto:mail@con-soul.in"
+                  href="mailto:con.sol.082025@gmail.com"
                   className="inline-flex items-center gap-2 border border-white/20 hover:border-gold px-6 py-2.5 rounded-xl text-white hover:text-gold transition-colors text-sm"
                 >
-                  mail@con-soul.in
+                  info@consoul.in
                 </a>
               </div>
             </section>

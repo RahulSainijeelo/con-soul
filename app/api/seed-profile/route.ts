@@ -15,7 +15,7 @@ export async function GET() {
             bio: "Expeditions for the Soul",
             photo: "",
             phoneNumbers: ["+91-9876543210"],
-            email: "contact@con-soul.in",
+            email: "con.sol.082025@gmail.com",
             address: "New Delhi, India",
             whatsapp: "+91-9876543210",
             experience: "5+ Years",
