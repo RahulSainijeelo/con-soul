@@ -14,11 +14,11 @@ import BottomTabBar from "@/components/layout/BottomTabBar";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "CONSOUL | Youth Group Travel India — Himalayas, Goa, Rajasthan & More",
-  description: "CONSOUL is India's #1 youth group travel platform. Join 300+ young travelers on curated group trips to Himalayas, Goa, Rajasthan, Kerala & more. Book your next adventure at con-soul.in",
+  title: "CONSOUL INDIA | Youth Group Travel India — Himalayas, Goa, Rajasthan & More",
+  description: "CONSOUL INDIA is India's #1 youth group travel platform. Join 300+ young travelers on curated group trips to Himalayas, Goa, Rajasthan, Kerala & more. Book your next adventure at con-soul.in",
   keywords: 'consoul, con-soul, youth group travel india, group trips india, adventure travel, himalayas trip, goa group trip, rajasthan travel, kerala backpacking, budget travel india, young travelers india',
   openGraph: {
-    title: "CONSOUL | Youth Group Travel India",
+    title: "CONSOUL INDIA | Youth Group Travel India",
     description: "India's youth group travel platform. Join 300+ travelers on curated group trips across Himalayas, Goa, Rajasthan & Kerala.",
     type: 'website',
     url: "https://con-soul.in",

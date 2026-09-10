@@ -208,7 +208,7 @@ export default function PastTripPage() {
                             },
                             "provider": {
                                 "@type": "TravelAgency",
-                                "name": "CONSOUL",
+                                "name": "CONSOUL INDIA",
                                 "url": "https://con-soul.in"
                             }
                         }) }}

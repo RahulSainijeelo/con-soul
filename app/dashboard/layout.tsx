@@ -4,8 +4,8 @@ import { DashboardClientWrapper } from "./DashboardClientWrapper";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Dashboard - CONSOUL",
-  description: "dashboard for managing CONSOUL services and content",
+  title: "Dashboard - CONSOUL INDIA",
+  description: "dashboard for managing CONSOUL INDIA services and content",
 };
 
 export default function DashboardLayout({

@@ -66,12 +66,12 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://con-soul.in'),
   title: {
-    default: "CONSOUL — Youth Group Travel India | Himalayas, Goa & More",
-    template: "%s | CONSOUL"
+    default: "CONSOUL INDIA — Youth Group Travel India | Himalayas, Goa & More",
+    template: "%s | CONSOUL INDIA"
   },
-  description: "CONSOUL is India's youth group travel platform. Curated group trips to Himalayas, Goa, Rajasthan & Kerala. Starting from Bilaspur, CG. Join 300+ young travelers.",
+  description: "CONSOUL INDIA is India's youth group travel platform. Curated group trips to Himalayas, Goa, Rajasthan & Kerala. Starting from Bilaspur, CG. Join 300+ young travelers.",
   keywords: [
-    'CONSOUL','consoul','consoul travel','consoul.in','con-soul.in',
+    'CONSOUL INDIA','CONSOUL','consoul','consoul travel','consoul.in','con-soul.in',
     'youth group travel India','group trips India','adventure trips India',
     'group travel platform India','youth travel India','group tour India',
     'group trips Himalayas','Goa group trip','Rajasthan group travel',
@@ -79,21 +79,21 @@ export const metadata: Metadata = {
     'affordable group trips India','solo travel group India',
     'Uttarakhand group trip','Vizag group tour','Rishikesh group tour',
   ],
-  authors: [{ name: "CONSOUL" }],
-  creator: "CONSOUL",
-  publisher: "CONSOUL",
+  authors: [{ name: "CONSOUL INDIA" }],
+  creator: "CONSOUL INDIA",
+  publisher: "CONSOUL INDIA",
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: 'https://con-soul.in',
-    siteName: 'CONSOUL',
-    title: 'CONSOUL — Youth Group Travel India',
+    siteName: 'CONSOUL INDIA',
+    title: 'CONSOUL INDIA — Youth Group Travel India',
     description: "Curated group trips to Himalayas, Goa & Kerala. Join 300+ young explorers.",
-    images: [{ url: '/images/og-cover.jpg', width: 1200, height: 630, alt: 'CONSOUL' }],
+    images: [{ url: '/images/og-cover.jpg', width: 1200, height: 630, alt: 'CONSOUL INDIA' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CONSOUL — Youth Group Travel India',
+    title: 'CONSOUL INDIA — Youth Group Travel India',
     description: 'Group trips to Himalayas, Goa & more for young explorers.',
     images: ['/images/og-cover.jpg'],
   },
@@ -125,7 +125,7 @@ export default function RootLayout({
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "CONSOUL",
+    "name": "CONSOUL INDIA",
     "alternateName": ["consoul", "con-soul", "con-soul.in", "consoul travel"],
     "url": "https://con-soul.in",
     "logo": { "@type": "ImageObject", "url": "https://con-soul.in/images/logo.png" },
@@ -146,7 +146,7 @@ export default function RootLayout({
   const travelAgencyJsonLd = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
-    "name": "CONSOUL",
+    "name": "CONSOUL INDIA",
     "url": "https://con-soul.in",
     "email": "con.sol.082025@gmail.com",
     "description": "India's youth group travel platform. Starting from Bilaspur, Chhattisgarh.",
@@ -169,7 +169,7 @@ export default function RootLayout({
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "CONSOUL",
+    "name": "CONSOUL INDIA",
     "url": "https://con-soul.in",
     "potentialAction": {
       "@type": "SearchAction",

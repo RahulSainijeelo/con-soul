@@ -231,7 +231,7 @@ function WaitlistState() {
                 <div className="text-center max-w-lg animate-hero-fade-up">
                     {/* Subtle brand tag */}
                     <span className="inline-block text-brand text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-4">
-                        CONSOUL
+                        CONSOUL INDIA
                     </span>
 
                     <h1

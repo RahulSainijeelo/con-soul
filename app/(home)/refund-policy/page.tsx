@@ -6,8 +6,8 @@ import BottomTabBar from '@/components/layout/BottomTabBar';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Cancellation & Refund Policy — CONSOUL Travel",
-  description: "Understand CONSOUL's booking cancellation and refund policy. Learn about the 15-day non-refundable registration timeline and refund terms.",
+  title: "Cancellation & Refund Policy — CONSOUL INDIA Travel",
+  description: "Understand CONSOUL INDIA's booking cancellation and refund policy. Learn about the 15-day non-refundable registration timeline and refund terms.",
   alternates: {
     canonical: 'https://con-soul.in/refund-policy',
   },
@@ -165,7 +165,7 @@ export default function RefundPolicyPage() {
                 </h2>
               </div>
               <p className="text-gray-400 leading-relaxed text-base mb-4">
-                CONSOUL experiences are carefully curated boutique group tours with strictly limited seats. To maintain fair pricing and guarantee seamless journeys:
+                CONSOUL INDIA experiences are carefully curated boutique group tours with strictly limited seats. To maintain fair pricing and guarantee seamless journeys:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-gray-300">
                 <li>Train tickets (IRCTC 3AC / Sleeper) and private transport are booked under individual passenger names in advance.</li>
@@ -174,18 +174,18 @@ export default function RefundPolicyPage() {
               </ul>
             </section>
 
-            {/* Trip Cancellation by CONSOUL */}
+            {/* Trip Cancellation by CONSOUL INDIA */}
             <section>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
                   <HelpCircle className="w-6 h-6 text-gold" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
-                  Cancellations by CONSOUL / Unforeseen Events
+                  Cancellations by CONSOUL INDIA / Unforeseen Events
                 </h2>
               </div>
               <p className="text-gray-400 leading-relaxed">
-                In the rare event that a trip is cancelled by CONSOUL due to severe weather, natural disasters, or unforeseen operational constraints, travelers will be offered a <strong className="text-white">100% full refund</strong> or a <strong className="text-white">100% credit transfer</strong> to any future trip of their choice.
+                In the rare event that a trip is cancelled by CONSOUL INDIA due to severe weather, natural disasters, or unforeseen operational constraints, travelers will be offered a <strong className="text-white">100% full refund</strong> or a <strong className="text-white">100% credit transfer</strong> to any future trip of their choice.
               </p>
             </section>
 

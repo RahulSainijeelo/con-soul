@@ -11,7 +11,7 @@ export async function GET() {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
         const profileData = {
-            name: "CONSOUL Admin",
+            name: "CONSOUL INDIA Admin",
             bio: "Expeditions for the Soul",
             photo: "",
             phoneNumbers: ["+91-9876543210"],

@@ -6,10 +6,10 @@ import { Users, Shield, Sparkles, Heart, MapPin, Mountain, Star, Compass, Calend
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "About CONSOUL — India's Youth Group Travel Platform",
-  description: "CONSOUL organises curated youth group trips across India — from Himalayas to Goa, Rajasthan to Kerala. Learn about our mission and join 300+ happy travelers.",
+  title: "About CONSOUL INDIA — India's Youth Group Travel Platform",
+  description: "CONSOUL INDIA organises curated youth group trips across India — from Himalayas to Goa, Rajasthan to Kerala. Learn about our mission and join 300+ happy travelers.",
   openGraph: {
-    title: "About CONSOUL — India's Youth Group Travel Platform",
+    title: "About CONSOUL INDIA — India's Youth Group Travel Platform",
     description: "Learn about our mission to make group travel affordable and unforgettable for young Indians.",
     url: 'https://con-soul.in/about',
   },
@@ -54,7 +54,7 @@ export default function AboutPage() {
   ];
 
   const timeline = [
-    { year: "2025", event: "CONSOUL was born in Bilaspur, Chhattisgarh — founded by travelers who wanted to build something real.", icon: Compass },
+    { year: "2025", event: "CONSOUL INDIA was born in Bilaspur, Chhattisgarh — founded by travelers who wanted to build something real.", icon: Compass },
     { year: "2025", event: "First trip launched: Mainpat — Shimla of Chhattisgarh. 15 strangers, 2 days, lifelong memories.", icon: Mountain },
     { year: "2026", event: "Expanded to Uttarakhand, Goa, and Vizag. Crossed 100+ travelers in the community.", icon: MapPin },
     { year: "2026", event: "300+ travelers and counting. Upcoming expeditions to Spiti Valley, Andaman, and beyond.", icon: Star },
@@ -85,7 +85,7 @@ export default function AboutPage() {
           </h1>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-            CONSOUL is India&apos;s youth group travel platform — curated expeditions where strangers become family, and every journey feeds the soul.
+            CONSOUL INDIA is India&apos;s youth group travel platform — curated expeditions where strangers become family, and every journey feeds the soul.
           </p>
         </div>
       </section>

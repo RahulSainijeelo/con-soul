@@ -164,7 +164,7 @@ export default function CustomSignInForm() {
             Welcome Back
           </h2>
           <p className="text-sm mt-1" style={{ color: "#9ca3af" }}>
-            Sign in to access your CONSOUL dashboard
+            Sign in to access your CONSOUL INDIA dashboard
           </p>
         </div>
       </div>

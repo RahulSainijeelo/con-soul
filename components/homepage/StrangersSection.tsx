@@ -5,7 +5,7 @@ import { Users, ArrowRight, Heart, Laugh, Camera } from 'lucide-react';
 
 const stories = [
   {
-    quote: "We were 15 strangers at the airport. By day 3, we were a family. That's the CONSOUL magic.",
+    quote: "We were 15 strangers at the airport. By day 3, we were a family. That's the CONSOUL INDIA magic.",
     name: "Arjun M.",
     trip: "Himalayas, 2025",
     icon: Heart,
@@ -46,7 +46,7 @@ export function StrangersSection() {
             We Start as <span className="text-brand">Strangers</span>
           </h2>
           <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Every CONSOUL trip begins with unfamiliar faces and ends with unbreakable bonds. 
+            Every CONSOUL INDIA trip begins with unfamiliar faces and ends with unbreakable bonds. 
             Solo traveler? You won&apos;t be solo for long.
           </p>
         </div>

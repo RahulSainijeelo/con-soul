@@ -6,8 +6,8 @@ import BottomTabBar from '@/components/layout/BottomTabBar';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — CONSOUL Travel",
-  description: "Your privacy is paramount. Learn how CONSOUL protects your personal information and data when using con-soul.in.",
+  title: "Privacy Policy — CONSOUL INDIA Travel",
+  description: "Your privacy is paramount. Learn how CONSOUL INDIA protects your personal information and data when using con-soul.in.",
   alternates: {
     canonical: 'https://con-soul.in/privacy-policy',
   },
@@ -44,7 +44,7 @@ export default function PrivacyPolicyPage() {
                 </h2>
               </div>
               <p className="text-gray-400 leading-relaxed text-lg">
-                At CONSOUL, we value your trust and are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your personal information when you use our premium travel services. We believe in transparency and giving you full control over your data.
+                At CONSOUL INDIA, we value your trust and are committed to protecting your privacy. This policy outlines how we collect, use, and safeguard your personal information when you use our premium travel services. We believe in transparency and giving you full control over your data.
               </p>
             </section>
 

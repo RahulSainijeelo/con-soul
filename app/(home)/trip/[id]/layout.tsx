@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   
   let title = 'Trip Details';
-  let description = 'Explore this curated group trip by CONSOUL — India\'s youth group travel platform.';
+  let description = 'Explore this curated group trip by CONSOUL INDIA — India\'s youth group travel platform.';
   let image = '/images/og-cover.jpg';
   
   try {
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (tripDoc.exists) {
       const data = tripDoc.data();
       title = data?.title || title;
-      description = data?.description || `Join ${title} — a curated group trip by CONSOUL. ${data?.duration || ''} of adventure, culture and unforgettable memories.`;
+      description = data?.description || `Join ${title} — a curated group trip by CONSOUL INDIA. ${data?.duration || ''} of adventure, culture and unforgettable memories.`;
       image = data?.coverImage || data?.images?.[0]?.url || image;
     }
   } catch (e) {
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     openGraph: {
-      title: `${title} | CONSOUL`,
+      title: `${title} | CONSOUL INDIA`,
       description,
       type: 'article',
       url: `https://con-soul.in/trip/${id}`,
@@ -67,7 +67,7 @@ export default async function TripLayout({
         "url": `https://con-soul.in/trip/${id}`,
         "provider": {
           "@type": "TravelAgency",
-          "name": "CONSOUL",
+          "name": "CONSOUL INDIA",
           "url": "https://con-soul.in"
         },
         ...(data?.startDate && {

@@ -203,7 +203,7 @@ export default function MyTripDetailPage() {
                 key: orderData.keyId,
                 amount: orderData.amount,
                 currency: orderData.currency || "INR",
-                name: "CONSOUL",
+                name: "CONSOUL INDIA",
                 description: `Remaining Payment for ${trip.title}`,
                 order_id: orderData.orderId,
                 handler: async function (response: any) {

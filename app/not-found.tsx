@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: '404 - Page Not Found | CONSOUL',
-  description: 'The page you are looking for could not be found. Return to CONSOUL homepage to explore our latest articles and news.',
+  title: '404 - Page Not Found | CONSOUL INDIA',
+  description: 'The page you are looking for could not be found. Return to CONSOUL INDIA homepage to explore our latest articles and news.',
   robots: {
     index: false,
     follow: true,

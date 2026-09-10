@@ -8,11 +8,11 @@ import BottomTabBar from '@/components/layout/BottomTabBar';
 import { db } from '@/config/firebase';
 
 export const metadata: Metadata = {
-    title: 'Past Trips & Reviews — CONSOUL Travel',
-    description: 'Explore completed group trips by CONSOUL and read reviews from 300+ happy travelers across Himalayas, Goa, Rajasthan and Kerala.',
+    title: 'Past Trips & Reviews — CONSOUL INDIA Travel',
+    description: 'Explore completed group trips by CONSOUL INDIA and read reviews from 300+ happy travelers across Himalayas, Goa, Rajasthan and Kerala.',
     keywords: 'consoul past trips, consoul reviews, group trip reviews india, youth travel reviews, consoul trip gallery',
     openGraph: {
-        title: 'Past Trips & Reviews — CONSOUL',
+        title: 'Past Trips & Reviews — CONSOUL INDIA',
         description: 'See completed group trips and read honest reviews from 300+ happy travelers.',
         url: 'https://con-soul.in/past-trips',
         type: 'website',

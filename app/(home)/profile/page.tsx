@@ -304,7 +304,7 @@ export default function ProfilePage() {
                                 <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400">
                                     <Info className="w-5 h-5" />
                                 </div>
-                                <span className="text-white font-medium">About CONSOUL</span>
+                                <span className="text-white font-medium">About CONSOUL INDIA</span>
                             </div>
                             <ChevronRight className="w-5 h-5 text-gray-500" />
                         </a>
@@ -350,7 +350,7 @@ export default function ProfilePage() {
                     </Button>
 
                     <p className="text-center text-gray-600 text-sm mt-8">
-                        CONSOUL App v1.0.0
+                        CONSOUL INDIA App v1.0.0
                     </p>
                 </div>
             </div>

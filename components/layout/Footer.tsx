@@ -32,7 +32,7 @@ export default function Footer() {
             style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif", fontWeight: 900 }}
             className="text-5xl tracking-[0.3rem] md:text-6xl lg:text-[10rem] text-white/5"
           >
-            CONSOUL
+            CONSOUL INDIA
           </h2>
         </div>
       </div>
@@ -146,7 +146,7 @@ export default function Footer() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xs text-gray-500">
-              © {currentYear} CONSOUL. All rights reserved. | Made with ❤️ for adventurous souls
+              © {currentYear} CONSOUL INDIA. All rights reserved. | Made with ❤️ for adventurous souls
             </p>
 
             {/* Payment Methods */}

@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
         // Send email via Nodemailer
         await transporter.sendMail({
-            from: `"CONSOUL Travel" <${process.env.NEXT_EMAIL_ADD}>`,
+            from: `"CONSOUL INDIA Travel" <${process.env.NEXT_EMAIL_ADD}>`,
             to: email,
             subject: "CONSOUL - Password Reset Code",
             html: `

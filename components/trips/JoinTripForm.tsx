@@ -233,7 +233,7 @@ export default function JoinTripForm({
                     key: orderData.keyId,
                     amount: orderData.amount,
                     currency: orderData.currency,
-                    name: "CONSOUL",
+                    name: "CONSOUL INDIA",
                     description: `Booking for ${tripTitle}`,
                     order_id: orderData.orderId,
                     prefill: {

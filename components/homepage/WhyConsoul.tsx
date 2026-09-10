@@ -38,7 +38,7 @@ export function WhyConsoul() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
-            Why Travel With CONSOUL
+            Why Travel With CONSOUL INDIA
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             What makes us different

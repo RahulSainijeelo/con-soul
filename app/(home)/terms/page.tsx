@@ -6,8 +6,8 @@ import BottomTabBar from '@/components/layout/BottomTabBar';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — CONSOUL Travel",
-  description: "Read CONSOUL Travel's terms and conditions, booking agreements, participant guidelines, and travel policies.",
+  title: "Terms & Conditions — CONSOUL INDIA Travel",
+  description: "Read CONSOUL INDIA Travel's terms and conditions, booking agreements, participant guidelines, and travel policies.",
   alternates: {
     canonical: 'https://con-soul.in/terms',
   },
@@ -29,7 +29,7 @@ export default function TermsPage() {
               Terms & Conditions
             </h1>
             <p className="text-lg md:text-xl text-gray-400">
-              Please read these terms carefully before booking any CONSOUL journey.
+              Please read these terms carefully before booking any CONSOUL INDIA journey.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export default function TermsPage() {
                 </h2>
               </div>
               <p className="text-gray-400 leading-relaxed text-base">
-                By accessing our website (<strong className="text-white">con-soul.in</strong>) or booking any trip, experience, or package with <strong className="text-white">CONSOUL Travel</strong>, you agree to be bound by these Terms and Conditions, our Privacy Policy, and our Cancellation & Refund Policy. If you do not agree with any part of these terms, please do not use our services or complete a booking.
+                By accessing our website (<strong className="text-white">con-soul.in</strong>) or booking any trip, experience, or package with <strong className="text-white">CONSOUL INDIA Travel</strong>, you agree to be bound by these Terms and Conditions, our Privacy Policy, and our Cancellation & Refund Policy. If you do not agree with any part of these terms, please do not use our services or complete a booking.
               </p>
             </section>
 
@@ -66,10 +66,10 @@ export default function TermsPage() {
                   • <strong className="text-white">Registration Deposit:</strong> A spot may be reserved by paying the required advance registration fee. Your booking status will remain <span className="text-amber-400 font-semibold">Registration Confirmed</span> until full settlement.
                 </p>
                 <p>
-                  • <strong className="text-white">Full Settlement:</strong> The remaining balance of the trip amount must be completed through the "My Trips" dashboard or official CONSOUL channels prior to the trip departure date.
+                  • <strong className="text-white">Full Settlement:</strong> The remaining balance of the trip amount must be completed through the "My Trips" dashboard or official CONSOUL INDIA channels prior to the trip departure date.
                 </p>
                 <p>
-                  • <strong className="text-white">Payment Security:</strong> Online payments are processed securely through certified payment gateways (Razorpay) with 256-bit SSL encryption. CONSOUL does not store sensitive card or banking credentials.
+                  • <strong className="text-white">Payment Security:</strong> Online payments are processed securely through certified payment gateways (Razorpay) with 256-bit SSL encryption. CONSOUL INDIA does not store sensitive card or banking credentials.
                 </p>
               </div>
             </section>
@@ -117,7 +117,7 @@ export default function TermsPage() {
                   • <strong className="text-white">Government ID:</strong> A valid government-issued ID (Aadhaar Card / Voter ID / Passport) is mandatory for all travelers for train ticket verification and resort check-ins.
                 </p>
                 <p>
-                  • <strong className="text-white">Community Code of Conduct:</strong> CONSOUL creates inclusive, safe travel communities. Any harassment, abusive behavior, illegal substance possession, or disruptive conduct may result in immediate dismissal from the tour without any refund.
+                  • <strong className="text-white">Community Code of Conduct:</strong> CONSOUL INDIA creates inclusive, safe travel communities. Any harassment, abusive behavior, illegal substance possession, or disruptive conduct may result in immediate dismissal from the tour without any refund.
                 </p>
                 <p>
                   • <strong className="text-white">Health & Fitness:</strong> Travelers are responsible for ensuring they are in adequate physical health for the designated trip itinerary and difficulty rating.
@@ -136,7 +136,7 @@ export default function TermsPage() {
                 </h2>
               </div>
               <p className="text-gray-400 leading-relaxed text-sm md:text-base">
-                While we make every effort to adhere strictly to published itineraries, travel routes may be modified by the tour coordinators due to train delays, weather conditions, local authority advisories, or road blocks to prioritize passenger safety. CONSOUL is not liable for secondary expenses resulting from train or flight schedule delays beyond our reasonable control.
+                While we make every effort to adhere strictly to published itineraries, travel routes may be modified by the tour coordinators due to train delays, weather conditions, local authority advisories, or road blocks to prioritize passenger safety. CONSOUL INDIA is not liable for secondary expenses resulting from train or flight schedule delays beyond our reasonable control.
               </p>
             </section>
 

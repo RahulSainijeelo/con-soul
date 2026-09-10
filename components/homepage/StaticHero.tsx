@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { TrustStrip } from "./TrustStrip";
 import Image from "next/image";
 
-const CONSOUL_LETTERS = ["C", "O", "N", "S", "O", "U", "L"];
+const CONSOUL_LETTERS = ["C", "O", "N", "S", "O", "U", "L", " ", "I", "N", "D", "I", "A"];
 const TAGLINE = "EVERY JOURNEY NEEDS DIRECTION";
 const DISCOVER_TEXT = "Discover Your Next Adventure";
 
@@ -116,27 +116,28 @@ export function StaticHero() {
           }}
         />
 
-        {/* CONSOUL letters */}
-        <h1 className="flex overflow-hidden" aria-label="CONSOUL">
+        {/* CONSOUL INDIA letters */}
+        <h1 className="flex flex-wrap justify-center overflow-hidden" aria-label="CONSOUL INDIA">
           {CONSOUL_LETTERS.map((letter, i) => (
             <span
               key={i}
               className="inline-block"
               style={{
                 fontFamily: "'Anton', sans-serif",
-                fontSize: "clamp(4.5rem, 13vw, 11rem)",
+                fontSize: "clamp(3.5rem, 10vw, 9rem)",
                 lineHeight: 0.9,
                 fontWeight: 400,
                 color: "#ffffff",
                 letterSpacing: "0.08em",
-                opacity: phase >= 1 ? 1 : 0,
-                transform: phase >= 1 ? "translateY(0)" : "translateY(80px) scaleY(0.7)",
+                opacity: letter === " " ? 1 : (phase >= 1 ? 1 : 0),
+                transform: letter === " " ? "none" : (phase >= 1 ? "translateY(0)" : "translateY(80px) scaleY(0.7)"),
                 transition: "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 800ms cubic-bezier(0.16, 1, 0.3, 1)",
-                transitionDelay: `${400 + i * 200}ms`,
-                textShadow: "0 0 80px rgba(234,88,12,0.15), 0 4px 30px rgba(0,0,0,0.8)",
+                transitionDelay: `${400 + i * 120}ms`,
+                textShadow: letter === " " ? "none" : "0 0 80px rgba(234,88,12,0.15), 0 4px 30px rgba(0,0,0,0.8)",
+                width: letter === " " ? "0.3em" : "auto",
               }}
             >
-              {letter}
+              {letter === " " ? "\u00A0" : letter}
             </span>
           ))}
         </h1>

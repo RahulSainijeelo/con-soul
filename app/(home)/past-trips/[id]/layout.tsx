@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   
   let title = 'Past Trip Details';
-  let description = 'Explore this completed group trip by CONSOUL and read reviews from fellow travelers.';
+  let description = 'Explore this completed group trip by CONSOUL INDIA and read reviews from fellow travelers.';
   let image = '/images/og-cover.jpg';
   
   try {
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (tripDoc.exists) {
       const data = tripDoc.data();
       title = data?.title || title;
-      description = data?.description || `Relive ${title} — a completed group trip by CONSOUL. See photos and reviews from fellow travelers.`;
+      description = data?.description || `Relive ${title} — a completed group trip by CONSOUL INDIA. See photos and reviews from fellow travelers.`;
       image = data?.coverImage || data?.images?.[0]?.url || image;
     }
   } catch (e) {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     openGraph: {
-      title: `${title} — Trip Review | CONSOUL`,
+      title: `${title} — Trip Review | CONSOUL INDIA`,
       description,
       type: 'article',
       url: `https://con-soul.in/past-trips/${slug}`,

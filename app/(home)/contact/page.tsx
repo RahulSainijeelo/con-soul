@@ -166,10 +166,10 @@ export default function ContactPage() {
                         )}
                     </div>
 
-                    {/* About CONSOUL — Founders */}
-                    <div className="mt-16 bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 backdrop-blur-sm">
-                        <div className="text-center mb-10">
-                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">About CONSOUL</h2>
+                    {/* About CONSOUL INDIA — Founders */}
+                    <div className="border border-white/10 rounded-2xl p-6 md:p-8">
+                        <div className="mb-6">
+                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">About CONSOUL INDIA</h2>
                             <p className="text-gray-400 max-w-2xl mx-auto">
                                 India&apos;s youth group travel platform — curating unforgettable adventures across the Himalayas, Goa, Rajasthan, Kerala &amp; more.
                             </p>
@@ -194,7 +194,7 @@ export default function ContactPage() {
                                 <h3 className="text-lg font-bold text-white">Himanshu Kumar</h3>
                                 <p className="text-gold text-sm font-medium mt-1">Co-Founder</p>
                                 <p className="text-gray-400 text-sm mt-3">
-                                    Dedicated to crafting seamless travel experiences and ensuring every CONSOUL trip is safe, exciting, and unforgettable.
+                                    Dedicated to crafting seamless travel experiences and ensuring every CONSOUL INDIA trip is safe, exciting, and unforgettable.
                                 </p>
                             </div>
                         </div>

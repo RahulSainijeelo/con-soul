@@ -34,8 +34,8 @@ export function DashboardHeader() {
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center">
           <Link href="/dashboard" className="font-bold text-2xl ml-7 text-white hover:text-gold transition-colors">
-            {/* <Image src={logo} width={70} alt="CONSOUL"/> */}
-            CONSOUL
+            {/* <Image src={logo} width={70} alt="CONSOUL INDIA"/> */}
+            CONSOUL INDIA
           </Link>
         </div>
         {/* Desktop navigation */}

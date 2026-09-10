@@ -55,7 +55,7 @@ export function DashboardSidebar() {
             <span className="text-black font-bold text-sm">CS</span>
           </div>
           <div>
-            <h2 className="text-white font-bold text-lg tracking-tight">CONSOUL</h2>
+            <h2 className="text-white font-bold text-lg tracking-tight">CONSOUL INDIA</h2>
             <p className="text-[10px] text-gray-500 uppercase tracking-widest">Admin Panel</p>
           </div>
         </Link>
