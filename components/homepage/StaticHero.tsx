@@ -117,14 +117,14 @@ export function StaticHero() {
         />
 
         {/* CONSOUL INDIA letters */}
-        <h1 className="flex flex-wrap justify-center overflow-hidden" aria-label="CONSOUL INDIA">
+        <h1 className="flex justify-center overflow-hidden whitespace-nowrap" aria-label="CONSOUL INDIA">
           {CONSOUL_LETTERS.map((letter, i) => (
             <span
               key={i}
               className="inline-block"
               style={{
                 fontFamily: "'Anton', sans-serif",
-                fontSize: "clamp(3.5rem, 10vw, 9rem)",
+                fontSize: "clamp(2rem, 7.5vw, 9rem)",
                 lineHeight: 0.9,
                 fontWeight: 400,
                 color: "#ffffff",
