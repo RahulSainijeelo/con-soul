@@ -21,6 +21,11 @@ const config: Config = {
       },
       colors: {
         brand: '#e06420',
+        canvas: 'var(--color-canvas)',
+        'canvas-raised': 'var(--color-canvas-raised)',
+        ink: 'var(--color-ink)',
+        'ink-muted': 'var(--color-ink-muted)',
+        'ink-faint': 'var(--color-ink-faint)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

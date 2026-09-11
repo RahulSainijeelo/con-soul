@@ -29,10 +29,10 @@ export function TrustStrip({ className = "", variant = "full" }: TrustStripProps
             {items.map((stat, index) => (
                 <div key={stat.id} className="flex items-center gap-1.5 sm:gap-2">
                     {index > 0 && (
-                        <span className="text-white/20 mr-2 sm:mr-4 hidden sm:inline" aria-hidden="true">·</span>
+                        <span className="text-[var(--color-ink-faint)] mr-2 sm:mr-4 hidden sm:inline" aria-hidden="true">·</span>
                     )}
-                    <stat.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand flex-shrink-0" aria-hidden="true" />
-                    <span className="text-white/80 text-[11px] sm:text-sm font-medium tracking-wide">
+                    <stat.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--color-ink-faint)] flex-shrink-0" aria-hidden="true" />
+                    <span className="text-[var(--color-ink-muted)] text-[11px] sm:text-[12px] font-normal tracking-[0.1em] uppercase">
                         {stat.label}
                     </span>
                 </div>

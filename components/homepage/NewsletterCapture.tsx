@@ -12,12 +12,9 @@ export function NewsletterCapture() {
     if (!email) return;
     
     setStatus('submitting');
-    // Simulate API call
     setTimeout(() => {
       setStatus('success');
       setEmail('');
-      
-      // Reset after 3 seconds
       setTimeout(() => {
         setStatus('idle');
       }, 3000);
@@ -25,59 +22,63 @@ export function NewsletterCapture() {
   };
 
   return (
-    <section className="py-24 md:py-28 px-4 md:px-8 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#12100a] to-[#0e0c08] relative z-[60] overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(255, 215, 0, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
-      {/* Background Gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-brand/10" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand/10 blur-[120px] rounded-full pointer-events-none" />
-      
-      <div className="max-w-3xl mx-auto relative z-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight drop-shadow-lg" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
-          Never Miss an Adventure
-        </h2>
-        <p className="text-gray-300 text-lg mb-10 max-w-xl mx-auto">
-          Get notified about upcoming trips, exclusive deals, and travel stories
-        </p>
+    <section className="relative overflow-hidden px-5 py-24 md:px-9 md:py-28 bg-[var(--color-canvas)] border-t border-[var(--color-border-subtle)]">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] lg:items-center lg:gap-16">
+          <div className="max-w-[920px]">
+            <p className="mb-5 text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
+              Stay Updated
+            </p>
+            <h2 className="max-w-[10ch] text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.05em] text-[var(--color-ink)]">
+              Never Miss
+              <br />
+              An Adventure
+            </h2>
+          </div>
+          <p className="max-w-[400px] text-[16px] font-normal leading-[1.6] text-[var(--color-ink-muted)] lg:justify-self-end">
+            Get notified about upcoming trips, exclusive deals, and travel stories from the CONSOUL INDIA community.
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          {status === 'success' ? (
-            <div className="flex flex-col items-center justify-center space-y-4 p-8 rounded-2xl bg-brand/10 border border-brand/30 backdrop-blur-sm animate-in fade-in zoom-in duration-300">
-              <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center text-white shadow-[0_0_20px_rgba(234,88,12,0.5)]">
-                <Check size={24} strokeWidth={3} />
-              </div>
-              <p className="text-white font-medium text-lg">
-                You're in! We'll keep you posted.
-              </p>
-            </div>
-          ) : (
-            <div className="relative flex flex-col sm:flex-row gap-3">
-              <div className="relative flex-1 group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-brand transition-colors">
-                  <Mail size={20} />
+        <div className="mt-14 max-w-lg">
+          <form onSubmit={handleSubmit}>
+            {status === 'success' ? (
+              <div className="flex items-center gap-4 py-6 border-t border-[var(--color-border-subtle)]">
+                <div className="w-10 h-10 rounded-full bg-[var(--color-ink)] flex items-center justify-center text-[var(--color-canvas)]">
+                  <Check size={20} strokeWidth={2.5} />
                 </div>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="w-full pl-12 pr-4 py-4 bg-zinc-900/80 border border-white/10 rounded-xl md:rounded-l-xl md:rounded-r-none text-white placeholder:text-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand focus:bg-zinc-900 transition-all backdrop-blur-sm"
-                  required
-                  disabled={status === 'submitting'}
-                />
+                <p className="text-[16px] font-medium text-[var(--color-ink)]">
+                  You&apos;re in! We&apos;ll keep you posted.
+                </p>
               </div>
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="py-4 px-8 bg-brand hover:bg-orange-500 text-white font-bold rounded-xl md:rounded-l-none md:rounded-r-xl transition-all shadow-[0_0_20px_rgba(234,88,12,0.3)] hover:shadow-[0_0_30px_rgba(234,88,12,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[160px]"
-              >
-                {status === 'submitting' ? (
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  'Join the Tribe'
-                )}
-              </button>
-            </div>
-          )}
-        </form>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-3 border-t border-[var(--color-border-subtle)] pt-8">
+                <div className="relative flex-1">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-0 py-3 bg-transparent border-b border-[var(--color-border-subtle)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:border-[var(--color-ink)] transition-colors text-[15px]"
+                    required
+                    disabled={status === 'submitting'}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="py-3 px-8 bg-[var(--color-ink)] text-[var(--color-canvas)] font-normal text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 hover:scale-[1.03] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[140px]"
+                >
+                  {status === 'submitting' ? (
+                    <span className="w-4 h-4 border-2 border-[var(--color-canvas)]/30 border-t-[var(--color-canvas)] rounded-full animate-spin" />
+                  ) : (
+                    'Join the Tribe'
+                  )}
+                </button>
+              </div>
+            )}
+          </form>
+        </div>
       </div>
     </section>
   );

@@ -18,119 +18,109 @@ a, button {
   touch-action: manipulation;
 }
 
-/* Custom Scrollbar for horizontal scrolling areas */
+/* Minimal Scrollbar */
 ::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
+  height: 4px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(128, 128, 128, 0.3);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(128, 128, 128, 0.5);
 }
 
 @layer base {
+  /* ── DARK MODE (default) ── */
   :root {
-    /* Premium Black & Gold Theme */
-    --background: 0 0% 5%;
-    /* Very dark gray/black */
-    --foreground: 45 30% 90%;
-    /* Off-white/gold tint */
+    --background: 0 0% 4%;
+    --foreground: 40 20% 93%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 45 30% 90%;
+    --card: 0 0% 7%;
+    --card-foreground: 40 20% 93%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 45 30% 90%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 40 20% 93%;
 
-    --primary: 45 90% 50%;
-    /* Gold */
-    --primary-foreground: 0 0% 5%;
+    --primary: 0 0% 93%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 0 0% 15%;
-    /* Dark gray */
-    --secondary-foreground: 45 30% 90%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 40 20% 93%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 45 90% 50%;
-    --accent-foreground: 0 0% 5%;
+    --accent: 25 85% 50%;
+    --accent-foreground: 0 0% 4%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 45 30% 20%;
-    /* Dark gold border */
-    --input: 45 30% 20%;
-    --ring: 45 90% 50%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    /* Custom Colors */
-    --color-gold: #F0923B;
-    --color-gold-light: #F5A85C;
-    --color-gold-dark: #D4772A;
+    /* Semantic tokens */
+    --color-canvas: #0A0A0A;
+    --color-canvas-raised: #111111;
+    --color-ink: #F3F0EA;
+    --color-ink-muted: rgba(243, 240, 234, 0.55);
+    --color-ink-faint: rgba(243, 240, 234, 0.30);
+    --color-border-subtle: rgba(255, 255, 255, 0.07);
+    --color-border-hover: rgba(255, 255, 255, 0.20);
+    --color-accent: #e06420;
 
-    --color-black: #0a0a0a;
-    --color-black-light: #1a1a1a;
-    --color-black-lighter: #2a2a2a;
-
-    --color-white: #ffffff;
-    --color-off-white: #f5f5f5;
-
-    /* Semantic Mappings */
-    --color-background: var(--color-black);
-    --color-background-secondary: var(--color-black-light);
-    --color-surface: var(--color-black-light);
-    --color-surface-secondary: var(--color-black-lighter);
-
-    --color-accent: var(--color-gold);
-    --color-accent-hover: var(--color-gold-light);
-
-    /* Text Colors */
-    --color-text-primary: var(--color-off-white);
-    --color-text-secondary: #a3a3a3;
-    --color-text-muted: #737373;
-    --color-text-accent: var(--color-gold);
-
-    /* Shadows */
-    --shadow-gold: 0 4px 14px 0 rgba(240, 146, 59, 0.35);
-
-    /* Typography — dirham-symbol-font for headings, Inter for body */
+    /* Typography — single font */
     --font-primary: "Inter", sans-serif;
-    --font-heading: dirham-symbol-font, Arial, sans-serif;
-    --font-display: dirham-symbol-font, Arial, sans-serif;
   }
 
-  .dark {
-    /* Same as root for now as the theme is dark by default */
-    --background: 0 0% 5%;
-    --foreground: 45 30% 90%;
-    --card: 0 0% 8%;
-    --card-foreground: 45 30% 90%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 45 30% 90%;
-    --primary: 45 90% 50%;
-    --primary-foreground: 0 0% 5%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 45 30% 90%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 45 90% 50%;
-    --accent-foreground: 0 0% 5%;
+  /* ── LIGHT MODE ── */
+  .light {
+    --background: 38 33% 95%;
+    --foreground: 0 0% 4%;
+
+    --card: 38 33% 92%;
+    --card-foreground: 0 0% 4%;
+
+    --popover: 38 33% 92%;
+    --popover-foreground: 0 0% 4%;
+
+    --primary: 0 0% 4%;
+    --primary-foreground: 38 33% 95%;
+
+    --secondary: 38 20% 90%;
+    --secondary-foreground: 0 0% 4%;
+
+    --muted: 38 20% 90%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 25 85% 50%;
+    --accent-foreground: 0 0% 100%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 45 30% 20%;
-    --input: 45 30% 20%;
-    --ring: 45 90% 50%;
+
+    --border: 0 0% 0% / 0.08;
+    --input: 0 0% 0% / 0.08;
+    --ring: 0 0% 50%;
+
+    --color-canvas: #F3F0EA;
+    --color-canvas-raised: #EBE7E0;
+    --color-ink: #0A0A0A;
+    --color-ink-muted: rgba(10, 10, 10, 0.55);
+    --color-ink-faint: rgba(10, 10, 10, 0.30);
+    --color-border-subtle: rgba(0, 0, 0, 0.07);
+    --color-border-hover: rgba(0, 0, 0, 0.20);
+    --color-accent: #e06420;
   }
+
   .theme {
     --animate-shine: shine var(--duration) infinite linear;
   }
@@ -149,18 +139,13 @@ a, button {
 /* Global Styles */
 body {
   font-family: var(--font-primary);
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  color: var(--color-text-primary);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  color: var(--color-ink);
 }
 
 p {
@@ -168,74 +153,49 @@ p {
   line-height: 1.6;
 }
 
-.font-display {
-  font-family: dirham-symbol-font, Arial, sans-serif;
-  font-weight: 800;
-}
-
-/*
- * Override legacy local-font CSS variables so that any component using
- * var(--heading-bold), var(--fpr1), var(--fpr1-bold), or var(--heart)
- * picks up the new unified font system.
- */
+/* Legacy font overrides — everything uses Inter now */
 body {
-  --heading-bold: dirham-symbol-font, Arial, sans-serif;
+  --heading-bold: "Inter", sans-serif;
+  --font-heading: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
   --fpr1: "Inter", sans-serif;
   --fpr1-bold: "Inter", sans-serif;
   --heart: "Inter", sans-serif;
 }
 
+/* Accent utility classes */
 .text-gold {
-  color: var(--color-gold);
+  color: var(--color-accent);
 }
 
 .bg-gold {
-  background-color: var(--color-gold);
+  background-color: var(--color-accent);
 }
 
 .border-gold {
-  border-color: var(--color-gold);
+  border-color: var(--color-accent);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-black-light);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-gold-dark);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
+/* Femur-style section fade */
+.section-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: sectionReveal 0.8s ease-out forwards;
 }
 
 /* Premium Animations */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes sectionReveal {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
@@ -259,13 +219,7 @@ body {
 }
 
 @keyframes shine {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  to {
-    background-position: 0% 0%;
-  }
-}
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  to { background-position: 0% 0%; }
+}

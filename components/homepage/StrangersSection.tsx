@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Users, ArrowRight, Heart, Laugh, Camera } from 'lucide-react';
+import { ArrowRight, Heart, Laugh, Camera } from 'lucide-react';
 
 const stories = [
   {
@@ -26,79 +26,63 @@ const stories = [
 
 export function StrangersSection() {
   return (
-    <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#0f0a12] to-[#0a080d] relative z-40 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(168, 85, 247, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 bg-brand/10 border border-brand/20 rounded-full px-4 py-1.5 mb-5">
-            <Users className="h-4 w-4 text-brand" />
-            <span className="text-brand text-xs font-semibold uppercase tracking-wider" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <section className="relative overflow-hidden px-5 py-24 md:px-9 md:py-28 bg-[var(--color-canvas)] border-t border-[var(--color-border-subtle)]">
+      <div className="mx-auto max-w-[1440px]">
+        {/* Header — Femur editorial */}
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)] lg:items-center lg:gap-16 mb-14">
+          <div className="max-w-[920px]">
+            <p className="mb-5 text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
               Strangers → Friends → Family
-            </span>
+            </p>
+            <h2 className="max-w-[12ch] text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.05em] text-[var(--color-ink)]">
+              We Start As
+              <br />
+              Strangers
+            </h2>
           </div>
-          <h2
-            className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight"
-            style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}
-          >
-            We Start as <span className="text-brand">Strangers</span>
-          </h2>
-          <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Every CONSOUL INDIA trip begins with unfamiliar faces and ends with unbreakable bonds. 
-            Solo traveler? You won&apos;t be solo for long.
+          <p className="max-w-[400px] text-[16px] font-normal leading-[1.6] text-[var(--color-ink-muted)] lg:justify-self-end">
+            Every CONSOUL INDIA trip begins with unfamiliar faces and ends with unbreakable bonds. Solo traveler? You won&apos;t be solo for long.
           </p>
         </div>
 
         {/* Story Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
-          {stories.map((story, i) => {
-            const Icon = story.icon;
-            return (
-              <div
-                key={i}
-                className="group rounded-2xl p-6 md:p-7 border border-white/5 hover:border-brand/20 transition-all duration-500 active:scale-[0.98]"
-                style={{ background: "linear-gradient(145deg, #141414 0%, #0d0d0d 100%)" }}
-              >
-                {/* Icon */}
-                <div className="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center mb-5">
-                  <Icon className="h-5 w-5 text-brand" />
-                </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {stories.map((story, i) => (
+            <div
+              key={i}
+              className="flex min-h-[260px] flex-col rounded-[4px] border border-[var(--color-border-subtle)] bg-[var(--color-canvas-raised)] p-8 transition duration-300 ease-in-out hover:-translate-y-1 hover:border-[var(--color-border-hover)]"
+            >
+              <span className="text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
+                0{i + 1}
+              </span>
 
-                {/* Quote */}
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 italic" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  &ldquo;{story.quote}&rdquo;
+              <p className="mt-8 text-[15px] font-normal leading-[1.7] text-[var(--color-ink-muted)] flex-1">
+                &ldquo;{story.quote}&rdquo;
+              </p>
+
+              <div className="mt-6 pt-6 border-t border-[var(--color-border-subtle)]">
+                <p className="text-[14px] font-semibold text-[var(--color-ink)]">
+                  {story.name}
                 </p>
-
-                {/* Author */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-white font-semibold text-sm" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      {story.name}
-                    </p>
-                    <p className="text-gray-500 text-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      {story.trip}
-                    </p>
-                  </div>
-                </div>
+                <p className="text-[12px] text-[var(--color-ink-faint)] mt-1 uppercase tracking-[0.1em]">
+                  {story.trip}
+                </p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-10 md:mt-14">
-          <p className="text-gray-400 text-sm mb-4" style={{ fontFamily: "'Inter', sans-serif" }}>
-            300+ solo travelers have found their tribe with us
+        <div className="text-center mt-14">
+          <p className="text-[13px] text-[var(--color-ink-faint)] mb-5 uppercase tracking-[0.15em]">
+            300+ solo travelers have found their tribe
           </p>
           <a
             href="/past-trips"
-            className="inline-flex items-center gap-2 text-brand hover:text-brand/80 font-semibold text-sm transition-colors active:scale-95"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] px-6 py-2.5 text-[11px] font-normal uppercase tracking-[0.15em] text-[var(--color-canvas)] transition-transform duration-300 hover:scale-[1.03]"
           >
             Join the next trip
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
       </div>
