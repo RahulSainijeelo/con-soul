@@ -111,8 +111,8 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
                 >
                     {/* Destination tag */}
                     <div className="flex items-center gap-1.5 mb-2 sm:mb-3">
-                        <MapPin className="w-3.5 h-3.5 text-brand" aria-hidden="true" />
-                        <span className="text-brand text-xs sm:text-sm font-semibold tracking-wider uppercase">
+                        <MapPin className="w-3.5 h-3.5 text-white" aria-hidden="true" />
+                        <span className="text-white text-xs sm:text-sm font-semibold tracking-wider uppercase">
                             {trip.destination}
                         </span>
                     </div>
@@ -128,7 +128,7 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
                     {/* Compact Details Row */}
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-5 text-white/70 text-xs sm:text-sm mb-5 sm:mb-6">
                         <span className="flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 text-brand/80" aria-hidden="true" />
+                            <Calendar className="w-3.5 h-3.5 text-white/80" aria-hidden="true" />
                             {formatDateRange(trip.startDate, trip.endDate)}
                         </span>
 
@@ -136,7 +136,7 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
                             <>
                                 <span className="text-white/30" aria-hidden="true">·</span>
                                 <span className="flex items-center gap-1.5">
-                                    <Clock className="w-3.5 h-3.5 text-brand/80" aria-hidden="true" />
+                                    <Clock className="w-3.5 h-3.5 text-white/80" aria-hidden="true" />
                                     {trip.duration}
                                 </span>
                             </>
@@ -144,14 +144,14 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
 
                         <span className="text-white/30" aria-hidden="true">·</span>
                         <span className="flex items-center gap-1.5 font-semibold text-white">
-                            <IndianRupee className="w-3.5 h-3.5 text-brand/80" aria-hidden="true" />
+                            <IndianRupee className="w-3.5 h-3.5 text-white/80" aria-hidden="true" />
                             {trip.price.toLocaleString("en-IN")}
                         </span>
 
                         {spotsLeft > 0 && spotsLeft <= 15 && (
                             <>
                                 <span className="text-white/30" aria-hidden="true">·</span>
-                                <span className="flex items-center gap-1.5 text-brand font-semibold">
+                                <span className="flex items-center gap-1.5 text-white font-semibold">
                                     <Users className="w-3.5 h-3.5" aria-hidden="true" />
                                     {spotsLeft} spot{spotsLeft !== 1 ? "s" : ""} left
                                 </span>
@@ -163,7 +163,7 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                         <Link
                             href={`/trip/${trip.id}/join`}
-                            className="inline-flex items-center justify-center gap-2 bg-brand hover:bg-orange-700 text-white font-semibold py-3 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand/30 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black"
+                            className="inline-flex items-center justify-center gap-2 bg-white hover:bg-white/90 text-black font-semibold py-3 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-white/20 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
                         >
                             Book This Trip
                             <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -222,15 +222,15 @@ function WaitlistState() {
             {/* Gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-black to-gray-900" />
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] bg-brand/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] bg-orange-500/8 rounded-full blur-[100px]" />
+                <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]" />
             </div>
 
             {/* Content */}
             <div className="relative z-10 flex h-full items-center justify-center px-4">
                 <div className="text-center max-w-lg animate-hero-fade-up">
                     {/* Subtle brand tag */}
-                    <span className="inline-block text-brand text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-4">
+                    <span className="inline-block text-white text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-4">
                         CONSOUL INDIA
                     </span>
 
@@ -262,13 +262,13 @@ function WaitlistState() {
                                     placeholder="your@email.com"
                                     required
                                     aria-label="Email address"
-                                    className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+                                    className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
                                 />
                             </div>
                             <button
                                 type="submit"
                                 disabled={status === "loading"}
-                                className="bg-brand hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand/30 text-sm disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-black flex items-center justify-center gap-2"
+                                className="bg-white hover:bg-white/90 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-white/20 text-sm disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black flex items-center justify-center gap-2"
                             >
                                 {status === "loading" ? (
                                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -382,7 +382,7 @@ export function HeroSection() {
     if (loading) {
         return (
             <section className="relative h-screen w-full bg-black flex items-center justify-center" aria-label="Loading hero">
-                <Loader2 className="h-10 w-10 animate-spin text-brand" />
+                <Loader2 className="h-10 w-10 animate-spin text-white" />
             </section>
         );
     }
@@ -422,14 +422,14 @@ export function HeroSection() {
             {/* Carousel Navigation Arrows */}
             <button
                 onClick={() => emblaApi?.scrollPrev()}
-                className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand"
+                className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white"
                 aria-label="Previous trip"
             >
                 <ChevronLeft className="w-5 h-5" />
             </button>
             <button
                 onClick={() => emblaApi?.scrollNext()}
-                className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand"
+                className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white"
                 aria-label="Next trip"
             >
                 <ChevronRight className="w-5 h-5" />
@@ -446,9 +446,9 @@ export function HeroSection() {
                         aria-label={`Go to ${trip.title}`}
                         className={`
                             h-2 rounded-full transition-all duration-500
-                            focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-1 focus:ring-offset-black
+                            focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-black
                             ${index === activeIndex
-                                ? "w-8 bg-brand animate-pulse-dot"
+                                ? "w-8 bg-white animate-pulse-dot"
                                 : "w-2 bg-white/30 hover:bg-white/50"
                             }
                         `}

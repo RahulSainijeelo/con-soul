@@ -107,7 +107,7 @@ export default function MyTripsPage() {
                 <Header />
                 <div className="container mx-auto px-4 py-20">
                     <div className="text-center">
-                        <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                         <p className="text-gray-400">Loading your trips...</p>
                     </div>
                 </div>
@@ -192,24 +192,24 @@ export default function MyTripsPage() {
                         <button
                             onClick={() => setActiveTab('upcoming')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'upcoming'
-                                ? 'border-gold text-gold'
+                                ? 'border-foreground text-foreground'
                                 : 'border-transparent text-gray-400 hover:text-white'
                                 }`}
                         >
                             Upcoming Trips
-                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'upcoming' ? 'bg-gold/20 text-gold' : 'bg-white/10 text-gray-400'}`}>
+                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'upcoming' ? 'bg-foreground/15 text-foreground' : 'bg-white/10 text-gray-400'}`}>
                                 {upcomingTrips.length}
                             </span>
                         </button>
                         <button
                             onClick={() => setActiveTab('past')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'past'
-                                ? 'border-gold text-gold'
+                                ? 'border-foreground text-foreground'
                                 : 'border-transparent text-gray-400 hover:text-white'
                                 }`}
                         >
                             Past Trips
-                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'past' ? 'bg-gold/20 text-gold' : 'bg-white/10 text-gray-400'}`}>
+                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'past' ? 'bg-foreground/15 text-foreground' : 'bg-white/10 text-gray-400'}`}>
                                 {pastTrips.length}
                             </span>
                         </button>
@@ -244,7 +244,7 @@ export default function MyTripsPage() {
                                             {getStatusBadge(booking.status, booking.seatNumber)}
                                         </div>
 
-                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
+                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-foreground text-xs font-semibold rounded-full border border-foreground/20">
                                             {trip.category}
                                         </div>
 
@@ -258,7 +258,7 @@ export default function MyTripsPage() {
                                         {booking.paymentStatus && (
                                             <div className="absolute bottom-4 left-4">
                                                 {booking.paymentStatus === 'partial' ? (
-                                                    <div className="px-3 py-1 bg-orange-900/80 backdrop-blur-sm text-orange-100 text-xs font-semibold rounded-full border border-orange-500/30">
+                                                    <div className="px-3 py-1 bg-black/80 backdrop-blur-sm text-white/90 text-xs font-semibold rounded-full border border-white/30">
                                                         Partial Payment
                                                     </div>
                                                 ) : (
@@ -271,7 +271,7 @@ export default function MyTripsPage() {
                                     </div>
 
                                     <CardHeader className="pb-3">
-                                        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
+                                        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-foreground transition-colors">
                                             {trip.title}
                                         </h3>
                                         <p className="text-sm text-gray-400 line-clamp-2 mt-2">
@@ -282,11 +282,11 @@ export default function MyTripsPage() {
                                     <CardContent className="pb-3 flex-grow">
                                         <div className="space-y-2 text-sm text-gray-400">
                                             <div className="flex items-center gap-2">
-                                                <MapPin className="w-4 h-4 text-gold" />
+                                                <MapPin className="w-4 h-4 text-foreground" />
                                                 <span>{trip.destination}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <Calendar className="w-4 h-4 text-gold" />
+                                                <Calendar className="w-4 h-4 text-foreground" />
                                                 <span>
                                                     {activeTab === 'upcoming' ? 'Starts' : 'Completed'}: {new Date(activeTab === 'upcoming' ? trip.startDate : trip.endDate).toLocaleDateString('en-US', {
                                                         year: 'numeric',
@@ -297,7 +297,7 @@ export default function MyTripsPage() {
                                             </div>
                                             {trip.duration && (
                                                 <div className="flex items-center gap-2">
-                                                    <Clock className="w-4 h-4 text-gold" />
+                                                    <Clock className="w-4 h-4 text-foreground" />
                                                     <span>{trip.duration}</span>
                                                 </div>
                                             )}
@@ -307,7 +307,7 @@ export default function MyTripsPage() {
 
                                     <CardFooter className='flex justify-center p-[1.5rem] mt-auto'>
                                         <Link href={activeTab === 'upcoming' ? `/my-trips/${booking.id}` : `/past-trips/${trip.slug || trip.id}`} className="w-full">
-                                            <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                            <button className="w-full bg-foreground hover:bg-foreground/80 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                                 {activeTab === 'upcoming' ? 'View Details' : 'View Details & Reviews'}
                                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                             </button>
@@ -334,7 +334,7 @@ export default function MyTripsPage() {
                         </p>
                         {activeTab === 'upcoming' && (
                             <Link href="/">
-                                <button className="bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
+                                <button className="bg-foreground hover:bg-foreground/80 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
                                     Explore Trips
                                 </button>
                             </Link>

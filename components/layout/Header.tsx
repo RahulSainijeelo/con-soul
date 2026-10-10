@@ -7,11 +7,11 @@ import { User } from "lucide-react";
 import Image from "next/image";
 import logo from "@/public/images/logo.png"
 import { Instagram } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Header() {
   const session = useSession();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,27 +21,6 @@ export default function Header() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Theme toggle
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "light") {
-      setIsDark(false);
-      document.documentElement.classList.add("light");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const next = !isDark;
-    setIsDark(next);
-    if (next) {
-      document.documentElement.classList.remove("light");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.add("light");
-      localStorage.setItem("theme", "light");
-    }
-  };
 
   const insta = { icon: Instagram, href: "https://www.instagram.com/consoul.in", label: "Instagram" }
   const Icon = insta.icon;
@@ -67,6 +46,9 @@ export default function Header() {
           >
             <span className="self-center"><Icon className="h-5 w-5" /></span>
           </Link>
+
+          {/* Mobile theme toggle */}
+          <ThemeToggle />
         </nav>
 
         {/* Desktop nav — Femur style */}
@@ -94,13 +76,8 @@ export default function Header() {
             My Trips
           </Link>
 
-          {/* Theme toggle — Femur pill style */}
-          <button
-            onClick={toggleTheme}
-            className="rounded-full border border-white/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-white/50 hover:text-white transition-all duration-300 hover:scale-[1.03]"
-          >
-            {isDark ? "Light" : "Dark"}
-          </button>
+          {/* Theme toggle — icon button */}
+          <ThemeToggle />
 
           <span className="h-4 w-[1px] bg-white/10" />
 

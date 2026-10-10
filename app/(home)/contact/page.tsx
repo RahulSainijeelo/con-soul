@@ -45,7 +45,7 @@ export default function ContactPage() {
             <div className="min-h-screen bg-black flex flex-col">
                 <Header />
                 <div className="flex-grow flex items-center justify-center">
-                    <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin"></div>
                 </div>
                 <Footer />
             </div>
@@ -73,7 +73,7 @@ export default function ContactPage() {
                 <div className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900 to-black">
                     <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20" />
                     <div className="relative max-w-7xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-5xl font-display font-bold text-gold mb-6">
+                        <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
                             Get in Touch
                         </h1>
                         <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -92,12 +92,12 @@ export default function ContactPage() {
                                 href={`tel:${profile.phoneNumbers[0]}`}
                                 className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
                             >
-                                <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold/30 transition-colors">
-                                    <Phone className="w-6 h-6 text-gold" />
+                                <div className="w-12 h-12 bg-foreground/15 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/30 transition-colors">
+                                    <Phone className="w-6 h-6 text-foreground" />
                                 </div>
                                 <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
                                 <p className="text-gray-400 mb-4">Available during working hours</p>
-                                <p className="text-lg font-semibold text-gold group-hover:text-white transition-colors">
+                                <p className="text-lg font-semibold text-foreground group-hover:text-white transition-colors">
                                     {profile.phoneNumbers[0]}
                                 </p>
                             </a>
@@ -139,12 +139,12 @@ export default function ContactPage() {
                         {/* Working Hours */}
                         {profile.workingHours && (
                             <div className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1 md:col-span-2 lg:col-span-1">
-                                <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-orange-500/30 transition-colors">
-                                    <Clock className="w-6 h-6 text-orange-500" />
+                                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-white/30 transition-colors">
+                                    <Clock className="w-6 h-6 text-black dark:text-white" />
                                 </div>
                                 <h3 className="text-xl font-bold text-white mb-2">Working Hours</h3>
                                 <p className="text-gray-400 mb-4">When we are available</p>
-                                <p className="text-lg font-semibold text-orange-500 group-hover:text-white transition-colors">
+                                <p className="text-lg font-semibold text-black dark:text-white group-hover:text-white transition-colors">
                                     {profile.workingHours}
                                 </p>
                             </div>
@@ -154,12 +154,12 @@ export default function ContactPage() {
                                 href={`tel:${profile.phoneNumbers[0]}`}
                                 className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
                             >
-                                <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold/30 transition-colors">
-                                    <Phone className="w-6 h-6 text-gold" />
+                                <div className="w-12 h-12 bg-foreground/15 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/30 transition-colors">
+                                    <Phone className="w-6 h-6 text-foreground" />
                                 </div>
                                 <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
                                 <p className="text-gray-400 mb-4">Available during working hours</p>
-                                <p className="text-lg font-semibold text-gold group-hover:text-white transition-colors">
+                                <p className="text-lg font-semibold text-foreground group-hover:text-white transition-colors">
                                     {profile.phoneNumbers[1]}
                                 </p>
                             </a>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                                     <span className="text-black font-bold text-xl">DK</span>
                                 </div>
                                 <h3 className="text-lg font-bold text-white">Dipanshu Kumar</h3>
-                                <p className="text-gold text-sm font-medium mt-1">Co-Founder</p>
+                                <p className="text-foreground text-sm font-medium mt-1">Co-Founder</p>
                                 <p className="text-gray-400 text-sm mt-3">
                                     Passionate about building communities through travel and creating experiences that turn strangers into lifelong friends.
                                 </p>
@@ -192,7 +192,7 @@ export default function ContactPage() {
                                     <span className="text-black font-bold text-xl">HK</span>
                                 </div>
                                 <h3 className="text-lg font-bold text-white">Himanshu Kumar</h3>
-                                <p className="text-gold text-sm font-medium mt-1">Co-Founder</p>
+                                <p className="text-foreground text-sm font-medium mt-1">Co-Founder</p>
                                 <p className="text-gray-400 text-sm mt-3">
                                     Dedicated to crafting seamless travel experiences and ensuring every CONSOUL INDIA trip is safe, exciting, and unforgettable.
                                 </p>

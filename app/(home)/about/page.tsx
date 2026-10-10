@@ -31,7 +31,7 @@ export default function AboutPage() {
       icon: Users,
       title: "Small Groups, Big Bonds",
       description: "We keep our groups intimate — 15 to 20 travelers max. This isn't mass tourism. It's a curated circle where strangers become lifelong friends.",
-      gradient: "from-orange-500/20 to-amber-500/20",
+      gradient: "from-foreground/15 to-foreground/10",
     },
     {
       icon: Shield,
@@ -67,10 +67,10 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-brand/10 via-black to-black" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-foreground/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-foreground/10 border border-foreground/20 text-foreground text-sm font-medium mb-6">
             <Compass className="w-4 h-4" />
             <span>Est. 2025 • Bilaspur, Chhattisgarh</span>
           </div>
@@ -81,7 +81,7 @@ export default function AboutPage() {
           >
             We Don&apos;t Sell Trips.
             <br />
-            <span className="text-brand">We Build Tribes.</span>
+            <span className="text-foreground">We Build Tribes.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -96,7 +96,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
-                <p className="text-3xl md:text-4xl font-black text-brand mb-1" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
+                <p className="text-3xl md:text-4xl font-black text-foreground mb-1" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
                   {stat.number}
                 </p>
                 <p className="text-sm text-gray-400 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>{stat.label}</p>
@@ -116,7 +116,7 @@ export default function AboutPage() {
             >
               Our Story
             </h2>
-            <div className="w-16 h-1 bg-brand mx-auto mb-8 rounded-full" />
+            <div className="w-16 h-1 bg-foreground mx-auto mb-8 rounded-full" />
             <p className="text-gray-400 text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
               We started CONSOUL because we were tired of overpriced, overcrowded, underwhelming &quot;group tours.&quot; We wanted something different — trips designed by travelers, for travelers. Small groups. Real experiences. No BS.
             </p>
@@ -132,13 +132,13 @@ export default function AboutPage() {
               return (
                 <div key={index} className="flex gap-4 md:gap-6 mb-8 last:mb-0">
                   <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-brand" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-foreground/10 border border-foreground/20 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-5 h-5 text-foreground" />
                     </div>
                     {index < timeline.length - 1 && <div className="w-px h-full bg-white/10 mt-2" />}
                   </div>
                   <div className="pt-1.5 pb-4">
-                    <span className="text-xs font-bold text-brand uppercase tracking-wider" style={{ fontFamily: "'Inter', sans-serif" }}>{item.year}</span>
+                    <span className="text-xs font-bold text-foreground uppercase tracking-wider" style={{ fontFamily: "'Inter', sans-serif" }}>{item.year}</span>
                     <p className="text-gray-300 mt-1 text-sm md:text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>{item.event}</p>
                   </div>
                 </div>
@@ -156,7 +156,7 @@ export default function AboutPage() {
               className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight"
               style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}
             >
-              What We <span className="text-brand">Stand For</span>
+              What We <span className="text-foreground">Stand For</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
               These aren&apos;t just words on a page. They&apos;re promises we keep on every single trip.
@@ -169,7 +169,7 @@ export default function AboutPage() {
               return (
                 <div
                   key={value.title}
-                  className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8 hover:border-brand/30 transition-all duration-300"
+                  className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8 hover:border-foreground/20 transition-all duration-300"
                 >
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${value.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <Icon className="w-6 h-6 text-white" />
@@ -205,7 +205,7 @@ export default function AboutPage() {
               <Link
                 href="/"
                 className="inline-flex items-center justify-center gap-2 text-white text-sm font-bold py-3.5 px-8 rounded-full transition-all duration-300 active:scale-95"
-                style={{ fontFamily: "'Inter', sans-serif", background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)", boxShadow: "0 0 20px rgba(234,88,12,0.3)" }}
+                style={{ fontFamily: "'Inter', sans-serif", background: "linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 100%)", boxShadow: "0 0 20px rgba(255,255,255,0.15)" }}
               >
                 <Calendar className="h-4 w-4" />
                 View Upcoming Trips
@@ -221,10 +221,10 @@ export default function AboutPage() {
             </div>
 
             <div className="flex items-center justify-center gap-4 mt-8">
-              <Link href="https://www.instagram.com/consoul.in" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-brand transition-colors">
+              <Link href="https://www.instagram.com/consoul.in" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-foreground transition-colors">
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="mailto:con.sol.082025@gmail.com" className="text-gray-500 hover:text-brand transition-colors">
+              <Link href="mailto:con.sol.082025@gmail.com" className="text-gray-500 hover:text-foreground transition-colors">
                 <Mail className="w-5 h-5" />
               </Link>
             </div>

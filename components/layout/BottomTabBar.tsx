@@ -40,8 +40,8 @@ export default function BottomTabBar() {
                             className={cn(
                                 "flex flex-col items-center justify-center gap-1 transition-colors active:scale-95 active:opacity-70",
                                 isActive
-                                    ? "text-gold"
-                                    : "text-gray-400 hover:text-gold/80"
+                                    ? "text-white"
+                                    : "text-gray-400 hover:text-white/80"
                             )}
                         >
                             <Icon className="h-5 w-5" />

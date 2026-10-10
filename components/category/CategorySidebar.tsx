@@ -55,7 +55,7 @@ export async function CategorySidebar() {
       <aside className="space-y-8">
         {/* Latest News Section */}
         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="border-l-4 border-orange-500 bg-gray-50 px-4 py-3">
+          <div className="border-l-4 border-black dark:border-white bg-gray-50 px-4 py-3">
             <h3 className="text-xl font-bold text-gray-900">Latest Articles</h3>
           </div>
           
@@ -73,7 +73,7 @@ export async function CategorySidebar() {
     <aside className="space-y-8">
       {/* Latest News Section */}
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-        <div className="border-l-4 border-orange-500 bg-gray-50 px-4 py-3">
+        <div className="border-l-4 border-black dark:border-white bg-gray-50 px-4 py-3">
           <h3 className="text-xl font-bold text-gray-900">Latest Articles</h3>
         </div>
         
@@ -90,7 +90,7 @@ export async function CategorySidebar() {
                   />
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-sm font-semibold text-gray-900 line-clamp-3 group-hover:text-orange-600 transition-colors mb-1">
+                  <h4 className="text-sm font-semibold text-gray-900 line-clamp-3 group-hover:text-black dark:text-white transition-colors mb-1">
                     {news.title}
                   </h4>
                   <p className="text-xs text-gray-500">{format(new Date(news.publishDate), 'MMM dd, yyyy')}</p>
@@ -103,7 +103,7 @@ export async function CategorySidebar() {
 
       {/* Optional: Popular Tags Section */}
       {/* <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-        <div className="border-l-4 border-orange-500 bg-gray-50 px-4 py-3">
+        <div className="border-l-4 border-black dark:border-white bg-gray-50 px-4 py-3">
           <h3 className="text-xl font-bold text-gray-900">Popular Tags</h3>
         </div>
         
@@ -111,7 +111,7 @@ export async function CategorySidebar() {
           <div className="flex flex-wrap gap-2">
             {['Politics', 'Election', 'BJP', 'Congress', 'Modi', 'Parliament', 'Supreme Court', 'Economy'].map((tag) => (
               <Link key={tag} href={`/tag/${tag.toLowerCase()}`}>
-                <Badge variant="outline" className="text-xs hover:bg-orange-50 hover:border-orange-300 transition-colors">
+                <Badge variant="outline" className="text-xs hover:bg-gray-50 dark:bg-gray-900 hover:border-gray-300 dark:border-gray-700 transition-colors">
                   {tag}
                 </Badge>
               </Link>

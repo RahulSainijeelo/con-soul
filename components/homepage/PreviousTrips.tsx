@@ -57,7 +57,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                     <div className="mb-20">
                         <div className="mb-12 text-center">
                             <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
-                                Memories from <span className="text-gold">Travelers</span>
+                                Memories from <span className="text-white/70">Travelers</span>
                             </h2>
                             <p className="mx-auto max-w-2xl text-gray-400">
                                 Hear from our happy travelers and their unforgettable experiences.
@@ -76,10 +76,10 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                     {reviews.map((review) => (
                                         <CarouselItem key={review.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                                             <div className="p-1 h-full">
-                                                <Card className="h-full rounded-2xl border-white/10 bg-white/5 backdrop-blur-sm hover:border-gold/30 transition-all duration-300 group">
+                                                <Card className="h-full rounded-2xl border-white/10 bg-white/5 backdrop-blur-sm hover:border-white/30 transition-all duration-300 group">
                                                     <CardContent className="flex !p-6 flex-col h-full">
                                                         <div className="flex items-center gap-4 mb-4">
-                                                            <div className="h-12 w-12 overflow-hidden rounded-full border border-gold/30 bg-gray-800 flex items-center justify-center flex-shrink-0">
+                                                            <div className="h-12 w-12 overflow-hidden rounded-full border border-white/30 bg-gray-800 flex items-center justify-center flex-shrink-0">
                                                                 {review.userImage ? (
                                                                     <img
                                                                         src={review.userImage}
@@ -87,14 +87,14 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                                                         className="h-full w-full object-cover"
                                                                     />
                                                                 ) : (
-                                                                    <span className="text-lg font-bold text-gold">{review.userName.charAt(0)}</span>
+                                                                    <span className="text-lg font-bold text-white">{review.userName.charAt(0)}</span>
                                                                 )}
                                                             </div>
                                                             <div>
                                                                 <h3 className="font-bold text-white text-sm md:text-base line-clamp-1">
                                                                     {review.userName}
                                                                 </h3>
-                                                                <p className="text-xs text-gold line-clamp-1">
+                                                                <p className="text-xs text-white/60 line-clamp-1">
                                                                     {review.tripName}
                                                                 </p>
                                                             </div>
@@ -105,7 +105,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                                                 <Star
                                                                     key={i}
                                                                     className={`h-3 w-3 ${i < review.rating
-                                                                        ? "fill-gold text-gold"
+                                                                        ? "fill-white text-white"
                                                                         : "fill-gray-700 text-gray-700"
                                                                         }`}
                                                                 />
@@ -113,7 +113,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                                         </div>
 
                                                         <div className="relative flex-grow">
-                                                            <Quote className="absolute -top-1 -left-1 w-3 h-3 text-gold/20" />
+                                                            <Quote className="absolute -top-1 -left-1 w-3 h-3 text-white/20" />
                                                             <p className="text-sm text-gray-300 italic leading-relaxed line-clamp-4 pl-4">
                                                                 "{review.certifiedHighlight || review.comment}"
                                                             </p>
@@ -125,8 +125,8 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                     ))}
                                 </CarouselContent>
                                 <div className="hidden md:block">
-                                    <CarouselPrevious className="-left-12 border-white/20 bg-black/50 text-gold hover:bg-gold hover:text-black" />
-                                    <CarouselNext className="-right-12 border-white/20 bg-black/50 text-gold hover:bg-gold hover:text-black" />
+                                    <CarouselPrevious className="-left-12 border-white/20 bg-black/50 text-white hover:bg-white hover:text-black" />
+                                    <CarouselNext className="-right-12 border-white/20 bg-black/50 text-white hover:bg-white hover:text-black" />
                                 </div>
                             </Carousel>
                         </div>
@@ -138,7 +138,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                     <div>
                         <div className="mb-12 text-center">
                             <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
-                                Our <span className="text-gold">Past Expeditions</span>
+                                Our <span className="text-white/70">Past Expeditions</span>
                             </h2>
                             <p className="mx-auto max-w-2xl text-gray-400">
                                 Explore the journeys we've completed and the memories we've made.
@@ -162,22 +162,22 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
                                         <div className="absolute top-4 left-4">
-                                            <span className="px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-full text-xs font-medium text-gold">
+                                            <span className="px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-full text-xs font-medium text-white">
                                                 {trip.category}
                                             </span>
                                         </div>
 
                                         <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                            <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-gold transition-colors">
+                                            <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-white/80 transition-colors">
                                                 {trip.title}
                                             </h3>
                                             <div className="flex items-center gap-4 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
                                                 <div className="flex items-center gap-1.5">
-                                                    <MapPin className="w-3.5 h-3.5 text-gold" />
+                                                    <MapPin className="w-3.5 h-3.5 text-white" />
                                                     <span className="line-clamp-1">{trip.destination}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1.5">
-                                                    <Calendar className="w-3.5 h-3.5 text-gold" />
+                                                    <Calendar className="w-3.5 h-3.5 text-white" />
                                                     <span>{new Date(trip.endDate).getFullYear()}</span>
                                                 </div>
                                             </div>
@@ -189,7 +189,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
 
                         <div className="mt-12 text-center">
                             <Link href="/past-trips">
-                                <button className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-gold/30 hover:border-gold text-gold rounded-full transition-all hover:bg-gold/10 group">
+                                <button className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-white/30 hover:border-white text-white rounded-full transition-all hover:bg-white/10 group">
                                     View All Past Trips
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </button>

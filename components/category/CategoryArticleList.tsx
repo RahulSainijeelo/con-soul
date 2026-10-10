@@ -48,7 +48,7 @@ export function CategoryArticleList({ articles, category, error }: CategoryArtic
         </div>
         <Link 
           href="/"
-          className="inline-block bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          className="inline-block bg-black dark:bg-white hover:bg-black/90 dark:bg-white/90 text-white px-6 py-3 rounded-lg font-medium transition-colors"
         >
           Return to Homepage
         </Link>
@@ -68,7 +68,7 @@ export function CategoryArticleList({ articles, category, error }: CategoryArtic
         </p>
         <Link 
           href="/"
-          className="inline-block bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          className="inline-block bg-black dark:bg-white hover:bg-black/90 dark:bg-white/90 text-white px-6 py-3 rounded-lg font-medium transition-colors"
         >
           Browse All Articles
         </Link>
@@ -92,7 +92,7 @@ export function CategoryArticleList({ articles, category, error }: CategoryArtic
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute top-3 left-3 bg-orange-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                <div className="absolute top-3 left-3 bg-black dark:bg-white text-white px-2 py-1 rounded-full text-xs font-semibold">
                   {category.toUpperCase()}
                 </div>
               </div>
@@ -100,7 +100,7 @@ export function CategoryArticleList({ articles, category, error }: CategoryArtic
             
             <div className="md:w-2/3 p-6">
               <div className="flex items-center text-sm text-gray-500 mb-3">
-                <div className="w-6 h-6 bg-gradient-to-r from-orange-400 to-red-400 rounded-full mr-2 flex items-center justify-center">
+                <div className="w-6 h-6 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full mr-2 flex items-center justify-center">
                   <span className="text-xs font-bold text-white">
                     {article.author.charAt(0).toUpperCase()}
                   </span>
@@ -111,7 +111,7 @@ export function CategoryArticleList({ articles, category, error }: CategoryArtic
               </div>
               
               <Link href={`/article/${article.id}`} className="group">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors line-clamp-2">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-black dark:text-white transition-colors line-clamp-2">
                   {article.title}
                 </h2>
                 
@@ -122,7 +122,7 @@ export function CategoryArticleList({ articles, category, error }: CategoryArtic
                 )}
                 
                 <div className="flex items-center justify-between">
-                  <span className="text-orange-600 font-medium text-sm group-hover:text-orange-700 transition-colors">
+                  <span className="text-black dark:text-white font-medium text-sm group-hover:text-black dark:text-white transition-colors">
                     Read more →
                   </span>
                   <div className="flex items-center text-xs text-gray-400">

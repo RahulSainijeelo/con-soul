@@ -49,7 +49,7 @@ export function CategoryPagination({
       {hasPrev && currentPage > 1 ? (
         <a 
           href={buildUrl(currentPage - 1)}
-          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-orange-600 transition-colors"
+          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-black dark:text-white transition-colors"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
           Previous
@@ -66,7 +66,7 @@ export function CategoryPagination({
         <>
           <a
             href={buildUrl(1)}
-            className="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-orange-600 transition-colors"
+            className="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-black dark:text-white transition-colors"
           >
             1
           </a>
@@ -83,8 +83,8 @@ export function CategoryPagination({
           href={buildUrl(page)}
           className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
             page === currentPage
-              ? 'text-white bg-orange-600 border border-orange-600'
-              : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-orange-600'
+              ? 'text-white bg-black dark:bg-white border border-black dark:border-white'
+              : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-black dark:text-white'
           }`}
         >
           {page}
@@ -99,7 +99,7 @@ export function CategoryPagination({
           )}
           <a
             href={buildUrl(totalPages)}
-            className="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-orange-600 transition-colors"
+            className="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-black dark:text-white transition-colors"
           >
             {totalPages}
           </a>
@@ -110,7 +110,7 @@ export function CategoryPagination({
       {hasNext && currentPage < totalPages ? (
         <a 
           href={buildUrl(currentPage + 1)}
-          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-orange-600 transition-colors"
+          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-black dark:text-white transition-colors"
         >
           Next
           <ChevronRight className="w-4 h-4 ml-1" />

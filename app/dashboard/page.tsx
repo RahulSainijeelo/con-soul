@@ -94,9 +94,9 @@ export default function DashboardOverview() {
             <Link
               key={action.label}
               href={action.href}
-              className="group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-gold/30 hover:bg-white/[0.07] transition-all duration-200"
+              className="group flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-foreground/20 hover:bg-white/[0.07] transition-all duration-200"
             >
-              <div className="p-2 rounded-lg bg-gold/10 text-gold group-hover:bg-gold/20 transition-colors">
+              <div className="p-2 rounded-lg bg-foreground/10 text-foreground group-hover:bg-foreground/15 transition-colors">
                 <action.icon className="w-4 h-4" />
               </div>
               <div>

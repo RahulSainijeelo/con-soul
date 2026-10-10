@@ -25,7 +25,7 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
         >
             {/* Upcoming badge on wrapper */}
             <div className="px-3 pt-3 pb-1 md:px-5 md:pt-4 md:pb-2">
-                <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-brand hover:bg-black/80 text-xs font-semibold">
+                <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-white hover:bg-black/80 text-xs font-semibold">
                     Upcoming
                 </Badge>
             </div>
@@ -51,7 +51,7 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
                     >
                         {/* Destination */}
                         <div>
-                            <div className="flex items-center gap-2 text-brand text-xs font-semibold tracking-wider uppercase mb-4">
+                            <div className="flex items-center gap-2 text-white text-xs font-semibold tracking-wider uppercase mb-4">
                                 <MapPin className="h-3.5 w-3.5" />
                                 <span style={{ fontFamily: "'Inter', sans-serif" }}>{trip.destination}</span>
                             </div>
@@ -87,8 +87,8 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
                         <div className="flex gap-3">
                             <Link
                                 href={`/trip/${trip.id}`}
-                                className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 text-white text-sm font-bold py-3.5 px-5 md:px-6 rounded-2xl transition-all duration-300 active:scale-95"
-                                style={{ fontFamily: "'Inter', sans-serif", background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)", boxShadow: "0 0 20px rgba(234,88,12,0.3)" }}
+                                className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 text-black text-sm font-bold py-3.5 px-5 md:px-6 rounded-2xl transition-all duration-300 active:scale-95"
+                                style={{ fontFamily: "'Inter', sans-serif", background: "#FFFFFF", boxShadow: "0 0 20px rgba(255,255,255,0.15)" }}
                             >
                                 Book This Trip
                                 <ArrowRight className="h-4 w-4" />

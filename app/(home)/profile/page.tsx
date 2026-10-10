@@ -157,7 +157,7 @@ export default function ProfilePage() {
     if (status === "loading" || loading) {
         return (
             <div className="min-h-screen bg-black flex items-center justify-center">
-                <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
@@ -180,7 +180,7 @@ export default function ProfilePage() {
                     <div className="relative flex flex-col md:flex-row gap-6 items-start md:items-center">
                         {/* Avatar */}
                         <div className="relative group">
-                            <div className="w-24 h-24 rounded-full border-2 border-gold overflow-hidden bg-black/50 flex items-center justify-center">
+                            <div className="w-24 h-24 rounded-full border-2 border-foreground overflow-hidden bg-black/50 flex items-center justify-center">
                                 {profile?.image || formData.image ? (
                                     <img
                                         src={formData.image || profile?.image}
@@ -191,7 +191,7 @@ export default function ProfilePage() {
                                     <User className="w-10 h-10 text-gray-400" />
                                 )}
                             </div>
-                            <label className="absolute bottom-0 right-0 p-1.5 bg-gold rounded-full cursor-pointer hover:bg-yellow-500 transition-colors shadow-lg">
+                            <label className="absolute bottom-0 right-0 p-1.5 bg-foreground rounded-full cursor-pointer hover:bg-yellow-500 transition-colors shadow-lg">
                                 {uploadingImage ? (
                                     <Loader2 className="w-4 h-4 text-black animate-spin" />
                                 ) : (
@@ -219,7 +219,7 @@ export default function ProfilePage() {
                                         variant="ghost"
                                         size="sm"
                                         onClick={() => setIsEditing(true)}
-                                        className="text-gold hover:text-white hover:bg-white/10"
+                                        className="text-foreground hover:text-white hover:bg-white/10"
                                     >
                                         <Edit2 className="w-4 h-4 mr-2" />
                                         Edit
@@ -267,7 +267,7 @@ export default function ProfilePage() {
                                         <Button
                                             onClick={handleSave}
                                             disabled={saving}
-                                            className="bg-gold hover:bg-yellow-600 text-black"
+                                            className="bg-foreground hover:bg-foreground/80 text-black"
                                         >
                                             {saving ? (
                                                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -281,11 +281,11 @@ export default function ProfilePage() {
                             ) : (
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-3 text-gray-300">
-                                        <Phone className="w-4 h-4 text-gold" />
+                                        <Phone className="w-4 h-4 text-foreground" />
                                         <span>{profile?.number || "No number added"}</span>
                                     </div>
                                     <div className="flex items-center gap-3 text-gray-300">
-                                        <Mail className="w-4 h-4 text-gold" />
+                                        <Mail className="w-4 h-4 text-foreground" />
                                         <span>{profile?.email}</span>
                                     </div>
                                 </div>

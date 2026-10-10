@@ -353,7 +353,7 @@ export default function JoinTripForm({
             <div className="space-y-6">
                 <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                     <CardHeader>
-                        <CardTitle className="text-gold">Personal Details</CardTitle>
+                        <CardTitle className="text-foreground">Personal Details</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div>
@@ -491,10 +491,10 @@ export default function JoinTripForm({
                                         />
                                         <label
                                             htmlFor="aadhaar-upload"
-                                            className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-gold transition-colors ${uploadingAadhaar ? 'opacity-50' : ''}`}
+                                            className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-foreground transition-colors ${uploadingAadhaar ? 'opacity-50' : ''}`}
                                         >
                                             {uploadingAadhaar ? (
-                                                <Loader2 className="h-8 w-8 text-gold animate-spin" />
+                                                <Loader2 className="h-8 w-8 text-foreground animate-spin" />
                                             ) : (
                                                 <>
                                                     <Upload className="h-8 w-8 text-gray-400 mb-2" />
@@ -514,22 +514,22 @@ export default function JoinTripForm({
             <div className="space-y-6">
                 <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                     <CardHeader>
-                        <CardTitle className="text-gold flex items-center gap-2">
+                        <CardTitle className="text-foreground flex items-center gap-2">
                             <CreditCard className="h-5 w-5" />
                             Payment Summary
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {/* Amount Display */}
-                        <div className="bg-gradient-to-br from-gold/10 to-yellow-900/10 p-6 rounded-xl border border-gold/20 text-center">
+                        <div className="bg-gradient-to-br from-foreground/10 to-yellow-900/10 p-6 rounded-xl border border-foreground/20 text-center">
                             {isPartialPayment() ? (
                                 <>
                                     <p className="text-gray-400 mb-1 text-xs uppercase tracking-wide">Total Trip Price</p>
                                     <p className="text-2xl font-semibold text-gray-300 line-through mb-3">₹{getTotalAmount().toLocaleString()}</p>
-                                    <p className="text-gold mb-2 text-sm uppercase tracking-wide font-semibold">Pay Now — Registration Fee</p>
+                                    <p className="text-foreground mb-2 text-sm uppercase tracking-wide font-semibold">Pay Now — Registration Fee</p>
                                     <div className="flex items-center justify-center gap-1">
-                                        <IndianRupee className="h-8 w-8 text-gold" />
-                                        <p className="text-5xl font-bold text-gold">{getPayableAmount().toLocaleString()}</p>
+                                        <IndianRupee className="h-8 w-8 text-foreground" />
+                                        <p className="text-5xl font-bold text-foreground">{getPayableAmount().toLocaleString()}</p>
                                     </div>
                                     <div className="mt-3 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                                         <p className="text-blue-300 text-sm">Remaining ₹{(getTotalAmount() - getPayableAmount()).toLocaleString()} payable later from My Trips</p>
@@ -539,8 +539,8 @@ export default function JoinTripForm({
                                 <>
                                     <p className="text-gray-400 mb-2 text-sm uppercase tracking-wide">Total Amount to Pay</p>
                                     <div className="flex items-center justify-center gap-1">
-                                        <IndianRupee className="h-8 w-8 text-gold" />
-                                        <p className="text-5xl font-bold text-gold">{getTotalAmount().toLocaleString()}</p>
+                                        <IndianRupee className="h-8 w-8 text-foreground" />
+                                        <p className="text-5xl font-bold text-foreground">{getTotalAmount().toLocaleString()}</p>
                                     </div>
                                 </>
                             )}
@@ -583,10 +583,10 @@ export default function JoinTripForm({
                                     Refund Policy Notice
                                 </div>
                                 <p className="text-gray-300 text-xs leading-relaxed">
-                                    Cancellations between <strong className="text-gold font-medium">15 to 10 days</strong> prior to departure receive only <strong className="text-gold font-medium">10% refund</strong> of registration fee. Cancellations <strong className="text-white font-medium">less than 10 days</strong> are strictly non-refundable.
+                                    Cancellations between <strong className="text-foreground font-medium">15 to 10 days</strong> prior to departure receive only <strong className="text-foreground font-medium">10% refund</strong> of registration fee. Cancellations <strong className="text-white font-medium">less than 10 days</strong> are strictly non-refundable.
                                 </p>
                                 <div className="pt-1">
-                                    <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-gold text-[11px] hover:underline font-medium inline-block">
+                                    <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-foreground text-[11px] hover:underline font-medium inline-block">
                                         Read complete cancellation policy →
                                     </a>
                                 </div>
@@ -635,7 +635,7 @@ export default function JoinTripForm({
                         <Button
                             onClick={handleRazorpayPayment}
                             disabled={loading}
-                            className="bg-gold hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6"
+                            className="bg-foreground hover:bg-foreground/80 text-black font-bold text-lg px-8 py-6"
                         >
                             {loading ? (
                                 <>
@@ -655,7 +655,7 @@ export default function JoinTripForm({
                     <Button
                         onClick={handleProceedToPayment}
                         disabled={uploadingAadhaar}
-                        className="bg-gold hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6 w-full md:w-auto"
+                        className="bg-foreground hover:bg-foreground/80 text-black font-bold text-lg px-8 py-6 w-full md:w-auto"
                     >
                         {uploadingAadhaar ? (
                             <>

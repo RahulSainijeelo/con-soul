@@ -277,13 +277,13 @@ export default function CreateTripPage() {
                     <Link href="/dashboard">
                         <Button
                             variant="ghost"
-                            className="mb-4 text-gray-400 hover:text-gold hover:bg-white/5"
+                            className="mb-4 text-gray-400 hover:text-foreground hover:bg-white/5"
                         >
                             <ArrowLeft className="mr-2 h-4 w-4" />
                             Back to Dashboard
                         </Button>
                     </Link>
-                    <h1 className="text-3xl font-display font-bold text-gold mb-2">
+                    <h1 className="text-3xl font-display font-bold text-foreground mb-2">
                         Create New Trip
                     </h1>
                     <p className="text-gray-400">
@@ -295,7 +295,7 @@ export default function CreateTripPage() {
                     {/* Basic Information */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">Basic Information</CardTitle>
+                            <CardTitle className="text-foreground">Basic Information</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
@@ -413,7 +413,7 @@ export default function CreateTripPage() {
                     {/* Trip Details */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">Trip Details</CardTitle>
+                            <CardTitle className="text-foreground">Trip Details</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -583,7 +583,7 @@ export default function CreateTripPage() {
                     {/* Travel Route Builder */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">Travel Route</CardTitle>
+                            <CardTitle className="text-foreground">Travel Route</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
                             <div className="space-y-4 bg-black/30 p-4 rounded-lg border border-white/5">
@@ -632,7 +632,7 @@ export default function CreateTripPage() {
                                                 placeholder="e.g., 3AC"
                                                 onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addRouteClass())}
                                             />
-                                            <Button type="button" onClick={addRouteClass} className="bg-gold hover:bg-yellow-600 text-black">
+                                            <Button type="button" onClick={addRouteClass} className="bg-foreground hover:bg-foreground/80 text-black">
                                                 Add
                                             </Button>
                                         </div>
@@ -691,7 +691,7 @@ export default function CreateTripPage() {
                                     </div>
                                 </div>
                                 <div className="flex justify-end mt-4">
-                                    <Button type="button" onClick={addRouteSegment} className="bg-gold hover:bg-yellow-600 text-black">
+                                    <Button type="button" onClick={addRouteSegment} className="bg-foreground hover:bg-foreground/80 text-black">
                                         Add Segment
                                     </Button>
                                 </div>
@@ -699,11 +699,11 @@ export default function CreateTripPage() {
 
                             {/* Existing Segments Timeline */}
                             {formData.travelRoute && formData.travelRoute.length > 0 && (
-                                <div className="relative pl-6 space-y-6 mt-6 border-l-2 border-dashed border-gold/50">
+                                <div className="relative pl-6 space-y-6 mt-6 border-l-2 border-dashed border-foreground/30">
                                     {formData.travelRoute.map((segment, index) => (
                                         <div key={index} className="relative">
-                                            <div className="absolute -left-[35px] top-1 bg-black border-2 border-gold rounded-full p-1">
-                                                {segment.mode === "train" ? <Train className="h-4 w-4 text-gold" /> : <Bus className="h-4 w-4 text-gold" />}
+                                            <div className="absolute -left-[35px] top-1 bg-black border-2 border-foreground rounded-full p-1">
+                                                {segment.mode === "train" ? <Train className="h-4 w-4 text-foreground" /> : <Bus className="h-4 w-4 text-foreground" />}
                                             </div>
                                             <div className="bg-black/40 border border-white/10 rounded-lg p-4 flex justify-between items-start">
                                                 <div>
@@ -721,7 +721,7 @@ export default function CreateTripPage() {
                                                     {segment.classes && segment.classes.length > 0 && (
                                                         <div className="flex gap-2">
                                                             {segment.classes.map((cls, idx) => (
-                                                                <span key={idx} className="text-xs bg-gold/20 text-gold px-2 py-1 rounded">
+                                                                <span key={idx} className="text-xs bg-foreground/15 text-foreground px-2 py-1 rounded">
                                                                     {cls}
                                                                 </span>
                                                             ))}
@@ -748,7 +748,7 @@ export default function CreateTripPage() {
                     {/* What's Included */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">What's Included</CardTitle>
+                            <CardTitle className="text-foreground">What's Included</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="flex gap-2">
@@ -762,7 +762,7 @@ export default function CreateTripPage() {
                                 <Button
                                     type="button"
                                     onClick={addIncludedItem}
-                                    className="bg-gold hover:bg-yellow-600 text-black"
+                                    className="bg-foreground hover:bg-foreground/80 text-black"
                                 >
                                     Add
                                 </Button>
@@ -792,7 +792,7 @@ export default function CreateTripPage() {
                     {/* What's Not Included */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">What's Not Included</CardTitle>
+                            <CardTitle className="text-foreground">What's Not Included</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="flex gap-2">
@@ -806,7 +806,7 @@ export default function CreateTripPage() {
                                 <Button
                                     type="button"
                                     onClick={addNotIncludedItem}
-                                    className="bg-gold hover:bg-yellow-600 text-black"
+                                    className="bg-foreground hover:bg-foreground/80 text-black"
                                 >
                                     Add
                                 </Button>
@@ -836,7 +836,7 @@ export default function CreateTripPage() {
                     {/* Images */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">Trip Images</CardTitle>
+                            <CardTitle className="text-foreground">Trip Images</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
@@ -854,10 +854,10 @@ export default function CreateTripPage() {
                                         className="hidden"
                                     />
                                     <label htmlFor="images">
-                                        <div className={`border-2 border-dashed border-white/20 rounded-lg p-6 text-center cursor-pointer hover:border-gold transition-colors ${uploadingImages ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                                        <div className={`border-2 border-dashed border-white/20 rounded-lg p-6 text-center cursor-pointer hover:border-foreground transition-colors ${uploadingImages ? 'opacity-50 cursor-not-allowed' : ''}`}>
                                             {uploadingImages ? (
                                                 <>
-                                                    <Loader2 className="h-8 w-8 mx-auto mb-2 text-gold animate-spin" />
+                                                    <Loader2 className="h-8 w-8 mx-auto mb-2 text-foreground animate-spin" />
                                                     <p className="text-gray-400">
                                                         Uploading images...
                                                     </p>
@@ -903,7 +903,7 @@ export default function CreateTripPage() {
                     {/* Status */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
-                            <CardTitle className="text-gold">Publication Status</CardTitle>
+                            <CardTitle className="text-foreground">Publication Status</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <Select
@@ -942,7 +942,7 @@ export default function CreateTripPage() {
                         <Button
                             type="submit"
                             disabled={loading || uploadingImages}
-                            className="bg-gold hover:bg-yellow-600 text-black font-semibold"
+                            className="bg-foreground hover:bg-foreground/80 text-black font-semibold"
                         >
                             {loading ? "Creating..." : "Create Trip"}
                         </Button>

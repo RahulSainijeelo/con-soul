@@ -20,7 +20,7 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
-        brand: '#e06420',
+        brand: '#1a1a1a',
         canvas: 'var(--color-canvas)',
         'canvas-raised': 'var(--color-canvas-raised)',
         ink: 'var(--color-ink)',

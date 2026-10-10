@@ -59,7 +59,7 @@ export function ContactEnquiries() {
       {/* Header Section */}
       <div className="flex items-center justify-between p-6 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm">
         <div>
-          <h2 className="text-2xl font-semibold mb-1 text-gold font-heading">
+          <h2 className="text-2xl font-semibold mb-1 text-foreground font-heading">
             Contact Enquiries
           </h2>
           <p className="text-base text-gray-400">
@@ -105,7 +105,7 @@ export function ContactEnquiries() {
                   <div>
                     <h4 className="font-medium text-white text-lg">{booking.fullName}</h4>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-400 mt-1">
-                      <span className="text-gold">{booking.tripTitle}</span>
+                      <span className="text-foreground">{booking.tripTitle}</span>
                       <span className="hidden sm:inline">•</span>
                       <span>{new Date(booking.createdAt).toLocaleDateString()}</span>
                       <span className="hidden sm:inline">•</span>
@@ -116,7 +116,7 @@ export function ContactEnquiries() {
                     variant="outline"
                     size="sm"
                     onClick={() => router.push(`/dashboard/bookings/${booking.id}`)}
-                    className="w-full md:w-auto border-gold/50 text-gold hover:bg-gold hover:text-black transition-colors"
+                    className="w-full md:w-auto border-foreground/30 text-foreground hover:bg-foreground hover:text-black transition-colors"
                   >
                     View Details
                   </Button>

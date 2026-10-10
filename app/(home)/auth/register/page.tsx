@@ -74,7 +74,7 @@ export default function RegisterPage() {
 
                 <div className="w-full max-w-md relative z-10">
                     <div className="text-center mb-10">
-                        <h1 className="text-4xl font-display font-bold text-gold mb-2">Join CONSOUL</h1>
+                        <h1 className="text-4xl font-display font-bold text-foreground mb-2">Join CONSOUL</h1>
                         <p className="text-gray-400">Start your journey to exclusive destinations</p>
                     </div>
 
@@ -117,7 +117,7 @@ export default function RegisterPage() {
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="John Doe"
                                         required
                                     />
@@ -132,7 +132,7 @@ export default function RegisterPage() {
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="name@example.com"
                                         required
                                     />
@@ -147,7 +147,7 @@ export default function RegisterPage() {
                                         type="number"
                                         value={number}
                                         onChange={(e) => setNumber(e.target.value)}
-                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="9876543210"
                                         required
                                     />
@@ -162,7 +162,7 @@ export default function RegisterPage() {
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="Create a strong password"
                                         required
                                     />
@@ -170,16 +170,16 @@ export default function RegisterPage() {
                             </div>
 
                             <div className="flex items-start gap-2 text-sm text-gray-400">
-                                <input type="checkbox" className="mt-1 rounded border-gray-600 bg-black/50 text-gold focus:ring-gold" required />
+                                <input type="checkbox" className="mt-1 rounded border-gray-600 bg-black/50 text-foreground focus:ring-gold" required />
                                 <span>
-                                    I agree to the <Link href="/terms" className="text-gold hover:underline">Terms of Service</Link> and <Link href="/privacy-policy" className="text-gold hover:underline">Privacy Policy</Link>
+                                    I agree to the <Link href="/terms" className="text-foreground hover:underline">Terms of Service</Link> and <Link href="/privacy-policy" className="text-foreground hover:underline">Privacy Policy</Link>
                                 </span>
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-gold hover:bg-yellow-600 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                className="w-full bg-foreground hover:bg-foreground/80 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
                             >
                                 {isLoading ? (
                                     <span className="animate-pulse">Creating Account...</span>
@@ -193,7 +193,7 @@ export default function RegisterPage() {
 
                         <p className="mt-8 text-center text-gray-400 text-sm">
                             Already have an account?{" "}
-                            <Link href="/auth/login" className="text-gold hover:text-white font-semibold transition-colors">
+                            <Link href="/auth/login" className="text-foreground hover:text-white font-semibold transition-colors">
                                 Sign In
                             </Link>
                         </p>

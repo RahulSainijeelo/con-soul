@@ -54,7 +54,7 @@ export function ReviewFeed({ reviews, tripId }: ReviewFeedProps) {
                 <h3 className="text-xl font-bold text-[#F0F0FA] mb-2">No reviews yet.</h3>
                 <p className="text-sm text-[#7878A0] mb-6">Be the first one back. Drop the first review.</p>
                 <Link href={`/trip/${tripId}/review`}>
-                    <button className="px-6 py-3 bg-gold hover:bg-yellow-600 text-black font-semibold rounded-full transition-colors">
+                    <button className="px-6 py-3 bg-foreground hover:bg-foreground/80 text-black font-semibold rounded-full transition-colors">
                         Add Your Review →
                     </button>
                 </Link>
@@ -70,7 +70,7 @@ export function ReviewFeed({ reviews, tripId }: ReviewFeedProps) {
                 <div className="flex-1 text-center py-3 px-2">
                     <div className="text-[10px] uppercase tracking-wider text-[#7878A0] font-semibold mb-1">Avg Rating</div>
                     <div className="text-lg md:text-xl font-bold text-[#F0F0FA] flex items-center justify-center gap-1">
-                        {avgRating} <span className="text-gold text-sm">★</span>
+                        {avgRating} <span className="text-foreground text-sm">★</span>
                     </div>
                 </div>
                 <div className="flex-1 text-center py-3 px-2">

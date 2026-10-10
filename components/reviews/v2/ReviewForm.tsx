@@ -191,15 +191,15 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                     <h3 className="font-display font-bold text-xl mb-4 text-white">Your Details</h3>
                     <div>
                         <label className="block text-sm text-[#D8D8EE] mb-1">Full Name</label>
-                        <input required type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-[#0C0C1A] border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold" />
+                        <input required type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-[#0C0C1A] border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-foreground" />
                     </div>
                     <div>
                         <label className="block text-sm text-[#D8D8EE] mb-1">Email</label>
-                        <input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-[#0C0C1A] border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold" />
+                        <input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-[#0C0C1A] border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-foreground" />
                     </div>
                     <div>
                         <label className="block text-sm text-[#D8D8EE] mb-1">Phone</label>
-                        <input required type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full bg-[#0C0C1A] border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold" />
+                        <input required type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full bg-[#0C0C1A] border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-foreground" />
                     </div>
                 </div>
             )}
@@ -236,10 +236,10 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                                 disabled={isDisabled}
                                 className={`px-4 py-2 rounded-full border transition-all ${
                                     isSelected 
-                                        ? 'bg-gold/20 border-gold text-gold' 
+                                        ? 'bg-foreground/15 border-foreground text-foreground' 
                                         : isDisabled 
                                             ? 'bg-white/5 border-white/5 text-white/40 cursor-not-allowed opacity-40' 
-                                            : 'bg-[#12121E] border-white/20 text-[#D8D8EE] hover:border-gold/50'
+                                            : 'bg-[#12121E] border-white/20 text-[#D8D8EE] hover:border-foreground/30'
                                 }`}
                             >
                                 {tag}
@@ -269,7 +269,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                                 onChange={e => slider.set(parseFloat(e.target.value))}
                                 className="flex-1 h-2 bg-[#0C0C1A] rounded-lg appearance-none cursor-pointer accent-gold"
                             />
-                            <span className="font-display font-bold text-xl text-gold w-12 text-right">{slider.val.toFixed(1)}</span>
+                            <span className="font-display font-bold text-xl text-foreground w-12 text-right">{slider.val.toFixed(1)}</span>
                         </div>
                     </div>
                 ))}
@@ -288,7 +288,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                         onChange={e => setHighlight(e.target.value)}
                         onBlur={validateHighlight}
                         placeholder="e.g. 3AM maggi at the pass with the whole crew freezing but laughing..."
-                        className={`w-full bg-[#12121E] border ${highlightError ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 min-h-[100px] focus:outline-none focus:border-gold resize-none`}
+                        className={`w-full bg-[#12121E] border ${highlightError ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 min-h-[100px] focus:outline-none focus:border-foreground resize-none`}
                     />
                     {100 - highlight.length <= 60 && (
                         <div className={`absolute bottom-3 right-3 text-xs ${100 - highlight.length <= 15 ? 'text-red-500' : 'text-[#7878A0]'}`}>
@@ -312,7 +312,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                             onClick={() => setPersonality(personality === p.label ? '' : p.label)}
                             className={`cursor-pointer p-4 rounded-lg border transition-all ${
                                 personality === p.label 
-                                    ? 'bg-gold/20 border-gold text-white' 
+                                    ? 'bg-foreground/15 border-foreground text-white' 
                                     : 'bg-[#12121E] border-white/10 text-[#7878A0] hover:bg-white/5 opacity-50 hover:opacity-100'
                             }`}
                         >
@@ -359,7 +359,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                             setHonestTake(e.target.value);
                             setHonestTakeError('');
                         }}
-                        className={`w-full bg-[#12121E] border ${honestTakeError ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 min-h-[100px] focus:outline-none focus:border-gold resize-none`}
+                        className={`w-full bg-[#12121E] border ${honestTakeError ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 min-h-[100px] focus:outline-none focus:border-foreground resize-none`}
                     />
                     {120 - honestTake.length <= 80 && (
                         <div className={`absolute bottom-3 right-3 text-xs ${120 - honestTake.length <= 20 ? 'text-red-500' : 'text-[#7878A0]'}`}>
@@ -386,9 +386,9 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
                             </button>
                         </div>
                     ))}
-                    <label className="aspect-square rounded-lg border-2 border-dashed border-white/20 hover:border-gold flex flex-col items-center justify-center cursor-pointer transition-colors bg-[#12121E]">
+                    <label className="aspect-square rounded-lg border-2 border-dashed border-white/20 hover:border-foreground flex flex-col items-center justify-center cursor-pointer transition-colors bg-[#12121E]">
                         {uploadingImages ? (
-                            <span className="text-gold text-sm font-semibold animate-pulse">Uploading...</span>
+                            <span className="text-foreground text-sm font-semibold animate-pulse">Uploading...</span>
                         ) : (
                             <>
                                 <Upload className="w-8 h-8 text-[#7878A0] mb-2" />
@@ -403,7 +403,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
             <button 
                 type="submit" 
                 disabled={submitting || uploadingImages}
-                className="w-full py-4 mt-8 bg-gold hover:bg-yellow-600 text-black font-display font-bold text-xl rounded-xl transition-all disabled:opacity-50"
+                className="w-full py-4 mt-8 bg-foreground hover:bg-foreground/80 text-black font-display font-bold text-xl rounded-xl transition-all disabled:opacity-50"
             >
                 {submitting ? 'Posting...' : 'Submit Review'}
             </button>

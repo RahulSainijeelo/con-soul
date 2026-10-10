@@ -36,7 +36,7 @@ export function StageThree({ formData }: StageThreeProps) {
         {/* Article Header */}
         <div className="p-6">
           <div className="mb-4">
-            <Badge className="bg-orange-500 text-white mb-2">
+            <Badge className="bg-black dark:bg-white text-white mb-2">
               {formData.category}
             </Badge>
           </div>
@@ -161,7 +161,7 @@ function ContentPreview({ content }: { content: string }) {
     // Handle basic markdown formatting
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
     .replace(/\*(.*?)\*/g, '<em class="italic text-gray-800">$1</em>')
-    .replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-orange-300 pl-6 py-2 my-6 bg-orange-50 italic text-gray-700 rounded-r-lg">$1</blockquote>')
+    .replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-gray-300 dark:border-gray-700 pl-6 py-2 my-6 bg-gray-50 dark:bg-gray-900 italic text-gray-700 rounded-r-lg">$1</blockquote>')
     .replace(/^- (.*$)/gim, '<li class="list-disc ml-6 mb-1 text-gray-800">$1</li>');
 
   // Convert line breaks to paragraphs

@@ -33,7 +33,7 @@ export function DashboardHeader() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-black text-white backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center">
-          <Link href="/dashboard" className="font-bold text-2xl ml-7 text-white hover:text-gold transition-colors">
+          <Link href="/dashboard" className="font-bold text-2xl ml-7 text-white hover:text-foreground transition-colors">
             {/* <Image src={logo} width={70} alt="CONSOUL INDIA"/> */}
             CONSOUL INDIA
           </Link>
@@ -50,7 +50,7 @@ export function DashboardHeader() {
                       alt={user.fullName || "Profile"}
                     />
                   ) : (
-                    <AvatarFallback className="bg-gray-800 text-gold">
+                    <AvatarFallback className="bg-gray-800 text-foreground">
                       {user?.firstName?.[0]}
                       {user?.lastName?.[0]}
                     </AvatarFallback>
@@ -70,7 +70,7 @@ export function DashboardHeader() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-white/10" />
-              <DropdownMenuItem asChild className="focus:bg-white/10 focus:text-gold cursor-pointer">
+              <DropdownMenuItem asChild className="focus:bg-white/10 focus:text-foreground cursor-pointer">
                 <Link href="/dashboard/profile">
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>

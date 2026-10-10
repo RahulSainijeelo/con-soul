@@ -250,7 +250,7 @@ export function ManageTrips() {
 
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-lg border bg-white/5 border-white/10 backdrop-blur-sm">
         <div>
-          <h2 className="text-2xl font-semibold mb-1 text-gold">
+          <h2 className="text-2xl font-semibold mb-1 text-foreground">
             Trip Management
           </h2>
           <p className="text-base text-gray-400">
@@ -275,7 +275,7 @@ export function ManageTrips() {
           </Button>
           <Link
             href="/dashboard/create-trip"
-            className="inline-flex items-center gap-2 px-6 py-3 font-medium bg-gold hover:bg-yellow-600 text-black border-none rounded-lg text-sm shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 font-medium bg-foreground hover:bg-foreground/80 text-black border-none rounded-lg text-sm shadow-sm transition-colors"
           >
             <PlusCircle className="h-4 w-4" />
             Create New Trip
@@ -336,7 +336,7 @@ export function ManageTrips() {
               variant="ghost"
               size="sm"
               onClick={handleClearFilters}
-              className="text-gray-400 hover:text-gold hover:bg-white/5"
+              className="text-gray-400 hover:text-foreground hover:bg-white/5"
             >
               Clear Filters
             </Button>
@@ -348,7 +348,7 @@ export function ManageTrips() {
         {loading && trips.length === 0 ? (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-gold" />
+              <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-foreground" />
               <p className="text-gray-400">Loading trips...</p>
             </div>
           </div>

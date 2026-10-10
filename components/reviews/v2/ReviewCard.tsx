@@ -30,7 +30,7 @@ const ACCENT_COLORS = [
     { base: '#F472B6', grad: 'from-[#3f0618] via-[#7f1d1d] to-[#3f0618]' }, // Pink
     { base: '#34D399', grad: 'from-[#022c22] via-[#064e3b] to-[#022c22]' }, // Emerald
     { base: '#60A5FA', grad: 'from-[#0c1a3a] via-[#1e3a5f] to-[#0c1a3a]' }, // Blue
-    { base: '#FB923C', grad: 'from-[#2a1200] via-[#4a2000] to-[#2a1200]' }, // Orange
+    { base: '#CCCCCC', grad: 'from-[#2a1200] via-[#4a2000] to-[#2a1200]' }, // Orange
 ];
 
 export function ReviewCard({ review, index }: ReviewProps) {
@@ -251,7 +251,7 @@ export function CTACard({ onClick }: { onClick: () => void }) {
             <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">✍️</div>
             <h3 className="text-lg font-bold text-[#F0F0FA] mb-1">Add Your Voice</h3>
             <p className="text-sm text-[#7878A0] mb-4">Review this trip.</p>
-            <button className="px-5 py-2 rounded-full bg-gold hover:bg-yellow-600 text-black font-semibold text-sm transition-colors">
+            <button className="px-5 py-2 rounded-full bg-foreground hover:bg-foreground/80 text-black font-semibold text-sm transition-colors">
                 Drop a Review →
             </button>
         </div>

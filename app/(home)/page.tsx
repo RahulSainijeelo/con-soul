@@ -137,7 +137,7 @@ export default async function HomePage() {
           {/* 8. Contact CTA */}
           <div className="flex justify-center pb-10 md:pb-10 mb-20 md:mb-0">
             <Link href="/contact">
-              <button className="bg-transparent hover:bg-white/5 text-gold font-semibold py-4 px-10 rounded-xl border-2 border-gold transition-colors text-base md:text-lg active:scale-95">
+              <button className="bg-transparent hover:bg-white/5 text-foreground font-semibold py-4 px-10 rounded-xl border-2 border-foreground transition-colors text-base md:text-lg active:scale-95">
                 Contact Us
               </button>
             </Link>

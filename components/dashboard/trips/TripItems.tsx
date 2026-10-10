@@ -80,12 +80,12 @@ const TripItems: React.FC<TripItemsProps> = ({
     return (
       <div className="text-center py-12">
         <div className="mx-auto w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-4">
-          <MapPin className="w-8 h-8 text-gold" />
+          <MapPin className="w-8 h-8 text-foreground" />
         </div>
         <h3 className="text-lg font-semibold text-white mb-2">No trips found</h3>
         <p className="text-gray-400 mb-6">Get started by creating your first trip.</p>
         <Link href="/dashboard/create-trip">
-          <Button className="bg-gold hover:bg-yellow-600 text-black font-semibold">
+          <Button className="bg-foreground hover:bg-foreground/80 text-black font-semibold">
             Create New Trip
           </Button>
         </Link>
@@ -141,11 +141,11 @@ const TripItems: React.FC<TripItemsProps> = ({
             {/* Trip Meta */}
             <div className="space-y-2 text-sm text-gray-400 mb-3">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-gold" />
+                <MapPin className="w-4 h-4 text-foreground" />
                 <span>{trip.destination}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-gold" />
+                <Calendar className="w-4 h-4 text-foreground" />
                 <span>
                   {trip.startDate ? format(new Date(trip.startDate), 'MMM dd') : 'TBD'} -
                   {trip.endDate ? format(new Date(trip.endDate), 'MMM dd, yyyy') : 'TBD'}
@@ -153,12 +153,12 @@ const TripItems: React.FC<TripItemsProps> = ({
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-gold" />
+                  <Users className="w-4 h-4 text-foreground" />
                   <span>{trip.maxParticipants} max</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <IndianRupee className="w-4 h-4 text-gold" />
-                  <span className="text-gold font-semibold">₹{trip.price}</span>
+                  <IndianRupee className="w-4 h-4 text-foreground" />
+                  <span className="text-foreground font-semibold">₹{trip.price}</span>
                 </div>
               </div>
             </div>
@@ -172,7 +172,7 @@ const TripItems: React.FC<TripItemsProps> = ({
           <CardFooter className="flex justify-between !gap-[0.2rem] !py-[1rem] px-[0.1rem] border-t border-white/10">
             {/* View Trip */}
             <Link href={`/trip/${trip.id}`} target="_blank">
-              <Button variant="ghost" size="sm" className="flex items-center gap-2 text-gray-300 hover:text-gold hover:bg-white/5">
+              <Button variant="ghost" size="sm" className="flex items-center gap-2 text-gray-300 hover:text-foreground hover:bg-white/5">
                 <Eye className="w-4 h-4" />
                 View
               </Button>

@@ -57,8 +57,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ea580c' },
-    { media: '(prefers-color-scheme: dark)', color: '#ea580c' }
+    { media: '(prefers-color-scheme: light)', color: '#FAFAFA' },
+    { media: '(prefers-color-scheme: dark)', color: '#0A0A0A' }
   ],
   colorScheme: 'light dark',
 }
@@ -192,7 +192,7 @@ export default function RootLayout({
 
         {/* Manifest and PWA */}
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="msapplication-TileColor" content="#ea580c" />
+        <meta name="msapplication-TileColor" content="#0A0A0A" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -213,7 +213,7 @@ export default function RootLayout({
       <body className={`${primaryFont.variable} ${HeartAndLove.variable} ${HeadingFontBold.variable} ${primaryFontBold.variable} ${inter.variable} ${montserrat.variable} ${anton.variable} antialiased`}>
         <NextTopLoader showSpinner={false} />
 
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-600 text-white px-4 py-2 rounded-md z-50">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-md z-50">
           Skip to main content
         </a>
 

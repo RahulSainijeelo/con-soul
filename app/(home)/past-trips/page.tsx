@@ -120,13 +120,13 @@ export default async function PastTripsPage() {
                                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                                         Completed
                                     </div>
-                                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-gold text-xs font-semibold rounded-full border border-gold/20">
+                                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-foreground text-xs font-semibold rounded-full border border-foreground/20">
                                         {trip.category}
                                     </div>
                                 </div>
 
                                 <CardHeader className="pb-3">
-                                    <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-gold transition-colors">
+                                    <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-foreground transition-colors">
                                         {trip.title}
                                     </h3>
                                     <p className="text-sm text-gray-400 line-clamp-2 mt-2">
@@ -143,7 +143,7 @@ export default async function PastTripsPage() {
                                                     <Star
                                                         key={i}
                                                         className={`w-4 h-4 ${i < Math.floor(trip.rating!)
-                                                            ? 'fill-gold text-gold'
+                                                            ? 'fill-foreground text-foreground'
                                                             : 'fill-gray-700 text-gray-700'
                                                             }`}
                                                     />
@@ -157,11 +157,11 @@ export default async function PastTripsPage() {
                                     {/* Trip Info */}
                                     <div className="space-y-2 text-sm text-gray-400">
                                         <div className="flex items-center gap-2">
-                                            <MapPin className="w-4 h-4 text-gold" />
+                                            <MapPin className="w-4 h-4 text-foreground" />
                                             <span>{trip.destination}</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <Calendar className="w-4 h-4 text-gold" />
+                                            <Calendar className="w-4 h-4 text-foreground" />
                                             <span>
                                                 Completed: {new Date(trip.endDate).toLocaleDateString('en-US', {
                                                     year: 'numeric',
@@ -172,7 +172,7 @@ export default async function PastTripsPage() {
                                         </div>
                                         {trip.duration && (
                                             <div className="flex items-center gap-2">
-                                                <Calendar className="w-4 h-4 text-gold" />
+                                                <Calendar className="w-4 h-4 text-foreground" />
                                                 <span>{trip.duration}</span>
                                             </div>
                                         )}
@@ -182,7 +182,7 @@ export default async function PastTripsPage() {
 
                                 <CardFooter className='flex justify-center p-[1.5rem]'>
                                     <Link href={`/past-trips/${trip.slug || trip.id}`} className="w-full">
-                                        <button className="w-full bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                        <button className="w-full bg-foreground hover:bg-foreground/80 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
                                             View Details & Reviews
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>

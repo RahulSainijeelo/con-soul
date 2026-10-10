@@ -30,7 +30,7 @@ const destinations: Destination[] = [
     name: 'Goa',
     subtitle: 'Beach & Nightlife',
     icon: MapPin,
-    gradient: 'from-orange-500/80 to-amber-500/80',
+    gradient: 'from-zinc-500/80 to-gray-500/80',
     trips: 0,
     status: 'upcoming'
   },
@@ -41,7 +41,7 @@ const destinations: Destination[] = [
     name: 'Amarkantak',
     subtitle: 'Narmada Origin',
     icon: Mountain,
-    gradient: 'from-orange-700/80 to-red-600/80',
+    gradient: 'from-zinc-600/80 to-gray-700/80',
     trips: 2,
     status: 'visited'
   },
@@ -59,7 +59,7 @@ const destinations: Destination[] = [
     name: 'Haridwar',
     subtitle: 'Holy Ganges',
     icon: Flame,
-    gradient: 'from-orange-500/80 to-amber-600/80',
+    gradient: 'from-zinc-500/80 to-gray-600/80',
     trips: 1,
     status: 'visited'
   },
@@ -169,7 +169,7 @@ const destinations: Destination[] = [
     name: 'Varanasi',
     subtitle: 'Spiritual Capital',
     icon: Flame,
-    gradient: 'from-orange-600/80 to-red-500/80',
+    gradient: 'from-zinc-600/80 to-gray-500/80',
     trips: 0,
     status: 'explore'
   },
@@ -196,7 +196,7 @@ const destinations: Destination[] = [
     name: 'Rann of Kutch',
     subtitle: 'White Desert',
     icon: Sun,
-    gradient: 'from-amber-400/80 to-orange-400/80',
+    gradient: 'from-gray-400/80 to-zinc-400/80',
     trips: 0,
     status: 'explore'
   },
@@ -272,7 +272,7 @@ export function DestinationGrid() {
             <button 
               key={dest.id} 
               onClick={() => handleCardClick(dest)}
-              className="text-left group relative rounded-xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-brand/50 transition-all duration-300 hover:-translate-y-1 block active:scale-[0.97] flex-none w-[160px] md:w-[200px] aspect-[3/4] snap-start"
+              className="text-left group relative rounded-xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/40 transition-all duration-300 hover:-translate-y-1 block active:scale-[0.97] flex-none w-[160px] md:w-[200px] aspect-[3/4] snap-start"
             >
               {/* Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-br ${dest.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
@@ -286,13 +286,13 @@ export function DestinationGrid() {
                   
                   {/* Status Badges */}
                   {dest.status === 'upcoming' && (
-                    <span className="text-[10px] font-bold bg-brand/90 backdrop-blur-md px-2.5 py-1 rounded-full text-white shadow-lg border border-white/20 animate-pulse">
+                    <span className="text-[10px] font-bold bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-black shadow-lg border border-white/20 animate-pulse">
                       Upcoming
                     </span>
                   )}
                   {dest.status === 'visited' && dest.trips > 0 && (
                     <span className="text-[10px] font-medium bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white/90 border border-white/10 flex items-center gap-1">
-                      <Star className="w-2.5 h-2.5 text-gold fill-gold" />
+                      <Star className="w-2.5 h-2.5 text-white fill-white" />
                       {dest.trips} Trip{dest.trips > 1 ? 's' : ''}
                     </span>
                   )}
@@ -318,7 +318,7 @@ export function DestinationGrid() {
         <DialogContent className="sm:max-w-md bg-zinc-950 border-white/10">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-white" style={{ fontFamily: "dirham-symbol-font, Arial, sans-serif" }}>
-              Explore <span className="text-brand">{selectedDest?.name}</span>
+              Explore <span className="text-white/70">{selectedDest?.name}</span>
             </DialogTitle>
             <DialogDescription className="text-gray-400" style={{ fontFamily: "'Inter', sans-serif" }}>
               Join the exclusive waitlist for {selectedDest?.name}. We&apos;ll email you before we launch new trips here so you can grab early-bird spots!
@@ -344,7 +344,7 @@ export function DestinationGrid() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand/50 transition-all"
+                  className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 />
                 {status === "error" && (
@@ -354,7 +354,7 @@ export function DestinationGrid() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full bg-brand hover:bg-brand/90 text-white font-bold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-70 disabled:active:scale-100 flex justify-center items-center gap-2"
+                className="w-full bg-white hover:bg-white/90 text-black font-bold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-70 disabled:active:scale-100 flex justify-center items-center gap-2"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 {status === "loading" && <Loader2 className="w-4 h-4 animate-spin" />}

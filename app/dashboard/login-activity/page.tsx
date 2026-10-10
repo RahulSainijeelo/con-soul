@@ -77,7 +77,7 @@ export default function LoginActivityPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
-          <Activity className="w-7 h-7 text-gold" />
+          <Activity className="w-7 h-7 text-foreground" />
           Login Activity
         </h1>
         <p className="text-sm text-gray-400 mt-1">
@@ -113,7 +113,7 @@ export default function LoginActivityPage() {
       {/* Table */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 animate-spin text-gold" />
+          <Loader2 className="w-8 h-8 animate-spin text-foreground" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16">
@@ -154,7 +154,7 @@ export default function LoginActivityPage() {
                           {entry.image ? (
                             <AvatarImage src={entry.image} alt={entry.name} />
                           ) : (
-                            <AvatarFallback className="bg-gray-800 text-gold text-xs">
+                            <AvatarFallback className="bg-gray-800 text-foreground text-xs">
                               {entry.name?.[0]?.toUpperCase() || "?"}
                             </AvatarFallback>
                           )}

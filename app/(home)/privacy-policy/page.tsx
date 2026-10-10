@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-display font-bold text-gold mb-6">
+            <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-6">
               Privacy Policy
             </h1>
             <p className="text-xl text-gray-400">
@@ -36,8 +36,8 @@ export default function PrivacyPolicyPage() {
             {/* Introduction */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Our Commitment
@@ -51,8 +51,8 @@ export default function PrivacyPolicyPage() {
             {/* Data Collection */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <Eye className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <Eye className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Information We Collect
@@ -73,8 +73,8 @@ export default function PrivacyPolicyPage() {
             {/* Data Security */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <Lock className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <Lock className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Data Security
@@ -95,7 +95,7 @@ export default function PrivacyPolicyPage() {
               <p className="text-gray-400 mb-4">
                 If you have any questions about our privacy practices, please contact our Data Protection Officer:
               </p>
-              <a href="mailto:con.sol.082025@gmail.com" className="text-gold hover:text-white transition-colors font-semibold">
+              <a href="mailto:con.sol.082025@gmail.com" className="text-foreground hover:text-white transition-colors font-semibold">
                 info@consoul.in
               </a>
             </section>

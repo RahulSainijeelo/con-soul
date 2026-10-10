@@ -22,10 +22,10 @@ export default function TermsPage() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-1 bg-gold/10 border border-gold/30 text-gold text-xs font-bold uppercase tracking-wider rounded-full mb-4">
+            <div className="inline-block px-4 py-1 bg-foreground/10 border border-foreground/20 text-foreground text-xs font-bold uppercase tracking-wider rounded-full mb-4">
               Legal Agreement
             </div>
-            <h1 className="text-4xl md:text-6xl font-display font-bold text-gold mb-6">
+            <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-6">
               Terms & Conditions
             </h1>
             <p className="text-lg md:text-xl text-gray-400">
@@ -39,8 +39,8 @@ export default function TermsPage() {
             {/* 1. Introduction */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <Scale className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <Scale className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   1. Agreement to Terms
@@ -54,8 +54,8 @@ export default function TermsPage() {
             {/* 2. Bookings & Payments */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <ShieldCheck className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   2. Booking & Payment Terms
@@ -77,8 +77,8 @@ export default function TermsPage() {
             {/* 3. Cancellation & Refund Summary */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   3. Cancellation & Non-Refundable Policy
@@ -86,17 +86,17 @@ export default function TermsPage() {
               </div>
               <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl space-y-2 mb-4">
                 <p className="text-sm md:text-base text-gray-200">
-                  ⚠️ <strong className="text-gold">Cancellation &amp; Registration Refund Tiers:</strong>
+                  ⚠️ <strong className="text-foreground">Cancellation &amp; Registration Refund Tiers:</strong>
                 </p>
                 <ul className="text-xs md:text-sm text-gray-300 space-y-1 pl-4 list-disc">
                   <li><strong className="text-white">&gt; 15 Days Prior:</strong> Full balance refund / 100% credit transfer.</li>
-                  <li><strong className="text-white">15 to 10 Days Prior:</strong> Only <strong className="text-gold">10% of the registration fee</strong> is refundable (90% retained for vendor bookings).</li>
+                  <li><strong className="text-white">15 to 10 Days Prior:</strong> Only <strong className="text-foreground">10% of the registration fee</strong> is refundable (90% retained for vendor bookings).</li>
                   <li><strong className="text-white">&lt; 10 Days Prior:</strong> Registration fee is <strong className="text-red-400">100% non-refundable</strong>.</li>
                 </ul>
               </div>
               <p className="text-gray-400 text-sm">
                 For complete cancellation rules, timeline details, and transfer options, please refer to our dedicated{" "}
-                <Link href="/refund-policy" className="text-gold hover:underline font-semibold">
+                <Link href="/refund-policy" className="text-foreground hover:underline font-semibold">
                   Cancellation & Refund Policy →
                 </Link>
               </p>
@@ -105,8 +105,8 @@ export default function TermsPage() {
             {/* 4. Passenger Verification & Code of Conduct */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <AlertCircle className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <AlertCircle className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   4. Traveler Identification & Conduct
@@ -128,8 +128,8 @@ export default function TermsPage() {
             {/* 5. Itinerary Adjustments & Unforeseen Delays */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <FileText className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   5. Itinerary & Train Delays
@@ -143,7 +143,7 @@ export default function TermsPage() {
             {/* 6. Support & Contact */}
             <section className="pt-8 border-t border-white/10">
               <div className="flex items-center gap-3 mb-4">
-                <Phone className="w-6 h-6 text-gold" />
+                <Phone className="w-6 h-6 text-foreground" />
                 <h2 className="text-2xl font-bold text-white">
                   Contact & Support
                 </h2>
@@ -153,13 +153,13 @@ export default function TermsPage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/contact">
-                  <button className="bg-gold hover:bg-yellow-600 text-black font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm">
+                  <button className="bg-foreground hover:bg-foreground/80 text-black font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm">
                     Contact Us
                   </button>
                 </Link>
                 <a
                   href="mailto:con.sol.082025@gmail.com"
-                  className="inline-flex items-center gap-2 border border-white/20 hover:border-gold px-6 py-2.5 rounded-xl text-white hover:text-gold transition-colors text-sm"
+                  className="inline-flex items-center gap-2 border border-white/20 hover:border-foreground px-6 py-2.5 rounded-xl text-white hover:text-foreground transition-colors text-sm"
                 >
                   info@consoul.in
                 </a>

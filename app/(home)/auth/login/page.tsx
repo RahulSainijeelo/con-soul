@@ -59,7 +59,7 @@ export default function LoginPage() {
 
                 <div className="w-full max-w-md relative z-10">
                     <div className="text-center mb-10">
-                        <h1 className="text-4xl font-display font-bold text-gold mb-2">Welcome Back</h1>
+                        <h1 className="text-4xl font-display font-bold text-foreground mb-2">Welcome Back</h1>
                         <p className="text-gray-400">Sign in to access your exclusive journeys</p>
                     </div>
 
@@ -102,7 +102,7 @@ export default function LoginPage() {
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="name@example.com"
                                         required
                                     />
@@ -117,7 +117,7 @@ export default function LoginPage() {
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-gold focus:ring-1 focus:ring-gold transition-all outline-none"
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
                                         placeholder="••••••••"
                                         required
                                     />
@@ -126,10 +126,10 @@ export default function LoginPage() {
 
                             <div className="flex items-center justify-between text-sm">
                                 <label className="flex items-center gap-2 cursor-pointer group">
-                                    <input type="checkbox" className="rounded border-gray-600 bg-black/50 text-gold focus:ring-gold" />
-                                    <span className="text-gray-400 group-hover:text-gold transition-colors">Remember me</span>
+                                    <input type="checkbox" className="rounded border-gray-600 bg-black/50 text-foreground focus:ring-gold" />
+                                    <span className="text-gray-400 group-hover:text-foreground transition-colors">Remember me</span>
                                 </label>
-                                <Link href="/auth/forgot-password" className="text-gold hover:text-white transition-colors">
+                                <Link href="/auth/forgot-password" className="text-foreground hover:text-white transition-colors">
                                     Forgot password?
                                 </Link>
                             </div>
@@ -137,7 +137,7 @@ export default function LoginPage() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-gold hover:bg-yellow-600 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                className="w-full bg-foreground hover:bg-foreground/80 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
                             >
                                 {isLoading ? (
                                     <span className="animate-pulse">Signing in...</span>
@@ -151,7 +151,7 @@ export default function LoginPage() {
 
                         <p className="mt-8 text-center text-gray-400 text-sm">
                             Don't have an account?{" "}
-                            <Link href="/auth/register" className="text-gold hover:text-white font-semibold transition-colors">
+                            <Link href="/auth/register" className="text-foreground hover:text-white font-semibold transition-colors">
                                 Create Account
                             </Link>
                         </p>

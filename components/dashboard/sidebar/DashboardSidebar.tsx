@@ -72,16 +72,16 @@ export function DashboardSidebar() {
               onClick={() => setMobileOpen(false)}
               className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
                 active
-                  ? "bg-gold/10 text-gold border border-gold/20"
+                  ? "bg-foreground/10 text-foreground border border-foreground/20"
                   : "text-gray-400 hover:text-white hover:bg-white/5"
               }`}
             >
               <item.icon className={`w-[18px] h-[18px] flex-shrink-0 ${
-                active ? "text-gold" : "text-gray-500 group-hover:text-gray-300"
+                active ? "text-foreground" : "text-gray-500 group-hover:text-gray-300"
               }`} />
               {item.label}
               {active && (
-                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-gold" />
+                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground" />
               )}
             </Link>
           );
@@ -108,7 +108,7 @@ export function DashboardSidebar() {
             {user?.imageUrl ? (
               <AvatarImage src={user.imageUrl} alt={user.fullName || "Admin"} />
             ) : (
-              <AvatarFallback className="bg-gray-800 text-gold text-xs">
+              <AvatarFallback className="bg-gray-800 text-foreground text-xs">
                 {user?.firstName?.[0]}{user?.lastName?.[0]}
               </AvatarFallback>
             )}

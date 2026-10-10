@@ -22,10 +22,10 @@ export default function RefundPolicyPage() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-1 bg-gold/10 border border-gold/30 text-gold text-xs font-bold uppercase tracking-wider rounded-full mb-4">
+            <div className="inline-block px-4 py-1 bg-foreground/10 border border-foreground/20 text-foreground text-xs font-bold uppercase tracking-wider rounded-full mb-4">
               Booking Terms
             </div>
-            <h1 className="text-4xl md:text-6xl font-display font-bold text-gold mb-6">
+            <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-6">
               Cancellation & Refund Policy
             </h1>
             <p className="text-lg md:text-xl text-gray-400">
@@ -44,7 +44,7 @@ export default function RefundPolicyPage() {
                   Key Registration Refund Policy
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  For cancellations made <strong className="text-gold font-semibold">between 15 days and 10 days prior to departure</strong>, only <strong className="text-gold font-semibold">10% of the registration amount is refundable</strong> (90% is retained for advance vendor commitments). For cancellations made <strong className="text-red-400 font-semibold">less than 10 days prior to departure</strong>, the registration fee is <strong className="text-red-400 font-semibold">100% strictly non-refundable</strong>.
+                  For cancellations made <strong className="text-foreground font-semibold">between 15 days and 10 days prior to departure</strong>, only <strong className="text-foreground font-semibold">10% of the registration amount is refundable</strong> (90% is retained for advance vendor commitments). For cancellations made <strong className="text-red-400 font-semibold">less than 10 days prior to departure</strong>, the registration fee is <strong className="text-red-400 font-semibold">100% strictly non-refundable</strong>.
                 </p>
               </div>
             </div>
@@ -56,8 +56,8 @@ export default function RefundPolicyPage() {
             {/* Timeline Breakdown */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Cancellation Timeline & Refund Structure
@@ -157,8 +157,8 @@ export default function RefundPolicyPage() {
             {/* Why This Policy Exists */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <RotateCcw className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <RotateCcw className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Why Registration Is Locked 15 Days Prior
@@ -177,8 +177,8 @@ export default function RefundPolicyPage() {
             {/* Trip Cancellation by CONSOUL INDIA */}
             <section>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                  <HelpCircle className="w-6 h-6 text-gold" />
+                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
+                  <HelpCircle className="w-6 h-6 text-foreground" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Cancellations by CONSOUL INDIA / Unforeseen Events
@@ -199,13 +199,13 @@ export default function RefundPolicyPage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/contact">
-                  <button className="bg-gold hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-xl transition-colors">
+                  <button className="bg-foreground hover:bg-foreground/80 text-black font-semibold px-6 py-3 rounded-xl transition-colors">
                     Contact Support
                   </button>
                 </Link>
                 <a
                   href="mailto:con.sol.082025@gmail.com"
-                  className="inline-flex items-center gap-2 border border-white/20 hover:border-gold px-6 py-3 rounded-xl text-white hover:text-gold transition-colors"
+                  className="inline-flex items-center gap-2 border border-white/20 hover:border-foreground px-6 py-3 rounded-xl text-white hover:text-foreground transition-colors"
                 >
                   Email: info@consoul.in
                 </a>
