@@ -42,7 +42,7 @@ export default function ContactPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-black flex flex-col">
+            <div className="min-h-screen bg-background text-foreground flex flex-col">
                 <Header />
                 <div className="flex-grow flex items-center justify-center">
                     <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin"></div>
@@ -54,9 +54,9 @@ export default function ContactPage() {
 
     if (!profile) {
         return (
-            <div className="min-h-screen bg-black flex flex-col">
+            <div className="min-h-screen bg-background text-foreground flex flex-col">
                 <Header />
-                <div className="flex-grow flex items-center justify-center text-white">
+                <div className="flex-grow flex items-center justify-center text-muted-foreground">
                     <p>Contact information not available.</p>
                 </div>
                 <Footer />
@@ -65,19 +65,19 @@ export default function ContactPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col">
+        <div className="min-h-screen bg-background text-foreground flex flex-col">
             <Header />
 
             <main className="flex-grow relative">
                 {/* Hero Section */}
-                <div className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900 to-black">
-                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20" />
+                <div className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-foreground/5 to-background">
+                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-10 pointer-events-none" />
                     <div className="relative max-w-7xl mx-auto text-center">
                         <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
                             Get in Touch
                         </h1>
-                        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                            We're here to help you plan your next adventure. Reach out to us for any inquiries or assistance.
+                        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                            We&apos;re here to help you plan your next adventure. Reach out to us for any inquiries or assistance.
                         </p>
                     </div>
                 </div>
@@ -90,14 +90,14 @@ export default function ContactPage() {
                         {profile.phoneNumbers && profile.phoneNumbers.length > 0 && (
                             <a
                                 href={`tel:${profile.phoneNumbers[0]}`}
-                                className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
+                                className="group bg-card border border-border rounded-2xl p-8 hover:border-foreground/30 transition-all duration-300 transform hover:-translate-y-1 shadow-sm"
                             >
-                                <div className="w-12 h-12 bg-foreground/15 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/30 transition-colors">
+                                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/20 transition-colors">
                                     <Phone className="w-6 h-6 text-foreground" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
-                                <p className="text-gray-400 mb-4">Available during working hours</p>
-                                <p className="text-lg font-semibold text-foreground group-hover:text-white transition-colors">
+                                <h3 className="text-xl font-bold text-foreground mb-2">Call Us</h3>
+                                <p className="text-muted-foreground mb-4">Available during working hours</p>
+                                <p className="text-lg font-semibold text-foreground group-hover:underline transition-colors">
                                     {profile.phoneNumbers[0]}
                                 </p>
                             </a>
@@ -109,14 +109,14 @@ export default function ContactPage() {
                                 href={`https://wa.me/${profile.whatsapp.replace(/\D/g, '')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
+                                className="group bg-card border border-border rounded-2xl p-8 hover:border-foreground/30 transition-all duration-300 transform hover:-translate-y-1 shadow-sm"
                             >
-                                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-green-500/30 transition-colors">
+                                <div className="w-12 h-12 bg-green-500/15 rounded-full flex items-center justify-center mb-6 group-hover:bg-green-500/25 transition-colors">
                                     <MessageCircle className="w-6 h-6 text-green-500" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">WhatsApp</h3>
-                                <p className="text-gray-400 mb-4">Chat with us directly</p>
-                                <p className="text-lg font-semibold text-green-500 group-hover:text-white transition-colors">
+                                <h3 className="text-xl font-bold text-foreground mb-2">WhatsApp</h3>
+                                <p className="text-muted-foreground mb-4">Chat with us directly</p>
+                                <p className="text-lg font-semibold text-green-500 group-hover:underline transition-colors">
                                     Chat Now
                                 </p>
                             </a>
@@ -125,41 +125,41 @@ export default function ContactPage() {
                         {/* Email */}
                         <a
                             href={`mailto:${profile.email}`}
-                            className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
+                            className="group bg-card border border-border rounded-2xl p-8 hover:border-foreground/30 transition-all duration-300 transform hover:-translate-y-1 shadow-sm"
                         >
-                            <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-500/30 transition-colors">
+                            <div className="w-12 h-12 bg-blue-500/15 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-500/25 transition-colors">
                                 <Mail className="w-6 h-6 text-blue-500" />
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-2">Email Us</h3>
-                            <p className="text-gray-400 mb-4">We'll respond as soon as possible</p>
-                            <p className="text-lg font-semibold text-blue-500 group-hover:text-white transition-colors break-words">
+                            <h3 className="text-xl font-bold text-foreground mb-2">Email Us</h3>
+                            <p className="text-muted-foreground mb-4">We&apos;ll respond as soon as possible</p>
+                            <p className="text-lg font-semibold text-blue-500 group-hover:underline transition-colors break-words">
                                 {profile.email}
                             </p>
                         </a>
                         {/* Working Hours */}
                         {profile.workingHours && (
-                            <div className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1 md:col-span-2 lg:col-span-1">
-                                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-white/30 transition-colors">
-                                    <Clock className="w-6 h-6 text-black dark:text-white" />
+                            <div className="group bg-card border border-border rounded-2xl p-8 hover:border-foreground/30 transition-all duration-300 transform hover:-translate-y-1 md:col-span-2 lg:col-span-1 shadow-sm">
+                                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/20 transition-colors">
+                                    <Clock className="w-6 h-6 text-foreground" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">Working Hours</h3>
-                                <p className="text-gray-400 mb-4">When we are available</p>
-                                <p className="text-lg font-semibold text-black dark:text-white group-hover:text-white transition-colors">
+                                <h3 className="text-xl font-bold text-foreground mb-2">Working Hours</h3>
+                                <p className="text-muted-foreground mb-4">When we are available</p>
+                                <p className="text-lg font-semibold text-foreground transition-colors">
                                     {profile.workingHours}
                                 </p>
                             </div>
                         )}
-                        {profile.phoneNumbers && profile.phoneNumbers.length > 0 && (
+                        {profile.phoneNumbers && profile.phoneNumbers.length > 1 && (
                             <a
-                                href={`tel:${profile.phoneNumbers[0]}`}
-                                className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1"
+                                href={`tel:${profile.phoneNumbers[1]}`}
+                                className="group bg-card border border-border rounded-2xl p-8 hover:border-foreground/30 transition-all duration-300 transform hover:-translate-y-1 shadow-sm"
                             >
-                                <div className="w-12 h-12 bg-foreground/15 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/30 transition-colors">
+                                <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-foreground/20 transition-colors">
                                     <Phone className="w-6 h-6 text-foreground" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
-                                <p className="text-gray-400 mb-4">Available during working hours</p>
-                                <p className="text-lg font-semibold text-foreground group-hover:text-white transition-colors">
+                                <h3 className="text-xl font-bold text-foreground mb-2">Call Us (Alt)</h3>
+                                <p className="text-muted-foreground mb-4">Available during working hours</p>
+                                <p className="text-lg font-semibold text-foreground group-hover:underline transition-colors">
                                     {profile.phoneNumbers[1]}
                                 </p>
                             </a>
@@ -167,33 +167,33 @@ export default function ContactPage() {
                     </div>
 
                     {/* About CONSOUL INDIA — Founders */}
-                    <div className="border border-white/10 rounded-2xl p-6 md:p-8">
-                        <div className="mb-6">
-                            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">About CONSOUL INDIA</h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto">
+                    <div className="border border-border rounded-2xl p-6 md:p-8 mt-12 bg-card">
+                        <div className="mb-6 text-center">
+                            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">About CONSOUL INDIA</h2>
+                            <p className="text-muted-foreground max-w-2xl mx-auto">
                                 India&apos;s youth group travel platform — curating unforgettable adventures across the Himalayas, Goa, Rajasthan, Kerala &amp; more.
                             </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
                             {/* Founder 1 */}
-                            <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/5 border border-white/10">
-                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gold to-yellow-600 flex items-center justify-center mb-4">
-                                    <span className="text-black font-bold text-xl">DK</span>
+                            <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-muted/40 border border-border">
+                                <div className="w-20 h-20 rounded-full bg-foreground/10 border border-border flex items-center justify-center mb-4">
+                                    <span className="text-foreground font-bold text-xl">DK</span>
                                 </div>
-                                <h3 className="text-lg font-bold text-white">Dipanshu Kumar</h3>
-                                <p className="text-foreground text-sm font-medium mt-1">Co-Founder</p>
-                                <p className="text-gray-400 text-sm mt-3">
+                                <h3 className="text-lg font-bold text-foreground">Dipanshu Kumar</h3>
+                                <p className="text-muted-foreground text-sm font-medium mt-1">Co-Founder</p>
+                                <p className="text-muted-foreground text-sm mt-3">
                                     Passionate about building communities through travel and creating experiences that turn strangers into lifelong friends.
                                 </p>
                             </div>
                             {/* Founder 2 */}
-                            <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/5 border border-white/10">
-                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gold to-yellow-600 flex items-center justify-center mb-4">
-                                    <span className="text-black font-bold text-xl">HK</span>
+                            <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-muted/40 border border-border">
+                                <div className="w-20 h-20 rounded-full bg-foreground/10 border border-border flex items-center justify-center mb-4">
+                                    <span className="text-foreground font-bold text-xl">HK</span>
                                 </div>
-                                <h3 className="text-lg font-bold text-white">Himanshu Kumar</h3>
-                                <p className="text-foreground text-sm font-medium mt-1">Co-Founder</p>
-                                <p className="text-gray-400 text-sm mt-3">
+                                <h3 className="text-lg font-bold text-foreground">Himanshu Kumar</h3>
+                                <p className="text-muted-foreground text-sm font-medium mt-1">Co-Founder</p>
+                                <p className="text-muted-foreground text-sm mt-3">
                                     Dedicated to crafting seamless travel experiences and ensuring every CONSOUL INDIA trip is safe, exciting, and unforgettable.
                                 </p>
                             </div>

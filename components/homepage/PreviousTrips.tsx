@@ -43,11 +43,11 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
     }
 
     return (
-        <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-gradient-to-b from-[#0a1210] to-[#080e0c] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid rgba(16, 185, 129, 0.08)", boxShadow: "0 -8px 30px rgba(0,0,0,0.6)" }}>
-            {/* Background Elements */}
+        <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-[var(--color-canvas)] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid var(--color-border-subtle)", boxShadow: "0 -8px 30px rgba(0,0,0,0.3)" }}>
+            {/* Background Elements — neutral monochrome glows */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]" />
+                <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-foreground/5 rounded-full blur-[100px]" />
+                <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-foreground/5 rounded-full blur-[100px]" />
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
@@ -56,10 +56,10 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                 {reviews.length > 0 && (
                     <div className="mb-20">
                         <div className="mb-12 text-center">
-                            <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
-                                Memories from <span className="text-white/70">Travelers</span>
+                            <h2 className="mb-4 text-3xl font-display font-bold text-foreground sm:text-4xl">
+                                Memories from <span className="text-foreground/70">Travelers</span>
                             </h2>
-                            <p className="mx-auto max-w-2xl text-gray-400">
+                            <p className="mx-auto max-w-2xl text-muted-foreground">
                                 Hear from our happy travelers and their unforgettable experiences.
                             </p>
                         </div>
@@ -76,10 +76,10 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                     {reviews.map((review) => (
                                         <CarouselItem key={review.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                                             <div className="p-1 h-full">
-                                                <Card className="h-full rounded-2xl border-white/10 bg-white/5 backdrop-blur-sm hover:border-white/30 transition-all duration-300 group">
+                                                <Card className="h-full rounded-2xl border-border bg-card hover:border-foreground/20 transition-all duration-300 group">
                                                     <CardContent className="flex !p-6 flex-col h-full">
                                                         <div className="flex items-center gap-4 mb-4">
-                                                            <div className="h-12 w-12 overflow-hidden rounded-full border border-white/30 bg-gray-800 flex items-center justify-center flex-shrink-0">
+                                                            <div className="h-12 w-12 overflow-hidden rounded-full border border-border bg-muted flex items-center justify-center flex-shrink-0">
                                                                 {review.userImage ? (
                                                                     <img
                                                                         src={review.userImage}
@@ -87,14 +87,14 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                                                         className="h-full w-full object-cover"
                                                                     />
                                                                 ) : (
-                                                                    <span className="text-lg font-bold text-white">{review.userName.charAt(0)}</span>
+                                                                    <span className="text-lg font-bold text-foreground">{review.userName.charAt(0)}</span>
                                                                 )}
                                                             </div>
                                                             <div>
-                                                                <h3 className="font-bold text-white text-sm md:text-base line-clamp-1">
+                                                                <h3 className="font-bold text-foreground text-sm md:text-base line-clamp-1">
                                                                     {review.userName}
                                                                 </h3>
-                                                                <p className="text-xs text-white/60 line-clamp-1">
+                                                                <p className="text-xs text-muted-foreground line-clamp-1 uppercase tracking-wider">
                                                                     {review.tripName}
                                                                 </p>
                                                             </div>
@@ -105,17 +105,17 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                                                 <Star
                                                                     key={i}
                                                                     className={`h-3 w-3 ${i < review.rating
-                                                                        ? "fill-white text-white"
-                                                                        : "fill-gray-700 text-gray-700"
+                                                                        ? "fill-foreground text-foreground"
+                                                                        : "fill-muted text-muted"
                                                                         }`}
                                                                 />
                                                             ))}
                                                         </div>
 
                                                         <div className="relative flex-grow">
-                                                            <Quote className="absolute -top-1 -left-1 w-3 h-3 text-white/20" />
-                                                            <p className="text-sm text-gray-300 italic leading-relaxed line-clamp-4 pl-4">
-                                                                "{review.certifiedHighlight || review.comment}"
+                                                            <Quote className="absolute -top-1 -left-1 w-3 h-3 text-foreground/20" />
+                                                            <p className="text-sm text-muted-foreground italic leading-relaxed line-clamp-4 pl-4">
+                                                                &ldquo;{review.certifiedHighlight || review.comment}&rdquo;
                                                             </p>
                                                         </div>
                                                     </CardContent>
@@ -125,8 +125,8 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                     ))}
                                 </CarouselContent>
                                 <div className="hidden md:block">
-                                    <CarouselPrevious className="-left-12 border-white/20 bg-black/50 text-white hover:bg-white hover:text-black" />
-                                    <CarouselNext className="-right-12 border-white/20 bg-black/50 text-white hover:bg-white hover:text-black" />
+                                    <CarouselPrevious className="-left-12 border-border bg-card text-foreground hover:bg-foreground hover:text-background" />
+                                    <CarouselNext className="-right-12 border-border bg-card text-foreground hover:bg-foreground hover:text-background" />
                                 </div>
                             </Carousel>
                         </div>
@@ -137,18 +137,18 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                 {pastTrips.length > 0 && (
                     <div>
                         <div className="mb-12 text-center">
-                            <h2 className="mb-4 text-3xl font-display font-bold text-white sm:text-4xl">
-                                Our <span className="text-white/70">Past Expeditions</span>
+                            <h2 className="mb-4 text-3xl font-display font-bold text-foreground sm:text-4xl">
+                                Our <span className="text-foreground/70">Past Expeditions</span>
                             </h2>
-                            <p className="mx-auto max-w-2xl text-gray-400">
-                                Explore the journeys we've completed and the memories we've made.
+                            <p className="mx-auto max-w-2xl text-muted-foreground">
+                                Explore the journeys we&apos;ve completed and the memories we&apos;ve made.
                             </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                             {pastTrips.map((trip) => (
                                 <Link href={`/past-trips/${trip.id}`} key={trip.id} className="group">
-                                    <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 bg-gray-900">
+                                    <div className="relative h-64 rounded-2xl overflow-hidden border border-border bg-muted">
                                         {trip.images && trip.images.length > 0 ? (
                                             <img
                                                 src={trip.images[0].url}
@@ -156,7 +156,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
                                             />
                                         ) : (
-                                            <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                                            <div className="h-full w-full bg-gradient-to-br from-muted to-card" />
                                         )}
 
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
@@ -189,7 +189,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
 
                         <div className="mt-12 text-center">
                             <Link href="/past-trips">
-                                <button className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-white/30 hover:border-white text-white rounded-full transition-all hover:bg-white/10 group">
+                                <button className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-border hover:border-foreground text-foreground rounded-full transition-all hover:bg-foreground/5 group">
                                     View All Past Trips
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </button>

@@ -168,17 +168,17 @@ export default function MyTripsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-black pb-16 md:pb-0">
+        <div className="min-h-screen bg-background text-foreground pb-16 md:pb-0">
             <Header />
 
             {/* Hero Section */}
-            <div className="text-white py-6 md:py-8">
+            <div className="text-foreground py-6 md:py-8">
                 <div className="container mx-auto px-4 pt-3 md:pt-20">
                     <div className="max-w-3xl">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 pl-20 sm:pl-0">
                             My Trips
                         </h1>
-                        <p className="text-lg md:text-xl text-gray-400">
+                        <p className="text-lg md:text-xl text-muted-foreground">
                             Manage your upcoming adventures and revisit your past journeys.
                         </p>
                     </div>
@@ -186,18 +186,18 @@ export default function MyTripsPage() {
             </div>
 
             {/* Tabs */}
-            <div className="bg-black/95 border-b border-white/10 sticky top-7 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+            <div className="bg-background/95 border-b border-border sticky top-7 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="container mx-auto px-4">
                     <div className="flex gap-5 justify-end md:justify-center">
                         <button
                             onClick={() => setActiveTab('upcoming')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'upcoming'
                                 ? 'border-foreground text-foreground'
-                                : 'border-transparent text-gray-400 hover:text-white'
+                                : 'border-transparent text-muted-foreground hover:text-foreground'
                                 }`}
                         >
                             Upcoming Trips
-                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'upcoming' ? 'bg-foreground/15 text-foreground' : 'bg-white/10 text-gray-400'}`}>
+                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'upcoming' ? 'bg-foreground/15 text-foreground' : 'bg-muted text-muted-foreground'}`}>
                                 {upcomingTrips.length}
                             </span>
                         </button>
@@ -205,11 +205,11 @@ export default function MyTripsPage() {
                             onClick={() => setActiveTab('past')}
                             className={`py-4 px-2 font-semibold border-b-2 transition-colors ${activeTab === 'past'
                                 ? 'border-foreground text-foreground'
-                                : 'border-transparent text-gray-400 hover:text-white'
+                                : 'border-transparent text-muted-foreground hover:text-foreground'
                                 }`}
                         >
                             Past Trips
-                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'past' ? 'bg-foreground/15 text-foreground' : 'bg-white/10 text-gray-400'}`}>
+                            <span className={`ml-2 px-2 py-0.5 text-xs font-bold rounded-full ${activeTab === 'past' ? 'bg-foreground/15 text-foreground' : 'bg-muted text-muted-foreground'}`}>
                                 {pastTrips.length}
                             </span>
                         </button>
@@ -226,7 +226,7 @@ export default function MyTripsPage() {
                             const spotsLeft = trip.maxParticipants - (trip.currentParticipants || 0);
 
                             return (
-                                <Card key={booking.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group flex flex-col h-full">
+                                <Card key={booking.id} className="overflow-hidden border-border bg-card shadow-lg hover:shadow-foreground/5 transition-shadow group flex flex-col h-full">
                                     {/* Trip Image */}
                                     <div className="relative h-64 overflow-hidden shrink-0">
                                         {trip.images && trip.images.length > 0 ? (
@@ -236,7 +236,7 @@ export default function MyTripsPage() {
                                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                             />
                                         ) : (
-                                            <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                                            <div className="h-full w-full bg-gradient-to-br from-muted to-card" />
                                         )}
 
                                         {/* Status Badge */}
@@ -244,7 +244,7 @@ export default function MyTripsPage() {
                                             {getStatusBadge(booking.status, booking.seatNumber)}
                                         </div>
 
-                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-foreground text-xs font-semibold rounded-full border border-foreground/20">
+                                        <div className="absolute top-4 left-4 px-3 py-1 bg-black/60 backdrop-blur-md text-white text-xs font-semibold rounded-full border border-white/20">
                                             {trip.category}
                                         </div>
 
@@ -258,7 +258,7 @@ export default function MyTripsPage() {
                                         {booking.paymentStatus && (
                                             <div className="absolute bottom-4 left-4">
                                                 {booking.paymentStatus === 'partial' ? (
-                                                    <div className="px-3 py-1 bg-black/80 backdrop-blur-sm text-white/90 text-xs font-semibold rounded-full border border-white/30">
+                                                    <div className="px-3 py-1 bg-black/60 backdrop-blur-md text-white/90 text-xs font-semibold rounded-full border border-white/20">
                                                         Partial Payment
                                                     </div>
                                                 ) : (
@@ -271,16 +271,16 @@ export default function MyTripsPage() {
                                     </div>
 
                                     <CardHeader className="pb-3">
-                                        <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-foreground transition-colors">
+                                        <h3 className="text-xl font-bold text-foreground line-clamp-2 group-hover:text-foreground/80 transition-colors">
                                             {trip.title}
                                         </h3>
-                                        <p className="text-sm text-gray-400 line-clamp-2 mt-2">
+                                        <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
                                             {trip.description}
                                         </p>
                                     </CardHeader>
 
                                     <CardContent className="pb-3 flex-grow">
-                                        <div className="space-y-2 text-sm text-gray-400">
+                                        <div className="space-y-2 text-sm text-muted-foreground">
                                             <div className="flex items-center gap-2">
                                                 <MapPin className="w-4 h-4 text-foreground" />
                                                 <span>{trip.destination}</span>
@@ -307,7 +307,7 @@ export default function MyTripsPage() {
 
                                     <CardFooter className='flex justify-center p-[1.5rem] mt-auto'>
                                         <Link href={activeTab === 'upcoming' ? `/my-trips/${booking.id}` : `/past-trips/${trip.slug || trip.id}`} className="w-full">
-                                            <button className="w-full bg-foreground hover:bg-foreground/80 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                            <button className="w-full bg-foreground hover:bg-foreground/80 text-background font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group shadow-sm">
                                                 {activeTab === 'upcoming' ? 'View Details' : 'View Details & Reviews'}
                                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                             </button>
@@ -319,22 +319,22 @@ export default function MyTripsPage() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
+                        <div className="w-24 h-24 bg-foreground/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-border">
                             {activeTab === 'upcoming' ? (
-                                <Calendar className="w-12 h-12 text-gray-600" />
+                                <Calendar className="w-12 h-12 text-muted-foreground" />
                             ) : (
-                                <MapPin className="w-12 h-12 text-gray-600" />
+                                <MapPin className="w-12 h-12 text-muted-foreground" />
                             )}
                         </div>
-                        <h3 className="text-xl font-semibold text-white mb-2">
+                        <h3 className="text-xl font-semibold text-foreground mb-2">
                             {activeTab === 'upcoming' ? 'No Upcoming Trips' : 'No Past Trips'}
                         </h3>
-                        <p className="text-gray-400 mb-6">
+                        <p className="text-muted-foreground mb-6">
                             {activeTab === 'upcoming' ? 'Start planning your next adventure!' : 'Your travel history will appear here.'}
                         </p>
                         {activeTab === 'upcoming' && (
                             <Link href="/">
-                                <button className="bg-foreground hover:bg-foreground/80 text-black font-semibold py-3 px-6 rounded-xl transition-colors">
+                                <button className="bg-foreground hover:bg-foreground/80 text-background font-semibold py-3 px-6 rounded-xl transition-colors shadow-sm">
                                     Explore Trips
                                 </button>
                             </Link>

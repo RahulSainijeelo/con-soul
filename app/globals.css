@@ -36,7 +36,8 @@ a, button {
 
 @layer base {
   /* ── DARK MODE (default) ── */
-  :root {
+  :root,
+  .dark {
     --background: 0 0% 4%;
     --foreground: 0 0% 93%;
 
@@ -107,17 +108,17 @@ a, button {
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 0% / 0.10;
-    --input: 0 0% 0% / 0.10;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
     --ring: 0 0% 50%;
 
-    --color-canvas: #FAFAFA;
+    --color-canvas: #F7F7F7;
     --color-canvas-raised: #FFFFFF;
     --color-ink: #0A0A0A;
     --color-ink-muted: rgba(10, 10, 10, 0.55);
     --color-ink-faint: rgba(10, 10, 10, 0.30);
-    --color-border-subtle: rgba(0, 0, 0, 0.08);
-    --color-border-hover: rgba(0, 0, 0, 0.20);
+    --color-border-subtle: rgba(0, 0, 0, 0.10);
+    --color-border-hover: rgba(0, 0, 0, 0.25);
     --color-accent: #0A0A0A;
   }
 

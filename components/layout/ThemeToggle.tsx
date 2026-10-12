@@ -1,45 +1,31 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { Sun, Moon } from "lucide-react";
 
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("theme");
-    if (saved === "light") {
-      setIsDark(false);
-    }
   }, []);
 
-  const toggleTheme = () => {
-    const next = !isDark;
-    setIsDark(next);
-    if (next) {
-      document.documentElement.classList.remove("light");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.add("light");
-      localStorage.setItem("theme", "light");
-    }
-  };
+  if (!mounted) {
+    return (
+      <div className="w-[62px] h-[28px] rounded-full border border-border opacity-0" />
+    );
+  }
 
-  if (!mounted) return null;
+  const isDark = theme === "dark";
 
   return (
     <button
-      onClick={toggleTheme}
-      className="relative rounded-full border border-white/10 p-2 text-white/50 hover:text-white hover:border-white/30 transition-all duration-300 hover:scale-[1.05] active:scale-95"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="relative rounded-full border border-border px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/60 hover:text-foreground hover:border-foreground/30 transition-all duration-300 hover:scale-[1.02] active:scale-95"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {isDark ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
+      {isDark ? "Light" : "Dark"}
     </button>
   );
 }

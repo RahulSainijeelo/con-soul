@@ -78,18 +78,18 @@ async function getHomepageData() {
       };
     }) as any[];
 
-    return { upcomingTrips, pastTrips, reviews };
+    return { upcomingTrips, pastTrips, reviews, allTrips: [...upcomingTrips, ...pastTrips] };
   } catch (error) {
     console.error("Failed to fetch homepage data:", error);
-    return { upcomingTrips: [], pastTrips: [], reviews: [] };
+    return { upcomingTrips: [], pastTrips: [], reviews: [], allTrips: [] };
   }
 }
 
 export default async function HomePage() {
-  const { upcomingTrips, pastTrips, reviews } = await getHomepageData();
+  const { upcomingTrips, pastTrips, reviews, allTrips } = await getHomepageData();
 
   return (
-    <main className="relative min-h-screen bg-black">
+    <main className="relative min-h-screen bg-background">
 
       <Header />
 
@@ -102,7 +102,7 @@ export default async function HomePage() {
       <div className="relative z-10" style={{ marginTop: '100vh' }}>
         <div
           id="trip-cards"
-          className="bg-black"
+          className="bg-background"
           style={{
             borderRadius: "40px 40px 0 0",
             boxShadow: "0px -6px 18px 2px rgba(255,255,255,0.62)",
@@ -120,7 +120,7 @@ export default async function HomePage() {
           </div>
 
           {/* 3. Destination Grid */}
-          <DestinationGrid />
+          <DestinationGrid tripData={allTrips} />
 
           {/* 5. Why CONSOUL — Brand Differentiators */}
           <WhyConsoul />

@@ -24,29 +24,29 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0A0A0A] text-white">
+    <footer className="bg-background text-foreground transition-colors duration-300">
       {/* Big CTA — Femur style */}
       <div className="flex flex-1 flex-col items-center justify-center text-center px-5 py-24 md:py-32">
         <div className="text-[clamp(2.5rem,8vw,6rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.03em]">
           <div>YOUR NEXT</div>
-          <div className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}>
+          <div className="text-transparent" style={{ WebkitTextStroke: '1px currentColor', opacity: 0.35 }}>
             ADVENTURE AWAITS
           </div>
         </div>
         <Link
           href="/past-trips"
-          className="mt-10 rounded-full bg-white px-8 py-3.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#0A0A0A] transition-all duration-300 hover:scale-[1.03]"
+          className="mt-10 rounded-full bg-foreground px-8 py-3.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-background transition-all duration-300 hover:scale-[1.03] shadow-md"
         >
           EXPLORE TRIPS →
         </Link>
       </div>
 
       {/* Footer Grid */}
-      <div className="border-t border-[#1F1F1F] px-5 md:px-9 py-16">
+      <div className="border-t border-border px-5 md:px-9 py-16">
         <div className="mx-auto max-w-[1440px] grid grid-cols-2 md:grid-cols-4 gap-10">
           {/* Destinations */}
           <div>
-            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-white/30 mb-5">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-muted-foreground/60 mb-5">
               Destinations
             </h3>
             <ul className="space-y-3">
@@ -54,7 +54,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-[13px] text-white/60 hover:text-white transition-colors"
+                    className="text-[13px] text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -65,7 +65,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-white/30 mb-5">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-muted-foreground/60 mb-5">
               Company
             </h3>
             <ul className="space-y-3">
@@ -73,7 +73,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-[13px] text-white/60 hover:text-white transition-colors"
+                    className="text-[13px] text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -84,7 +84,7 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-white/30 mb-5">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-muted-foreground/60 mb-5">
               Legal
             </h3>
             <ul className="space-y-3">
@@ -92,7 +92,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-[13px] text-white/60 hover:text-white transition-colors"
+                    className="text-[13px] text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -103,7 +103,7 @@ export default function Footer() {
 
           {/* Connect */}
           <div>
-            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-white/30 mb-5">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.24em] text-muted-foreground/60 mb-5">
               Connect
             </h3>
             <ul className="space-y-3">
@@ -112,7 +112,7 @@ export default function Footer() {
                   href="https://www.instagram.com/consoul.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[13px] text-white/60 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-[13px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <Instagram className="w-3.5 h-3.5" />
                   Instagram ↗
@@ -121,7 +121,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="mailto:con.sol.082025@gmail.com"
-                  className="text-[13px] text-white/60 hover:text-white transition-colors flex items-center gap-2"
+                  className="text-[13px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   info@consoul.in
@@ -133,8 +133,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-[#1F1F1F] px-5 md:px-9 py-5">
-        <div className="mx-auto max-w-[1440px] flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-[12px] uppercase tracking-[0.1em] text-[#555555]">
+      <div className="border-t border-border px-5 md:px-9 py-5">
+        <div className="mx-auto max-w-[1440px] flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-[12px] uppercase tracking-[0.1em] text-muted-foreground">
           <span>© {currentYear} CONSOUL INDIA</span>
           <span>con-soul.in</span>
           <div className="flex items-center gap-3">
@@ -142,7 +142,7 @@ export default function Footer() {
             {["UPI", "Visa", "Mastercard", "Razorpay"].map((method) => (
               <span
                 key={method}
-                className="text-[10px] text-[#555] border border-white/10 rounded px-2 py-0.5"
+                className="text-[10px] text-muted-foreground border border-border rounded px-2 py-0.5"
               >
                 {method}
               </span>

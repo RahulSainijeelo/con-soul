@@ -78,17 +78,17 @@ export default async function PastTripsPage() {
     const pastTrips = await getPastTrips();
 
     return (
-        <div className="min-h-screen bg-black pb-16 md:pb-0">
+        <div className="min-h-screen bg-background text-foreground pb-16 md:pb-0">
             <Header />
 
             {/* Hero Section */}
-            <div className="text-white py-4">
+            <div className="text-foreground py-4">
                 <div className="container mx-auto px-4 pt-3 md:pt-20">
                     <div className="max-w-3xl">
                         <h1 className="text-4xl md:text-5xl pl-20 sm:pl-0 lg:text-6xl font-display font-bold mb-6">
                             Past Trips
                         </h1>
-                        <p className="text-lg text-gray-400">
+                        <p className="text-lg text-muted-foreground">
                             Explore our completed journeys and read reviews from travelers who have experienced unforgettable adventures with us.
                         </p>
                     </div>
@@ -99,12 +99,12 @@ export default async function PastTripsPage() {
             <div className="container mx-auto px-4 pb-8">
                 {pastTrips.length === 0 ? (
                     <div className="text-center py-20">
-                        <p className="text-gray-400 text-lg">No completed trips available at the moment.</p>
+                        <p className="text-muted-foreground text-lg">No completed trips available at the moment.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {pastTrips.map((trip) => (
-                            <Card key={trip.id} className="overflow-hidden border-white/10 bg-white/5 shadow-lg hover:shadow-gold/20 transition-shadow group">
+                            <Card key={trip.id} className="overflow-hidden border-border bg-card shadow-lg hover:shadow-foreground/5 transition-shadow group">
                                 {/* Trip Image */}
                                 <div className="relative h-64 overflow-hidden">
                                     {trip.images && trip.images.length > 0 ? (
@@ -114,22 +114,22 @@ export default async function PastTripsPage() {
                                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         />
                                     ) : (
-                                        <div className="h-full w-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                                        <div className="h-full w-full bg-gradient-to-br from-muted to-card" />
                                     )}
-                                    <div className="absolute top-4 right-4 px-3 py-1 bg-green-900/80 backdrop-blur-sm text-green-100 text-xs font-semibold rounded-full flex items-center gap-1 border border-green-500/30">
+                                    <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md text-white text-xs font-semibold rounded-full flex items-center gap-1 border border-white/20">
                                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                                         Completed
                                     </div>
-                                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-sm text-foreground text-xs font-semibold rounded-full border border-foreground/20">
+                                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/60 backdrop-blur-md text-white text-xs font-semibold rounded-full border border-white/20">
                                         {trip.category}
                                     </div>
                                 </div>
 
                                 <CardHeader className="pb-3">
-                                    <h3 className="text-xl font-bold text-white line-clamp-2 group-hover:text-foreground transition-colors">
+                                    <h3 className="text-xl font-bold text-foreground line-clamp-2 group-hover:text-foreground/80 transition-colors">
                                         {trip.title}
                                     </h3>
-                                    <p className="text-sm text-gray-400 line-clamp-2 mt-2">
+                                    <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
                                         {trip.description}
                                     </p>
                                 </CardHeader>
@@ -144,18 +144,18 @@ export default async function PastTripsPage() {
                                                         key={i}
                                                         className={`w-4 h-4 ${i < Math.floor(trip.rating!)
                                                             ? 'fill-foreground text-foreground'
-                                                            : 'fill-gray-700 text-gray-700'
+                                                            : 'fill-muted text-muted'
                                                             }`}
                                                     />
                                                 ))}
                                             </div>
-                                            <span className="text-sm font-semibold text-white">{trip.rating.toFixed(1)}</span>
-                                            <span className="text-sm text-gray-500">({trip.reviewCount || 0} reviews)</span>
+                                            <span className="text-sm font-semibold text-foreground">{trip.rating.toFixed(1)}</span>
+                                            <span className="text-sm text-muted-foreground">({trip.reviewCount || 0} reviews)</span>
                                         </div>
                                     )}
 
                                     {/* Trip Info */}
-                                    <div className="space-y-2 text-sm text-gray-400">
+                                    <div className="space-y-2 text-sm text-muted-foreground">
                                         <div className="flex items-center gap-2">
                                             <MapPin className="w-4 h-4 text-foreground" />
                                             <span>{trip.destination}</span>
@@ -182,7 +182,7 @@ export default async function PastTripsPage() {
 
                                 <CardFooter className='flex justify-center p-[1.5rem]'>
                                     <Link href={`/past-trips/${trip.slug || trip.id}`} className="w-full">
-                                        <button className="w-full bg-foreground hover:bg-foreground/80 text-black font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group">
+                                        <button className="w-full bg-foreground hover:bg-foreground/80 text-background font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 group shadow-sm">
                                             View Details & Reviews
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>

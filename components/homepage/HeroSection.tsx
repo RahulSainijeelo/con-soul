@@ -119,8 +119,7 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
 
                     {/* Trip Name */}
                     <h1
-                        className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-bold text-white leading-[1.1] mb-3 sm:mb-4"
-                        style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900 }}
+                        className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-black text-white leading-[1.1] mb-3 sm:mb-4"
                     >
                         {trip.title}
                     </h1>
@@ -235,8 +234,7 @@ function WaitlistState() {
                     </span>
 
                     <h1
-                        className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-4"
-                        style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 900 }}
+                        className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-4"
                     >
                         New trips dropping soon
                     </h1>

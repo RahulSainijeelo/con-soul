@@ -27,7 +27,7 @@ export default function BottomTabBar() {
     }, [session]);
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl border-t border-white/10 md:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-border md:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
             <div className="grid grid-cols-4 h-[68px]">
                 {tabs.map((tab) => {
                     const isActive = pathname === tab.href;
@@ -40,8 +40,8 @@ export default function BottomTabBar() {
                             className={cn(
                                 "flex flex-col items-center justify-center gap-1 transition-colors active:scale-95 active:opacity-70",
                                 isActive
-                                    ? "text-white"
-                                    : "text-gray-400 hover:text-white/80"
+                                    ? "text-foreground"
+                                    : "text-muted-foreground hover:text-foreground/80"
                             )}
                         >
                             <Icon className="h-5 w-5" />

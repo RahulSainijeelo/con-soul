@@ -75,7 +75,7 @@ export function StaticHero() {
   const brandFading = phase >= 4;
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#0A0A0A] flex flex-col items-center justify-center select-none">
+    <section className="relative h-screen w-full overflow-hidden bg-[var(--color-canvas)] flex flex-col items-center justify-center select-none">
       {/* ── Background Image ── */}
       <div
         className="absolute inset-0 z-0 transition-opacity"
@@ -93,8 +93,8 @@ export function StaticHero() {
           quality={85}
         />
         <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-canvas)] via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-canvas)]/60 via-transparent to-transparent" />
       </div>
 
       {/* ── CONSOUL INDIA + Tagline (fades away after tagline completes) ── */}
@@ -122,7 +122,6 @@ export function StaticHero() {
               key={i}
               className="inline-block"
               style={{
-                fontFamily: "'Inter', sans-serif",
                 fontSize: "clamp(2rem, 7.5vw, 9rem)",
                 lineHeight: 0.92,
                 fontWeight: 800,
@@ -146,7 +145,6 @@ export function StaticHero() {
         <p
           className="mt-4 font-normal uppercase"
           style={{
-            fontFamily: "'Inter', sans-serif",
             fontSize: "clamp(0.6rem, 1.1vw, 0.85rem)",
             letterSpacing: "0.24em",
             minHeight: "1.5em",
@@ -172,7 +170,6 @@ export function StaticHero() {
       >
         <p
           style={{
-            fontFamily: "'Inter', sans-serif",
             fontSize: "clamp(2.5rem, 7vw, 6rem)",
             fontWeight: 800,
             lineHeight: 0.95,

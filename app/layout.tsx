@@ -217,7 +217,7 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" themes={["dark", "light"]} enableSystem={false}>
           <ClerkProvider>
             <div id="main-content">
               {children}
