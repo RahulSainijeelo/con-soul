@@ -75,7 +75,7 @@ export function StaticHero() {
   const brandFading = phase >= 4;
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[var(--color-canvas)] flex flex-col items-center justify-center select-none">
+    <section className="relative h-screen w-full overflow-hidden bg-[#0A0A0A] flex flex-col items-center justify-center select-none">
       {/* ── Background Image ── */}
       <div
         className="absolute inset-0 z-0 transition-opacity"
@@ -93,8 +93,8 @@ export function StaticHero() {
           quality={85}
         />
         <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-canvas)] via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-canvas)]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-transparent to-transparent" />
       </div>
 
       {/* ── CONSOUL INDIA + Tagline (fades away after tagline completes) ── */}
@@ -160,7 +160,7 @@ export function StaticHero() {
         </p>
       </div>
 
-      {/* ── "Discover Your Next Adventure" — appears AFTER CONSOUL vanishes ── */}
+      {/* ── "YOUR NEXT ADVENTURE AWAITS" — appears AFTER CONSOUL vanishes ── */}
       <div
         className="relative z-10 flex flex-col items-center justify-center text-center px-4 pb-[15vh] md:pb-0"
         style={{
@@ -168,31 +168,37 @@ export function StaticHero() {
           transition: "opacity 600ms ease-out",
         }}
       >
-        <p
+        <h2
+          className="font-black uppercase tracking-tight"
           style={{
-            fontSize: "clamp(2.5rem, 7vw, 6rem)",
-            fontWeight: 800,
+            fontSize: "clamp(2.5rem, 7.5vw, 6.5rem)",
             lineHeight: 0.95,
             color: "#ffffff",
-            letterSpacing: "-0.04em",
-            textTransform: "uppercase",
             textShadow: "0 4px 30px rgba(0,0,0,0.6)",
           }}
         >
-          {DISCOVER_TEXT.slice(0, discoverChars)}
-          {phase >= 5 && discoverChars < DISCOVER_TEXT.length && (
-            <span
-              className="inline-block align-middle animate-pulse"
-              style={{
-                width: "3px",
-                height: "0.8em",
-                backgroundColor: "rgba(255,255,255,0.5)",
-                marginLeft: "4px",
-                borderRadius: "2px",
-              }}
-            />
-          )}
-        </p>
+          YOUR NEXT
+        </h2>
+        <h2
+          className="font-black uppercase tracking-tight mt-1 md:mt-2"
+          style={{
+            fontSize: "clamp(2.5rem, 7.5vw, 6.5rem)",
+            lineHeight: 0.95,
+            color: "transparent",
+            WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.9)",
+            textShadow: "0 4px 30px rgba(0,0,0,0.4)",
+          }}
+        >
+          ADVENTURE AWAITS
+        </h2>
+
+        {/* Explore Trips CTA Button */}
+        <button
+          onClick={scrollToTrips}
+          className="mt-8 md:mt-10 px-8 py-3.5 bg-white hover:bg-white/90 text-black font-bold text-xs md:text-sm tracking-widest uppercase rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
+        >
+          Explore Trips &rarr;
+        </button>
       </div>
 
       {/* ── Scroll Indicator ── */}

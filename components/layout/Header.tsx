@@ -36,15 +36,15 @@ export default function Header() {
         </Link>
 
         {/* Mobile nav */}
-        <nav className="md:hidden mt-10 sm:flex items-center gap-3 bg-background/95 backdrop-blur-md border border-border rounded-full p-2 shadow-lg">
+        <nav className="md:hidden flex items-center gap-2 bg-black dark:bg-white border border-black/20 dark:border-white/20 rounded-full p-1.5 shadow-xl">
           <Link
             href={insta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-foreground/50 hover:text-foreground transition-colors flex gap-1 align-baseline"
+            className="w-8 h-8 rounded-full bg-white dark:bg-black text-black dark:text-white flex items-center justify-center hover:opacity-90 transition-all shadow-sm"
             aria-label={insta.label}
           >
-            <span className="self-center"><Icon className="h-5 w-5" /></span>
+            <Icon className="h-4 w-4" />
           </Link>
 
           {/* Mobile theme toggle */}
@@ -52,12 +52,12 @@ export default function Header() {
         </nav>
 
         {/* Desktop nav — Femur style */}
-        <nav className="hidden md:flex items-center gap-3 bg-background/95 backdrop-blur-md border border-border rounded-full px-5 py-2.5 shadow-lg">
+        <nav className="hidden md:flex items-center gap-2 bg-black dark:bg-white border border-black/20 dark:border-white/20 rounded-full px-3 py-1.5 shadow-xl">
           <Link
             href={insta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-foreground/40 hover:text-foreground transition-colors flex items-center justify-center w-8 h-8 rounded-full border border-border hover:border-foreground/30"
+            className="w-8 h-8 rounded-full bg-white dark:bg-black text-black dark:text-white flex items-center justify-center hover:opacity-90 transition-all shadow-sm"
             aria-label={insta.label}
           >
             <Icon className="h-4 w-4" />
@@ -65,13 +65,13 @@ export default function Header() {
 
           <Link
             href="/past-trips"
-            className="text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground/60 hover:text-foreground transition-colors border border-border hover:border-foreground/30 rounded-full px-4 py-1.5"
+            className="text-[11px] font-semibold uppercase tracking-[0.15em] bg-white dark:bg-black text-black dark:text-white rounded-full px-4 py-2 hover:opacity-90 transition-all shadow-sm"
           >
             Past Trips
           </Link>
           <Link
             href="/my-trips"
-            className="text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground/60 hover:text-foreground transition-colors border border-border hover:border-foreground/30 rounded-full px-4 py-1.5"
+            className="text-[11px] font-semibold uppercase tracking-[0.15em] bg-white dark:bg-black text-black dark:text-white rounded-full px-4 py-2 hover:opacity-90 transition-all shadow-sm"
           >
             My Trips
           </Link>
@@ -79,20 +79,20 @@ export default function Header() {
           {/* Theme toggle — text button with border */}
           <ThemeToggle />
 
-          <span className="h-4 w-[1px] bg-border" />
+          <span className="h-4 w-[1px] bg-white/30 dark:bg-black/30 mx-1" />
 
           {session.status === "authenticated" ? (
-            <Link href="/profile" className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-foreground/10 border border-border">
-                <User className="w-4 h-4 text-foreground/60" />
+            <Link href="/profile" className="flex items-center gap-2 bg-white dark:bg-black text-black dark:text-white rounded-full px-3 py-1.5 shadow-sm">
+              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-black/10 dark:bg-white/10">
+                <User className="w-3.5 h-3.5 text-black dark:text-white" />
               </div>
-              <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
                 {session.data.user?.name?.split(" ")[0]}
               </span>
             </Link>
           ) : (
             <Link href="/auth/login">
-              <Button className="bg-foreground hover:bg-foreground/90 text-background font-semibold text-[10px] uppercase tracking-[0.1em] px-6 py-2.5 h-auto rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+              <Button className="bg-white dark:bg-black text-black dark:text-white hover:opacity-90 font-bold text-[10px] uppercase tracking-[0.1em] px-6 py-2 h-auto rounded-full shadow-sm">
                 Login
               </Button>
             </Link>

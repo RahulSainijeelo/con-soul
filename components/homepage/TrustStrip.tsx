@@ -1,4 +1,4 @@
-import { Users, MapPin, Mountain, Star, ShieldCheck, CalendarCheck, CreditCard } from "lucide-react";
+import { Users, MapPin, Mountain, Star, ShieldCheck, CreditCard, Compass, UserCheck } from "lucide-react";
 
 interface TrustStripProps {
     className?: string;
@@ -14,8 +14,9 @@ const stats = [
 
 const guarantees = [
     { icon: ShieldCheck, label: "100% Safe & Secure", id: "safe" },
-    { icon: CalendarCheck, label: "Free Date Changes", id: "date-change" },
-    { icon: CreditCard, label: "Low Deposit ₹2,999", id: "deposit" },
+    { icon: CreditCard, label: "Low Deposit", id: "deposit" },
+    { icon: Compass, label: "Curated Itineraries", id: "curated" },
+    { icon: UserCheck, label: "Verified Trip Captains", id: "captains" },
 ];
 
 export function TrustStrip({ className = "", variant = "full" }: TrustStripProps) {

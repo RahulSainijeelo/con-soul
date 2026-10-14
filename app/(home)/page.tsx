@@ -105,7 +105,8 @@ export default async function HomePage() {
           className="bg-background"
           style={{
             borderRadius: "40px 40px 0 0",
-            boxShadow: "0px -6px 18px 2px rgba(255,255,255,0.62)",
+            borderTop: "1px solid var(--color-border-subtle)",
+            boxShadow: "0 -8px 30px rgba(0,0,0,0.3)",
             overflow: "hidden",
           }}
         >

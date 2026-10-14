@@ -153,7 +153,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                                             <img
                                                 src={trip.images[0].url}
                                                 alt={trip.title}
-                                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                             />
                                         ) : (
                                             <div className="h-full w-full bg-gradient-to-br from-muted to-card" />

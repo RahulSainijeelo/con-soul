@@ -222,7 +222,7 @@ export default function PastTripPage() {
                         <img
                             src={trip.images[0].url}
                             alt={trip.title}
-                            className="h-full w-full object-cover grayscale"
+                            className="h-full w-full object-cover"
                         />
                     ) : (
                         <div className="h-full w-full bg-gradient-to-br from-gray-900 to-black" />
