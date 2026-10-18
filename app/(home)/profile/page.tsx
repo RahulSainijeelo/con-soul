@@ -156,7 +156,7 @@ export default function ProfilePage() {
 
     if (status === "loading" || loading) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
+            <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
@@ -167,11 +167,11 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="min-h-screen bg-black pb-20 md:pb-0">
+        <div className="min-h-screen bg-background text-foreground pb-20 md:pb-0">
             <Header />
 
             <div className="container mx-auto px-4 py-8 mt-16 md:mt-20 max-w-2xl">
-                <h1 className="text-3xl font-display font-bold text-white mb-8">My Profile</h1>
+                <h1 className="text-3xl font-display font-bold text-foreground mb-8">My Profile</h1>
 
                 {/* Profile Card */}
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8 relative overflow-hidden">

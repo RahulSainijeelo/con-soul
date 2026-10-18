@@ -70,20 +70,20 @@ export function ReviewCard({ review, index }: ReviewProps) {
         
         return (
             <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-[#D8D8EE] w-32 shrink-0">{label}</span>
-                <div className="flex-1 mx-3 h-2 bg-[#13131E] rounded-full overflow-hidden">
+                <span className="text-foreground/80 w-32 shrink-0">{label}</span>
+                <div className="flex-1 mx-3 h-2 bg-muted rounded-full overflow-hidden">
                     <div 
                         className="h-full rounded-full transition-all duration-1000" 
                         style={{ width: `${percentage}%`, backgroundColor: accent.base }}
                     />
                 </div>
-                <span className="font-bold text-[#F0F0FA] shrink-0 w-6 text-right">{value.toFixed(1)}</span>
+                <span className="font-bold text-foreground shrink-0 w-6 text-right">{value.toFixed(1)}</span>
             </div>
         );
     };
 
     return (
-        <div className="w-[264px] shrink-0 snap-start flex flex-col rounded-2xl overflow-hidden bg-[#12121E] border border-white/[0.06]">
+        <div className="w-[264px] shrink-0 snap-start flex flex-col rounded-2xl overflow-hidden bg-card border border-border">
             
             {/* Header */}
             <div className={`p-4 bg-gradient-to-br ${accent.grad} relative`}>
@@ -100,8 +100,8 @@ export function ReviewCard({ review, index }: ReviewProps) {
                             {initials}
                         </div>
                         <div>
-                            <h3 className="font-bold text-[#F0F0FA] leading-tight line-clamp-1">{review.userName}</h3>
-                            <p className="text-xs text-[#D8D8EE] opacity-80">{review.tripName || 'Traveler'}</p>
+                            <h3 className="font-bold text-foreground leading-tight line-clamp-1">{review.userName}</h3>
+                            <p className="text-xs text-muted-foreground opacity-80">{review.tripName || 'Traveler'}</p>
                         </div>
                     </div>
                     <div className="text-right">
@@ -113,7 +113,7 @@ export function ReviewCard({ review, index }: ReviewProps) {
                                 />
                             ))}
                         </div>
-                        <span className="text-[10px] text-[#D8D8EE] opacity-60 mt-1 block">{formatDate(review.createdAt)}</span>
+                        <span className="text-[10px] text-muted-foreground opacity-60 mt-1 block">{formatDate(review.createdAt)}</span>
                     </div>
                 </div>
             </div>
@@ -142,9 +142,9 @@ export function ReviewCard({ review, index }: ReviewProps) {
 
                 {/* Certified Highlight */}
                 {review.certifiedHighlight && (
-                    <div className="bg-[#0C0C1A] p-3 rounded-r-lg border-l-2" style={{ borderColor: accent.base }}>
-                        <span className="text-[9px] uppercase font-semibold text-[#7878A0] tracking-wider block mb-1">Certified Highlight</span>
-                        <p className="text-sm text-[#F0F0FA] italic leading-snug">"{review.certifiedHighlight}"</p>
+                    <div className="bg-muted p-3 rounded-r-lg border-l-2" style={{ borderColor: accent.base }}>
+                        <span className="text-[9px] uppercase font-semibold text-muted-foreground tracking-wider block mb-1">Certified Highlight</span>
+                        <p className="text-sm text-foreground italic leading-snug">"{review.certifiedHighlight}"</p>
                     </div>
                 )}
 
@@ -182,7 +182,7 @@ export function ReviewCard({ review, index }: ReviewProps) {
                                 key={i} 
                                 src={img} 
                                 alt={`Trip photo ${i+1}`} 
-                                className="w-12 h-12 rounded object-cover shrink-0 cursor-pointer border border-white/10 hover:border-white/30"
+                                className="w-12 h-12 rounded object-cover shrink-0 cursor-pointer border border-border hover:border-foreground/30"
                                 onClick={() => {
                                     setLightboxIndex(i);
                                     setLightboxOpen(true);
@@ -198,15 +198,15 @@ export function ReviewCard({ review, index }: ReviewProps) {
                         {!showHonestTake ? (
                             <button 
                                 onClick={() => setShowHonestTake(true)}
-                                className="w-full py-2 flex items-center justify-center gap-2 text-xs font-medium text-[#7878A0] bg-white/[0.03] hover:bg-white/[0.06] rounded border border-white/[0.06] transition-colors"
+                                className="w-full py-2 flex items-center justify-center gap-2 text-xs font-medium text-muted-foreground bg-foreground/[0.03] hover:bg-foreground/[0.06] rounded border border-border transition-colors"
                             >
                                 <Eye className="w-3.5 h-3.5" />
                                 Tap to unlock Honest Take
                             </button>
                         ) : (
-                            <div className="bg-[#0C0C1A] p-3 rounded border border-white/[0.06]">
-                                <span className="text-[9px] uppercase font-semibold text-[#7878A0] tracking-wider block mb-1">Honest Take</span>
-                                <p className="text-xs text-[#D8D8EE] leading-snug">{review.honestTake}</p>
+                            <div className="bg-muted p-3 rounded border border-border">
+                                <span className="text-[9px] uppercase font-semibold text-muted-foreground tracking-wider block mb-1">Honest Take</span>
+                                <p className="text-xs text-foreground/80 leading-snug">{review.honestTake}</p>
                             </div>
                         )}
                     </div>
@@ -214,12 +214,12 @@ export function ReviewCard({ review, index }: ReviewProps) {
             </div>
 
             {/* Footer */}
-            <div className="p-3 border-t border-white/[0.06] flex items-center justify-between bg-[#12121E]">
-                <span className="text-xs text-[#5A5A78]">Rebook?</span>
+            <div className="p-3 border-t border-border flex items-center justify-between bg-card">
+                <span className="text-xs text-muted-foreground">Rebook?</span>
                 <button 
                     onClick={handleLike}
                     className="flex items-center gap-1.5 text-xs font-medium transition-colors"
-                    style={{ color: liked ? accent.base : '#7878A0' }}
+                    style={{ color: liked ? accent.base : 'var(--color-ink-muted)' }}
                 >
                     <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
                     {likes > 0 ? likes : ''}
@@ -246,12 +246,12 @@ export function CTACard({ onClick }: { onClick: () => void }) {
     return (
         <div 
             onClick={onClick}
-            className="w-[264px] shrink-0 snap-start flex flex-col items-center justify-center rounded-2xl bg-[#12121E] border border-dashed border-white/10 cursor-pointer hover:bg-white/5 transition-colors group"
+            className="w-[264px] shrink-0 snap-start flex flex-col items-center justify-center rounded-2xl bg-card border border-dashed border-border cursor-pointer hover:bg-foreground/5 transition-colors group"
         >
             <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">✍️</div>
-            <h3 className="text-lg font-bold text-[#F0F0FA] mb-1">Add Your Voice</h3>
-            <p className="text-sm text-[#7878A0] mb-4">Review this trip.</p>
-            <button className="px-5 py-2 rounded-full bg-foreground hover:bg-foreground/80 text-black font-semibold text-sm transition-colors">
+            <h3 className="text-lg font-bold text-foreground mb-1">Add Your Voice</h3>
+            <p className="text-sm text-muted-foreground mb-4">Review this trip.</p>
+            <button className="px-5 py-2 rounded-full bg-foreground hover:bg-foreground/80 text-background font-semibold text-sm transition-colors">
                 Drop a Review →
             </button>
         </div>

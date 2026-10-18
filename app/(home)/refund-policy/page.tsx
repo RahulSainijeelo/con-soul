@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RefundPolicyPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -28,7 +28,7 @@ export default function RefundPolicyPage() {
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-6">
               Cancellation & Refund Policy
             </h1>
-            <p className="text-lg md:text-xl text-gray-400">
+            <p className="text-lg md:text-xl text-muted-foreground">
               Clear, transparent guidelines on bookings, cancellations, and refunds.
             </p>
           </div>
@@ -40,10 +40,10 @@ export default function RefundPolicyPage() {
                 <ShieldAlert className="w-6 h-6 text-amber-400" />
               </div>
               <div>
-                <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                   Key Registration Refund Policy
                 </h2>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   For cancellations made <strong className="text-foreground font-semibold">between 15 days and 10 days prior to departure</strong>, only <strong className="text-foreground font-semibold">10% of the registration amount is refundable</strong> (90% is retained for advance vendor commitments). For cancellations made <strong className="text-red-400 font-semibold">less than 10 days prior to departure</strong>, the registration fee is <strong className="text-red-400 font-semibold">100% strictly non-refundable</strong>.
                 </p>
               </div>
@@ -51,7 +51,7 @@ export default function RefundPolicyPage() {
           </div>
 
           {/* Main Content Sections */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 space-y-12">
+          <div className="bg-card border border-border rounded-2xl p-8 md:p-12 space-y-12">
 
             {/* Timeline Breakdown */}
             <section>
@@ -71,14 +71,14 @@ export default function RefundPolicyPage() {
                     Full Refund / Transfer
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                    <h3 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
                       <Clock className="w-4 h-4 text-green-400" />
                       &gt; 15 Days Prior
                     </h3>
-                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                       Cancellations made more than 15 days before the departure date:
                     </p>
-                    <ul className="space-y-1.5 text-xs text-gray-300">
+                    <ul className="space-y-1.5 text-xs text-muted-foreground">
                       <li className="flex items-start gap-1.5">
                         <span className="text-green-400 font-bold">✓</span>
                         <span>Full registration &amp; trip balance refund (minus nominal bank fees).</span>
@@ -100,17 +100,17 @@ export default function RefundPolicyPage() {
                     10% Refundable
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                    <h3 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
                       <ShieldAlert className="w-4 h-4 text-amber-400" />
                       15 to 10 Days Prior
                     </h3>
-                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                       Cancellations made between 15 days and 10 days before departure:
                     </p>
-                    <ul className="space-y-1.5 text-xs text-gray-300">
+                    <ul className="space-y-1.5 text-xs text-muted-foreground">
                       <li className="flex items-start gap-1.5">
                         <span className="text-amber-400 font-bold">ℹ</span>
-                        <span><strong className="text-white">Only 10% of registration fee is refunded</strong> (90% retained for vendor bookings).</span>
+                        <span>Only 10% of registration fee is refunded</span>
                       </li>
                       <li className="flex items-start gap-1.5">
                         <span className="text-green-400 font-bold">✓</span>
@@ -129,17 +129,17 @@ export default function RefundPolicyPage() {
                     Non-Refundable
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                    <h3 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
                       <ShieldAlert className="w-4 h-4 text-red-400" />
                       &lt; 10 Days Prior
                     </h3>
-                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                       Cancellations made less than 10 days before departure:
                     </p>
-                    <ul className="space-y-1.5 text-xs text-gray-300">
+                    <ul className="space-y-1.5 text-xs text-muted-foreground">
                       <li className="flex items-start gap-1.5">
                         <span className="text-red-400 font-bold">✕</span>
-                        <span><strong className="text-white">0% Registration Refund.</strong> Non-refundable and non-transferable.</span>
+                        <span><strong className="text-foreground">0% Registration Refund.</strong> Non-refundable and non-transferable.</span>
                       </li>
                       <li className="flex items-start gap-1.5">
                         <span className="text-gray-400 font-bold">•</span>
@@ -160,14 +160,14 @@ export default function RefundPolicyPage() {
                 <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
                   <RotateCcw className="w-6 h-6 text-foreground" />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                   Why Registration Is Locked 15 Days Prior
                 </h2>
               </div>
-              <p className="text-gray-400 leading-relaxed text-base mb-4">
+              <p className="text-muted-foreground leading-relaxed text-base mb-4">
                 CONSOUL INDIA experiences are carefully curated boutique group tours with strictly limited seats. To maintain fair pricing and guarantee seamless journeys:
               </p>
-              <ul className="list-disc pl-6 space-y-2 text-gray-300">
+              <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
                 <li>Train tickets (IRCTC 3AC / Sleeper) and private transport are booked under individual passenger names in advance.</li>
                 <li>Resort rooms and boutique hotel blocks are secured with non-refundable deposits.</li>
                 <li>Cruise passes, permits, and private guides are confirmed per head count.</li>
@@ -180,32 +180,32 @@ export default function RefundPolicyPage() {
                 <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
                   <HelpCircle className="w-6 h-6 text-foreground" />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                   Cancellations by CONSOUL INDIA / Unforeseen Events
                 </h2>
               </div>
-              <p className="text-gray-400 leading-relaxed">
-                In the rare event that a trip is cancelled by CONSOUL INDIA due to severe weather, natural disasters, or unforeseen operational constraints, travelers will be offered a <strong className="text-white">100% full refund</strong> or a <strong className="text-white">100% credit transfer</strong> to any future trip of their choice.
+              <p className="text-muted-foreground leading-relaxed">
+                In the rare event that a trip is cancelled by CONSOUL INDIA due to severe weather, natural disasters, or unforeseen operational constraints, travelers will be offered a <strong className="text-foreground">100% full refund</strong> or a <strong className="text-foreground">100% credit transfer</strong> to any future trip of their choice.
               </p>
             </section>
 
             {/* Contact & Support */}
-            <section className="pt-8 border-t border-white/10">
-              <h2 className="text-2xl font-bold text-white mb-3">
+            <section className="pt-8 border-t border-border">
+              <h2 className="text-2xl font-bold text-foreground mb-3">
                 Questions or Cancellation Requests?
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-muted-foreground mb-6">
                 To request a cancellation or discuss your booking, please reach out with your Booking ID:
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/contact">
-                  <button className="bg-foreground hover:bg-foreground/80 text-black font-semibold px-6 py-3 rounded-xl transition-colors">
+                  <button className="bg-foreground hover:bg-foreground/80 text-background font-semibold px-6 py-3 rounded-xl transition-colors">
                     Contact Support
                   </button>
                 </Link>
                 <a
                   href="mailto:con.sol.082025@gmail.com"
-                  className="inline-flex items-center gap-2 border border-white/20 hover:border-foreground px-6 py-3 rounded-xl text-white hover:text-foreground transition-colors"
+                  className="inline-flex items-center gap-2 border border-border hover:border-foreground px-6 py-3 rounded-xl text-foreground hover:opacity-80 transition-colors"
                 >
                   Email: info@consoul.in
                 </a>

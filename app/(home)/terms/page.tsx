@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -28,13 +28,13 @@ export default function TermsPage() {
             <h1 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-6">
               Terms & Conditions
             </h1>
-            <p className="text-lg md:text-xl text-gray-400">
+            <p className="text-lg md:text-xl text-muted-foreground">
               Please read these terms carefully before booking any CONSOUL INDIA journey.
             </p>
           </div>
 
           {/* Main Card */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 space-y-12">
+          <div className="bg-card border border-border rounded-2xl p-8 md:p-12 space-y-12">
 
             {/* 1. Introduction */}
             <section>
@@ -42,12 +42,12 @@ export default function TermsPage() {
                 <div className="w-12 h-12 bg-foreground/10 rounded-full flex items-center justify-center">
                   <Scale className="w-6 h-6 text-foreground" />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                   1. Agreement to Terms
                 </h2>
               </div>
-              <p className="text-gray-400 leading-relaxed text-base">
-                By accessing our website (<strong className="text-white">con-soul.in</strong>) or booking any trip, experience, or package with <strong className="text-white">CONSOUL INDIA Travel</strong>, you agree to be bound by these Terms and Conditions, our Privacy Policy, and our Cancellation & Refund Policy. If you do not agree with any part of these terms, please do not use our services or complete a booking.
+              <p className="text-muted-foreground leading-relaxed text-base">
+                By accessing our website (<strong className="text-foreground">con-soul.in</strong>) or booking any trip, experience, or package with <strong className="text-foreground">CONSOUL INDIA Travel</strong>, you agree to be bound by these Terms and Conditions, our Privacy Policy, and our Cancellation & Refund Policy. If you do not agree with any part of these terms, please do not use our services or complete a booking.
               </p>
             </section>
 
@@ -61,15 +61,15 @@ export default function TermsPage() {
                   2. Booking & Payment Terms
                 </h2>
               </div>
-              <div className="space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm md:text-base">
                 <p>
-                  • <strong className="text-white">Registration Deposit:</strong> A spot may be reserved by paying the required advance registration fee. Your booking status will remain <span className="text-amber-400 font-semibold">Registration Confirmed</span> until full settlement.
+                  • <strong className="text-foreground">Registration Deposit:</strong> A spot may be reserved by paying the required advance registration fee. Your booking status will remain <span className="text-amber-400 font-semibold">Registration Confirmed</span> until full settlement.
                 </p>
                 <p>
-                  • <strong className="text-white">Full Settlement:</strong> The remaining balance of the trip amount must be completed through the "My Trips" dashboard or official CONSOUL INDIA channels prior to the trip departure date.
+                  • <strong className="text-foreground">Full Settlement:</strong> The remaining balance of the trip amount must be completed through the "My Trips" dashboard or official CONSOUL INDIA channels prior to the trip departure date.
                 </p>
                 <p>
-                  • <strong className="text-white">Payment Security:</strong> Online payments are processed securely through certified payment gateways (Razorpay) with 256-bit SSL encryption. CONSOUL INDIA does not store sensitive card or banking credentials.
+                  • <strong className="text-foreground">Payment Security:</strong> Online payments are processed securely through certified payment gateways (Razorpay) with 256-bit SSL encryption. CONSOUL INDIA does not store sensitive card or banking credentials.
                 </p>
               </div>
             </section>
@@ -88,13 +88,13 @@ export default function TermsPage() {
                 <p className="text-sm md:text-base text-gray-200">
                   ⚠️ <strong className="text-foreground">Cancellation &amp; Registration Refund Tiers:</strong>
                 </p>
-                <ul className="text-xs md:text-sm text-gray-300 space-y-1 pl-4 list-disc">
-                  <li><strong className="text-white">&gt; 15 Days Prior:</strong> Full balance refund / 100% credit transfer.</li>
-                  <li><strong className="text-white">15 to 10 Days Prior:</strong> Only <strong className="text-foreground">10% of the registration fee</strong> is refundable (90% retained for vendor bookings).</li>
-                  <li><strong className="text-white">&lt; 10 Days Prior:</strong> Registration fee is <strong className="text-red-400">100% non-refundable</strong>.</li>
+                <ul className="text-xs md:text-sm text-muted-foreground space-y-1 pl-4 list-disc">
+                  <li><strong className="text-foreground">&gt; 15 Days Prior:</strong> Full balance refund / 100% credit transfer.</li>
+                  <li><strong className="text-foreground">15 to 10 Days Prior:</strong> Only <strong className="text-foreground">10% of the registration fee</strong> is refundable (90% retained for vendor bookings).</li>
+                  <li><strong className="text-foreground">&lt; 10 Days Prior:</strong> Registration fee is <strong className="text-red-400">100% non-refundable</strong>.</li>
                 </ul>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="text-muted-foreground text-sm">
                 For complete cancellation rules, timeline details, and transfer options, please refer to our dedicated{" "}
                 <Link href="/refund-policy" className="text-foreground hover:underline font-semibold">
                   Cancellation & Refund Policy →
@@ -112,15 +112,15 @@ export default function TermsPage() {
                   4. Traveler Identification & Conduct
                 </h2>
               </div>
-              <div className="space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm md:text-base">
                 <p>
-                  • <strong className="text-white">Government ID:</strong> A valid government-issued ID (Aadhaar Card / Voter ID / Passport) is mandatory for all travelers for train ticket verification and resort check-ins.
+                  • <strong className="text-foreground">Government ID:</strong> A valid government-issued ID (Aadhaar Card / Voter ID / Passport) is mandatory for all travelers for train ticket verification and resort check-ins.
                 </p>
                 <p>
-                  • <strong className="text-white">Community Code of Conduct:</strong> CONSOUL INDIA creates inclusive, safe travel communities. Any harassment, abusive behavior, illegal substance possession, or disruptive conduct may result in immediate dismissal from the tour without any refund.
+                  • <strong className="text-foreground">Community Code of Conduct:</strong> CONSOUL INDIA creates inclusive, safe travel communities. Any harassment, abusive behavior, illegal substance possession, or disruptive conduct may result in immediate dismissal from the tour without any refund.
                 </p>
                 <p>
-                  • <strong className="text-white">Health & Fitness:</strong> Travelers are responsible for ensuring they are in adequate physical health for the designated trip itinerary and difficulty rating.
+                  • <strong className="text-foreground">Health & Fitness:</strong> Travelers are responsible for ensuring they are in adequate physical health for the designated trip itinerary and difficulty rating.
                 </p>
               </div>
             </section>
@@ -135,31 +135,31 @@ export default function TermsPage() {
                   5. Itinerary & Train Delays
                 </h2>
               </div>
-              <p className="text-gray-400 leading-relaxed text-sm md:text-base">
+              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                 While we make every effort to adhere strictly to published itineraries, travel routes may be modified by the tour coordinators due to train delays, weather conditions, local authority advisories, or road blocks to prioritize passenger safety. CONSOUL INDIA is not liable for secondary expenses resulting from train or flight schedule delays beyond our reasonable control.
               </p>
             </section>
 
             {/* 6. Support & Contact */}
-            <section className="pt-8 border-t border-white/10">
+            <section className="pt-8 border-t border-border">
               <div className="flex items-center gap-3 mb-4">
                 <Phone className="w-6 h-6 text-foreground" />
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-foreground">
                   Contact & Support
                 </h2>
               </div>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-muted-foreground text-sm mb-4">
                 If you have questions regarding our terms, bookings, or policies, please reach out to our team:
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/contact">
-                  <button className="bg-foreground hover:bg-foreground/80 text-black font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm">
+                  <button className="bg-foreground hover:bg-foreground/80 text-background font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm">
                     Contact Us
                   </button>
                 </Link>
                 <a
                   href="mailto:con.sol.082025@gmail.com"
-                  className="inline-flex items-center gap-2 border border-white/20 hover:border-foreground px-6 py-2.5 rounded-xl text-white hover:text-foreground transition-colors text-sm"
+                  className="inline-flex items-center gap-2 border border-border hover:border-foreground px-6 py-2.5 rounded-xl text-foreground hover:opacity-80 transition-colors text-sm"
                 >
                   info@consoul.in
                 </a>

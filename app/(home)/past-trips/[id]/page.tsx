@@ -174,8 +174,8 @@ export default function PastTripPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-black flex items-center justify-center">
-                <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+            <div className="min-h-screen bg-background flex items-center justify-center">
+                <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
@@ -189,7 +189,7 @@ export default function PastTripPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-black pb-16 md:pb-0">
+            <div className="min-h-screen bg-background text-foreground pb-16 md:pb-0">
                 {/* TouristTrip Schema for SEO */}
                 {trip && (
                     <script
@@ -225,7 +225,7 @@ export default function PastTripPage() {
                             className="h-full w-full object-cover"
                         />
                     ) : (
-                        <div className="h-full w-full bg-gradient-to-br from-gray-900 to-black" />
+                        <div className="h-full w-full bg-gradient-to-br from-muted to-background" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
@@ -233,10 +233,10 @@ export default function PastTripPage() {
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
                         <div className="container mx-auto">
                             <div className="flex items-center gap-3 mb-4">
-                                <Badge variant="secondary" className="bg-gray-700 text-white hover:bg-gray-600">
+                                <Badge variant="secondary" className="bg-foreground/20 text-white hover:bg-foreground/30 backdrop-blur-md">
                                     Past Trip
                                 </Badge>
-                                <Badge className="bg-gold text-black hover:bg-yellow-500">
+                                <Badge className="bg-foreground text-background hover:bg-foreground/80">
                                     {trip.category}
                                 </Badge>
                                 {booking?.status === 'confirmed' && (
@@ -250,7 +250,7 @@ export default function PastTripPage() {
                                 {trip.title}
                             </h1>
                             {trip.description && (
-                                <p className="text-lg md:text-xl text-gray-300 max-w-3xl">
+                                <p className="text-lg md:text-xl text-white/80 max-w-3xl">
                                     {trip.description}
                                 </p>
                             )}
@@ -266,24 +266,24 @@ export default function PastTripPage() {
 
                             {/* Review Section for Confirmed Travelers */}
                             {booking?.status === 'confirmed' && !userReview && (
-                                <div className="bg-gradient-to-br from-gold/10 to-orange-500/5 rounded-2xl border border-gold/20 p-6 md:p-8 flex items-center justify-between">
+                                <div className="bg-gradient-to-br from-foreground/10 to-foreground/5 rounded-2xl border border-foreground/20 p-6 md:p-8 flex items-center justify-between">
                                     <div>
-                                        <h2 className="text-2xl font-display font-bold text-white mb-2">
+                                        <h2 className="text-2xl font-display font-bold text-foreground mb-2">
                                             How was your trip?
                                         </h2>
-                                        <p className="text-gray-400">Share your experience with us and other travelers.</p>
+                                        <p className="text-muted-foreground">Share your experience with us and other travelers.</p>
                                     </div>
 
                                     <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
                                         <DialogTrigger asChild>
-                                            <Button className="bg-gold hover:bg-yellow-600 text-black font-semibold">
+                                            <Button className="bg-foreground hover:bg-foreground/80 text-background font-semibold">
                                                 Write a Review
                                             </Button>
                                         </DialogTrigger>
-                                            <DialogContent className="bg-[#09090F] border-white/10 text-white sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+                                            <DialogContent className="bg-card border-border text-foreground sm:max-w-3xl max-h-[90vh] overflow-y-auto">
                                                 <DialogHeader>
-                                                    <DialogTitle className="text-2xl font-bold text-white">Write a Review</DialogTitle>
-                                                    <DialogDescription className="text-gray-400">
+                                                    <DialogTitle className="text-2xl font-bold text-foreground">Write a Review</DialogTitle>
+                                                    <DialogDescription className="text-muted-foreground">
                                                         Tell us about your adventure on {trip.title}.
                                                     </DialogDescription>
                                                 </DialogHeader>
@@ -304,10 +304,10 @@ export default function PastTripPage() {
                             )}
 
                             {userReview && (
-                                <div className="bg-green-900/20 border border-green-500/30 rounded-2xl p-6 text-center">
+                                <div className="bg-green-500/10 border border-green-500/30 rounded-2xl p-6 text-center">
                                     <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                                    <h3 className="text-xl font-bold text-white mb-2">Review Submitted!</h3>
-                                    <p className="text-gray-400">
+                                    <h3 className="text-xl font-bold text-foreground mb-2">Review Submitted!</h3>
+                                    <p className="text-muted-foreground">
                                         {userReview.status === 'pending'
                                             ? "Your review is pending approval."
                                             : "Your review has been approved and is visible below."}
@@ -316,40 +316,40 @@ export default function PastTripPage() {
                             )}
 
                             {/* Trip Highlights */}
-                            <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                            <div className="bg-card rounded-2xl border border-border p-6 md:p-8">
+                                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                                     Trip Highlights
                                 </h2>
                                 <div className="grid md:grid-cols-2 gap-4">
-                                    <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
-                                        <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl border border-border hover:border-foreground/30 transition-colors">
+                                        <svg className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                         </svg>
                                         <div>
-                                            <h4 className="font-semibold text-white mb-1">Scenic {trip.category} Views</h4>
-                                            <p className="text-sm text-gray-400">Experience breathtaking {trip.destination}</p>
+                                            <h4 className="font-semibold text-foreground mb-1">Scenic {trip.category} Views</h4>
+                                            <p className="text-sm text-muted-foreground">Experience breathtaking {trip.destination}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Trip Details/Content */}
-                            <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                            <div className="bg-card rounded-2xl border border-border p-6 md:p-8">
+                                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                                     About This Trip
                                 </h2>
-                                <div className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold">
+                                <div className="prose prose-lg max-w-none text-muted-foreground leading-relaxed prose-headings:text-foreground prose-strong:text-foreground">
                                     <ul className="list-disc pl-5 space-y-2">
                                         {trip.content?.split('.').filter(s => s.trim().length > 0).map((sentence, i) => (
-                                            <li key={i} className="text-gray-300">{sentence.trim()}.</li>
+                                            <li key={i} className="text-muted-foreground">{sentence.trim()}.</li>
                                         ))}
                                     </ul>
                                 </div>
                             </div>
                             {/* Image Gallery */}
                             {trip.images && trip.images.length > 1 && (
-                                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                                    <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                                <div className="bg-card rounded-2xl border border-border p-6 md:p-8">
+                                    <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                                         Gallery
                                     </h2>
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -382,33 +382,33 @@ export default function PastTripPage() {
                         {/* Right Column - Sidebar */}
                         <div className="space-y-6">
                             {/* Trip Information Card */}
-                            <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                    <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="bg-card rounded-2xl p-6 border border-border">
+                                <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                                    <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     Trip Information
                                 </h3>
 
                                 <div className="space-y-4">
-                                    <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                                        <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="flex items-center gap-3 pb-3 border-b border-border">
+                                        <svg className="w-5 h-5 text-foreground flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                         <div className="flex-1">
-                                            <p className="text-sm text-gray-400">Destination</p>
-                                            <p className="font-medium text-white">{trip.destination}</p>
+                                            <p className="text-sm text-muted-foreground">Destination</p>
+                                            <p className="font-medium text-foreground">{trip.destination}</p>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                                        <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="flex items-center gap-3 pb-3 border-b border-border">
+                                        <svg className="w-5 h-5 text-foreground flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
                                         <div className="flex-1">
-                                            <p className="text-sm text-gray-400">Completed On</p>
-                                            <p className="font-medium text-white">
+                                            <p className="text-sm text-muted-foreground">Completed On</p>
+                                            <p className="font-medium text-foreground">
                                                 {new Date(trip.endDate).toLocaleDateString('en-US', {
                                                     year: 'numeric',
                                                     month: 'long',

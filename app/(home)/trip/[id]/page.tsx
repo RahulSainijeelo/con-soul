@@ -118,8 +118,8 @@ export default function TripPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-foreground border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -160,7 +160,7 @@ export default function TripPage() {
                 Registration Confirmed
               </button>
             </Link>
-            <p className="text-xs text-center text-gray-400 mt-2">Click to view booking & pay remaining</p>
+            <p className="text-xs text-center text-muted-foreground mt-2">Click to view booking & pay remaining</p>
           </div>
         );
       case 'pending':
@@ -170,7 +170,7 @@ export default function TripPage() {
               <Clock className="w-5 h-5" />
               Booking Pending
             </button>
-            <p className="text-xs text-center text-gray-400 mt-2">Awaiting confirmation</p>
+            <p className="text-xs text-center text-muted-foreground mt-2">Awaiting confirmation</p>
           </div>
         );
       case 'rejected':
@@ -180,7 +180,7 @@ export default function TripPage() {
               <XCircle className="w-5 h-5" />
               Booking Rejected
             </button>
-            <p className="text-xs text-center text-gray-400 mt-2">Please contact support</p>
+            <p className="text-xs text-center text-muted-foreground mt-2">Please contact support</p>
           </div>
         );
       default:
@@ -196,7 +196,7 @@ export default function TripPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-black pb-16 md:pb-0">
+      <div className="min-h-screen bg-background text-foreground pb-16 md:pb-0">
         <Header />
 
         {/* Hero Image Section */}
@@ -208,7 +208,7 @@ export default function TripPage() {
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="h-full w-full bg-gradient-to-br from-gray-900 to-black" />
+            <div className="h-full w-full bg-gradient-to-br from-muted to-background" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
@@ -222,7 +222,7 @@ export default function TripPage() {
                 {trip.title}
               </h1>
               {trip.description && (
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl">
+                <p className="text-lg md:text-xl text-white/80 max-w-3xl">
                   {trip.description}
                 </p>
               )}
@@ -236,45 +236,45 @@ export default function TripPage() {
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
               {/* Trip Highlights */}
-              <div className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+              <div className="bg-card rounded-2xl border border-border p-6 md:p-8">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                   Trip Highlights
                 </h2>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl border border-border hover:border-foreground/30 transition-colors">
+                    <svg className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <div>
-                      <h4 className="font-semibold text-white mb-1">Scenic {trip.category} Views</h4>
-                      <p className="text-sm text-gray-400">Experience breathtaking {trip.destination}</p>
+                      <h4 className="font-semibold text-foreground mb-1">Scenic {trip.category} Views</h4>
+                      <p className="text-sm text-muted-foreground">Experience breathtaking {trip.destination}</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl border border-border hover:border-foreground/30 transition-colors">
+                    <svg className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <div>
-                      <h4 className="font-semibold text-white mb-1">Cultural Immersion</h4>
-                      <p className="text-sm text-gray-400">Connect with local traditions and culture</p>
+                      <h4 className="font-semibold text-foreground mb-1">Cultural Immersion</h4>
+                      <p className="text-sm text-muted-foreground">Connect with local traditions and culture</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl border border-border hover:border-foreground/30 transition-colors">
+                    <svg className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <div>
-                      <h4 className="font-semibold text-white mb-1">Adventure Activities</h4>
-                      <p className="text-sm text-gray-400">Exciting outdoor experiences</p>
+                      <h4 className="font-semibold text-foreground mb-1">Adventure Activities</h4>
+                      <p className="text-sm text-muted-foreground">Exciting outdoor experiences</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-4 bg-black/30 rounded-xl border border-gold/10 hover:border-gold/30 transition-colors">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="flex items-start gap-3 p-4 bg-foreground/5 rounded-xl border border-border hover:border-foreground/30 transition-colors">
+                    <svg className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <div>
-                      <h4 className="font-semibold text-white mb-1">Premium Experience</h4>
-                      <p className="text-sm text-gray-400">Carefully curated journey</p>
+                      <h4 className="font-semibold text-foreground mb-1">Premium Experience</h4>
+                      <p className="text-sm text-muted-foreground">Carefully curated journey</p>
                     </div>
                   </div>
                 </div>
