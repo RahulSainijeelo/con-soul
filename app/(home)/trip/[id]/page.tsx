@@ -282,9 +282,9 @@ export default function TripPage() {
 
               {/* Travel Route */}
               {trip.travelRoute && trip.travelRoute.length > 0 && (
-                <div className="bg-gradient-to-br from-gold/5 via-white/5 to-orange-500/5 rounded-2xl border border-gold/20 p-6 md:p-8">
-                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6 flex items-center gap-3">
-                    <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-card rounded-2xl border border-border p-6 md:p-8 shadow-sm">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6 flex items-center gap-3">
+                    <svg className="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                     </svg>
                     Travel Route
@@ -294,11 +294,11 @@ export default function TripPage() {
                     {/* Departure Point */}
                     <div className="flex items-center gap-4">
                       <div className="relative flex items-center justify-center w-6 h-6">
-                        <div className="w-3 h-3 bg-gold rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)] animate-pulse" />
+                        <div className="w-3 h-3 bg-amber-500 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)] animate-pulse" />
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-lg font-bold text-white">{trip.travelRoute[0].from}</span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300 uppercase tracking-wider">Departure</span>
+                        <span className="text-lg font-bold text-foreground">{trip.travelRoute[0].from}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-muted text-muted-foreground border border-border uppercase tracking-wider">Departure</span>
                       </div>
                     </div>
 
@@ -306,28 +306,28 @@ export default function TripPage() {
                       <div key={index} className="relative">
                         {/* Segment Card Container */}
                         <div className="pl-[11px] py-2">
-                          <div className="border-l-2 border-dashed border-gold/40 pl-6 py-2">
-                            <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-gold/30 transition-colors">
+                          <div className="border-l-2 border-dashed border-amber-500/40 pl-6 py-2">
+                            <div className="bg-muted/40 rounded-xl p-5 border border-border hover:border-amber-500/40 transition-colors">
                               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div className="flex items-center gap-4">
                                   <span className="text-3xl">{segment.mode === 'train' ? '🚂' : '🚌'}</span>
                                   <div>
-                                    <div className="text-white font-bold text-lg capitalize">{segment.mode}</div>
-                                    <div className="text-gray-400 text-sm">
-                                      <span className="text-white font-semibold">Dep: {segment.departureTime}</span> → <span className="text-white font-semibold">Arr: {segment.arrivalTime}</span>
+                                    <div className="text-foreground font-bold text-lg capitalize">{segment.mode}</div>
+                                    <div className="text-muted-foreground text-sm font-medium">
+                                      <span className="text-foreground font-semibold">Dep: {segment.departureTime}</span> → <span className="text-foreground font-semibold">Arr: {segment.arrivalTime}</span>
                                     </div>
                                   </div>
                                 </div>
                                 
                                 <div className="flex flex-col md:items-end gap-2">
                                   {segment.duration && (
-                                    <div className="text-sm text-gray-400 flex items-center gap-1">
+                                    <div className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                                       <Clock className="w-4 h-4" /> {segment.duration}
                                     </div>
                                   )}
                                   <div className="flex flex-wrap gap-2">
                                     {segment.classes && segment.classes.map((cls, idx) => (
-                                      <span key={idx} className="px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-gold text-xs font-medium">
+                                      <span key={idx} className="px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold">
                                         {cls}
                                       </span>
                                     ))}
@@ -335,7 +335,7 @@ export default function TripPage() {
                                 </div>
                               </div>
                               {segment.notes && (
-                                <div className="mt-3 pt-3 border-t border-white/5 text-sm text-gray-400 italic">
+                                <div className="mt-3 pt-3 border-t border-border text-sm text-muted-foreground italic">
                                   {segment.notes}
                                 </div>
                               )}
@@ -347,14 +347,14 @@ export default function TripPage() {
                         <div className="flex items-center gap-4">
                           <div className="relative flex items-center justify-center w-6 h-6">
                             {index === trip.travelRoute!.length - 1 ? (
-                              <div className="w-4 h-4 bg-gold rounded-full shadow-[0_0_15px_rgba(212,175,55,0.8)]" />
+                              <div className="w-4 h-4 bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.8)]" />
                             ) : (
-                              <div className="w-3 h-3 bg-gold rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]" />
+                              <div className="w-3 h-3 bg-amber-500 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
                             )}
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-lg font-bold text-white">{segment.to}</span>
-                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-gray-300 uppercase tracking-wider">
+                            <span className="text-lg font-bold text-foreground">{segment.to}</span>
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-muted text-muted-foreground border border-border uppercase tracking-wider">
                               {index === trip.travelRoute!.length - 1 ? 'Destination' : 'Transit'}
                             </span>
                           </div>
@@ -367,20 +367,20 @@ export default function TripPage() {
 
               {/* Itinerary Overview */}
               {trip.itinerary && trip.itinerary.length > 0 && (
-                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                <div className="bg-card rounded-2xl border border-border p-6 md:p-8 shadow-sm">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                     Itinerary Overview
                   </h2>
                   <div className="space-y-6">
                     {trip.itinerary.map((item, index) => (
-                      <div key={index} className={`relative pl-8 ${index !== trip.itinerary!.length - 1 ? 'pb-6 border-l-2 border-gold/30' : ''}`}>
-                        <div className="absolute -left-2.5 top-0 w-5 h-5 bg-gold rounded-full border-4 border-black" />
-                        <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-gold/30 transition-colors">
+                      <div key={index} className={`relative pl-8 ${index !== trip.itinerary!.length - 1 ? 'pb-6 border-l-2 border-amber-500/30' : ''}`}>
+                        <div className="absolute -left-2.5 top-0 w-5 h-5 bg-amber-500 rounded-full border-4 border-background" />
+                        <div className="bg-muted/40 rounded-xl p-5 border border-border hover:border-amber-500/40 transition-colors">
                           <div className="flex items-center justify-between mb-3">
-                            <h3 className="text-xl font-bold text-white">Day {item.day}</h3>
+                            <h3 className="text-xl font-bold text-foreground">Day {item.day}</h3>
                           </div>
-                          <h4 className="text-lg font-semibold text-gray-200 mb-2">{item.title}</h4>
-                          <p className="text-gray-400">{item.description}</p>
+                          <h4 className="text-lg font-semibold text-foreground mb-2">{item.title}</h4>
+                          <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                         </div>
                       </div>
                     ))}
@@ -389,58 +389,58 @@ export default function TripPage() {
               )}
 
               {/* Trip Details/Content */}
-              <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+              <div className="bg-card rounded-2xl border border-border p-6 md:p-8 shadow-sm">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                   About This Trip
                 </h2>
-                <div className="prose prose-lg max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-gold">
+                <div className="prose prose-lg max-w-none text-muted-foreground leading-relaxed prose-headings:text-foreground prose-strong:text-foreground">
                   <ul className="list-disc pl-5 space-y-2">
                     {(trip.content || '').split('.').filter(s => s.trim().length > 0).map((sentence, i) => (
-                      <li key={i} className="text-gray-300">{sentence.trim()}.</li>
+                      <li key={i} className="text-muted-foreground">{sentence.trim()}.</li>
                     ))}
                   </ul>
                 </div>
               </div>
 
               {/* Cancellation & Refund Policy */}
-              <div className="bg-gradient-to-br from-amber-500/10 via-white/5 to-white/5 rounded-2xl border border-amber-500/30 p-6 md:p-8">
+              <div className="bg-card rounded-2xl border border-amber-500/30 p-6 md:p-8 shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <ShieldAlert className="w-5 h-5 text-amber-400" />
+                    <ShieldAlert className="w-5 h-5 text-amber-500 dark:text-amber-400" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-display font-bold text-white">
+                    <h2 className="text-2xl font-display font-bold text-foreground">
                       Cancellation & Refund Policy
                     </h2>
-                    <p className="text-xs text-amber-400 font-medium">Important Booking Condition</p>
+                    <p className="text-xs text-amber-600 dark:text-amber-400 font-semibold">Important Booking Condition</p>
                   </div>
                 </div>
 
-                <div className="space-y-4 text-gray-300">
-                  <div className="p-4 bg-black/40 border border-amber-500/20 rounded-xl">
-                    <p className="text-sm md:text-base leading-relaxed">
-                      ⚠️ <strong className="text-white">Registration Refund Policy:</strong> Cancellations between <strong className="text-gold">15 to 10 days</strong> receive only <strong className="text-gold">10% refund</strong> of registration fee. Cancellations <strong className="text-red-400">under 10 days</strong> prior to departure are <strong className="text-red-400">100% non-refundable</strong>.
+                <div className="space-y-4 text-foreground">
+                  <div className="p-4 bg-muted/40 border border-amber-500/30 rounded-xl">
+                    <p className="text-sm md:text-base leading-relaxed text-foreground">
+                      ⚠️ <strong className="text-foreground">Registration Refund Policy:</strong> Cancellations between <strong className="text-amber-600 dark:text-amber-400">15 to 10 days</strong> receive only <strong className="text-amber-600 dark:text-amber-400">10% refund</strong> of registration fee. Cancellations <strong className="text-red-500 dark:text-red-400">under 10 days</strong> prior to departure are <strong className="text-red-500 dark:text-red-400">100% non-refundable</strong>.
                     </p>
                   </div>
 
                   <div className="grid md:grid-cols-3 gap-3 text-sm">
-                    <div className="p-3 bg-black/20 rounded-lg border border-white/10">
-                      <p className="font-semibold text-green-400 text-xs mb-1">✓ &gt; 15 Days Prior</p>
-                      <p className="text-[11px] text-gray-400">Full refund (minus bank fees) or 100% trip transfer.</p>
+                    <div className="p-3 bg-muted/30 rounded-lg border border-border">
+                      <p className="font-semibold text-green-600 dark:text-green-400 text-xs mb-1">✓ &gt; 15 Days Prior</p>
+                      <p className="text-[11px] text-muted-foreground font-medium">Full refund (minus bank fees) or 100% trip transfer.</p>
                     </div>
-                    <div className="p-3 bg-black/20 rounded-lg border border-amber-500/20">
-                      <p className="font-semibold text-amber-400 text-xs mb-1">ℹ 15 – 10 Days Prior</p>
-                      <p className="text-[11px] text-gray-400"><strong className="text-white">10% registration refunded</strong> (90% retained for bookings).</p>
+                    <div className="p-3 bg-muted/30 rounded-lg border border-amber-500/30">
+                      <p className="font-semibold text-amber-600 dark:text-amber-400 text-xs mb-1">ℹ 15 – 10 Days Prior</p>
+                      <p className="text-[11px] text-muted-foreground font-medium"><strong className="text-foreground">10% registration refunded</strong> (90% retained for bookings).</p>
                     </div>
-                    <div className="p-3 bg-black/20 rounded-lg border border-red-500/20">
-                      <p className="font-semibold text-red-400 text-xs mb-1">✕ &lt; 10 Days Prior</p>
-                      <p className="text-[11px] text-gray-400"><strong className="text-white">0% refund</strong>. Strictly non-refundable.</p>
+                    <div className="p-3 bg-muted/30 rounded-lg border border-red-500/30">
+                      <p className="font-semibold text-red-600 dark:text-red-400 text-xs mb-1">✕ &lt; 10 Days Prior</p>
+                      <p className="text-[11px] text-muted-foreground font-medium"><strong className="text-foreground">0% refund</strong>. Strictly non-refundable.</p>
                     </div>
                   </div>
 
-                  <div className="pt-2 flex justify-between items-center text-xs text-gray-400">
+                  <div className="pt-2 flex justify-between items-center text-xs text-muted-foreground font-medium">
                     <span>Have questions about your booking?</span>
-                    <Link href="/refund-policy" className="text-gold hover:underline font-medium inline-flex items-center gap-1">
+                    <Link href="/refund-policy" className="text-amber-600 dark:text-amber-400 hover:underline font-semibold inline-flex items-center gap-1">
                       Read Full Policy →
                     </Link>
                   </div>
@@ -449,15 +449,15 @@ export default function TripPage() {
 
               {/* Image Gallery */}
               {trip.images && trip.images.length > 1 && (
-                <div className="bg-white/5 rounded-2xl border border-white/10 p-6 md:p-8">
-                  <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-6">
+                <div className="bg-card rounded-2xl border border-border p-6 md:p-8 shadow-sm">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
                     Gallery
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {trip.images.slice(1).map((image, index) => (
                       <div
                         key={index}
-                        className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
+                        className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer border border-border"
                         onClick={() => openLightbox(trip.images.map(img => img.url), index + 1)}
                       >
                         <img
@@ -465,7 +465,7 @@ export default function TripPage() {
                           alt={`${trip.title} - Image ${index + 2}`}
                           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/15 transition-colors" />
                       </div>
                     ))}
                   </div>
@@ -476,17 +476,17 @@ export default function TripPage() {
             {/* Right Column - Sidebar */}
             <div className="space-y-6">
               {/* Price & Booking Card */}
-              <div className="bg-gradient-to-br from-gold/10 to-orange-500/5 rounded-2xl p-6 border border-gold/20">
+              <div className="bg-card rounded-2xl p-6 border border-amber-500/30 shadow-sm">
                 <div className="text-center mb-6">
-                  <p className="text-sm text-gray-400 mb-2">Starting from</p>
-                  <p className="text-4xl font-bold text-gold">₹{trip.price.toLocaleString()}</p>
-                  <p className="text-sm text-gray-400 mt-1">per person</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-2">Starting from</p>
+                  <p className="text-4xl font-bold text-amber-600 dark:text-amber-400">₹{trip.price.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-muted-foreground mt-1">per person</p>
                 </div>
 
                 <div className="space-y-3">
                   {getBookingStatusButton()}
                   <Link href="/contact">
-                    <button className="w-full bg-transparent hover:bg-white/5 text-gold font-semibold py-3 px-6 rounded-xl border-2 border-gold transition-colors">
+                    <button className="w-full bg-transparent hover:bg-foreground/5 text-foreground font-semibold py-3 px-6 rounded-xl border-2 border-foreground transition-colors">
                       Contact Us
                     </button>
                   </Link>
@@ -495,33 +495,33 @@ export default function TripPage() {
               </div>
 
               {/* Trip Information Card */}
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
+                <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Trip Information
                 </h3>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-3 pb-3 border-b border-border">
+                    <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-400">Destination</p>
-                      <p className="font-medium text-white">{trip.destination}</p>
+                      <p className="text-sm font-medium text-muted-foreground">Destination</p>
+                      <p className="font-semibold text-foreground">{trip.destination}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-3 pb-3 border-b border-border">
+                    <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-400">Start Date</p>
-                      <p className="font-medium text-white">
+                      <p className="text-sm font-medium text-muted-foreground">Start Date</p>
+                      <p className="font-semibold text-foreground">
                         {new Date(trip.startDate).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
@@ -532,35 +532,35 @@ export default function TripPage() {
                   </div>
 
                   {trip.duration && (
-                    <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                      <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-3 pb-3 border-b border-border">
+                      <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-400">Duration</p>
-                        <p className="font-medium text-white">{trip.duration}</p>
+                        <p className="text-sm font-medium text-muted-foreground">Duration</p>
+                        <p className="font-semibold text-foreground">{trip.duration}</p>
                       </div>
                     </div>
                   )}
 
-                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-3 pb-3 border-b border-border">
+                    <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-400">Group Size</p>
-                      <p className="font-medium text-white">Max {trip.maxParticipants} People</p>
+                      <p className="text-sm font-medium text-muted-foreground">Group Size</p>
+                      <p className="font-semibold text-foreground">Max {trip.maxParticipants} People</p>
                     </div>
                   </div>
 
                   {trip.difficulty && (
                     <div className="flex items-center gap-3">
-                      <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-400">Difficulty</p>
-                        <p className="font-medium text-white">{trip.difficulty}</p>
+                        <p className="text-sm font-medium text-muted-foreground">Difficulty</p>
+                        <p className="font-semibold text-foreground">{trip.difficulty}</p>
                       </div>
                     </div>
                   )}
@@ -569,8 +569,8 @@ export default function TripPage() {
 
               {/* What's Included Card */}
               {trip.included && trip.included.length > 0 && (
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                  <h3 className="text-xl font-bold text-white mb-4">What's Included</h3>
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
+                  <h3 className="text-xl font-bold text-foreground mb-4">What&apos;s Included</h3>
 
                   <div className="space-y-3">
                     {trip.included.map((item, index) => (
@@ -578,7 +578,7 @@ export default function TripPage() {
                         <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
-                        <span className="text-gray-300">{item}</span>
+                        <span className="text-foreground font-medium text-sm">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -587,8 +587,8 @@ export default function TripPage() {
 
               {/* What's Not Included Card */}
               {trip.notIncluded && trip.notIncluded.length > 0 && (
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                  <h3 className="text-xl font-bold text-white mb-4">Not Included</h3>
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm">
+                  <h3 className="text-xl font-bold text-foreground mb-4">Not Included</h3>
 
                   <div className="space-y-3">
                     {trip.notIncluded.map((item, index) => (
@@ -596,7 +596,7 @@ export default function TripPage() {
                         <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                         </svg>
-                        <span className="text-gray-300">{item}</span>
+                        <span className="text-foreground font-medium text-sm">{item}</span>
                       </div>
                     ))}
                   </div>

@@ -31,7 +31,7 @@ export function StrangersSection() {
         {/* Header — Femur editorial */}
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)] lg:items-center lg:gap-16 mb-14">
           <div className="max-w-[920px]">
-            <p className="mb-5 text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
+            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.32em] text-[var(--color-ink-muted)]">
               Strangers → Friends → Family
             </p>
             <h2 className="max-w-[12ch] text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.05em] text-[var(--color-ink)]">
@@ -52,11 +52,11 @@ export function StrangersSection() {
               key={i}
               className="flex min-h-[260px] flex-col rounded-[4px] border border-[var(--color-border-subtle)] bg-[var(--color-canvas-raised)] p-8 transition duration-300 ease-in-out hover:-translate-y-1 hover:border-[var(--color-border-hover)]"
             >
-              <span className="text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
+              <span className="text-[11px] font-bold uppercase tracking-[0.32em] text-[var(--color-ink-muted)]">
                 0{i + 1}
               </span>
 
-              <p className="mt-8 text-[15px] font-normal leading-[1.7] text-[var(--color-ink-muted)] flex-1">
+              <p className="mt-8 text-[15px] font-medium leading-[1.7] text-[var(--color-ink)] flex-1">
                 &ldquo;{story.quote}&rdquo;
               </p>
 
@@ -64,7 +64,7 @@ export function StrangersSection() {
                 <p className="text-[14px] font-semibold text-[var(--color-ink)]">
                   {story.name}
                 </p>
-                <p className="text-[12px] text-[var(--color-ink-faint)] mt-1 uppercase tracking-[0.1em]">
+                <p className="text-[12px] font-medium text-[var(--color-ink-muted)] mt-1 uppercase tracking-[0.1em]">
                   {story.trip}
                 </p>
               </div>
@@ -74,12 +74,12 @@ export function StrangersSection() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-14">
-          <p className="text-[13px] text-[var(--color-ink-faint)] mb-5 uppercase tracking-[0.15em]">
+          <p className="text-[13px] font-medium text-[var(--color-ink-muted)] mb-5 uppercase tracking-[0.15em]">
             300+ solo travelers have found their tribe
           </p>
           <a
             href="/past-trips"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] px-6 py-2.5 text-[11px] font-normal uppercase tracking-[0.15em] text-[var(--color-canvas)] transition-transform duration-300 hover:scale-[1.03]"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-canvas)] transition-transform duration-300 hover:scale-[1.03]"
           >
             Join the next trip
             <ArrowRight className="h-3.5 w-3.5" />

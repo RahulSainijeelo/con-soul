@@ -320,7 +320,7 @@ export function DestinationGrid({ tripData }: DestinationGridProps) {
                   <h3 className="text-xl font-bold text-white mb-0.5 drop-shadow-lg leading-tight">
                     {dest.name}
                   </h3>
-                  <p className="text-xs text-gray-300 font-medium drop-shadow-md line-clamp-1">
+                  <p className="text-xs text-zinc-100 font-medium drop-shadow-md line-clamp-1">
                     {dest.subtitle}
                   </p>
                 </div>
@@ -335,7 +335,7 @@ export function DestinationGrid({ tripData }: DestinationGridProps) {
         <DialogContent className="sm:max-w-md bg-card border-border">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-foreground">
-              Explore <span className="text-foreground/70">{selectedDest?.name}</span>
+              Explore <span className="text-foreground/85">{selectedDest?.name}</span>
             </DialogTitle>
             <DialogDescription className="text-muted-foreground">
               Join the exclusive waitlist for {selectedDest?.name}. We&apos;ll email you before we launch new trips here so you can grab early-bird spots!

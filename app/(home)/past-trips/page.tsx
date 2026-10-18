@@ -41,6 +41,16 @@ interface Trip {
     reviewCount?: number;
 }
 
+const getCategoryBadgeClass = (category?: string) => {
+    const cat = (category || "").toLowerCase();
+    if (cat.includes("mountain")) return "bg-amber-500/20 text-amber-300 border-amber-500/30";
+    if (cat.includes("trek")) return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+    if (cat.includes("beach")) return "bg-cyan-500/20 text-cyan-300 border-cyan-500/30";
+    if (cat.includes("cultur")) return "bg-rose-500/20 text-rose-300 border-rose-500/30";
+    if (cat.includes("weekend")) return "bg-violet-500/20 text-violet-300 border-violet-500/30";
+    return "bg-amber-500/20 text-amber-300 border-amber-500/30";
+};
+
 async function getPastTrips(): Promise<Trip[]> {
     try {
         // Query Firestore directly instead of self-fetching the API route
@@ -120,7 +130,7 @@ export default async function PastTripsPage() {
                                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
                                         Completed
                                     </div>
-                                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/60 backdrop-blur-md text-white text-xs font-semibold rounded-full border border-white/20">
+                                    <div className={`absolute top-4 left-4 px-3 py-1 backdrop-blur-md text-xs font-semibold rounded-full border ${getCategoryBadgeClass(trip.category)}`}>
                                         {trip.category}
                                     </div>
                                 </div>
@@ -143,7 +153,7 @@ export default async function PastTripsPage() {
                                                     <Star
                                                         key={i}
                                                         className={`w-4 h-4 ${i < Math.floor(trip.rating!)
-                                                            ? 'fill-foreground text-foreground'
+                                                            ? 'fill-amber-400 text-amber-400'
                                                             : 'fill-muted text-muted'
                                                             }`}
                                                     />

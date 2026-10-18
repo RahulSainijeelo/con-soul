@@ -27,12 +27,12 @@ export function NewsletterCapture() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           {/* Left Column: Heading */}
           <div>
-            <span className="inline-block mb-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-[var(--color-ink-muted)]">
+            <span className="inline-block mb-3 text-[11px] font-bold uppercase tracking-[0.25em] text-[var(--color-ink-muted)]">
               Stay Updated
             </span>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-[0.95] text-[var(--color-ink)]">
               Never Miss<br />
-              <span className="text-[var(--color-ink-muted)]">An Adventure</span>
+              <span className="opacity-80">An Adventure</span>
             </h2>
           </div>
 
@@ -61,7 +61,7 @@ export function NewsletterCapture() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email address"
-                      className="w-full py-2.5 bg-transparent text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none text-sm"
+                      className="w-full py-2.5 bg-transparent text-[var(--color-ink)] placeholder:text-[var(--color-ink-muted)] focus:outline-none text-sm"
                       required
                       disabled={status === 'submitting'}
                     />
@@ -81,7 +81,7 @@ export function NewsletterCapture() {
               )}
             </form>
 
-            <p className="text-xs text-[var(--color-ink-faint)]">
+            <p className="text-xs font-medium text-[var(--color-ink-muted)]">
               No spam, ever. Unsubscribe with one click anytime.
             </p>
           </div>

@@ -54,7 +54,7 @@ a, button {
     --secondary-foreground: 40 10% 94%;
 
     --muted: 220 6% 13%;
-    --muted-foreground: 220 5% 50%;
+    --muted-foreground: 220 4% 62%;
 
     --accent: 40 5% 88%;
     --accent-foreground: 220 10% 7%;
@@ -72,8 +72,8 @@ a, button {
     --color-canvas: #111318;
     --color-canvas-raised: #181b22;
     --color-ink: #F3F0EA;
-    --color-ink-muted: rgba(243, 240, 234, 0.60);
-    --color-ink-faint: rgba(243, 240, 234, 0.35);
+    --color-ink-muted: rgba(243, 240, 234, 0.75);
+    --color-ink-faint: rgba(243, 240, 234, 0.48);
     --color-border-subtle: rgba(255, 255, 255, 0.08);
     --color-border-hover: rgba(255, 255, 255, 0.22);
     --color-accent: #FFFFFF;
@@ -100,7 +100,7 @@ a, button {
     --secondary-foreground: 220 15% 10%;
 
     --muted: 40 10% 94%;
-    --muted-foreground: 220 5% 42%;
+    --muted-foreground: 220 8% 32%;
 
     --accent: 220 10% 18%;
     --accent-foreground: 40 15% 100%;
@@ -115,8 +115,8 @@ a, button {
     --color-canvas: #F8F6F2;
     --color-canvas-raised: #FFFFFF;
     --color-ink: #151820;
-    --color-ink-muted: rgba(21, 24, 32, 0.58);
-    --color-ink-faint: rgba(21, 24, 32, 0.32);
+    --color-ink-muted: rgba(21, 24, 32, 0.72);
+    --color-ink-faint: rgba(21, 24, 32, 0.48);
     --color-border-subtle: rgba(0, 0, 0, 0.08);
     --color-border-hover: rgba(0, 0, 0, 0.22);
     --color-accent: #151820;

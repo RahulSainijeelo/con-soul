@@ -23,7 +23,7 @@ export function UpcomingTrips({ trips }: UpcomingTripsProps) {
                     <h2
                         className="mb-4 text-4xl md:text-5xl font-black text-foreground tracking-tight"
                     >
-                        Upcoming <span className="text-foreground/70">Expeditions</span>
+                        Upcoming <span className="text-foreground/85">Expeditions</span>
                     </h2>
                     <p className="mx-auto max-w-2xl text-muted-foreground text-lg">
                         Immerse yourself in journeys designed for the soul. Each trip is a chapter in your life&apos;s story.

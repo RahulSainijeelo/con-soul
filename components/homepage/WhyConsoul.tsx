@@ -41,7 +41,7 @@ export function WhyConsoul() {
         {/* Header — Femur editorial style */}
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)] lg:items-center lg:gap-16 mb-14">
           <div className="max-w-[920px]">
-            <p className="mb-5 text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
+            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.32em] text-[var(--color-ink-muted)]">
               Why CONSOUL INDIA
             </p>
             <h2 className="max-w-[12ch] text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.05em] text-[var(--color-ink)]">
@@ -64,7 +64,7 @@ export function WhyConsoul() {
                 key={usp.id}
                 className="flex min-h-[280px] flex-col rounded-[4px] border border-[var(--color-border-subtle)] bg-[var(--color-canvas-raised)] p-8 transition duration-300 ease-in-out hover:-translate-y-1 hover:border-[var(--color-border-hover)]"
               >
-                <span className="text-[11px] font-normal uppercase tracking-[0.32em] text-[var(--color-ink-faint)]">
+                <span className="text-[11px] font-bold uppercase tracking-[0.32em] text-[var(--color-ink-muted)]">
                   {usp.num}
                 </span>
                 <div className="mt-10 flex flex-1 flex-col">

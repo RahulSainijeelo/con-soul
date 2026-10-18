@@ -493,69 +493,69 @@ export default function MyTripDetailPage() {
                     {/* Left Column - Main Details & Itinerary */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Dates & Duration Card */}
-                        <Card className="bg-white/5 border-white/10 rounded-2xl p-6 md:p-8">
-                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                                <Calendar className="w-6 h-6 text-gold" />
+                        <Card className="bg-card border-border rounded-2xl p-6 md:p-8 shadow-sm">
+                            <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+                                <Calendar className="w-6 h-6 text-amber-500" />
                                 Trip Overview
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Start Date</p>
-                                    <p className="font-semibold text-lg text-white">{formatDate(trip?.startDate)}</p>
+                                <div className="p-4 bg-muted/40 rounded-xl border border-border">
+                                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1">Start Date</p>
+                                    <p className="font-semibold text-lg text-foreground">{formatDate(trip?.startDate)}</p>
                                 </div>
-                                <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">End Date</p>
-                                    <p className="font-semibold text-lg text-white">{formatDate(trip?.endDate)}</p>
+                                <div className="p-4 bg-muted/40 rounded-xl border border-border">
+                                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1">End Date</p>
+                                    <p className="font-semibold text-lg text-foreground">{formatDate(trip?.endDate)}</p>
                                 </div>
                                 {trip?.duration && (
-                                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Duration</p>
-                                        <p className="font-semibold text-lg text-white">{trip.duration}</p>
+                                    <div className="p-4 bg-muted/40 rounded-xl border border-border">
+                                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1">Duration</p>
+                                        <p className="font-semibold text-lg text-foreground">{trip.duration}</p>
                                     </div>
                                 )}
                                 {booking.seatNumber && (
-                                    <div className="p-4 bg-black/40 rounded-xl border border-white/5">
-                                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Assigned Seat</p>
-                                        <p className="font-semibold text-lg text-gold font-mono">{booking.seatNumber}</p>
+                                    <div className="p-4 bg-muted/40 rounded-xl border border-border">
+                                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1">Assigned Seat</p>
+                                        <p className="font-semibold text-lg text-amber-600 dark:text-amber-400 font-mono">{booking.seatNumber}</p>
                                     </div>
                                 )}
                             </div>
 
                             {trip?.description && (
-                                <div className="mt-6 pt-6 border-t border-white/10">
-                                    <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Description</h3>
-                                    <p className="text-gray-300 leading-relaxed">{trip.description}</p>
+                                <div className="mt-6 pt-6 border-t border-border">
+                                    <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-2">Description</h3>
+                                    <p className="text-muted-foreground leading-relaxed">{trip.description}</p>
                                 </div>
                             )}
                         </Card>
 
                         {/* Itinerary Section */}
                         {trip?.itinerary && trip.itinerary.length > 0 && (
-                            <Card className="bg-white/5 border-white/10 rounded-2xl p-6 md:p-8">
-                                <h2 className="text-2xl font-bold text-white mb-6">Itinerary</h2>
+                            <Card className="bg-card border-border rounded-2xl p-6 md:p-8 shadow-sm">
+                                <h2 className="text-2xl font-bold text-foreground mb-6">Itinerary</h2>
                                 <div className="space-y-6">
                                     {trip.itinerary.map((item, idx) => (
                                         <div
                                             key={idx}
-                                            className="relative pl-8 pb-6 border-l-2 border-gold/30 last:border-0 last:pb-0"
+                                            className="relative pl-8 pb-6 border-l-2 border-amber-500/30 last:border-0 last:pb-0"
                                         >
-                                            <div className="absolute -left-[9px] top-0 w-4 h-4 bg-gold rounded-full border-4 border-black" />
+                                            <div className="absolute -left-[9px] top-0 w-4 h-4 bg-amber-500 rounded-full border-4 border-background" />
                                             <div className="mb-2">
-                                                <span className="text-xs font-bold text-gold uppercase tracking-wider">
+                                                <span className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
                                                     Day {item.day || idx + 1}
                                                 </span>
-                                                <h3 className="text-lg font-bold text-white">{item.title}</h3>
+                                                <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
                                             </div>
 
                                             {item.description && (
-                                                <p className="text-sm text-gray-300 mb-3">{item.description}</p>
+                                                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{item.description}</p>
                                             )}
 
                                             {item.activities && item.activities.length > 0 && (
                                                 <ul className="space-y-1">
                                                     {item.activities.map((act, actIdx) => (
-                                                        <li key={actIdx} className="text-sm text-gray-400 flex items-start gap-2">
-                                                            <span className="text-gold mt-0.5">•</span>
+                                                        <li key={actIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                                                            <span className="text-amber-500 mt-0.5">•</span>
                                                             <span>{act}</span>
                                                         </li>
                                                     ))}
@@ -569,18 +569,18 @@ export default function MyTripDetailPage() {
 
                         {/* Included & Not Included Section */}
                         {((trip?.included && trip.included.length > 0) || (trip?.notIncluded && trip.notIncluded.length > 0)) && (
-                            <Card className="bg-white/5 border-white/10 rounded-2xl p-6 md:p-8">
-                                <h2 className="text-2xl font-bold text-white mb-6">Inclusions & Exclusions</h2>
+                            <Card className="bg-card border-border rounded-2xl p-6 md:p-8 shadow-sm">
+                                <h2 className="text-2xl font-bold text-foreground mb-6">Inclusions & Exclusions</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {trip?.included && trip.included.length > 0 && (
                                         <div className="space-y-3">
-                                            <h3 className="text-lg font-semibold text-green-400 flex items-center gap-2">
-                                                <CheckCircle2 className="w-5 h-5" /> What's Included
+                                            <h3 className="text-lg font-semibold text-green-600 dark:text-green-400 flex items-center gap-2">
+                                                <CheckCircle2 className="w-5 h-5" /> What&apos;s Included
                                             </h3>
                                             <ul className="space-y-2">
                                                 {trip.included.map((inc, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
-                                                        <Check className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                                                    <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
+                                                        <Check className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                                         <span>{inc}</span>
                                                     </li>
                                                 ))}
@@ -590,13 +590,13 @@ export default function MyTripDetailPage() {
 
                                     {trip?.notIncluded && trip.notIncluded.length > 0 && (
                                         <div className="space-y-3">
-                                            <h3 className="text-lg font-semibold text-red-400 flex items-center gap-2">
-                                                <XCircle className="w-5 h-5" /> What's Not Included
+                                            <h3 className="text-lg font-semibold text-red-600 dark:text-red-400 flex items-center gap-2">
+                                                <XCircle className="w-5 h-5" /> What&apos;s Not Included
                                             </h3>
                                             <ul className="space-y-2">
                                                 {trip.notIncluded.map((exc, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-400">
-                                                        <X className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                                                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                                        <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                                                         <span>{exc}</span>
                                                     </li>
                                                 ))}
@@ -611,27 +611,27 @@ export default function MyTripDetailPage() {
                     {/* Right Column - Payment & Traveler Info */}
                     <div className="space-y-6">
                         {/* Payment Section */}
-                        <Card className="bg-gradient-to-br from-gray-900 to-black border-white/10 rounded-2xl p-6">
-                            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                <CreditCard className="w-5 h-5 text-gold" />
+                        <Card className="bg-card border-border rounded-2xl p-6 shadow-sm">
+                            <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
+                                <CreditCard className="w-5 h-5 text-amber-500" />
                                 Payment Details
                             </h2>
 
                             <div className="space-y-5">
                                 {/* Payment Status Banner */}
                                 {booking.paymentStatus === "partial" && (
-                                    <div className="p-4 bg-yellow-950/40 border border-yellow-500/30 rounded-xl space-y-2">
-                                        <div className="flex items-center justify-between text-green-400 font-semibold text-sm">
+                                    <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-2">
+                                        <div className="flex items-center justify-between text-green-600 dark:text-green-400 font-semibold text-sm">
                                             <span className="flex items-center gap-1.5">
                                                 <CheckCircle2 className="w-4 h-4" /> Registration Paid ✓
                                             </span>
                                             <span>₹{paidAmount.toLocaleString()}</span>
                                         </div>
-                                        <div className="flex items-center justify-between text-gray-300 text-sm">
+                                        <div className="flex items-center justify-between text-muted-foreground text-sm font-medium">
                                             <span>Total Amount:</span>
-                                            <span>₹{booking.amount.toLocaleString()}</span>
+                                            <span className="text-foreground font-semibold">₹{booking.amount.toLocaleString()}</span>
                                         </div>
-                                        <div className="flex items-center justify-between text-gold font-bold text-base pt-2 border-t border-yellow-500/20">
+                                        <div className="flex items-center justify-between text-amber-600 dark:text-amber-400 font-bold text-base pt-2 border-t border-amber-500/20">
                                             <span>Remaining Due:</span>
                                             <span>₹{remainingAmount.toLocaleString()}</span>
                                         </div>
@@ -640,7 +640,7 @@ export default function MyTripDetailPage() {
                                         <Button
                                             onClick={handlePayRemaining}
                                             disabled={loadingPayment}
-                                            className="w-full mt-3 bg-gold hover:bg-yellow-600 text-black font-bold py-3 text-base rounded-xl transition-colors shadow-lg shadow-gold/10"
+                                            className="w-full mt-3 bg-foreground hover:bg-foreground/90 text-background font-bold py-3 text-base rounded-xl transition-colors shadow-sm"
                                         >
                                             {loadingPayment ? (
                                                 <span className="flex items-center gap-2">
@@ -656,46 +656,46 @@ export default function MyTripDetailPage() {
                                 )}
 
                                 {booking.paymentStatus === "paid" && (
-                                    <div className="p-4 bg-green-950/40 border border-green-500/30 rounded-xl space-y-2">
-                                        <div className="flex items-center gap-2 text-green-400 font-bold text-lg">
+                                    <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-xl space-y-2">
+                                        <div className="flex items-center gap-2 text-green-600 dark:text-green-400 font-bold text-lg">
                                             <CheckCircle2 className="w-5 h-5" />
                                             <span>Fully Paid ✓</span>
                                         </div>
-                                        <div className="flex items-center justify-between text-gray-300 text-sm pt-2 border-t border-green-500/20">
+                                        <div className="flex items-center justify-between text-muted-foreground text-sm pt-2 border-t border-green-500/20">
                                             <span>Total Amount Paid:</span>
-                                            <span className="text-white font-semibold">₹{booking.amount.toLocaleString()}</span>
+                                            <span className="text-foreground font-semibold">₹{booking.amount.toLocaleString()}</span>
                                         </div>
                                     </div>
                                 )}
 
                                 {booking.paymentStatus !== "partial" && booking.paymentStatus !== "paid" && (
-                                    <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
-                                        <div className="flex items-center justify-between text-gray-300 text-sm">
+                                    <div className="p-4 bg-muted/40 border border-border rounded-xl space-y-2">
+                                        <div className="flex items-center justify-between text-muted-foreground text-sm">
                                             <span>Booking Amount:</span>
-                                            <span className="text-gold font-bold text-lg">₹{booking.amount.toLocaleString()}</span>
+                                            <span className="text-amber-600 dark:text-amber-400 font-bold text-lg">₹{booking.amount.toLocaleString()}</span>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* Payment Breakdown info */}
-                                <div className="space-y-3 pt-4 border-t border-white/10 text-sm">
-                                    <div className="flex justify-between text-gray-400">
+                                <div className="space-y-3 pt-4 border-t border-border text-sm">
+                                    <div className="flex justify-between text-muted-foreground">
                                         <span>Trip Fee</span>
-                                        <span className="text-white font-medium">₹{booking.amount.toLocaleString()}</span>
+                                        <span className="text-foreground font-semibold">₹{booking.amount.toLocaleString()}</span>
                                     </div>
 
                                     {booking.razorpayPaymentId && (
-                                        <div className="pt-2 border-t border-white/5">
-                                            <span className="text-xs text-gray-400 block mb-1">Razorpay Payment ID</span>
-                                            <span className="font-mono text-xs text-gray-300 break-all bg-black/40 p-2 rounded block border border-white/5">
+                                        <div className="pt-2 border-t border-border">
+                                            <span className="text-xs text-muted-foreground block mb-1">Razorpay Payment ID</span>
+                                            <span className="font-mono text-xs text-foreground break-all bg-muted/40 p-2 rounded block border border-border">
                                                 {booking.razorpayPaymentId}
                                             </span>
                                         </div>
                                     )}
 
                                     {booking.createdAt && (
-                                        <div className="flex items-center gap-2 text-xs text-gray-400 pt-2">
-                                            <Calendar className="w-3.5 h-3.5 text-gold" />
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2">
+                                            <Calendar className="w-3.5 h-3.5 text-amber-500" />
                                             <span>Booked on {formatDate(booking.createdAt)}</span>
                                         </div>
                                     )}
@@ -704,43 +704,43 @@ export default function MyTripDetailPage() {
                         </Card>
 
                         {/* Traveler Information */}
-                        <Card className="bg-white/5 border-white/10 rounded-2xl p-6">
-                            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                <User className="w-5 h-5 text-gold" />
+                        <Card className="bg-card border-border rounded-2xl p-6 shadow-sm">
+                            <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
+                                <User className="w-5 h-5 text-amber-500" />
                                 Traveler Information
                             </h2>
 
                             <div className="space-y-4">
                                 <div className="flex items-start gap-3">
-                                    <User className="w-4 h-4 text-gold mt-1 shrink-0" />
+                                    <User className="w-4 h-4 text-amber-500 mt-1 shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-400 uppercase tracking-wider">Full Name</p>
-                                        <p className="font-medium text-white">{booking.fullName}</p>
+                                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Full Name</p>
+                                        <p className="font-semibold text-foreground">{booking.fullName}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-3">
-                                    <Mail className="w-4 h-4 text-gold mt-1 shrink-0" />
+                                    <Mail className="w-4 h-4 text-amber-500 mt-1 shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-400 uppercase tracking-wider">Email Address</p>
-                                        <p className="font-medium text-white break-all">{booking.email}</p>
+                                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Email Address</p>
+                                        <p className="font-semibold text-foreground break-all">{booking.email}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-3">
-                                    <Phone className="w-4 h-4 text-gold mt-1 shrink-0" />
+                                    <Phone className="w-4 h-4 text-amber-500 mt-1 shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-400 uppercase tracking-wider">Mobile Number</p>
-                                        <p className="font-medium text-white">{booking.mobileNo}</p>
+                                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Mobile Number</p>
+                                        <p className="font-semibold text-foreground">{booking.mobileNo}</p>
                                     </div>
                                 </div>
 
                                 {booking.aadhaarNo && (
                                     <div className="flex items-start gap-3">
-                                        <Shield className="w-4 h-4 text-gold mt-1 shrink-0" />
+                                        <Shield className="w-4 h-4 text-amber-500 mt-1 shrink-0" />
                                         <div>
-                                            <p className="text-xs text-gray-400 uppercase tracking-wider">Aadhaar Number</p>
-                                            <p className="font-mono text-white">XXXX-XXXX-{booking.aadhaarNo.slice(-4)}</p>
+                                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Aadhaar Number</p>
+                                            <p className="font-mono text-foreground">XXXX-XXXX-{booking.aadhaarNo.slice(-4)}</p>
                                         </div>
                                     </div>
                                 )}
@@ -749,28 +749,28 @@ export default function MyTripDetailPage() {
 
                         {/* Refund Policy Card */}
                         <Card className="bg-amber-500/5 border-amber-500/20 rounded-2xl p-5 space-y-2">
-                            <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm">
+                            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold text-sm">
                                 <ShieldAlert className="w-4 h-4" />
                                 <span>Cancellation & Refund Policy</span>
                             </div>
-                            <p className="text-xs text-gray-300 leading-relaxed">
-                                Cancellations between <strong className="text-gold">15 to 10 days</strong> prior to departure receive <strong className="text-gold">10% refund</strong> of registration fee. Cancellations <strong className="text-white">under 10 days</strong> are strictly non-refundable.
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                                Cancellations between <strong className="text-amber-600 dark:text-amber-400">15 to 10 days</strong> prior to departure receive <strong className="text-amber-600 dark:text-amber-400">10% refund</strong> of registration fee. Cancellations <strong className="text-foreground">under 10 days</strong> are strictly non-refundable.
                             </p>
                             <div className="pt-1">
-                                <Link href="/refund-policy" className="text-gold text-xs hover:underline font-medium inline-block">
+                                <Link href="/refund-policy" className="text-amber-600 dark:text-amber-400 text-xs hover:underline font-semibold inline-block">
                                     View Full Refund Policy →
                                 </Link>
                             </div>
                         </Card>
 
                         {/* Support Card */}
-                        <Card className="bg-white/5 border-white/10 rounded-2xl p-6 text-center">
-                            <h3 className="text-lg font-bold text-white mb-2">Need Assistance?</h3>
-                            <p className="text-xs text-gray-400 mb-4">
+                        <Card className="bg-card border-border rounded-2xl p-6 text-center shadow-sm">
+                            <h3 className="text-lg font-bold text-foreground mb-2">Need Assistance?</h3>
+                            <p className="text-xs text-muted-foreground mb-4">
                                 Have questions about your booking or itinerary? Contact our support team.
                             </p>
                             <Link href="/contact">
-                                <Button variant="outline" className="w-full border-gold/40 text-gold hover:bg-gold/10">
+                                <Button variant="outline" className="w-full border-border text-foreground hover:bg-foreground/5">
                                     Contact Support
                                 </Button>
                             </Link>

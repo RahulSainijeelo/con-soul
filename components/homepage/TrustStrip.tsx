@@ -32,8 +32,8 @@ export function TrustStrip({ className = "", variant = "full" }: TrustStripProps
                     {index > 0 && (
                         <span className="text-[var(--color-ink-faint)] mr-2 sm:mr-4 hidden sm:inline" aria-hidden="true">·</span>
                     )}
-                    <stat.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--color-ink-faint)] flex-shrink-0" aria-hidden="true" />
-                    <span className="text-[var(--color-ink-muted)] text-[11px] sm:text-[12px] font-normal tracking-[0.1em] uppercase">
+                    <stat.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--color-ink-muted)] flex-shrink-0" aria-hidden="true" />
+                    <span className="text-[var(--color-ink)] text-[11px] sm:text-[12px] font-medium tracking-[0.08em] uppercase">
                         {stat.label}
                     </span>
                 </div>
