@@ -75,7 +75,7 @@ export function StaticHero() {
   const brandFading = phase >= 4;
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#0A0A0A] flex flex-col items-center justify-center select-none">
+    <section className="relative h-screen w-full overflow-hidden bg-[#111318] flex flex-col items-center justify-center select-none">
       {/* ── Background Image ── */}
       <div
         className="absolute inset-0 z-0 transition-opacity"
@@ -92,9 +92,10 @@ export function StaticHero() {
           priority
           quality={85}
         />
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
+        {/* Lighter overlay — let the hero image breathe */}
+        <div className="absolute inset-0 bg-black/40" />
+        {/* Gentle bottom gradient for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
       </div>
 
       {/* ── CONSOUL INDIA + Tagline (fades away after tagline completes) ── */}

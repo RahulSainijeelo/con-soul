@@ -43,7 +43,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
     }
 
     return (
-        <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-[var(--color-canvas)] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid var(--color-border-subtle)", boxShadow: "0 -8px 30px rgba(0,0,0,0.3)" }}>
+        <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-[var(--color-canvas)] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid var(--color-border-subtle)", boxShadow: "0 -8px 40px rgba(0,0,0,0.1)" }}>
             {/* Background Elements — neutral monochrome glows */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-foreground/5 rounded-full blur-[100px]" />

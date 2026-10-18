@@ -91,10 +91,11 @@ function TripSlide({ trip, isActive }: { trip: Trip; isActive: boolean }) {
                         loading="eager"
                     />
                 ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-gray-900 via-black to-gray-800" />
+                    <div className="h-full w-full bg-gradient-to-br from-gray-900 via-[#111318] to-gray-800" />
                 )}
-                {/* Dark gradient overlay — bottom-to-top for text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
+                {/* Lighter gradient overlay — let the hero image breathe */}
+                <div className="absolute inset-0 bg-black/35" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
             </div>
 
             {/* Trip Details Card — bottom-left desktop / bottom-center mobile */}
@@ -219,7 +220,7 @@ function WaitlistState() {
     return (
         <div className="relative h-screen w-full overflow-hidden">
             {/* Gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-black to-gray-900" />
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-[#111318] to-gray-800" />
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
                 <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]" />
@@ -379,7 +380,7 @@ export function HeroSection() {
     // Loading state
     if (loading) {
         return (
-            <section className="relative h-screen w-full bg-black flex items-center justify-center" aria-label="Loading hero">
+            <section className="relative h-screen w-full bg-[#111318] flex items-center justify-center" aria-label="Loading hero">
                 <Loader2 className="h-10 w-10 animate-spin text-white" />
             </section>
         );
@@ -393,7 +394,7 @@ export function HeroSection() {
     // Single trip → static hero
     if (trips.length === 1) {
         return (
-            <section className="relative h-screen w-full overflow-hidden bg-black" aria-label={`Next trip: ${trips[0].title}`}>
+            <section className="relative h-screen w-full overflow-hidden bg-[#111318]" aria-label={`Next trip: ${trips[0].title}`}>
                 <TripSlide trip={trips[0]} isActive={true} />
                 <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 z-20">
                     <TrustStrip />
@@ -404,7 +405,7 @@ export function HeroSection() {
 
     // Multiple trips → carousel
     return (
-        <section className="relative h-screen w-full overflow-hidden bg-black" aria-label="Upcoming trips">
+        <section className="relative h-screen w-full overflow-hidden bg-[#111318]" aria-label="Upcoming trips">
             <div className="h-full" ref={emblaRef}>
                 <div className="flex h-full">
                     {trips.map((trip, index) => (

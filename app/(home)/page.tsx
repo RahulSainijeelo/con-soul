@@ -106,7 +106,7 @@ export default async function HomePage() {
           style={{
             borderRadius: "40px 40px 0 0",
             borderTop: "1px solid var(--color-border-subtle)",
-            boxShadow: "0 -8px 30px rgba(0,0,0,0.3)",
+            boxShadow: "0 -8px 40px rgba(0,0,0,0.15)",
             overflow: "hidden",
           }}
         >
@@ -138,7 +138,7 @@ export default async function HomePage() {
           {/* 8. Contact CTA */}
           <div className="flex justify-center pb-10 md:pb-10 mb-20 md:mb-0">
             <Link href="/contact">
-              <button className="bg-transparent hover:bg-white/5 text-foreground font-semibold py-4 px-10 rounded-xl border-2 border-foreground transition-colors text-base md:text-lg active:scale-95">
+              <button className="bg-transparent hover:bg-foreground/5 text-foreground font-semibold py-4 px-10 rounded-xl border-2 border-foreground transition-colors text-base md:text-lg active:scale-95">
                 Contact Us
               </button>
             </Link>
