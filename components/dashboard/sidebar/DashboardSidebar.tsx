@@ -17,6 +17,7 @@ import {
   X,
   Loader2,
   Activity,
+  UsersRound,
 } from "lucide-react";
 
 const navItems = [
@@ -25,6 +26,7 @@ const navItems = [
   { label: "Enquiries", href: "/dashboard/enquiries", icon: MessageSquare },
   { label: "Reviews", href: "/dashboard/reviews", icon: Star },
   { label: "Login Activity", href: "/dashboard/login-activity", icon: Activity },
+  { label: "Team & Access", href: "/dashboard/members", icon: UsersRound },
   { label: "Profile", href: "/dashboard/profile", icon: User },
 ];
 
