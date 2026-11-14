@@ -1,0 +1,9 @@
+allowBuilds:
+  '@clerk/shared': true
+  '@firebase/util': true
+  '@vercel/speed-insights': true
+  browser-tabs-lock: true
+  core-js: true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true

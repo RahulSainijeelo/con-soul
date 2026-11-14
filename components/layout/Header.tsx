@@ -10,6 +10,8 @@ import {
   Award,
   LayoutDashboard,
   LogOut,
+  Instagram,
+  Linkedin,
 } from "lucide-react";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
@@ -30,6 +32,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LoginModal } from "@/components/auth/LoginModal";
 
 const NAV_LINKS = [
   { label: "Trips", href: "/trips" },
@@ -44,6 +47,7 @@ export default function Header() {
   const session = useSession();
   const [userRole, setUserRole] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   useEffect(() => {
     if (session.status === "authenticated") {
@@ -69,125 +73,175 @@ export default function Header() {
     <header className="fixed top-0 px-3 py-3 md:px-4 md:py-6 flex justify-end left-0 right-0 z-50 w-full pointer-events-none">
       <div className="container mx-auto flex items-start justify-between pointer-events-auto">
         {/* Left — Logo */}
-        <Link href="/" className="flex-shrink-0 transition-opacity duration-700 opacity-100">
-          <div className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-white/95 dark:bg-white/95 backdrop-blur-md border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 shadow-lg">
-            <Image src={logo} alt="CONSOUL INDIA logo" />
-          </div>
-        </Link>
+        <div className="flex-shrink-0 transition-opacity duration-700 opacity-100 flex items-center">
+          {/* Desktop logo: navigates to / */}
+          <Link href="/" className="hidden md:block">
+            <div className="w-14 h-14 rounded-full bg-white/95 dark:bg-white/95 backdrop-blur-md border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-105">
+              <Image src={logo} alt="CONSOUL INDIA logo" priority />
+            </div>
+          </Link>
+          {/* Mobile logo: tapping toggles the menu bar */}
+          <button
+            onClick={() => setMobileOpen((prev) => !prev)}
+            aria-label="Toggle Menu"
+            className="md:hidden w-11 h-11 rounded-full bg-white/95 dark:bg-white/95 backdrop-blur-md border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 shadow-lg active:scale-95"
+          >
+            <Image src={logo} alt="CONSOUL INDIA logo" width={32} height={32} className="object-contain" priority />
+          </button>
+        </div>
 
         {/* Mobile nav */}
         <div className="md:hidden flex items-center">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
-              <button className="w-11 h-11 rounded-full bg-black dark:bg-white border border-black/20 dark:border-white/20 flex items-center justify-center shadow-xl">
+              <button
+                aria-label="Toggle Menu"
+                className="w-11 h-11 rounded-full bg-black dark:bg-white border border-black/20 dark:border-white/20 flex items-center justify-center shadow-xl active:scale-95 transition-transform"
+              >
                 <Menu className="h-5 w-5 text-white dark:text-black" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] p-0">
-              <SheetHeader className="px-6 pt-6 pb-4 border-b">
-                <SheetTitle className="text-left text-sm font-bold uppercase tracking-[0.1em]">
-                  Menu
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col py-4">
-                {NAV_LINKS.map((link) => (
-                  <SheetClose asChild key={link.href}>
+            <SheetContent side="right" className="w-[300px] p-0 flex flex-col justify-between overflow-y-auto">
+              <div>
+                <SheetHeader className="px-6 pt-6 pb-4 border-b border-border">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-white/95 dark:bg-white/95 backdrop-blur-md border border-black/10 dark:border-white/10 flex items-center justify-center p-1 shadow-sm shrink-0">
+                      <Image src={logo} alt="CONSOUL INDIA logo" width={22} height={22} className="object-contain" />
+                    </div>
+                    <SheetTitle className="text-left text-sm font-black uppercase tracking-[0.14em] text-foreground">
+                      CONSOUL INDIA
+                    </SheetTitle>
+                  </div>
+                </SheetHeader>
+                <div className="flex flex-col py-4">
+                  {NAV_LINKS.map((link) => (
+                    <SheetClose asChild key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </SheetClose>
+                  ))}
+                  <SheetClose asChild>
                     <Link
-                      href={link.href}
-                      className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors"
+                      href="/ambassadors"
+                      className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-2"
                     >
-                      {link.label}
+                      Campus Ambassador
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500" />
+                      </span>
                     </Link>
                   </SheetClose>
-                ))}
-                <SheetClose asChild>
-                  <Link
-                    href="/ambassadors"
-                    className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-2"
-                  >
-                    Campus Ambassador
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500" />
+
+                  <div className="px-6 py-3 flex items-center gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                      Theme
                     </span>
-                  </Link>
-                </SheetClose>
-
-                <div className="px-6 py-3 flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-                    Theme
-                  </span>
-                  <ThemeToggle />
-                </div>
-
-                <div className="mx-6 my-2 h-px bg-border" />
-
-                {isAuthenticated ? (
-                  <>
-                    <SheetClose asChild>
-                      <Link
-                        href="/my-trips"
-                        className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
-                      >
-                        <Briefcase className="h-4 w-4" />
-                        My Trips & Bookings
-                      </Link>
-                    </SheetClose>
-                    <SheetClose asChild>
-                      <Link
-                        href="/profile"
-                        className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
-                      >
-                        <User className="h-4 w-4" />
-                        My Profile
-                      </Link>
-                    </SheetClose>
-
-                    {showAmbassador && (
-                      <SheetClose asChild>
-                        <Link
-                          href="/ambassador"
-                          className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
-                        >
-                          <Award className="h-4 w-4" />
-                          Ambassador Portal
-                        </Link>
-                      </SheetClose>
-                    )}
-
-                    {showAdmin && (
-                      <SheetClose asChild>
-                        <Link
-                          href="/dashboard"
-                          className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
-                        >
-                          <LayoutDashboard className="h-4 w-4" />
-                          Admin Dashboard
-                        </Link>
-                      </SheetClose>
-                    )}
-
-                    <div className="mx-6 my-2 h-px bg-border" />
-
-                    <button
-                      onClick={() => signOut()}
-                      className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3 text-left w-full text-destructive"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Log Out
-                    </button>
-                  </>
-                ) : (
-                  <div className="px-6 py-3">
-                    <SheetClose asChild>
-                      <Link href="/auth/login">
-                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:opacity-90 font-bold text-xs uppercase tracking-[0.1em] rounded-full">
-                          Login
-                        </Button>
-                      </Link>
-                    </SheetClose>
+                    <ThemeToggle />
                   </div>
-                )}
+
+                  <div className="mx-6 my-2 h-px bg-border" />
+
+                  {isAuthenticated ? (
+                    <>
+                      <SheetClose asChild>
+                        <Link
+                          href="/my-trips"
+                          className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
+                        >
+                          <Briefcase className="h-4 w-4" />
+                          My Trips & Bookings
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link
+                          href="/profile"
+                          className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
+                        >
+                          <User className="h-4 w-4" />
+                          My Profile
+                        </Link>
+                      </SheetClose>
+
+                      {showAmbassador && (
+                        <SheetClose asChild>
+                          <Link
+                            href="/ambassador"
+                            className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
+                          >
+                            <Award className="h-4 w-4" />
+                            Ambassador Portal
+                          </Link>
+                        </SheetClose>
+                      )}
+
+                      {showAdmin && (
+                        <SheetClose asChild>
+                          <Link
+                            href="/dashboard"
+                            className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3"
+                          >
+                            <LayoutDashboard className="h-4 w-4" />
+                            Admin Dashboard
+                          </Link>
+                        </SheetClose>
+                      )}
+
+                      <div className="mx-6 my-2 h-px bg-border" />
+
+                      <button
+                        onClick={() => signOut()}
+                        className="px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] hover:bg-accent transition-colors flex items-center gap-3 text-left w-full text-destructive"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Log Out
+                      </button>
+                    </>
+                  ) : (
+                    <div className="px-6 py-3">
+                      <Button
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setLoginModalOpen(true);
+                        }}
+                        className="w-full bg-black dark:bg-white text-white dark:text-black hover:opacity-90 font-bold text-xs uppercase tracking-[0.1em] rounded-full"
+                      >
+                        Login / Sign In
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Social Media Links (Instagram & LinkedIn) */}
+              <div className="p-6 border-t border-border mt-auto bg-muted/20">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
+                  Connect With Us
+                </p>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <a
+                    href="https://www.instagram.com/consoul.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-foreground/5 hover:bg-foreground/10 border border-border text-foreground text-xs font-semibold uppercase tracking-wider transition-colors group"
+                  >
+                    <Instagram className="w-4 h-4 text-orange-500 group-hover:scale-110 transition-transform" />
+                    <span>Instagram</span>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/company/consoul-india"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-foreground/5 hover:bg-foreground/10 border border-border text-foreground text-xs font-semibold uppercase tracking-wider transition-colors group"
+                  >
+                    <Linkedin className="w-4 h-4 text-sky-500 group-hover:scale-110 transition-transform" />
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
@@ -276,14 +330,17 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href="/auth/login">
-              <Button className="bg-white dark:bg-black text-black dark:text-white hover:opacity-90 font-bold text-[10px] uppercase tracking-[0.1em] px-6 py-2 h-auto rounded-full shadow-sm">
-                Login
-              </Button>
-            </Link>
+            <Button
+              onClick={() => setLoginModalOpen(true)}
+              className="bg-white dark:bg-black text-black dark:text-white hover:opacity-90 font-bold text-[10px] uppercase tracking-[0.1em] px-6 py-2 h-auto rounded-full shadow-sm"
+            >
+              Login
+            </Button>
           )}
         </nav>
       </div>
+
+      <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
     </header>
   );
 }

@@ -53,7 +53,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
     }
 
     return (
-        <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-[var(--color-canvas)] relative z-50 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid var(--color-border-subtle)", boxShadow: "0 -8px 40px rgba(0,0,0,0.1)" }}>
+        <section className="py-24 md:py-28 -mt-[30px] md:mt-0 bg-[var(--color-canvas)] relative z-10 overflow-hidden" style={{ borderRadius: "40px 40px 0 0", borderTop: "1px solid var(--color-border-subtle)", boxShadow: "0 -8px 40px rgba(0,0,0,0.1)" }}>
             {/* Background Elements — neutral monochrome glows */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-foreground/5 rounded-full blur-[100px]" />
@@ -66,7 +66,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                 {reviews.length > 0 && (
                     <div className="mb-20">
                         <div className="mb-12 text-center">
-                            <h2 className="mb-4 text-3xl font-display font-bold text-foreground sm:text-4xl">
+                            <h2 className="mb-4 text-3xl font-sans font-bold text-foreground sm:text-4xl">
                                 Memories from <span className="text-foreground/85">Travelers</span>
                             </h2>
                             <p className="mx-auto max-w-2xl text-muted-foreground">
@@ -147,7 +147,7 @@ export function PreviousTrips({ pastTrips, reviews }: PreviousTripsProps) {
                 {pastTrips.length > 0 && (
                     <div>
                         <div className="mb-12 text-center">
-                            <h2 className="mb-4 text-3xl font-display font-bold text-foreground sm:text-4xl">
+                            <h2 className="mb-4 text-3xl font-sans font-bold text-foreground sm:text-4xl">
                                 Our <span className="text-foreground/85">Past Expeditions</span>
                             </h2>
                             <p className="mx-auto max-w-2xl text-muted-foreground">

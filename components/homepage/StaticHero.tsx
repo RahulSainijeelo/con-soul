@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { TrustStrip } from "./TrustStrip";
 import Image from "next/image";
 
 const CONSOUL_LETTERS = ["C", "O", "N", "S", "O", "U", "L", " ", "I", "N", "D", "I", "A"];

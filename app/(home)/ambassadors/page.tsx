@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { BottomTabBar } from "@/components/layout/BottomTabBar";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import BottomTabBar from "@/components/layout/BottomTabBar";
 import { Button } from "@/components/ui/button";
 import {
   GraduationCap,
@@ -151,7 +151,7 @@ export default function AmbassadorsPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/20 hover:bg-white/5 px-8 gap-2"
+                  className="border-foreground/20 hover:bg-foreground/5 px-8 gap-2"
                 >
                   <Users className="w-4 h-4" />
                   Login First
@@ -177,7 +177,7 @@ export default function AmbassadorsPage() {
             {benefits.map((benefit) => (
               <div
                 key={benefit.title}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-amber-500/30 transition-colors"
+                className="bg-foreground/5 border border-foreground/10 rounded-2xl p-6 hover:border-amber-500/30 transition-colors"
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-2xl">
@@ -213,7 +213,7 @@ export default function AmbassadorsPage() {
             {tiers.map((tier, index) => (
               <div
                 key={tier.name}
-                className={`relative bg-white/5 border ${tier.borderColor} rounded-2xl p-6 text-center hover:scale-[1.02] transition-transform`}
+                className={`relative bg-foreground/5 border ${tier.borderColor} rounded-2xl p-6 text-center hover:scale-[1.02] transition-transform`}
               >
                 {tier.name === "Gold" && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-amber-500 text-black text-xs font-bold">
@@ -241,7 +241,7 @@ export default function AmbassadorsPage() {
 
                 {index < tiers.length - 1 && (
                   <div className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10">
-                    <ArrowRight className="w-5 h-5 text-white/30" />
+                    <ArrowRight className="w-5 h-5 text-foreground/30" />
                   </div>
                 )}
               </div>
@@ -265,7 +265,7 @@ export default function AmbassadorsPage() {
             {steps.map((item) => (
               <div
                 key={item.step}
-                className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-6 flex items-start gap-4"
+                className="bg-foreground/5 border border-foreground/10 rounded-2xl p-5 md:p-6 flex items-start gap-4"
               >
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
                   <span className="text-amber-400 font-bold text-sm">
@@ -285,7 +285,7 @@ export default function AmbassadorsPage() {
 
         {/* CTA Section */}
         <section className="max-w-5xl mx-auto px-4 py-12 md:py-16">
-          <div className="relative bg-white/5 border border-amber-500/20 rounded-2xl p-8 md:p-12 text-center overflow-hidden">
+          <div className="relative bg-foreground/5 border border-amber-500/20 rounded-2xl p-8 md:p-12 text-center overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-amber-500/10 rounded-full blur-[80px]" />
             </div>
@@ -314,7 +314,7 @@ export default function AmbassadorsPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white/20 hover:bg-white/5 px-8 gap-2"
+                    className="border-foreground/20 hover:bg-foreground/5 px-8 gap-2"
                   >
                     <Users className="w-4 h-4" />
                     Login First

@@ -26,16 +26,46 @@ export default function Footer() {
   return (
     <footer className="bg-background text-foreground transition-colors duration-300">
       {/* Big CTA — Femur style */}
-      <div className="flex flex-1 flex-col items-center justify-center text-center px-5 py-24 md:py-32">
-        <div className="text-[clamp(2.5rem,8vw,6rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.03em]">
+      <div className="relative overflow-hidden flex flex-1 flex-col items-center justify-center text-center px-5 py-24 md:py-32">
+        {/* Large "CONSOUL INDIA" background watermark */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+          aria-hidden="true"
+        >
+          <span
+            className="font-black uppercase whitespace-nowrap"
+            style={{
+              fontSize: "clamp(4.5rem, 16vw, 15rem)",
+              lineHeight: 1,
+              letterSpacing: "-0.04em",
+              color: "transparent",
+              WebkitTextStroke: "1px var(--color-border-subtle, rgba(255, 255, 255, 0.08))",
+              opacity: 0.8,
+            }}
+          >
+            CONSOUL INDIA
+          </span>
+        </div>
+
+        {/* Heading */}
+        <div className="relative z-10 text-[clamp(2.5rem,8vw,6.5rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.03em] select-none">
           <div>YOUR NEXT</div>
-          <div className="text-transparent" style={{ WebkitTextStroke: '1.5px currentColor', opacity: 0.65 }}>
+          <div
+            className="mt-1 md:mt-2"
+            style={{
+              WebkitTextStroke: "1.5px var(--color-ink, currentColor)",
+              WebkitTextFillColor: "transparent",
+              opacity: 0.75,
+            }}
+          >
             ADVENTURE AWAITS
           </div>
         </div>
+
+        {/* Explore Trips Button */}
         <Link
-          href="/past-trips"
-          className="mt-10 rounded-full bg-foreground px-8 py-3.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-background transition-all duration-300 hover:scale-[1.03] shadow-md"
+          href="/#trip-cards"
+          className="relative z-10 mt-9 rounded-full bg-foreground px-8 py-4 text-[12px] font-bold uppercase tracking-[0.14em] text-background transition-all duration-300 hover:scale-[1.03] shadow-md hover:shadow-lg cursor-pointer"
         >
           EXPLORE TRIPS →
         </Link>
