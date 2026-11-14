@@ -67,6 +67,7 @@
     "nextjs-toploader": "^3.9.17",
     "nodemailer": "^8.0.6",
     "nprogress": "^0.2.0",
+    "pdf-parse": "^1.1.1",
     "postcss": "8.4.30",
     "razorpay": "^2.9.8",
     "react": "18.2.0",
