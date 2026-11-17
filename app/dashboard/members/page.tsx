@@ -429,7 +429,7 @@ function AmbassadorApplicationsTab() {
               {f.label}
               {f.value !== "all" && (
                 <span className="ml-1.5 text-[10px] opacity-70">
-                  ({applications.filter((a) => f.value === "all" || a.status === f.value).length})
+                  ({applications.filter((a) => a.status === (f.value as string)).length})
                 </span>
               )}
             </button>
