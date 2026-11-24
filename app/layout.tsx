@@ -218,7 +218,7 @@ export default function RootLayout({
         </a>
 
         <ThemeProvider attribute="class" defaultTheme="dark" themes={["dark", "light"]} enableSystem={false}>
-          <ClerkProvider>
+          <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_Y2xlcmsuY29uLXNvdWwuaW4k'}>
             <div id="main-content">
               {children}
             </div>

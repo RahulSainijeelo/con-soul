@@ -9,8 +9,13 @@ export const imageSchema = z.object({
 // Itinerary item schema
 export const itineraryItemSchema = z.object({
     day: z.number().int().positive("Day must be a positive integer"),
+    from: z.string().min(1, "Origin city is required"),
+    to: z.string().optional(),
     title: z.string().min(1, "Itinerary title is required"),
     description: z.string().min(1, "Itinerary description is required"),
+    meals: z.array(z.string()).default([]),
+    experiencesCount: z.number().int().nonnegative().default(1),
+    highlightExperience: z.string().optional(),
 });
 
 // Route segment schema

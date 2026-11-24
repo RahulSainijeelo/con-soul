@@ -1,15 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import { TripRowItem } from '@/components/trips/TripRowItem';
-import { DEFAULT_UPCOMING_EXPEDITIONS } from '@/components/homepage/UpcomingTrips';
+import { DEFAULT_UPCOMING_EXPEDITIONS, combineWithBlueprintTrips } from '@/components/homepage/UpcomingTrips';
 import { Sparkles, Compass, Filter } from 'lucide-react';
 
 export default function TripsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [trips, setTrips] = useState<any[]>(DEFAULT_UPCOMING_EXPEDITIONS);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadPublishedTrips() {
+      try {
+        const res = await fetch('/api/trips?status=published&limit=50');
+        if (res.ok) {
+          const json = await res.json();
+          const publishedList = json.data || (Array.isArray(json) ? json : []);
+          setTrips(combineWithBlueprintTrips(publishedList));
+        }
+      } catch (err) {
+        console.error('Failed to load published trips on trips page:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPublishedTrips();
+  }, []);
 
   const categories = [
     { id: 'all', label: 'All Expeditions' },
@@ -18,11 +39,15 @@ export default function TripsPage() {
     { id: 'beach', label: 'Coastal & Beach' },
   ];
 
-  const filteredTrips = DEFAULT_UPCOMING_EXPEDITIONS.filter((trip) => {
+  const filteredTrips = trips.filter((trip) => {
     if (selectedCategory === 'all') return true;
-    if (selectedCategory === 'grand') return trip.category.toLowerCase().includes('grand') || trip.title.toLowerCase().includes('europe');
-    if (selectedCategory === 'mountain') return trip.category.toLowerCase().includes('mountain') || trip.category.toLowerCase().includes('trek');
-    if (selectedCategory === 'beach') return trip.category.toLowerCase().includes('beach') || trip.category.toLowerCase().includes('coast');
+    const cat = (trip.category || '').toLowerCase();
+    const title = (trip.title || '').toLowerCase();
+    const dest = (trip.destination || '').toLowerCase();
+
+    if (selectedCategory === 'grand') return cat.includes('grand') || title.includes('europe') || dest.includes('europe');
+    if (selectedCategory === 'mountain') return cat.includes('mountain') || cat.includes('trek') || title.includes('himalay') || dest.includes('manali') || dest.includes('kasol');
+    if (selectedCategory === 'beach') return cat.includes('beach') || cat.includes('coast') || title.includes('goa') || dest.includes('goa');
     return true;
   });
 

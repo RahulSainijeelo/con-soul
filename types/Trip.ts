@@ -9,6 +9,17 @@ export interface RouteSegment {
     notes?: string;
 }
 
+export interface ItineraryDay {
+    day: number;
+    from: string;
+    to?: string;
+    title: string;
+    description: string;
+    meals: string[];
+    experiencesCount: number;
+    highlightExperience?: string;
+}
+
 interface BaseTrip {
     title: string;
     destination: string;
@@ -25,7 +36,7 @@ interface BaseTrip {
     duration?: string;
     included?: string[];
     notIncluded?: string[];
-    itinerary?: { day: number; title: string; description: string }[];
+    itinerary?: ItineraryDay[];
     featured?: boolean;
     rating?: number;
     reviewCount?: number;

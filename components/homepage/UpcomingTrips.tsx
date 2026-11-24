@@ -83,13 +83,36 @@ export const DEFAULT_UPCOMING_EXPEDITIONS: any[] = [
   },
 ];
 
+/**
+ * Combines real published expeditions from Firestore with the European Escapade
+ * blueprint catalog so that the platform always showcases a robust lineup of 
+ * departures in the European Escapade style. Real trips appear first.
+ */
+export function combineWithBlueprintTrips(realTrips: any[] = []): any[] {
+  if (!realTrips || realTrips.length === 0) {
+    return DEFAULT_UPCOMING_EXPEDITIONS;
+  }
+
+  const realIds = new Set(realTrips.map((t) => (t.slug || t.id || '').toLowerCase()));
+  const realTitles = new Set(realTrips.map((t) => (t.title || '').toLowerCase().trim()));
+
+  // Filter out blueprint trips that match real published trips by id, slug, or title
+  const supplementalBlueprint = DEFAULT_UPCOMING_EXPEDITIONS.filter((bp) => {
+    const bpId = (bp.slug || bp.id || '').toLowerCase();
+    const bpTitle = (bp.title || '').toLowerCase().trim();
+    return !realIds.has(bpId) && !realTitles.has(bpTitle);
+  });
+
+  return [...realTrips, ...supplementalBlueprint];
+}
+
 interface UpcomingTripsProps {
   trips: EditTrip[];
 }
 
 export function UpcomingTrips({ trips }: UpcomingTripsProps) {
-  // If Firestore has published trips, use them; otherwise use European Escapade & curated benchmark trips
-  const displayTrips = trips && trips.length > 0 ? trips : DEFAULT_UPCOMING_EXPEDITIONS;
+  // Combine real published trips with curated European Escapade blueprint expeditions
+  const displayTrips = combineWithBlueprintTrips(trips);
 
   return (
     <section

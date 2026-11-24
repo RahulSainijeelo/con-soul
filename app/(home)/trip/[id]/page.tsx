@@ -405,6 +405,65 @@ const RELATED_EXPEDITIONS = [
   { id: 'european-discovery', title: 'European Discovery', duration: '12 Days', countries: 6, price: 148000, image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80', tag: 'Quick Escape' },
 ];
 
+// ─── Content-to-Itinerary Parser (European Escapade Blueprint) ───────
+/**
+ * Automatically parses unstructured trip content into the European Escapade
+ * day-by-day blueprint format (day, from, to, title, description, highlightExperience, meals).
+ * This ensures ANY real trip created in Firestore seamlessly adheres to the European Escapade blueprint.
+ */
+function parseItineraryFromContent(raw: string, fallbackDestination = 'Expedition'): ItineraryDay[] {
+  if (!raw || typeof raw !== 'string') return [];
+  const dayRegex = /(?:^|\n)(?:###\s*)?Day\s*(\d+)[:\s–—-]+([^\n]+)/gi;
+  const matches = [...raw.matchAll(dayRegex)];
+  if (matches.length === 0) return [];
+
+  return matches.map((m, idx) => {
+    const dayNum = parseInt(m[1], 10);
+    const dayTitle = m[2].trim();
+    const startIndex = (m.index ?? 0) + m[0].length;
+    const nextMatch = matches[idx + 1];
+    const endIndex = nextMatch && nextMatch.index !== undefined ? nextMatch.index : raw.length;
+    const bodyText = raw.slice(startIndex, endIndex).trim();
+
+    // Determine from / to from title (e.g. 'London to Paris' or 'Journey to Parvati Valley')
+    let from = fallbackDestination;
+    let to: string | undefined = undefined;
+    if (dayTitle.toLowerCase().includes(' to ')) {
+      const parts = dayTitle.split(/\s+to\s+/i);
+      from = parts[0].replace(/^(journey|drive|transfer|trek)\s+/i, '').trim();
+      to = parts[1].trim();
+    } else if (dayTitle.includes('&')) {
+      from = dayTitle.split('&')[0].trim();
+    } else {
+      from = dayTitle;
+    }
+
+    // Determine highlight experience
+    const paragraphs = bodyText.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+    const firstSentence = (paragraphs[0] || dayTitle).split(/[.\n]/)[0].trim();
+    const highlight = firstSentence.length > 10 && firstSentence.length < 90 ? firstSentence : dayTitle;
+
+    // Determine meals
+    const meals: string[] = [];
+    const lowerBody = bodyText.toLowerCase();
+    if (lowerBody.includes('breakfast')) meals.push('Breakfast Included');
+    if (lowerBody.includes('dinner')) meals.push('Dinner Included');
+    if (lowerBody.includes('lunch')) meals.push('Lunch Included');
+    if (meals.length === 0) meals.push(idx === 0 ? 'Dinner Included' : 'Breakfast Included');
+
+    return {
+      day: dayNum,
+      from,
+      to,
+      title: dayTitle,
+      description: bodyText || dayTitle,
+      highlightExperience: highlight,
+      meals,
+      experiencesCount: Math.max(1, paragraphs.length || 1),
+    };
+  });
+}
+
 // ─── Main Page Component ─────────────────────────────────────────────
 export default function TripPage() {
   const { data: session } = useSession();
@@ -457,8 +516,53 @@ export default function TripPage() {
         const tripRes = await fetch(`/api/trips/${tripId}`);
         if (tripRes.ok) {
           const tripData = await tripRes.json();
-          if (!tripData.itinerary || tripData.itinerary.length === 0) tripData.itinerary = defaultTrip.itinerary;
-          if (!tripData.travelRoute || tripData.travelRoute.length === 0) tripData.travelRoute = defaultTrip.travelRoute;
+
+          // 1. European Escapade Blueprint Itinerary
+          if (!tripData.itinerary || tripData.itinerary.length === 0) {
+            const parsed = parseItineraryFromContent(tripData.content, tripData.destination || tripData.title);
+            if (parsed.length > 0) {
+              tripData.itinerary = parsed;
+            } else {
+              tripData.itinerary = defaultTrip.itinerary;
+            }
+          }
+
+          // 2. European Escapade Blueprint Route
+          if (!tripData.travelRoute || tripData.travelRoute.length === 0) {
+            if (tripData.itinerary && tripData.itinerary.length > 1) {
+              tripData.travelRoute = tripData.itinerary.map((d: any, idx: number, arr: any[]) => ({
+                from: d.from || tripData.destination || 'Departure Hub',
+                to: d.to || arr[idx + 1]?.from || d.from,
+                mode: tripData.mode || 'bus',
+                classes: ['Force Urbania'],
+                departureTime: '08:00',
+                arrivalTime: '14:00',
+                duration: '4h-6h',
+                notes: d.highlightExperience || d.title,
+              }));
+            } else {
+              tripData.travelRoute = defaultTrip.travelRoute;
+            }
+          }
+
+          // 3. Blueprint Counts & Metadata
+          if (!tripData.countriesCount) {
+            tripData.countriesCount = tripData.destination?.toLowerCase().includes('europe') ? 10 : 1;
+          }
+          if (!tripData.citiesCount) {
+            const stops = new Set([
+              ...(tripData.travelRoute || []).flatMap((r: any) => [r.from, r.to]).filter(Boolean),
+              ...(tripData.itinerary || []).map((d: any) => d.from).filter(Boolean),
+            ]);
+            tripData.citiesCount = stops.size > 1 ? stops.size : 4;
+          }
+          if (!tripData.duration && tripData.itinerary?.length) {
+            tripData.duration = `${tripData.itinerary.length} Days`;
+          }
+          if (!tripData.registrationAmount) {
+            tripData.registrationAmount = 999;
+          }
+
           setTrip(tripData);
         } else {
           setTrip(defaultTrip);
@@ -528,31 +632,33 @@ export default function TripPage() {
     }
   };
 
-  // Add-on experiences data
-  const addOnExperiences = [
+  // Add-on experiences: tailored for European or regional/Indian expeditions
+  const isEurope = currentTrip.destination?.toLowerCase().includes('europe') || currentTrip.id === 'european-escapade';
+
+  const defaultEuropeAddOns = [
     { day: 2, from: 'Paris', experience: 'Seine River Cruise with Live Guitar', image: tripImages[0] },
-    { day: 5, from: 'Barcelona', experience: 'Traditional Flamenco Dinner Show', image: tripImages[4] },
-    { day: 8, from: 'French Riviera', experience: 'Casino de Monte-Carlo Evening', image: tripImages[3] },
-    { day: 10, from: 'Florence', experience: 'Tuscan Cooking Masterclass', image: tripImages[2] },
-    { day: 12, from: 'Rome', experience: 'Vatican Skip-the-Line Tour', image: tripImages[2] },
-    { day: 14, from: 'Venice', experience: 'Romantic Gondola Serenade', image: tripImages[3] },
-    { day: 17, from: 'Munich', experience: 'Neuschwanstein Castle Day Trip', image: tripImages[5] },
-    { day: 19, from: 'Prague', experience: 'Craft Beer & Jazz Cellar Night', image: tripImages[1] },
-    { day: 21, from: 'Berlin', experience: 'Techno Club Culture Tour', image: tripImages[5] },
-    { day: 23, from: 'Amsterdam', experience: 'Heineken Experience & Red Light Tour', image: tripImages[1] },
-    { day: 6, from: 'Barcelona', experience: 'Paddleboarding at Barceloneta', image: tripImages[4] },
-    { day: 8, from: 'French Riviera', experience: 'Perfumery Workshop in \u00c8ze', image: tripImages[3] },
-    { day: 12, from: 'Rome', experience: 'Moulin Rouge Cabaret Night', image: tripImages[0] },
-    { day: 15, from: 'Austrian Alps', experience: 'Alpine Paragliding Experience', image: tripImages[2] },
-    { day: 16, from: 'Vienna', experience: 'Vienna State Opera Evening', image: tripImages[3] },
-    { day: 17, from: 'Munich', experience: 'Oktoberfest Tent Experience', image: tripImages[5] },
-    { day: 19, from: 'Prague', experience: 'Bobsled Track Thrill Ride', image: tripImages[1] },
-    { day: 20, from: 'Berlin', experience: 'Spy Museum & Cold War Bunker', image: tripImages[5] },
-    { day: 21, from: 'Berlin', experience: 'Street Art Graffiti Workshop', image: tripImages[5] },
-    { day: 23, from: 'Amsterdam', experience: 'Rijksmuseum After-Hours Tour', image: tripImages[1] },
-    { day: 3, from: 'French Countryside', experience: 'Beaujolais Wine Tasting', image: tripImages[0] },
-    { day: 9, from: 'Pisa', experience: 'Vespa Tour of Tuscan Hills', image: tripImages[2] },
+    { day: 5, from: 'Barcelona', experience: 'Traditional Flamenco Dinner Show', image: tripImages[4] || tripImages[0] },
+    { day: 8, from: 'French Riviera', experience: 'Casino de Monte-Carlo Evening', image: tripImages[3] || tripImages[0] },
+    { day: 10, from: 'Florence', experience: 'Tuscan Cooking Masterclass', image: tripImages[2] || tripImages[0] },
+    { day: 12, from: 'Rome', experience: 'Vatican Skip-the-Line Tour', image: tripImages[2] || tripImages[0] },
+    { day: 14, from: 'Venice', experience: 'Romantic Gondola Serenade', image: tripImages[3] || tripImages[0] },
+    { day: 17, from: 'Munich', experience: 'Neuschwanstein Castle Day Trip', image: tripImages[5] || tripImages[0] },
+    { day: 19, from: 'Prague', experience: 'Craft Beer & Jazz Cellar Night', image: tripImages[1] || tripImages[0] },
+    { day: 21, from: 'Berlin', experience: 'Techno Club Culture Tour', image: tripImages[5] || tripImages[0] },
+    { day: 23, from: 'Amsterdam', experience: 'Heineken Experience & Red Light Tour', image: tripImages[1] || tripImages[0] },
   ];
+
+  const regionalAddOns = (currentTrip.itinerary || []).slice(0, 8).map((d, i) => {
+    const act = d.highlightExperience || d.title;
+    return {
+      day: d.day,
+      from: d.from,
+      experience: `Optional Adventure: ${act.slice(0, 48)}`,
+      image: tripImages[i % tripImages.length] || tripImages[0],
+    };
+  });
+
+  const addOnExperiences = isEurope ? defaultEuropeAddOns : (regionalAddOns.length > 0 ? regionalAddOns : defaultEuropeAddOns);
 
   const includedHighlights = (currentTrip.itinerary || [])
     .filter((d) => d.highlightExperience)

@@ -31,6 +31,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# codebase memory
+.codebase-memory/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

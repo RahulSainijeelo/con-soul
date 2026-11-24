@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload, X, Loader2, Train, Bus } from "lucide-react";
+import { ArrowLeft, Upload, X, Loader2, Train, Bus, Plus, MapPin, Coffee } from "lucide-react";
 import Link from "next/link";
-import type { CreateTrip, RouteSegment } from "@/types/Trip";
+import type { CreateTrip, RouteSegment, ItineraryDay } from "@/types/Trip";
 import { uploadImageToImgBB } from "@/lib/imgbb";
 
 const tripCategories = [
@@ -42,7 +42,7 @@ export default function CreateTripPage() {
         description: "",
         content: "",
         images: [],
-        status: "archived",
+        status: "published",
         startDate: "",
         endDate: "",
         price: 0,
@@ -52,6 +52,7 @@ export default function CreateTripPage() {
         included: [],
         notIncluded: [],
         travelRoute: [],
+        itinerary: [],
         mode: "bus",
         price_3ac: 0,
         price_sleeper: 0,
@@ -71,6 +72,19 @@ export default function CreateTripPage() {
         notes: "",
     });
     const [routeClass, setRouteClass] = useState("");
+
+    // Itinerary day builder state
+    const [itineraryDay, setItineraryDay] = useState<ItineraryDay>({
+        day: (formData.itinerary?.length || 0) + 1,
+        from: "",
+        to: "",
+        title: "",
+        description: "",
+        meals: [],
+        experiencesCount: 1,
+        highlightExperience: "",
+    });
+    const [mealItem, setMealItem] = useState("");
 
     const addRouteClass = () => {
         if (routeClass.trim()) {
@@ -117,6 +131,58 @@ export default function CreateTripPage() {
             ...prev,
             travelRoute: prev.travelRoute?.filter((_, i) => i !== index) || [],
         }));
+    };
+
+    // ─── Itinerary Day Management ────────────────────────────────
+    const addMealToDay = () => {
+        if (mealItem.trim()) {
+            setItineraryDay((prev) => ({
+                ...prev,
+                meals: [...prev.meals, mealItem.trim()],
+            }));
+            setMealItem("");
+        }
+    };
+
+    const removeMealFromDay = (index: number) => {
+        setItineraryDay((prev) => ({
+            ...prev,
+            meals: prev.meals.filter((_, i) => i !== index),
+        }));
+    };
+
+    const addItineraryDay = () => {
+        if (itineraryDay.from && itineraryDay.title && itineraryDay.description) {
+            setFormData((prev) => ({
+                ...prev,
+                itinerary: [...(prev.itinerary || []), itineraryDay],
+            }));
+            setItineraryDay({
+                day: (formData.itinerary?.length || 0) + 2,
+                from: "",
+                to: "",
+                title: "",
+                description: "",
+                meals: [],
+                experiencesCount: 1,
+                highlightExperience: "",
+            });
+            setMealItem("");
+        } else {
+            toast({
+                title: "Incomplete Day",
+                description: "Please fill in From city, Title, and Description.",
+                variant: "destructive",
+            });
+        }
+    };
+
+    const removeItineraryDay = (index: number) => {
+        setFormData((prev) => {
+            const updated = (prev.itinerary || []).filter((_, i) => i !== index).map((d, i) => ({ ...d, day: i + 1 }));
+            return { ...prev, itinerary: updated };
+        });
+        setItineraryDay((prev) => ({ ...prev, day: (formData.itinerary?.length || 1) }));
     };
 
     const handleInputChange = (
@@ -737,6 +803,175 @@ export default function CreateTripPage() {
                                                 >
                                                     <X className="h-4 w-4" />
                                                 </Button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+
+                    {/* ─── Day-by-Day Itinerary Builder (European Escapade Style) ─── */}
+                    <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                        <CardHeader>
+                            <CardTitle className="text-foreground flex items-center gap-2">
+                                <MapPin className="h-5 w-5" /> Day-by-Day Itinerary
+                            </CardTitle>
+                            <p className="text-sm text-gray-400">Add each day of the expedition — Contiki European Escapade style</p>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            {/* Add New Day Form */}
+                            <div className="border border-dashed border-orange-500/40 rounded-xl p-5 space-y-4 bg-orange-500/5">
+                                <h4 className="text-sm font-bold text-orange-400 uppercase tracking-wider">
+                                    + Day {itineraryDay.day}
+                                </h4>
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <Label className="text-gray-300 text-xs">From City *</Label>
+                                        <Input
+                                            value={itineraryDay.from}
+                                            onChange={(e) => setItineraryDay((p) => ({ ...p, from: e.target.value }))}
+                                            placeholder="e.g., Paris"
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300 text-xs">To City (optional)</Label>
+                                        <Input
+                                            value={itineraryDay.to || ""}
+                                            onChange={(e) => setItineraryDay((p) => ({ ...p, to: e.target.value || undefined }))}
+                                            placeholder="e.g., French Riviera"
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="text-gray-300 text-xs">Day Title *</Label>
+                                        <Input
+                                            value={itineraryDay.title}
+                                            onChange={(e) => setItineraryDay((p) => ({ ...p, title: e.target.value }))}
+                                            placeholder="e.g., Paris to French Riviera"
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <Label className="text-gray-300 text-xs">Highlight Experience</Label>
+                                    <Input
+                                        value={itineraryDay.highlightExperience || ""}
+                                        onChange={(e) => setItineraryDay((p) => ({ ...p, highlightExperience: e.target.value }))}
+                                        placeholder="e.g., Take a Tour of Paris by Night"
+                                        className="bg-black/50 border-white/10 text-white"
+                                    />
+                                </div>
+
+                                <div>
+                                    <Label className="text-gray-300 text-xs">Day Description *</Label>
+                                    <Textarea
+                                        value={itineraryDay.description}
+                                        onChange={(e) => setItineraryDay((p) => ({ ...p, description: e.target.value }))}
+                                        placeholder="Describe what happens this day — activities, sightseeing, group experiences..."
+                                        className="bg-black/50 border-white/10 text-white min-h-[80px]"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Meals */}
+                                    <div>
+                                        <Label className="text-gray-300 text-xs flex items-center gap-1">
+                                            <Coffee className="h-3 w-3" /> Meals Included
+                                        </Label>
+                                        <div className="flex gap-2 mt-1">
+                                            <Input
+                                                value={mealItem}
+                                                onChange={(e) => setMealItem(e.target.value)}
+                                                placeholder="e.g., Breakfast Included"
+                                                className="bg-black/50 border-white/10 text-white text-sm"
+                                                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addMealToDay())}
+                                            />
+                                            <Button type="button" onClick={addMealToDay} size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
+                                                +
+                                            </Button>
+                                        </div>
+                                        {itineraryDay.meals.length > 0 && (
+                                            <div className="flex flex-wrap gap-1 mt-2">
+                                                {itineraryDay.meals.map((m, i) => (
+                                                    <span key={i} className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full flex items-center gap-1">
+                                                        {m}
+                                                        <button type="button" onClick={() => removeMealFromDay(i)} className="hover:text-red-400">×</button>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Experiences Count */}
+                                    <div>
+                                        <Label className="text-gray-300 text-xs"># of Experiences</Label>
+                                        <Input
+                                            type="number"
+                                            min={0}
+                                            value={itineraryDay.experiencesCount}
+                                            onChange={(e) => setItineraryDay((p) => ({ ...p, experiencesCount: parseInt(e.target.value) || 0 }))}
+                                            className="bg-black/50 border-white/10 text-white"
+                                        />
+                                    </div>
+                                </div>
+
+                                <Button type="button" onClick={addItineraryDay} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold">
+                                    <Plus className="h-4 w-4 mr-2" /> Add Day {itineraryDay.day}
+                                </Button>
+                            </div>
+
+                            {/* Existing Itinerary Days Timeline */}
+                            {formData.itinerary && formData.itinerary.length > 0 && (
+                                <div className="relative pl-6 space-y-4 mt-4 border-l-2 border-orange-500/30">
+                                    {formData.itinerary.map((day, index) => (
+                                        <div key={index} className="relative">
+                                            <div className="absolute -left-[29px] top-1 w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-[10px] font-bold text-white">
+                                                {day.day}
+                                            </div>
+                                            <div className="bg-black/40 border border-white/10 rounded-lg p-4">
+                                                <div className="flex justify-between items-start">
+                                                    <div className="flex-1">
+                                                        <div className="flex items-center gap-2 mb-1">
+                                                            <span className="font-semibold text-white">{day.from}</span>
+                                                            {day.to && (
+                                                                <>
+                                                                    <span className="text-gray-500">→</span>
+                                                                    <span className="font-semibold text-white">{day.to}</span>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                        <p className="text-sm text-orange-400 font-medium">{day.title}</p>
+                                                        {day.highlightExperience && (
+                                                            <p className="text-xs text-yellow-400 mt-1">★ {day.highlightExperience}</p>
+                                                        )}
+                                                        <p className="text-xs text-gray-400 mt-1 line-clamp-2">{day.description}</p>
+                                                        <div className="flex gap-2 mt-2 flex-wrap">
+                                                            {day.meals.map((m, mi) => (
+                                                                <span key={mi} className="text-[10px] bg-green-500/15 text-green-400 px-2 py-0.5 rounded">
+                                                                    {m}
+                                                                </span>
+                                                            ))}
+                                                            {day.experiencesCount > 0 && (
+                                                                <span className="text-[10px] bg-blue-500/15 text-blue-400 px-2 py-0.5 rounded">
+                                                                    {day.experiencesCount} experience{day.experiencesCount > 1 ? "s" : ""}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        onClick={() => removeItineraryDay(index)}
+                                                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 ml-2"
+                                                    >
+                                                        <X className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}

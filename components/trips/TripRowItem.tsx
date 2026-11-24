@@ -21,9 +21,11 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
   const endDateFormatted = formatDate(trip.endDate);
   const dateRange = startDateFormatted && endDateFormatted ? `${startDateFormatted} - ${endDateFormatted}` : trip.duration || 'Flexible Dates';
 
-  // Contiki-style Route formatting
+  // Contiki-style Route formatting: prioritize travelRoute stops if present, otherwise parse destination
   const routeString = trip.destination || 'Expedition Route';
-  const routeStops = routeString.includes('→')
+  const routeStops: string[] = trip.travelRoute && trip.travelRoute.length > 0
+    ? Array.from(new Set(trip.travelRoute.flatMap((r: any) => [r.from, r.to]).filter(Boolean))) as string[]
+    : routeString.includes('→')
     ? routeString.split('→').map((s: string) => s.trim())
     : routeString.includes(' - ')
     ? routeString.split(' - ').map((s: string) => s.trim())
@@ -31,7 +33,9 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
 
   const durationDays = trip.duration?.replace(/[^0-9]/g, '') || (trip.duration ? trip.duration : '7');
   const countriesCount = trip.countriesCount || (trip.destination?.toLowerCase().includes('europe') ? 10 : 1);
-  const citiesCount = trip.citiesCount || (routeStops.length > 2 ? routeStops.length : 4);
+  const citiesCount = trip.citiesCount || (routeStops.length > 1 ? routeStops.length : 4);
+  const registrationDeposit = trip.registrationAmount || 999;
+  const tripTargetUrl = `/trip/${trip.slug || trip.id}`;
 
   return (
     <div className="w-full max-w-5xl mx-auto rounded-3xl overflow-hidden border border-[var(--color-border-subtle)] bg-[var(--color-canvas-raised)] hover:border-orange-500/40 transition-all duration-300 shadow-md hover:shadow-xl group">
@@ -51,7 +55,7 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
               {trip.category || 'Group Tour'}
             </span>
             <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-orange-500 text-white shadow-lg shadow-orange-500/30">
-              ₹999 Deposit
+              ₹{registrationDeposit} Deposit
             </span>
           </div>
 
@@ -146,13 +150,13 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
               </div>
               <p className="text-[11px] font-medium text-emerald-500 mt-0.5 flex items-center gap-1">
                 <ShieldCheck className="w-3 h-3" />
-                Reserve seat for just ₹{trip.registrationAmount || 999}
+                Reserve seat for just ₹{registrationDeposit}
               </p>
             </div>
 
             <div className="flex items-center gap-2">
               <Link
-                href={`/trip/${trip.id}`}
+                href={tripTargetUrl}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-3.5 px-6 rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>View Full Itinerary</span>
