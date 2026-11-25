@@ -100,219 +100,6 @@ interface Booking {
   amountPaid?: number;
 }
 
-// ─── Contiki European Escapade 24-Day Benchmark Data ──────────────
-// Extracted live from https://www.contiki.com/en-sg/tours/european-escapade
-const CONTIKI_EUROPEAN_ESCAPADE_FALLBACK: Trip = {
-  id: 'european-escapade',
-  title: 'European Escapade',
-  destination: 'Western & Central Europe',
-  category: 'Grand Expedition',
-  description:
-    'The one that ticks off all your bucket list cities in less than a month, with upgraded twin-share hotel accommodation, dedicated trip leaders, and a tribe of 85% solo travelers.',
-  content:
-    'Wanna go all in on Europe\u2019s major cities? We\u2019re talking Amsterdam, Paris, Berlin, Prague, Venice, Rome\u2026 and even Barcelona! On this extraordinary 24-day European escapade tour, you\u2019ll make the most of one iconic continent, with stop-offs at the Swiss Alps, Tuscany, and the French Riviera. Travel with young curious minds from campuses across India and worldwide.',
-  images: [
-    { url: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=80' },
-    { url: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80' },
-  ],
-  status: 'published',
-  startDate: '2026-11-10T00:00:00.000Z',
-  endDate: '2026-12-03T00:00:00.000Z',
-  price: 268500,
-  originalPrice: 298000,
-  registrationAmount: 999,
-  maxParticipants: 24,
-  currentParticipants: 18,
-  duration: '24 Days',
-  countriesCount: 10,
-  citiesCount: 23,
-  difficulty: 'Moderate Pace',
-  rating: 4.8,
-  reviewCount: 342,
-  featured: true,
-  mode: 'bus',
-  included: [
-    'Coach (Force Urbania luxury touring)',
-    '23 Nights in twin-share boutique hotels',
-    '18 Handpicked Cultural & Adventure Experiences',
-    '23 Breakfasts',
-    '1 Lunch (Tuscan farm-to-table)',
-    '5 Dinners (multi-course local)',
-    'Expedition Captain, Driver Team, Local Guides',
-  ],
-  notIncluded: [
-    'International round-trip flights to London / Europe',
-    'Personal travel & medical insurance (mandatory)',
-    'Optional free-time activities (e.g. Moulin Rouge cabaret show, Gondola serenade)',
-    'Lunches not listed in itinerary and personal shopping',
-  ],
-  travelRoute: [
-    { from: 'London', to: 'Paris', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '07:30', arrivalTime: '16:00', duration: '6h 30m', notes: 'English Channel Eurotunnel Crossing' },
-    { from: 'Paris', to: 'French Riviera', mode: 'train', classes: ['TGV High-Speed'], departureTime: '09:15', arrivalTime: '15:00', duration: '5h 45m', notes: 'Scenic Mediterranean corridor' },
-    { from: 'French Riviera', to: 'Florence', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '08:00', arrivalTime: '14:30', duration: '6h 30m', notes: 'Photo stop at Leaning Tower of Pisa' },
-    { from: 'Florence', to: 'Rome', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '08:30', arrivalTime: '12:30', duration: '4h 00m', notes: 'Direct transit into the Eternal City' },
-    { from: 'Rome', to: 'Venice', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '08:00', arrivalTime: '15:00', duration: '7h 00m', notes: 'Lunch stop at Casale Polegri, Baschi' },
-    { from: 'Venice', to: 'Vienna', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '08:30', arrivalTime: '16:00', duration: '7h 30m', notes: 'Breathtaking Austrian Alpine pass' },
-    { from: 'Vienna', to: 'Prague', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '09:00', arrivalTime: '13:30', duration: '4h 30m', notes: 'Bohemian pastoral landscapes' },
-    { from: 'Prague', to: 'Berlin', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '08:30', arrivalTime: '13:00', duration: '4h 30m', notes: 'Direct Autobahn transfer' },
-    { from: 'Berlin', to: 'Amsterdam', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '08:00', arrivalTime: '15:30', duration: '7h 30m', notes: 'Windmills & Dutch canal country' },
-    { from: 'Amsterdam', to: 'London', mode: 'bus', classes: ['Urbania Luxe'], departureTime: '09:00', arrivalTime: '18:30', duration: '8h 30m', notes: 'Ferry crossing back to London' },
-  ],
-  itinerary: [
-    { day: 1, from: 'London', to: 'Paris', title: 'London to Paris', highlightExperience: 'Take a Tour of Paris by Night', meals: ['Dinner Included'], experiencesCount: 1, description: 'Meet your fellow travelers and Expedition Captain in London. Board our luxury coach, cross the English Channel via the Eurotunnel, and roll into Paris by evening. Kick off the adventure with an introductory evening illumination tour seeing the Eiffel Tower, Arc de Triomphe, and Champs-\u00c9lys\u00e9es ablaze in lights, followed by a welcome French bistro dinner.' },
-    { day: 2, from: 'Paris', title: 'Paris', highlightExperience: 'Explore Montmartre & the Louvre', meals: ['Breakfast Included'], experiencesCount: 1, description: 'A full Parisian immersion. Wander through the cobblestone alleys of Montmartre, visit the Sacr\u00e9-C\u0153ur for panoramic views, or walk along the Seine to the Louvre Museum. Optional evening Seine river cruise with live French acoustic guitar.' },
-    { day: 3, from: 'Paris', to: 'French Countryside', title: 'Paris to French Countryside', highlightExperience: 'Special Stay at 16th-Century French Ch\u00e2teau', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 1, description: 'Journey south through rolling vineyards into the Beaujolais wine country. Arrive at our exclusive heritage ch\u00e2teau nestled in scenic hills. Enjoy local vineyard walks, hillside sunsets, and an authentic multi-course French country dinner cooked with local farm ingredients.' },
-    { day: 4, from: 'French Countryside', to: 'Barcelona', title: 'French Countryside to Barcelona', highlightExperience: 'Cross the Pyrenees into Catalonia', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Wave goodbye to the vineyards as we descend towards the Mediterranean coast. Cross the Spanish border past the Pyrenees into vibrant Barcelona. Evening introduction to the Gothic Quarter followed by late-night tapas and sangria at Pla\u00e7a Reial.' },
-    { day: 5, from: 'Barcelona', title: 'Barcelona', highlightExperience: 'Gaud\u00ed Architecture & Sagrada Fam\u00edlia', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Spend the entire day soaking up Catalan flair. Marvel at Antoni Gaud\u00ed\u2019s architectural masterpiece, the Sagrada Fam\u00edlia, stroll down tree-lined Las Ramblas, and catch the sea breeze at Barceloneta Beach. Optional traditional Flamenco show in the evening.' },
-    { day: 6, from: 'Barcelona', title: 'Barcelona', highlightExperience: 'Take a Gothic Walking Tour', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Join our local guide on a deep-dive Gothic walking tour through labyrinthine alleyways, hidden Roman ruins, and bustling street markets like La Boqueria. Free afternoon for paddleboarding or shopping on Passeig de Gr\u00e0cia.' },
-    { day: 7, from: 'Barcelona', to: 'French Riviera via Arles', title: 'Barcelona to French Riviera via Arles', highlightExperience: 'Visit Arles & Roman Amphitheatre', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 1, description: 'Drive north along the golden Costa Brava into southern France. Stop in Arles\u2014the Roman provincial city that inspired Vincent van Gogh\u2014to explore its 2,000-year-old Roman amphitheatre. Continue along the glittering French Riviera (C\u00f4te d\u2019Azur) for an oceanfront dinner.' },
-    { day: 8, from: 'French Riviera', title: 'French Riviera', highlightExperience: 'Drive the C\u00f4te d\u2019Azur & Monaco', meals: ['Breakfast Included'], experiencesCount: 3, description: 'Three legendary experiences in one day: drive along the breathtaking cliffside corniche of the C\u00f4te d\u2019Azur, visit a traditional perfumery in medieval \u00c8ze village, and spend the evening dressed up in glitzy Monaco to watch superyachts and visit the famed Casino de Monte-Carlo.' },
-    { day: 9, from: 'French Riviera', to: 'Florence via Pisa', title: 'French Riviera to Florence via Pisa', highlightExperience: 'Visit Pisa (for that Epic Selfie)', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Cross the Italian border into Liguria and Tuscany. Stop at the Campo dei Miracoli in Pisa to snap the quintessential photo holding up the iconic Leaning Tower. Arrive in the evening in Florence\u2014the cradle of the Renaissance.' },
-    { day: 10, from: 'Florence', title: 'Florence', highlightExperience: 'Florence Renaissance Walking Tour', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Stroll through history with an expert local Florentine guide. Marvel at the marble facade of Santa Maria del Fiore (the Duomo), cross the jewel-studded Ponte Vecchio, and visit Piazza della Signoria. Free afternoon to shop authentic Tuscan leather goods and indulge in world-class gelato.' },
-    { day: 11, from: 'Florence', to: 'Rome', title: 'Florence to Rome', highlightExperience: 'Tour Rome on Foot', meals: ['Breakfast Included'], experiencesCount: 2, description: 'Journey south into Italy\u2019s Eternal City. Upon arrival, lace up your walking shoes for an unforgettable walking tour: stand before the mighty Colosseum, explore the Roman Forum ruins, toss a coin into the Trevi Fountain, and admire the majestic Pantheon under the stars.' },
-    { day: 12, from: 'Rome', title: 'Rome', highlightExperience: 'Vatican City & Trastevere Evening', meals: ['Breakfast Included'], experiencesCount: 1, description: 'An entire free day to unlock Rome at your own pace. Optional skip-the-line morning tour of Vatican City, including the Vatican Museums and Michelangelo\u2019s ceiling in the Sistine Chapel. In the evening, gather with the group in bohemian Trastevere for wood-fired Roman pizza.' },
-    { day: 13, from: 'Rome', to: 'Venice via Baschi', title: 'Rome to Venice via Baschi', highlightExperience: 'Lunch at Casale Polegri MAKE TRAVEL MATTER\u00ae Experience', meals: ['Breakfast Included', 'Lunch Included'], experiencesCount: 1, description: 'Travel north through central Italy\u2019s emerald Umbrian hills. Stop at Casale Polegri in Baschi for our signature MAKE TRAVEL MATTER\u00ae farm-to-table lunch prepared by Chef Lorenzo using organic estate ingredients. Continue north across the Po Valley to the Venetian lagoon.' },
-    { day: 14, from: 'Venice', title: 'Venice', highlightExperience: 'Cruise on a Motoscafo to Venice & St. Mark\u2019s', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Board a private Venetian motorboat (Motoscafo) cruising past historic palazzos directly into St. Mark\u2019s Square. Watch a master glassblower in action, see the Bridge of Sighs, and glide through hidden canals on an optional gondola ride. Unbeatable seafood cicchetti along the way.' },
-    { day: 15, from: 'Venice', to: 'Austrian Alps', title: 'Venice to Austrian Alps', highlightExperience: 'Alpine Mountain Lodge Special Stay', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 1, description: 'Say arrivederci to Italy as we ascend into the dramatic snow-capped Austrian Alps. Settle into our traditional Tyrolean wooden lodge. Breathe in crisp alpine air, explore meadow hiking trails, and savor a hearty Tyrolean schnitzel dinner by the fireplace.' },
-    { day: 16, from: 'Austrian Alps', to: 'Vienna', title: 'Austrian Alps to Vienna', highlightExperience: 'Get to Know Vienna\u2019s Imperial Palaces', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Drive through alpine valleys to Vienna\u2014Austria\u2019s grand imperial capital. Explore the Ringstrasse, Hofburg Palace, and St. Stephen\u2019s Cathedral. Indulge in classic Viennese coffeehouse culture with a slice of rich Sachertorte chocolate cake.' },
-    { day: 17, from: 'Vienna', to: 'Munich', title: 'Vienna to Munich', highlightExperience: 'Clink your Steins at a Bavarian Beer Hall', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Cross the German border into Bavaria\u2019s lively capital, Munich. Walk through Marienplatz to watch the famous Glockenspiel clock show. In the evening, put on your festive mood and clink giant steins of Bavarian brew to live oompah folk music in a historic beer hall.' },
-    { day: 18, from: 'Munich', to: 'Prague via Pilsen', title: 'Munich to Prague via Pilsen', highlightExperience: 'Visit Dachau Memorial & Bohemian Crossing', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 1, description: 'A morning stop for reflection at the Dachau Memorial site to learn poignant World War II history. Then traverse lush Bohemian pine forests across the Czech border to fairytale Prague, where a traditional Czech dumpling dinner awaits.' },
-    { day: 19, from: 'Prague', title: 'Prague', highlightExperience: 'Tour Prague on Foot & Charles Bridge', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Discover the "City of a Hundred Spires" on a comprehensive guided walking tour. Cross the statue-lined Charles Bridge over the Vltava River, watch the Astronomical Clock strike the hour in Old Town Square, and hike up to Prague Castle for jaw-dropping views.' },
-    { day: 20, from: 'Prague', to: 'Berlin', title: 'Prague to Berlin', highlightExperience: 'Tour Berlin & Brandenburg Gate', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Head north into Germany\u2019s pulsating, avant-garde capital: Berlin. Check out the Brandenburg Gate, the poignant Holocaust Memorial, and the Reichstag building with its futuristic glass dome. Dive into Berlin\u2019s renowned underground street art culture.' },
-    { day: 21, from: 'Berlin', title: 'Berlin', highlightExperience: 'Browse East Side Gallery Berlin Wall', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Walk along the East Side Gallery\u2014the longest surviving section of the Berlin Wall, adorned with iconic international murals of freedom. Check out Checkpoint Charlie and explore hipster vintage boutiques in Kreuzberg and Friedrichshain.' },
-    { day: 22, from: 'Berlin', to: 'Amsterdam', title: 'Berlin to Amsterdam', highlightExperience: 'Dutch Windmills & Canal Country', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Leave Germany behind and roll into the Netherlands. Pass picturesque flat landscapes, dykes, and classic windmills before entering vibrant Amsterdam. Settle in and take an introductory twilight walk along the UNESCO-listed concentric canal rings.' },
-    { day: 23, from: 'Amsterdam', title: 'Amsterdam', highlightExperience: 'Visit the Artistic STRAAT Museum & Canal Cruise', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 2, description: 'Explore the world-famous STRAAT Museum showcasing massive graffiti and street art in an industrial shipyard. Rent bicycles like true locals, cruise the scenic tree-shaded canals, and gather for an emotional final farewell celebration dinner recounting unforgettable memories.' },
-    { day: 24, from: 'Amsterdam', to: 'London', title: 'Amsterdam to London', highlightExperience: 'Ferry Crossing & Tribe Farewell', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Board our luxury coach for the return leg. Ferry crossing back across the English Channel, concluding our epic 24-day European journey back in London. Hug your new lifelong tribe goodbye\u2014until the next reunion expedition!' },
-  ],
-};
-
-const HIMALAYAS_KASOL_FALLBACK: Trip = {
-  id: 'himalayas-kasol',
-  title: 'Himalayan Kasol & Kheerganga Drift',
-  destination: 'Delhi → Kasol → Kheerganga → Manali',
-  category: 'Mountain Trek',
-  description:
-    'Camp under Kasol pinewoods, trek through oak forests to natural sulfur springs at 9,700 ft, and share deep midnight conversations with students from IITs, BITS, and DU.',
-  content:
-    'Ready to escape the daily college grind? Journey into Himachal with 18-24 solo travelers. Camp under Kasol pinewoods, trek through oak forests to natural sulfur springs at Kheerganga, and roll down through Solang Valley in a luxury Force Urbania.',
-  images: [
-    { url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80' },
-    { url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1591018653367-4e4f1a4c3b4f?auto=format&fit=crop&w=1200&q=80' },
-  ],
-  status: 'published',
-  startDate: '2026-12-15T00:00:00.000Z',
-  endDate: '2026-12-21T00:00:00.000Z',
-  price: 14500,
-  originalPrice: 17999,
-  registrationAmount: 999,
-  maxParticipants: 20,
-  currentParticipants: 14,
-  duration: '7 Days',
-  countriesCount: 1,
-  citiesCount: 4,
-  difficulty: 'Moderate Trek',
-  rating: 4.9,
-  reviewCount: 188,
-  featured: true,
-  mode: 'bus',
-  included: [
-    'Force Urbania 17-Seater AC Luxury Coach (Delhi round-trip)',
-    '6 Nights in riverside luxury dome tents & boutique homestays',
-    'Certified Himalayan Trek Leaders & Wilderness First-Aid Captains',
-    '6 Breakfasts & 4 Campfire Dinners',
-    'Kheerganga summit permits & bonfire acoustic sessions',
-  ],
-  notIncluded: [
-    'Transit to Delhi departure pickup point',
-    'Personal gear (trekking poles, thermal layers)',
-    'Lunches and personal shopping in Kasol & Old Manali',
-  ],
-  travelRoute: [
-    { from: 'Delhi', to: 'Kasol', mode: 'bus', classes: ['Force Urbania'], departureTime: '18:00', arrivalTime: '08:00', duration: '14h 00m', notes: 'Overnight mountain transit' },
-    { from: 'Kasol', to: 'Barshaini & Kheerganga', mode: 'bus', classes: ['Trek Base'], departureTime: '09:00', arrivalTime: '16:00', duration: '7h 00m', notes: '12km alpine trail trek' },
-    { from: 'Kheerganga', to: 'Tosh & Manali', mode: 'bus', classes: ['Force Urbania'], departureTime: '10:00', arrivalTime: '17:00', duration: '7h 00m', notes: 'Descent & Solang transfer' },
-    { from: 'Manali', to: 'Delhi', mode: 'bus', classes: ['Force Urbania'], departureTime: '17:00', arrivalTime: '07:00', duration: '14h 00m', notes: 'Return leg to Delhi' },
-  ],
-  itinerary: [
-    { day: 1, from: 'Delhi', to: 'Kasol', title: 'Delhi to Parvati Valley', highlightExperience: 'Board the Force Urbania & Midnight Dhaba Stop', meals: ['Dinner Included'], experiencesCount: 1, description: 'Meet the tribe at Majnu Ka Tilla in Delhi. Load bags into our luxury Urbania and break the ice over chai and parathas on the Grand Trunk road before winding into the Himalayas.' },
-    { day: 2, from: 'Kasol', title: 'Kasol & Chalal Riverside Drift', highlightExperience: 'Kasol Riverbank Acoustic Jam & Israeli Cafe Walk', meals: ['Breakfast Included'], experiencesCount: 2, description: 'Wake up to the roaring Parvati River. Cross the wooden suspension bridge to quaint Chalal village. Evening chill by the riverbank with acoustic music and hot Israeli shakshuka.' },
-    { day: 3, from: 'Kasol', to: 'Kheerganga', title: 'Trek to Kheerganga Summit (9,700 ft)', highlightExperience: 'Natural Sulfur Hot Spring Bath Under Snow Peaks', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 2, description: 'Drive to Barshaini and begin the scenic trek past Rudra Nag waterfall and apple orchards. Reach the summit ridge by late afternoon and dip in the legendary natural warm sulfur spring pools.' },
-    { day: 4, from: 'Kheerganga', to: 'Tosh', title: 'Descent to Fairytale Tosh', highlightExperience: 'Sunset Over Spire Peaks & Wood-Fired Cafes', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 1, description: 'Sunrise over the Pin Parvati range. Descend into Tosh, the village perched on a high ridge. Evening gatherings around wooden tandoors sharing travel stories.' },
-    { day: 5, from: 'Tosh', to: 'Manali', title: 'Tosh to Old Manali via Naggar', highlightExperience: 'Explore Naggar Castle & Old Manali Cafes', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Scenic drive to Manali stopping at the medieval Naggar Castle overlooking the Beas valley. Settle into our Old Manali boutique lodge.' },
-    { day: 6, from: 'Manali', title: 'Solang Valley & Tribe Farewell', highlightExperience: 'Farewell Bonfire & Himalayan Stargazing', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 2, description: 'Adventure activities at Solang Valley, followed by an emotional final night bonfire with certificates, inside jokes, and new lifelong connections.' },
-    { day: 7, from: 'Manali', to: 'Delhi', title: 'Manali to Delhi Return', highlightExperience: 'Return Journey & Tribe Reunion Planning', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Descend through Kullu valley back to Delhi, arriving with full hearts and a permanent tribe.' },
-  ],
-};
-
-const GOA_COASTAL_FALLBACK: Trip = {
-  id: 'goa-coastal-drift',
-  title: 'Goa Coastal Drift & Tribe Gathering',
-  destination: 'Mumbai / Bilaspur → North Goa → South Goa',
-  category: 'Beach & Culture',
-  description:
-    'Secret cliffside coves, sunset beach shacks, Portuguese heritage trails, and non-stop ocean vibes with youth travelers from across India.',
-  content:
-    'Experience Goa the way it was meant to be \u2014 beyond the commercial traps. Join 20-24 college students and young professionals on an unfiltered coastal road trip. Secret waterfalls in Netravali, sunset bonfires at Morjim, and sunset jam sessions.',
-  images: [
-    { url: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=2000&q=80' },
-    { url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80' },
-    { url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80' },
-  ],
-  status: 'published',
-  startDate: '2026-12-27T00:00:00.000Z',
-  endDate: '2027-01-02T00:00:00.000Z',
-  price: 18500,
-  originalPrice: 21999,
-  registrationAmount: 999,
-  maxParticipants: 24,
-  currentParticipants: 19,
-  duration: '6 Days',
-  countriesCount: 1,
-  citiesCount: 3,
-  difficulty: 'Easy Pace',
-  rating: 4.8,
-  reviewCount: 210,
-  featured: true,
-  mode: 'bus',
-  included: [
-    '5 Nights in curated boutique beach resorts (twin-share AC rooms)',
-    'Daily coastal breakfasts',
-    'Scooter rental allowance or shared Force Urbania for transfers',
-    'Dolphin spotting & secret waterfall permits',
-    'Dedicated CONSOUL Tribe Captain & 24/7 on-ground assistance',
-  ],
-  notIncluded: [
-    'Flights or train to Goa (Madgaon / Vasco / Dabolim / MOPA)',
-    'Water sports and optional scuba diving',
-    'Lunches and alcohol/club entries',
-  ],
-  travelRoute: [
-    { from: 'Arrival Hub', to: 'North Goa (Anjuna/Vagator)', mode: 'bus', classes: ['Urbania Transfer'], departureTime: '12:00', arrivalTime: '14:00', duration: '2h 00m', notes: 'Resort check-in & sundowner' },
-    { from: 'North Goa', to: 'Fontainhas (Panjim)', mode: 'bus', classes: ['Heritage Day'], departureTime: '10:00', arrivalTime: '18:00', duration: '8h 00m', notes: 'Latin Quarter photowalk' },
-    { from: 'North Goa', to: 'South Goa (Palolem)', mode: 'bus', classes: ['Coastal Corridor'], departureTime: '09:00', arrivalTime: '12:00', duration: '3h 00m', notes: 'Serene white sand shift' },
-  ],
-  itinerary: [
-    { day: 1, from: 'Goa', title: 'Arrival & Morjim Sundowner', highlightExperience: 'Sunset Tribe Circle & Seafood Shack Dinner', meals: ['Dinner Included'], experiencesCount: 1, description: 'Arrive in Goa and get transferred to our boutique beach resort. Evening icebreaker games on Morjim beach as the sun dips into the Arabian Sea.' },
-    { day: 2, from: 'North Goa', title: 'Anjuna Flea Market & Vagator Cliffs', highlightExperience: 'Cliffside Sunset at Chapora & Night Market', meals: ['Breakfast Included'], experiencesCount: 2, description: 'Explore colorful flea markets, hop between famous bohemian cafes, and stand atop Chapora Fort for golden hour with the entire tribe.' },
-    { day: 3, from: 'Panjim', title: 'Fontainhas Latin Quarter & Mandovi', highlightExperience: 'Heritage Photowalk in Colorful Portuguese Alleys', meals: ['Breakfast Included'], experiencesCount: 2, description: 'Wander pastel-hued colonial streets in Fontainhas. Sample authentic Portuguese egg tarts and traditional Goan fish curry thali.' },
-    { day: 4, from: 'South Goa', title: 'South Goa Serenity & Palolem Beach', highlightExperience: 'Kayaking in Palolem Backwaters', meals: ['Breakfast Included'], experiencesCount: 1, description: 'Head south to tranquil Palolem and butterfly beach. Golden sand, swaying palms, and peaceful ocean kayaking away from the crowds.' },
-    { day: 5, from: 'South Goa', title: 'Secret Waterfall & Tribe Celebration', highlightExperience: 'Jungle Waterfall Dip & Silent Noise Party', meals: ['Breakfast Included', 'Dinner Included'], experiencesCount: 2, description: 'Hike into hidden Netravali jungle waterfalls. Celebrate our final night together with an unforgettable beach bonfire and celebration dinner.' },
-    { day: 6, from: 'Goa', title: 'Farewell & Departures', highlightExperience: 'Final Beach Walk & Souvenir Hunt', meals: ['Breakfast Included'], experiencesCount: 1, description: 'One last breakfast with ocean views before heading to airport/railway station. Say goodbye to the tribe until next time!' },
-  ],
-};
-
-const BENCHMARK_TRIPS_MAP: Record<string, Trip> = {
-  'european-escapade': CONTIKI_EUROPEAN_ESCAPADE_FALLBACK,
-  'himalayas-kasol': HIMALAYAS_KASOL_FALLBACK,
-  'goa-coastal-drift': GOA_COASTAL_FALLBACK,
-};
-
 // ─── Highlights Carousel Sub-Component (Contiki-style) ─────────────
 function HighlightsCarousel({
   included,
@@ -392,24 +179,17 @@ function HighlightsCarousel({
 
 // ─── Verified Reviews Data ───────────────────────────────────────────
 const VERIFIED_REVIEWS = [
-  { name: 'Priya Sharma', campus: 'SRCC Delhi', date: 'Oct 2026', rating: 5, quote: 'Absolutely life-changing. I traveled solo and came back with 23 best friends from across India. The Motoscafo cruise in Venice was surreal, and the French ch\u00e2teau stay was a dream.', initials: 'PS' },
-  { name: 'Arjun Mehta', campus: 'IIT Bombay', date: 'Sep 2026', rating: 5, quote: 'The itinerary pacing was perfect \u2014 never felt rushed. Barcelona and Prague were standout cities. The Expedition Captain made everything seamless. Worth every rupee.', initials: 'AM' },
-  { name: 'Ananya Reddy', campus: 'Christ Bangalore', date: 'Aug 2026', rating: 4, quote: 'Meeting students from BITS, IIM, and international universities was amazing. The farm-to-table lunch in Baschi was the highlight. Only wish we had one more day in Rome!', initials: 'AR' },
-  { name: 'Karthik Nair', campus: 'BITS Pilani', date: 'Jul 2026', rating: 5, quote: 'Best investment of my college life. 10 countries in 24 days with zero planning stress. The Force Urbania coach was surprisingly comfortable for long drives.', initials: 'KN' },
+  { name: 'Priya Sharma', campus: 'SRCC Delhi', date: 'Oct 2026', rating: 5, quote: 'Absolutely life-changing. I traveled solo and came back with 23 best friends from across India. The mountain sunrise was surreal, and the expedition captain made everything seamless.', initials: 'PS' },
+  { name: 'Arjun Mehta', campus: 'IIT Bombay', date: 'Sep 2026', rating: 5, quote: 'The itinerary pacing was perfect — never felt rushed. Meeting students from BITS, IIM, and universities across India was amazing. Worth every rupee.', initials: 'AM' },
+  { name: 'Ananya Reddy', campus: 'Christ Bangalore', date: 'Aug 2026', rating: 4, quote: 'Traveling solo for the first time felt intimidating, but within hour one we were bonded. The stays, food, and secret spots explored were top tier.', initials: 'AR' },
+  { name: 'Karthik Nair', campus: 'BITS Pilani', date: 'Jul 2026', rating: 5, quote: 'Best investment of my college life. Epic routes with zero planning stress. The Force Urbania coach was super comfortable for the long scenic drives.', initials: 'KN' },
 ];
 
-// ─── Related Expeditions Data ────────────────────────────────────────
-const RELATED_EXPEDITIONS = [
-  { id: 'european-whirl', title: 'European Whirl', duration: '17 Days', countries: 8, price: 198000, image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80', tag: 'Best Seller' },
-  { id: 'european-adventurer', title: 'European Adventurer', duration: '37 Days', countries: 14, price: 398000, image: 'https://images.unsplash.com/photo-1541959833400-049d37f98ccd?auto=format&fit=crop&w=800&q=80', tag: 'Epic' },
-  { id: 'european-discovery', title: 'European Discovery', duration: '12 Days', countries: 6, price: 148000, image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80', tag: 'Quick Escape' },
-];
-
-// ─── Content-to-Itinerary Parser (European Escapade Blueprint) ───────
+// ─── Content-to-Itinerary Parser (Blueprint Format) ─────────────────
 /**
- * Automatically parses unstructured trip content into the European Escapade
- * day-by-day blueprint format (day, from, to, title, description, highlightExperience, meals).
- * This ensures ANY real trip created in Firestore seamlessly adheres to the European Escapade blueprint.
+ * Automatically parses unstructured trip content into the day-by-day
+ * blueprint format (day, from, to, title, description, highlightExperience, meals).
+ * This ensures ANY real trip created in Firestore seamlessly adheres to the layout blueprint.
  */
 function parseItineraryFromContent(raw: string, fallbackDestination = 'Expedition'): ItineraryDay[] {
   if (!raw || typeof raw !== 'string') return [];
@@ -425,7 +205,7 @@ function parseItineraryFromContent(raw: string, fallbackDestination = 'Expeditio
     const endIndex = nextMatch && nextMatch.index !== undefined ? nextMatch.index : raw.length;
     const bodyText = raw.slice(startIndex, endIndex).trim();
 
-    // Determine from / to from title (e.g. 'London to Paris' or 'Journey to Parvati Valley')
+    // Determine from / to from title (e.g. 'Delhi to Manali' or 'Journey to Parvati Valley')
     let from = fallbackDestination;
     let to: string | undefined = undefined;
     if (dayTitle.toLowerCase().includes(' to ')) {
@@ -469,6 +249,7 @@ export default function TripPage() {
   const { data: session } = useSession();
   const params = useParams();
   const [trip, setTrip] = useState<Trip | null>(null);
+  const [relatedTrips, setRelatedTrips] = useState<Trip[]>([]);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedDays, setExpandedDays] = useState<Set<number>>(new Set([1]));
@@ -511,23 +292,22 @@ export default function TripPage() {
     const tripId = Array.isArray(params.id) ? params.id[0] : params.id;
     if (!tripId) return;
     const fetchData = async () => {
-      const defaultTrip = BENCHMARK_TRIPS_MAP[tripId] || CONTIKI_EUROPEAN_ESCAPADE_FALLBACK;
       try {
-        const tripRes = await fetch(`/api/trips/${tripId}`);
+        const [tripRes, relatedRes] = await Promise.all([
+          fetch(`/api/trips/${tripId}`),
+          fetch('/api/trips?status=published&limit=10'),
+        ]);
+
         if (tripRes.ok) {
           const tripData = await tripRes.json();
 
-          // 1. European Escapade Blueprint Itinerary
+          // 1. Itinerary parsing from content if not structured
           if (!tripData.itinerary || tripData.itinerary.length === 0) {
             const parsed = parseItineraryFromContent(tripData.content, tripData.destination || tripData.title);
-            if (parsed.length > 0) {
-              tripData.itinerary = parsed;
-            } else {
-              tripData.itinerary = defaultTrip.itinerary;
-            }
+            tripData.itinerary = parsed;
           }
 
-          // 2. European Escapade Blueprint Route
+          // 2. Travel route derivation
           if (!tripData.travelRoute || tripData.travelRoute.length === 0) {
             if (tripData.itinerary && tripData.itinerary.length > 1) {
               tripData.travelRoute = tripData.itinerary.map((d: any, idx: number, arr: any[]) => ({
@@ -541,20 +321,20 @@ export default function TripPage() {
                 notes: d.highlightExperience || d.title,
               }));
             } else {
-              tripData.travelRoute = defaultTrip.travelRoute;
+              tripData.travelRoute = [];
             }
           }
 
-          // 3. Blueprint Counts & Metadata
+          // 3. Dynamic counts & metadata
           if (!tripData.countriesCount) {
-            tripData.countriesCount = tripData.destination?.toLowerCase().includes('europe') ? 10 : 1;
+            tripData.countriesCount = 1;
           }
           if (!tripData.citiesCount) {
             const stops = new Set([
               ...(tripData.travelRoute || []).flatMap((r: any) => [r.from, r.to]).filter(Boolean),
               ...(tripData.itinerary || []).map((d: any) => d.from).filter(Boolean),
             ]);
-            tripData.citiesCount = stops.size > 1 ? stops.size : 4;
+            tripData.citiesCount = stops.size > 1 ? stops.size : (tripData.itinerary?.length || 4);
           }
           if (!tripData.duration && tripData.itinerary?.length) {
             tripData.duration = `${tripData.itinerary.length} Days`;
@@ -565,15 +345,26 @@ export default function TripPage() {
 
           setTrip(tripData);
         } else {
-          setTrip(defaultTrip);
+          setTrip(null);
         }
+
+        if (relatedRes.ok) {
+          const relJson = await relatedRes.json();
+          const list = relJson.data || (Array.isArray(relJson) ? relJson : []);
+          const filtered = list.filter((t: any) => t.id !== tripId).slice(0, 3);
+          setRelatedTrips(filtered);
+        }
+
         if (session?.user?.email) {
           const bookingsRes = await fetch(`/api/user/bookings?tripId=${tripId}&checkOnly=true`);
-          if (bookingsRes.ok) { const bookingData = await bookingsRes.json(); if (bookingData.exists && bookingData.booking) setBooking(bookingData.booking); }
+          if (bookingsRes.ok) {
+            const bookingData = await bookingsRes.json();
+            if (bookingData.exists && bookingData.booking) setBooking(bookingData.booking);
+          }
         }
       } catch (error) {
-        console.error('Error fetching trip, using benchmark:', error);
-        setTrip(defaultTrip);
+        console.error('Error fetching trip:', error);
+        setTrip(null);
       } finally {
         setLoading(false);
       }
@@ -603,7 +394,30 @@ export default function TripPage() {
     );
   }
 
-  const currentTrip = trip || CONTIKI_EUROPEAN_ESCAPADE_FALLBACK;
+  if (!trip) {
+    return (
+      <div className="min-h-screen bg-[var(--color-canvas)] text-[var(--color-ink)] flex flex-col justify-between">
+        <Header />
+        <div className="container mx-auto px-4 py-24 text-center max-w-lg my-auto">
+          <Compass className="w-16 h-16 text-orange-500 mx-auto mb-4 opacity-80" />
+          <h1 className="text-3xl font-black uppercase tracking-tight mb-3">Expedition Not Found</h1>
+          <p className="text-[var(--color-ink-muted)] mb-8 text-sm leading-relaxed">
+            This expedition could not be found or is no longer accepting departures. Explore our latest live departures across India.
+          </p>
+          <Link
+            href="/trips"
+            className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-8 rounded-full text-sm uppercase tracking-wider transition-all shadow-lg shadow-orange-500/25"
+          >
+            Explore All Expeditions <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+        <Footer />
+        <BottomTabBar />
+      </div>
+    );
+  }
+
+  const currentTrip = trip;
   const tripImages = currentTrip.images?.map((img) => img.url) || [];
   const depositAmount = currentTrip.registrationAmount || 999;
   const spotsLeft = currentTrip.maxParticipants - (currentTrip.currentParticipants || 0);
@@ -632,33 +446,19 @@ export default function TripPage() {
     }
   };
 
-  // Add-on experiences: tailored for European or regional/Indian expeditions
-  const isEurope = currentTrip.destination?.toLowerCase().includes('europe') || currentTrip.id === 'european-escapade';
+  const routeStart = currentTrip.travelRoute?.[0]?.from || currentTrip.itinerary?.[0]?.from || currentTrip.destination?.split('→')[0]?.trim() || currentTrip.destination || 'Expedition Hub';
+  const routeEnd = currentTrip.travelRoute?.[currentTrip.travelRoute.length - 1]?.to || currentTrip.itinerary?.[currentTrip.itinerary.length - 1]?.to || currentTrip.itinerary?.[currentTrip.itinerary.length - 1]?.from || currentTrip.destination?.split('→').slice(-1)[0]?.trim() || routeStart;
 
-  const defaultEuropeAddOns = [
-    { day: 2, from: 'Paris', experience: 'Seine River Cruise with Live Guitar', image: tripImages[0] },
-    { day: 5, from: 'Barcelona', experience: 'Traditional Flamenco Dinner Show', image: tripImages[4] || tripImages[0] },
-    { day: 8, from: 'French Riviera', experience: 'Casino de Monte-Carlo Evening', image: tripImages[3] || tripImages[0] },
-    { day: 10, from: 'Florence', experience: 'Tuscan Cooking Masterclass', image: tripImages[2] || tripImages[0] },
-    { day: 12, from: 'Rome', experience: 'Vatican Skip-the-Line Tour', image: tripImages[2] || tripImages[0] },
-    { day: 14, from: 'Venice', experience: 'Romantic Gondola Serenade', image: tripImages[3] || tripImages[0] },
-    { day: 17, from: 'Munich', experience: 'Neuschwanstein Castle Day Trip', image: tripImages[5] || tripImages[0] },
-    { day: 19, from: 'Prague', experience: 'Craft Beer & Jazz Cellar Night', image: tripImages[1] || tripImages[0] },
-    { day: 21, from: 'Berlin', experience: 'Techno Club Culture Tour', image: tripImages[5] || tripImages[0] },
-    { day: 23, from: 'Amsterdam', experience: 'Heineken Experience & Red Light Tour', image: tripImages[1] || tripImages[0] },
-  ];
-
-  const regionalAddOns = (currentTrip.itinerary || []).slice(0, 8).map((d, i) => {
+  // Add-on experiences dynamically derived from itinerary
+  const addOnExperiences = (currentTrip.itinerary || []).slice(0, 8).map((d, i) => {
     const act = d.highlightExperience || d.title;
     return {
       day: d.day,
       from: d.from,
-      experience: `Optional Adventure: ${act.slice(0, 48)}`,
-      image: tripImages[i % tripImages.length] || tripImages[0],
+      experience: `Optional Activity: ${act.slice(0, 48)}`,
+      image: tripImages[i % (tripImages.length || 1)] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80',
     };
   });
-
-  const addOnExperiences = isEurope ? defaultEuropeAddOns : (regionalAddOns.length > 0 ? regionalAddOns : defaultEuropeAddOns);
 
   const includedHighlights = (currentTrip.itinerary || [])
     .filter((d) => d.highlightExperience)
@@ -674,7 +474,7 @@ export default function TripPage() {
         ═══════════════════════════════════════════════════════════ */}
         <section className="relative w-full">
           {tripImages.length > 0 && (
-            <div className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+            <div className="relative h-[45vh] md:h-[50vh] overflow-hidden">
               <img
                 src={tripImages[0]}
                 alt={currentTrip.title}
@@ -707,36 +507,36 @@ export default function TripPage() {
           {/* ── Contiki-style route + stats strip (dark background) ── */}
           <div className="bg-[#1a1d24] text-white">
             <div className="container mx-auto max-w-5xl px-4 py-6 md:py-8">
-              {/* Route: London → London */}
+              {/* Dynamic Route */}
               <div className="flex items-center justify-center gap-3 mb-5">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-orange-500" />
-                  <span className="text-sm font-bold">London</span>
+                  <span className="text-sm font-bold">{routeStart}</span>
                 </div>
                 <div className="flex-1 max-w-[200px] border-t-2 border-dashed border-white/30 relative">
                   <ArrowRight className="w-4 h-4 text-white/50 absolute -right-1 -top-2" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold">London</span>
+                  <span className="text-sm font-bold">{routeEnd}</span>
                   <MapPin className="w-4 h-4 text-orange-500" />
                 </div>
               </div>
 
-              {/* Stats: 24 Days | 10 Countries | 23 Cities */}
+              {/* Dynamic Stats */}
               <div className="flex items-center justify-center gap-6 md:gap-10">
                 <div className="text-center">
-                  <span className="text-3xl md:text-4xl font-black">{currentTrip.duration?.replace(' Days', '') || '24'}</span>
+                  <span className="text-3xl md:text-4xl font-black">{currentTrip.duration?.replace(/[^0-9]/g, '') || (currentTrip.itinerary?.length ? String(currentTrip.itinerary.length) : '7')}</span>
                   <p className="text-xs text-white/60 mt-0.5">Days</p>
                 </div>
                 <div className="w-px h-10 bg-white/20" />
                 <div className="text-center">
-                  <span className="text-3xl md:text-4xl font-black">{currentTrip.countriesCount || 10}</span>
-                  <p className="text-xs text-white/60 mt-0.5">Countries</p>
+                  <span className="text-3xl md:text-4xl font-black">{currentTrip.countriesCount || 1}</span>
+                  <p className="text-xs text-white/60 mt-0.5">{currentTrip.countriesCount && currentTrip.countriesCount > 1 ? 'Countries' : 'Region'}</p>
                 </div>
                 <div className="w-px h-10 bg-white/20" />
                 <div className="text-center">
-                  <span className="text-3xl md:text-4xl font-black">{currentTrip.citiesCount || 23}</span>
-                  <p className="text-xs text-white/60 mt-0.5">Cities</p>
+                  <span className="text-3xl md:text-4xl font-black">{currentTrip.citiesCount || (currentTrip.itinerary?.length || 4)}</span>
+                  <p className="text-xs text-white/60 mt-0.5">Stops</p>
                 </div>
               </div>
             </div>
@@ -1135,36 +935,44 @@ export default function TripPage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            7. "TRIPS YOU MAY LIKE" (Contiki — dark bg section)
+            7. "TRIPS YOU MAY LIKE" (Real published trips)
         ═══════════════════════════════════════════════════════════ */}
-        <div className="bg-[#1a1d24] text-white">
-          <div className="container mx-auto max-w-5xl px-4 py-12 md:py-16 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-serif italic text-center text-white">
-              Trips you may like
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {RELATED_EXPEDITIONS.map((relTrip) => (
-                <Link key={relTrip.id} href={`/trip/${relTrip.id}`} className="group">
-                  <div className="rounded-2xl overflow-hidden hover:ring-2 hover:ring-orange-500/50 transition-all">
-                    <div className="relative h-48 overflow-hidden">
-                      <img src={relTrip.image} alt={relTrip.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <h3 className="text-lg font-bold text-white mb-1">{relTrip.title}</h3>
-                        <div className="flex items-center gap-2 text-xs text-white/70">
-                          <span>{relTrip.duration}</span>
-                          <span className="text-white/30">&middot;</span>
-                          <span>{relTrip.countries} countries</span>
+        {relatedTrips.length > 0 && (
+          <div className="bg-[#1a1d24] text-white">
+            <div className="container mx-auto max-w-5xl px-4 py-12 md:py-16 space-y-8">
+              <h2 className="text-3xl md:text-4xl font-serif italic text-center text-white">
+                Trips you may like
+              </h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {relatedTrips.map((relTrip) => (
+                  <Link key={relTrip.id} href={`/trip/${relTrip.id}`} className="group">
+                    <div className="rounded-2xl overflow-hidden hover:ring-2 hover:ring-orange-500/50 transition-all bg-white/5 border border-white/10">
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={relTrip.images?.[0]?.url || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'}
+                          alt={relTrip.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h3 className="text-lg font-bold text-white mb-1 truncate">{relTrip.title}</h3>
+                          <div className="flex items-center gap-2 text-xs text-white/70">
+                            <span>{relTrip.duration || 'Curated Days'}</span>
+                            <span className="text-white/30">&middot;</span>
+                            <span>{relTrip.destination || 'Expedition'}</span>
+                          </div>
+                          <p className="text-sm font-bold text-orange-400 mt-2">
+                            From ₹{Number(relTrip.price || 0).toLocaleString('en-IN')}
+                          </p>
                         </div>
-                        <p className="text-sm font-bold text-white mt-2">From {'\u20B9'}{relTrip.price.toLocaleString()}</p>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════
             8. STICKY BOTTOM BAR — Contiki-style (mobile + desktop)
@@ -1175,11 +983,11 @@ export default function TripPage() {
             <div className="flex items-center gap-4 min-w-0">
               <h3 className="text-base md:text-lg font-bold text-orange-500 truncate">{currentTrip.title}</h3>
               <div className="hidden sm:flex items-center gap-3 text-xs text-[var(--color-ink-muted)] font-medium shrink-0">
-                <span>{currentTrip.duration?.replace(' Days', '') || '24'} <span className="text-[var(--color-ink-faint)]">Days</span></span>
+                <span>{currentTrip.duration?.replace(/[^0-9]/g, '') || (currentTrip.itinerary?.length ? String(currentTrip.itinerary.length) : '7')} <span className="text-[var(--color-ink-faint)]">Days</span></span>
                 <span className="text-[var(--color-border-subtle)]">|</span>
-                <span>{currentTrip.countriesCount || 10} <span className="text-[var(--color-ink-faint)]">Countries</span></span>
+                <span>{currentTrip.countriesCount || 1} <span className="text-[var(--color-ink-faint)]">{currentTrip.countriesCount && currentTrip.countriesCount > 1 ? 'Countries' : 'Region'}</span></span>
                 <span className="text-[var(--color-border-subtle)]">|</span>
-                <span>{currentTrip.citiesCount || 23} <span className="text-[var(--color-ink-faint)]">Cities</span></span>
+                <span>{currentTrip.citiesCount || (currentTrip.itinerary?.length || 4)} <span className="text-[var(--color-ink-faint)]">Stops</span></span>
               </div>
             </div>
 

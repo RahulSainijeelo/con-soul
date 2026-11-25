@@ -26,12 +26,12 @@ export function StaticHero() {
   const [discoverChars, setDiscoverChars] = useState(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 300);
-    const t2 = setTimeout(() => setPhase(2), 2200);
-    const t3 = setTimeout(() => setPhase(3), 4500);
-    const t4 = setTimeout(() => setPhase(4), 5500);
-    const t5 = setTimeout(() => setPhase(5), 7000);
-    const t6 = setTimeout(() => setPhase(6), 9500);
+    const t1 = setTimeout(() => setPhase(1), 200);
+    const t2 = setTimeout(() => setPhase(2), 1400);
+    const t3 = setTimeout(() => setPhase(3), 2800);
+    const t4 = setTimeout(() => setPhase(4), 3400);
+    const t5 = setTimeout(() => setPhase(5), 4200);
+    const t6 = setTimeout(() => setPhase(6), 5800);
 
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
   }, []);

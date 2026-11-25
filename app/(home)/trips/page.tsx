@@ -5,12 +5,12 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import { TripRowItem } from '@/components/trips/TripRowItem';
-import { DEFAULT_UPCOMING_EXPEDITIONS, combineWithBlueprintTrips } from '@/components/homepage/UpcomingTrips';
-import { Sparkles, Compass, Filter } from 'lucide-react';
+import { Sparkles, Compass } from 'lucide-react';
+import Link from 'next/link';
 
 export default function TripsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [trips, setTrips] = useState<any[]>(DEFAULT_UPCOMING_EXPEDITIONS);
+  const [trips, setTrips] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function TripsPage() {
         if (res.ok) {
           const json = await res.json();
           const publishedList = json.data || (Array.isArray(json) ? json : []);
-          setTrips(combineWithBlueprintTrips(publishedList));
+          setTrips(publishedList);
         }
       } catch (err) {
         console.error('Failed to load published trips on trips page:', err);
@@ -34,9 +34,10 @@ export default function TripsPage() {
 
   const categories = [
     { id: 'all', label: 'All Expeditions' },
-    { id: 'grand', label: 'Grand Expeditions' },
     { id: 'mountain', label: 'Himalayas & Mountains' },
     { id: 'beach', label: 'Coastal & Beach' },
+    { id: 'adventure', label: 'Adventure' },
+    { id: 'cultural', label: 'Cultural' },
   ];
 
   const filteredTrips = trips.filter((trip) => {
@@ -45,10 +46,11 @@ export default function TripsPage() {
     const title = (trip.title || '').toLowerCase();
     const dest = (trip.destination || '').toLowerCase();
 
-    if (selectedCategory === 'grand') return cat.includes('grand') || title.includes('europe') || dest.includes('europe');
     if (selectedCategory === 'mountain') return cat.includes('mountain') || cat.includes('trek') || title.includes('himalay') || dest.includes('manali') || dest.includes('kasol');
-    if (selectedCategory === 'beach') return cat.includes('beach') || cat.includes('coast') || title.includes('goa') || dest.includes('goa');
-    return true;
+    if (selectedCategory === 'beach') return cat.includes('beach') || cat.includes('coast') || title.includes('goa') || dest.includes('goa') || dest.includes('vizag');
+    if (selectedCategory === 'adventure') return cat.includes('adventure') || title.includes('adventure');
+    if (selectedCategory === 'cultural') return cat.includes('cultural') || cat.includes('heritage') || title.includes('maikal') || dest.includes('amarkantak');
+    return cat.includes(selectedCategory);
   });
 
   return (
@@ -71,7 +73,7 @@ export default function TripsPage() {
           </h1>
 
           <p className="text-base md:text-lg text-[var(--color-ink-muted)] max-w-2xl mx-auto leading-relaxed mb-8">
-            European grand tours, Himalayan high passes, and coastal drifts with curious minds from campuses across India.
+            Curated youth group expeditions across Himalayan high passes and coastal trails with curious minds from campuses across India.
           </p>
 
           {/* Category Filter Pills */}
@@ -93,13 +95,34 @@ export default function TripsPage() {
         </div>
       </section>
 
-      {/* ── Trips Grid / List in Contiki European Escapade Style ── */}
+      {/* ── Trips Grid / List in Blueprint Layout Style ── */}
       <section className="container mx-auto px-4 pb-24 max-w-5xl">
-        <div className="flex flex-col gap-6 md:gap-8">
-          {filteredTrips.map((trip, index) => (
-            <TripRowItem key={trip.id} trip={trip} index={index} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="py-20 flex flex-col items-center justify-center gap-3">
+            <div className="w-10 h-10 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+            <p className="text-xs uppercase tracking-widest text-[var(--color-ink-faint)]">Loading real expeditions...</p>
+          </div>
+        ) : filteredTrips.length > 0 ? (
+          <div className="flex flex-col gap-6 md:gap-8">
+            {filteredTrips.map((trip, index) => (
+              <TripRowItem key={trip.id} trip={trip} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="max-w-md mx-auto text-center py-16 px-6 rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-canvas-raised)]">
+            <Compass className="w-10 h-10 text-orange-500 mx-auto mb-3 opacity-80" />
+            <h3 className="text-lg font-bold text-[var(--color-ink)] mb-2">No expeditions found in this category</h3>
+            <p className="text-xs text-[var(--color-ink-muted)] mb-5">
+              Check out all departures or suggest a new route for our next season.
+            </p>
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className="text-xs font-bold text-orange-500 hover:underline cursor-pointer"
+            >
+              View All Expeditions &rarr;
+            </button>
+          </div>
+        )}
       </section>
 
       <Footer />

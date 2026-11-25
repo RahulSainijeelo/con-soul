@@ -886,13 +886,13 @@ export default function EditTripPage() {
                         </CardContent>
                     </Card>
 
-                    {/* ─── Day-by-Day Itinerary Builder (European Escapade Style) ─── */}
+                    {/* ─── Day-by-Day Itinerary Builder (Blueprint Style) ─── */}
                     <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                         <CardHeader>
                             <CardTitle className="text-gold flex items-center gap-2">
                                 <MapPin className="h-5 w-5" /> Day-by-Day Itinerary
                             </CardTitle>
-                            <p className="text-sm text-gray-400">Add each day of the expedition — Contiki European Escapade style</p>
+                            <p className="text-sm text-gray-400">Add each day of the expedition with day title, route, highlights, and inclusions</p>
                         </CardHeader>
                         <CardContent className="space-y-6">
                             {/* Existing Itinerary Days Timeline */}
@@ -961,7 +961,7 @@ export default function EditTripPage() {
                                         <Input
                                             value={itineraryDay.from}
                                             onChange={(e) => setItineraryDay((p) => ({ ...p, from: e.target.value }))}
-                                            placeholder="e.g., Paris"
+                                            placeholder="e.g., Manali"
                                             className="bg-black/50 border-white/10 text-white"
                                         />
                                     </div>
@@ -970,7 +970,7 @@ export default function EditTripPage() {
                                         <Input
                                             value={itineraryDay.to || ""}
                                             onChange={(e) => setItineraryDay((p) => ({ ...p, to: e.target.value || undefined }))}
-                                            placeholder="e.g., French Riviera"
+                                            placeholder="e.g., Kasol"
                                             className="bg-black/50 border-white/10 text-white"
                                         />
                                     </div>
@@ -979,7 +979,7 @@ export default function EditTripPage() {
                                         <Input
                                             value={itineraryDay.title}
                                             onChange={(e) => setItineraryDay((p) => ({ ...p, title: e.target.value }))}
-                                            placeholder="e.g., Paris to French Riviera"
+                                            placeholder="e.g., Manali to Kasol & Parvati Valley"
                                             className="bg-black/50 border-white/10 text-white"
                                         />
                                     </div>
@@ -990,7 +990,7 @@ export default function EditTripPage() {
                                     <Input
                                         value={itineraryDay.highlightExperience || ""}
                                         onChange={(e) => setItineraryDay((p) => ({ ...p, highlightExperience: e.target.value }))}
-                                        placeholder="e.g., Take a Tour of Paris by Night"
+                                        placeholder="e.g., Trek to Kheerganga & Riverside Bonfire"
                                         className="bg-black/50 border-white/10 text-white"
                                     />
                                 </div>

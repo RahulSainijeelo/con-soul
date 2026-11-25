@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { ArrowRight, Sparkles, GraduationCap, Network, Users2 } from 'lucide-react';
 

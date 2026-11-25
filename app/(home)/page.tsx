@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Render dynamically — homepage fetches live data from Firebase
-export const dynamic = 'force-dynamic';
+// ISR — revalidate every 60 seconds instead of force-dynamic (huge perf win)
+export const revalidate = 60;
 
 function serializeDoc(doc: any) {
   const data = doc.data();
