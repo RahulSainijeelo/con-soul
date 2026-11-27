@@ -177,13 +177,16 @@ function HighlightsCarousel({
   );
 }
 
-// ─── Verified Reviews Data ───────────────────────────────────────────
-const VERIFIED_REVIEWS = [
-  { name: 'Priya Sharma', campus: 'SRCC Delhi', date: 'Oct 2026', rating: 5, quote: 'Absolutely life-changing. I traveled solo and came back with 23 best friends from across India. The mountain sunrise was surreal, and the expedition captain made everything seamless.', initials: 'PS' },
-  { name: 'Arjun Mehta', campus: 'IIT Bombay', date: 'Sep 2026', rating: 5, quote: 'The itinerary pacing was perfect — never felt rushed. Meeting students from BITS, IIM, and universities across India was amazing. Worth every rupee.', initials: 'AM' },
-  { name: 'Ananya Reddy', campus: 'Christ Bangalore', date: 'Aug 2026', rating: 4, quote: 'Traveling solo for the first time felt intimidating, but within hour one we were bonded. The stays, food, and secret spots explored were top tier.', initials: 'AR' },
-  { name: 'Karthik Nair', campus: 'BITS Pilani', date: 'Jul 2026', rating: 5, quote: 'Best investment of my college life. Epic routes with zero planning stress. The Force Urbania coach was super comfortable for the long scenic drives.', initials: 'KN' },
-];
+interface TripReview {
+  id: string;
+  userName?: string;
+  name?: string;
+  rating: number;
+  comment: string;
+  certifiedHighlight?: string;
+  status?: string;
+  createdAt?: string;
+}
 
 // ─── Content-to-Itinerary Parser (Blueprint Format) ─────────────────
 /**
@@ -250,6 +253,7 @@ export default function TripPage() {
   const params = useParams();
   const [trip, setTrip] = useState<Trip | null>(null);
   const [relatedTrips, setRelatedTrips] = useState<Trip[]>([]);
+  const [tripReviews, setTripReviews] = useState<TripReview[]>([]);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedDays, setExpandedDays] = useState<Set<number>>(new Set([1]));
@@ -298,8 +302,11 @@ export default function TripPage() {
           fetch('/api/trips?status=published&limit=10'),
         ]);
 
+        let resolvedTripId = tripId;
+
         if (tripRes.ok) {
           const tripData = await tripRes.json();
+          resolvedTripId = tripData.id || tripId;
 
           // 1. Itinerary parsing from content if not structured
           if (!tripData.itinerary || tripData.itinerary.length === 0) {
@@ -344,6 +351,28 @@ export default function TripPage() {
           }
 
           setTrip(tripData);
+
+          const [reviewsRes, bookingsRes] = await Promise.all([
+            fetch(`/api/reviews?tripId=${encodeURIComponent(resolvedTripId)}`),
+            session?.user?.email
+              ? fetch(`/api/user/bookings?tripId=${encodeURIComponent(resolvedTripId)}&checkOnly=true`)
+              : Promise.resolve(null),
+          ]);
+
+          if (reviewsRes.ok) {
+            const reviewsJson = await reviewsRes.json();
+            const approved = Array.isArray(reviewsJson)
+              ? reviewsJson.filter((r: TripReview) => r.status === 'approved')
+              : [];
+            setTripReviews(approved);
+          } else {
+            setTripReviews([]);
+          }
+
+          if (bookingsRes && bookingsRes.ok) {
+            const bookingData = await bookingsRes.json();
+            if (bookingData.exists && bookingData.booking) setBooking(bookingData.booking);
+          }
         } else {
           setTrip(null);
         }
@@ -351,16 +380,8 @@ export default function TripPage() {
         if (relatedRes.ok) {
           const relJson = await relatedRes.json();
           const list = relJson.data || (Array.isArray(relJson) ? relJson : []);
-          const filtered = list.filter((t: any) => t.id !== tripId).slice(0, 3);
+          const filtered = list.filter((t: any) => t.id !== resolvedTripId && t.slug !== tripId).slice(0, 3);
           setRelatedTrips(filtered);
-        }
-
-        if (session?.user?.email) {
-          const bookingsRes = await fetch(`/api/user/bookings?tripId=${tripId}&checkOnly=true`);
-          if (bookingsRes.ok) {
-            const bookingData = await bookingsRes.json();
-            if (bookingData.exists && bookingData.booking) setBooking(bookingData.booking);
-          }
         }
       } catch (error) {
         console.error('Error fetching trip:', error);
@@ -888,7 +909,7 @@ export default function TripPage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            6. TRIP REVIEWS (Contiki-style centered layout)
+            6. TRIP REVIEWS (Real Firestore reviews only)
         ═══════════════════════════════════════════════════════════ */}
         <div className="bg-[var(--color-canvas)]">
           <div className="container mx-auto max-w-5xl px-4 py-10 md:py-14 space-y-8">
@@ -896,41 +917,90 @@ export default function TripPage() {
               Trip Reviews
             </h2>
 
-            {/* Overall Rating — Contiki centered style */}
-            <div className="text-center space-y-3">
-              <p className="text-sm font-bold text-orange-500 uppercase tracking-wider">Overall Rating</p>
-              <p className="text-6xl font-black text-[var(--color-ink)]">{currentTrip.rating || 4.8}</p>
-              <p className="text-sm font-semibold text-[var(--color-ink-muted)]">Out Of 5</p>
-              <div className="flex items-center justify-center gap-1">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className={`w-5 h-5 ${s <= Math.round(currentTrip.rating || 4.8) ? 'fill-orange-500 text-orange-500' : 'text-gray-300 dark:text-white/20'}`} />
-                ))}
-              </div>
-              <p className="text-xs text-[var(--color-ink-faint)]">Based on {currentTrip.reviewCount || 342} Independent Reviews</p>
-            </div>
+            {tripReviews.length > 0 ? (
+              <>
+                {(() => {
+                  const avgRating = (
+                    tripReviews.reduce((sum, r) => sum + Number(r.rating || 5), 0) /
+                    tripReviews.length
+                  ).toFixed(1);
+                  return (
+                    <div className="text-center space-y-3">
+                      <p className="text-sm font-bold text-orange-500 uppercase tracking-wider">Overall Rating</p>
+                      <p className="text-6xl font-black text-[var(--color-ink)]">{avgRating}</p>
+                      <p className="text-sm font-semibold text-[var(--color-ink-muted)]">Out Of 5</p>
+                      <div className="flex items-center justify-center gap-1">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star
+                            key={s}
+                            className={`w-5 h-5 ${
+                              s <= Math.round(Number(avgRating))
+                                ? 'fill-orange-500 text-orange-500'
+                                : 'text-gray-300 dark:text-white/20'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-xs text-[var(--color-ink-faint)]">
+                        Based on {tripReviews.length} Verified Traveler Review{tripReviews.length === 1 ? '' : 's'}
+                      </p>
+                    </div>
+                  );
+                })()}
 
-            {/* Review Cards */}
-            <div className="grid md:grid-cols-2 gap-4">
-              {VERIFIED_REVIEWS.map((review, i) => (
-                <div key={i} className="border border-[var(--color-border-subtle)] rounded-xl p-5 bg-[var(--color-canvas-raised)] hover:shadow-md transition-shadow">
-                  <div className="flex items-center gap-0.5 mb-3">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className={`w-3.5 h-3.5 ${s <= review.rating ? 'fill-orange-500 text-orange-500' : 'text-gray-300 dark:text-white/20'}`} />
-                    ))}
-                  </div>
-                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed mb-4">&ldquo;{review.quote}&rdquo;</p>
-                  <div className="flex items-center gap-3 pt-3 border-t border-[var(--color-border-subtle)]">
-                    <div className="w-8 h-8 rounded-full bg-orange-500/15 flex items-center justify-center shrink-0">
-                      <span className="text-[11px] font-bold text-orange-500">{review.initials}</span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-[var(--color-ink)]">{review.name}</p>
-                      <p className="text-[11px] text-[var(--color-ink-faint)]">{review.campus} &middot; {review.date}</p>
-                    </div>
-                  </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {tripReviews.map((review) => {
+                    const reviewerName = review.userName || review.name || 'Traveler';
+                    const initials = reviewerName
+                      .split(' ')
+                      .filter(Boolean)
+                      .map((part) => part[0])
+                      .join('')
+                      .slice(0, 2)
+                      .toUpperCase();
+                    const formattedDate = review.createdAt
+                      ? new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                      : '';
+                    return (
+                      <div key={review.id} className="border border-[var(--color-border-subtle)] rounded-xl p-5 bg-[var(--color-canvas-raised)] hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-0.5 mb-3">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star key={s} className={`w-3.5 h-3.5 ${s <= review.rating ? 'fill-orange-500 text-orange-500' : 'text-gray-300 dark:text-white/20'}`} />
+                          ))}
+                        </div>
+                        <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed mb-4">
+                          &ldquo;{review.certifiedHighlight || review.comment}&rdquo;
+                        </p>
+                        <div className="flex items-center gap-3 pt-3 border-t border-[var(--color-border-subtle)]">
+                          <div className="w-8 h-8 rounded-full bg-orange-500/15 flex items-center justify-center shrink-0">
+                            <span className="text-[11px] font-bold text-orange-500">{initials || 'T'}</span>
+                          </div>
+                          <div>
+                            <p className="text-xs font-semibold text-[var(--color-ink)]">{reviewerName}</p>
+                            {formattedDate && (
+                              <p className="text-[11px] text-[var(--color-ink-faint)]">Verified Traveler &middot; {formattedDate}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
+              </>
+            ) : (
+              <div className="max-w-xl mx-auto text-center border border-[var(--color-border-subtle)] rounded-2xl p-8 bg-[var(--color-canvas-raised)] space-y-4">
+                <p className="text-base font-bold text-[var(--color-ink)]">No reviews for this departure yet</p>
+                <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+                  Verified traveler reviews appear here after the expedition completes. Explore real reviews from our past CONSOUL batches in the meantime.
+                </p>
+                <Link
+                  href="/past-trips"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-600 transition-colors"
+                >
+                  Read Real Past Trip Reviews <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 

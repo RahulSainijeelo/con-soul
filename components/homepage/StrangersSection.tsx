@@ -1,30 +1,6 @@
 import React from 'react';
 import { ArrowRight, Sparkles, GraduationCap, Network, Users2 } from 'lucide-react';
 
-const stories = [
-  {
-    quote:
-      "I came from an engineering bubble where everyone thought the same way. Sharing an Urbania with designers from NID and economics grads from DU completely rewired my worldview.",
-    name: "Kabir T.",
-    institution: "IIT Roorkee",
-    trip: "Himalayas Expedition",
-  },
-  {
-    quote:
-      "Signed up 100% solo knowing no one. I returned with co-founders for my new startup, lifelong travel buddies, and people I speak with every single week.",
-    name: "Ananya D.",
-    institution: "SRCC, Delhi University",
-    trip: "Goa Coastal Drift",
-  },
-  {
-    quote:
-      "The sheer variety of intellect in one circle — medical students, coders, writers — debating under Kasol stars. You can never get this inside a single college campus.",
-    name: "Rishabh V.",
-    institution: "BITS Pilani",
-    trip: "Rajasthan Heritage Trails",
-  },
-];
-
 const pillars = [
   {
     icon: GraduationCap,
@@ -75,7 +51,7 @@ export function StrangersSection() {
         </div>
 
         {/* Cross-Institution Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
           {pillars.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -99,42 +75,8 @@ export function StrangersSection() {
           })}
         </div>
 
-        {/* Story Cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {stories.map((story, i) => (
-            <div
-              key={i}
-              className="flex min-h-[280px] flex-col rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-canvas-raised)] p-8 transition duration-300 ease-in-out hover:-translate-y-1 hover:border-[var(--color-border-hover)]"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-[0.32em] text-[var(--color-ink-muted)]">
-                  0{i + 1}
-                </span>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded bg-foreground/5 text-orange-400 border border-orange-500/20">
-                  {story.institution}
-                </span>
-              </div>
-
-              <p className="mt-6 text-[15px] font-medium leading-[1.7] text-[var(--color-ink)] flex-1">
-                &ldquo;{story.quote}&rdquo;
-              </p>
-
-              <div className="mt-6 pt-5 border-t border-[var(--color-border-subtle)] flex items-center justify-between">
-                <div>
-                  <p className="text-[14px] font-semibold text-[var(--color-ink)]">
-                    {story.name}
-                  </p>
-                  <p className="text-[11px] font-medium text-[var(--color-ink-muted)] mt-0.5 uppercase tracking-[0.1em]">
-                    {story.trip}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Bottom CTA */}
-        <div className="text-center mt-14">
+        <div className="text-center mt-12">
           <p className="text-[13px] font-medium text-[var(--color-ink-muted)] mb-5 uppercase tracking-[0.15em]">
             50+ Colleges • 300+ Solo Travelers • Zero Awkwardness
           </p>
