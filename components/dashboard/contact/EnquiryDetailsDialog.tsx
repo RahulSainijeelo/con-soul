@@ -63,6 +63,9 @@ export function EnquiryDetailsDialog({
           <div>
             <h3 className="font-semibold text-gray-300">Customer Information</h3>
             <p className="mt-1 text-white">Name: {enquiry.name}</p>
+            {enquiry.email && (
+              <p className="text-white">Email: {enquiry.email}</p>
+            )}
             <p className="text-white">Mobile: {enquiry.mobile}</p>
           </div>
           <div>

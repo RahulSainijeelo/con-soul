@@ -444,6 +444,13 @@ export default function TripPage() {
   const spotsLeft = currentTrip.maxParticipants - (currentTrip.currentParticipants || 0);
   const startDate = new Date(currentTrip.startDate);
   const endDate = new Date(currentTrip.endDate);
+  const totalDaysCount =
+    currentTrip.duration?.match(/\d+/)?.[0] ||
+    (currentTrip.itinerary?.length ? String(currentTrip.itinerary.length) : '6');
+  const formattedDateRange =
+    !isNaN(startDate.getTime()) && !isNaN(endDate.getTime())
+      ? `${startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} – ${endDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`
+      : currentTrip.duration || 'Flexible Dates';
 
   const getBookingCTA = () => {
     if (!booking) {
@@ -491,43 +498,90 @@ export default function TripPage() {
         <Header />
 
         {/* ═══════════════════════════════════════════════════════════
-            1. HERO — Full-width photo (Contiki-style)
+            1. HERO — Clean high-res photo, title & professional key points
         ═══════════════════════════════════════════════════════════ */}
         <section className="relative w-full">
           {tripImages.length > 0 && (
-            <div className="relative h-[45vh] md:h-[50vh] overflow-hidden">
+            <div className="relative h-[58vh] md:h-[68vh] min-h-[430px] max-h-[650px] overflow-hidden bg-[#14171f]">
               <img
                 src={tripImages[0]}
                 alt={currentTrip.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-center"
               />
-              {/* Dark overlay card at bottom — Contiki-style title strip */}
-              <div className="absolute bottom-0 left-0 right-0">
-                <div className="mx-4 md:mx-8 mb-4 md:mb-6 max-w-xl">
-                  <div className="bg-[#1a1d24]/90 backdrop-blur-sm rounded-2xl px-6 py-5 md:px-8 md:py-6">
-                    <p className="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-1">originals</p>
-                    <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight leading-[0.95]">
-                      {currentTrip.title}
-                    </h1>
+              {/* Smooth atmospheric gradient for crisp title contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1d24] via-black/35 to-black/25" />
+
+              {/* Top-right actions positioned cleanly below fixed navbar */}
+              <div className="absolute top-24 md:top-28 right-4 md:right-8 flex items-center gap-2 z-20">
+                <button
+                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  className="p-2.5 bg-black/40 backdrop-blur-md rounded-full border border-white/20 transition-all hover:bg-black/60 hover:scale-110"
+                  aria-label="Wishlist"
+                >
+                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+                </button>
+                <button
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({ title: currentTrip.title, url: window.location.href });
+                    } else {
+                      navigator.clipboard.writeText(window.location.href);
+                      alert('Trip link copied!');
+                    }
+                  }}
+                  className="p-2.5 bg-black/40 backdrop-blur-md rounded-full border border-white/20 transition-all hover:bg-black/60 hover:scale-110"
+                  aria-label="Share"
+                >
+                  <Share2 className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              {/* Clean Centered Title & Key Quick Facts */}
+              <div className="absolute inset-0 flex flex-col items-center justify-end pb-10 md:pb-14 px-4 z-10">
+                <div className="text-center max-w-4xl">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-500/20 border border-orange-400/40 backdrop-blur-md text-orange-300 text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
+                    {currentTrip.category || 'Expedition'} &middot; {currentTrip.difficulty || 'Curated Group'}
+                  </span>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-[1.02] drop-shadow-lg mb-4">
+                    {currentTrip.title}
+                  </h1>
+                  <div className="flex items-center justify-center gap-3 md:gap-5 flex-wrap">
+                    <span className="inline-flex items-center gap-1.5 text-white/90 text-xs md:text-sm font-semibold">
+                      <Calendar className="w-4 h-4 text-orange-400" />
+                      {currentTrip.duration || `${totalDaysCount} Days`}
+                    </span>
+                    <span className="text-white/35">&bull;</span>
+                    <span className="inline-flex items-center gap-1.5 text-white/90 text-xs md:text-sm font-semibold">
+                      <MapPin className="w-4 h-4 text-orange-400" />
+                      {currentTrip.destination || `${routeStart} → ${routeEnd}`}
+                    </span>
+                    <span className="text-white/35">&bull;</span>
+                    <span className="inline-flex items-center gap-1.5 text-white/90 text-xs md:text-sm font-semibold">
+                      <Users className="w-4 h-4 text-orange-400" />
+                      Max {currentTrip.maxParticipants} People
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Top-right actions */}
-              <div className="absolute top-4 right-4 md:right-8 flex items-center gap-2">
-                <button onClick={() => setIsWishlisted(!isWishlisted)} className="p-2.5 bg-white/90 dark:bg-black/40 backdrop-blur-md rounded-full border border-black/5 dark:border-white/15 transition-all hover:scale-110" aria-label="Wishlist">
-                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-700 dark:text-white'}`} />
-                </button>
-                <button onClick={() => { if (navigator.share) navigator.share({ title: currentTrip.title, url: window.location.href }); else { navigator.clipboard.writeText(window.location.href); alert('Trip link copied!'); } }} className="p-2.5 bg-white/90 dark:bg-black/40 backdrop-blur-md rounded-full border border-black/5 dark:border-white/15 transition-all hover:scale-110" aria-label="Share">
-                  <Share2 className="w-5 h-5 text-gray-700 dark:text-white" />
-                </button>
-              </div>
+              {/* Gallery lightbox trigger */}
+              {tripImages.length > 1 && (
+                <div className="absolute bottom-4 right-4 md:right-8 z-20">
+                  <button
+                    onClick={() => openLightbox(0)}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-black/60 backdrop-blur-md border border-white/15 rounded-full text-white text-xs font-semibold hover:bg-black/80 transition-colors"
+                  >
+                    <Camera className="w-3.5 h-3.5 text-orange-400" />
+                    {tripImages.length} Photos
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
-          {/* ── Contiki-style route + stats strip (dark background) ── */}
+          {/* ── Route strip + professional summary points (dark background) ── */}
           <div className="bg-[#1a1d24] text-white">
-            <div className="container mx-auto max-w-5xl px-4 py-6 md:py-8">
+            <div className="container mx-auto max-w-5xl px-4 py-7 md:py-9">
               {/* Dynamic Route */}
               <div className="flex items-center justify-center gap-3 mb-5">
                 <div className="flex items-center gap-2">
@@ -543,34 +597,48 @@ export default function TripPage() {
                 </div>
               </div>
 
-              {/* Dynamic Stats */}
-              <div className="flex items-center justify-center gap-6 md:gap-10">
-                <div className="text-center">
-                  <span className="text-3xl md:text-4xl font-black">{currentTrip.duration?.replace(/[^0-9]/g, '') || (currentTrip.itinerary?.length ? String(currentTrip.itinerary.length) : '7')}</span>
-                  <p className="text-xs text-white/60 mt-0.5">Days</p>
-                </div>
-                <div className="w-px h-10 bg-white/20" />
-                <div className="text-center">
-                  <span className="text-3xl md:text-4xl font-black">{currentTrip.countriesCount || 1}</span>
-                  <p className="text-xs text-white/60 mt-0.5">{currentTrip.countriesCount && currentTrip.countriesCount > 1 ? 'Countries' : 'Region'}</p>
-                </div>
-                <div className="w-px h-10 bg-white/20" />
-                <div className="text-center">
-                  <span className="text-3xl md:text-4xl font-black">{currentTrip.citiesCount || (currentTrip.itinerary?.length || 4)}</span>
-                  <p className="text-xs text-white/60 mt-0.5">Stops</p>
-                </div>
-              </div>
-            </div>
+              {/* Concise Summary */}
+              <p className="text-sm md:text-base text-white/80 leading-relaxed text-center max-w-3xl mx-auto mb-7">
+                {currentTrip.description}
+              </p>
 
-            {/* Description card — Contiki-style italic serif */}
-            <div className="container mx-auto max-w-5xl px-4 pb-8">
-              <div className="space-y-4">
-                <h2 className="text-xl md:text-2xl font-serif italic text-white/90 leading-snug">
-                  {currentTrip.description}
-                </h2>
-                <p className="text-sm text-white/60 leading-relaxed">
-                  {currentTrip.content}
-                </p>
+              {/* Key professional snapshot cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 max-w-4xl mx-auto">
+                <div className="text-center p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  <Calendar className="w-5 h-5 text-orange-400 mx-auto mb-1.5" />
+                  <p className="text-[11px] text-white/50 uppercase tracking-wider font-semibold">Trip Dates</p>
+                  <p className="text-xs sm:text-sm font-bold text-white mt-0.5">{formattedDateRange}</p>
+                </div>
+                <div className="text-center p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  <Sparkles className="w-5 h-5 text-orange-400 mx-auto mb-1.5" />
+                  <p className="text-[11px] text-white/50 uppercase tracking-wider font-semibold">Package From</p>
+                  <p className="text-xs sm:text-sm font-bold text-white mt-0.5">
+                    {'\u20B9'}{currentTrip.price.toLocaleString('en-IN')} / person
+                  </p>
+                  {currentTrip.mode === 'train' && currentTrip.price_3ac && currentTrip.price_sleeper && (
+                    <p className="text-[10px] text-white/60 mt-0.5">
+                      SL {'\u20B9'}{currentTrip.price_sleeper.toLocaleString('en-IN')} &middot; 3AC {'\u20B9'}{currentTrip.price_3ac.toLocaleString('en-IN')}
+                    </p>
+                  )}
+                </div>
+                <div className="text-center p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  {currentTrip.mode === 'train' ? (
+                    <Train className="w-5 h-5 text-orange-400 mx-auto mb-1.5" />
+                  ) : (
+                    <Bus className="w-5 h-5 text-orange-400 mx-auto mb-1.5" />
+                  )}
+                  <p className="text-[11px] text-white/50 uppercase tracking-wider font-semibold">Travel Mode</p>
+                  <p className="text-xs sm:text-sm font-bold text-white mt-0.5">
+                    {currentTrip.mode === 'train' ? 'Train + Mountain Coach' : 'Deluxe Coach'}
+                  </p>
+                </div>
+                <div className="text-center p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  <Shield className="w-5 h-5 text-orange-400 mx-auto mb-1.5" />
+                  <p className="text-[11px] text-white/50 uppercase tracking-wider font-semibold">Booking Token</p>
+                  <p className="text-xs sm:text-sm font-bold text-white mt-0.5">
+                    {'\u20B9'}{depositAmount.toLocaleString('en-IN')} only
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -618,7 +686,12 @@ export default function TripPage() {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-center">
               <div>
                 <p className="text-xs text-[var(--color-ink-faint)] uppercase tracking-wider mb-1">From</p>
-                <p className="text-3xl font-black text-[var(--color-ink)]">{'\u20B9'}{currentTrip.price.toLocaleString()}<span className="text-sm font-normal text-[var(--color-ink-faint)] ml-1">pp</span></p>
+                <p className="text-3xl font-black text-[var(--color-ink)]">{'\u20B9'}{currentTrip.price.toLocaleString('en-IN')}<span className="text-sm font-normal text-[var(--color-ink-faint)] ml-1">pp</span></p>
+                {currentTrip.mode === 'train' && currentTrip.price_3ac && currentTrip.price_sleeper && (
+                  <p className="text-xs text-[var(--color-ink-muted)] mt-1">
+                    Sleeper {'\u20B9'}{currentTrip.price_sleeper.toLocaleString('en-IN')} &bull; AC (3AC) {'\u20B9'}{currentTrip.price_3ac.toLocaleString('en-IN')}
+                  </p>
+                )}
               </div>
               <div className="hidden md:block w-px h-12 bg-[var(--color-border-subtle)]" />
               <div>
@@ -628,7 +701,7 @@ export default function TripPage() {
               <div className="hidden md:block w-px h-12 bg-[var(--color-border-subtle)]" />
               <div>
                 <p className="text-xs text-[var(--color-ink-faint)] uppercase tracking-wider mb-1">Accommodation</p>
-                <p className="text-sm text-[var(--color-ink-muted)]">Twin-share boutique hotels</p>
+                <p className="text-sm text-[var(--color-ink-muted)]">Handpicked Stays (Triple Sharing)</p>
               </div>
             </div>
 
@@ -636,20 +709,23 @@ export default function TripPage() {
             <div className="max-w-lg mx-auto">
               <h3 className="text-lg font-semibold text-[var(--color-ink)] mb-5">What's included:</h3>
               <div className="space-y-4">
-                {currentTrip.included?.map((item, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div className="w-8 h-8 shrink-0 flex items-center justify-center text-orange-500">
-                      {i === 0 && <Bus className="w-6 h-6" />}
-                      {i === 1 && <MapPin className="w-6 h-6" />}
-                      {i === 2 && <Compass className="w-6 h-6" />}
-                      {i === 3 && <Coffee className="w-6 h-6" />}
-                      {i === 4 && <UtensilsCrossed className="w-6 h-6" />}
-                      {i === 5 && <UtensilsCrossed className="w-6 h-6" />}
-                      {i === 6 && <Users className="w-6 h-6" />}
+                {currentTrip.included?.map((item, i) => {
+                  const iconSlot = i % 7;
+                  return (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="w-8 h-8 shrink-0 flex items-center justify-center text-orange-500 mt-0.5">
+                        {iconSlot === 0 && <Bus className="w-6 h-6" />}
+                        {iconSlot === 1 && <Ticket className="w-6 h-6" />}
+                        {iconSlot === 2 && <UtensilsCrossed className="w-6 h-6" />}
+                        {iconSlot === 3 && <Sparkles className="w-6 h-6" />}
+                        {iconSlot === 4 && <MapPin className="w-6 h-6" />}
+                        {iconSlot === 5 && <Compass className="w-6 h-6" />}
+                        {iconSlot === 6 && <Users className="w-6 h-6" />}
+                      </div>
+                      <span className="text-[15px] text-[var(--color-ink)] font-medium leading-relaxed">{item}</span>
                     </div>
-                    <span className="text-[15px] text-[var(--color-ink)] font-medium">{item}</span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -755,8 +831,8 @@ export default function TripPage() {
                             {/* Stop: From city */}
                             <div className="relative">
                               <div className="absolute -left-[31px] top-1 w-4 h-4 rounded-full border-2 border-orange-500 bg-[var(--color-canvas)]" />
-                              <h4 className="text-lg font-bold text-orange-500 mb-2">{dayItem.from}</h4>
-                              <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+                              <h4 className="text-lg font-bold text-orange-500 mb-2">{dayItem.title || dayItem.from}</h4>
+                              <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed whitespace-pre-line">
                                 {dayItem.description}
                               </p>
                             </div>
@@ -1053,7 +1129,7 @@ export default function TripPage() {
             <div className="flex items-center gap-4 min-w-0">
               <h3 className="text-base md:text-lg font-bold text-orange-500 truncate">{currentTrip.title}</h3>
               <div className="hidden sm:flex items-center gap-3 text-xs text-[var(--color-ink-muted)] font-medium shrink-0">
-                <span>{currentTrip.duration?.replace(/[^0-9]/g, '') || (currentTrip.itinerary?.length ? String(currentTrip.itinerary.length) : '7')} <span className="text-[var(--color-ink-faint)]">Days</span></span>
+                <span>{totalDaysCount} <span className="text-[var(--color-ink-faint)]">Days</span></span>
                 <span className="text-[var(--color-border-subtle)]">|</span>
                 <span>{currentTrip.countriesCount || 1} <span className="text-[var(--color-ink-faint)]">{currentTrip.countriesCount && currentTrip.countriesCount > 1 ? 'Countries' : 'Region'}</span></span>
                 <span className="text-[var(--color-border-subtle)]">|</span>

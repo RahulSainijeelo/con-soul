@@ -168,6 +168,7 @@ export function ContactEnquiries() {
             onCall={handleCall}
             onWhatsApp={handleWhatsApp}
             onSMS={handleSMS}
+            onEmail={handleEmail}
             onStatusChange={updateStatus}
           />
         </div>

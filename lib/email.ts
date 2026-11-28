@@ -342,3 +342,102 @@ export async function sendTrainTicketEmail(params: TrainTicketEmailParams) {
 
     console.log(`[Train Ticket Email] Sent to ${email} for passenger ${passengerName}`);
 }
+
+export interface TripSuggestionEmailParams {
+    destination: string;
+    name: string;
+    email: string;
+    phone?: string;
+    suggestion: string;
+    suggestionId: string;
+}
+
+function escapeHtml(text: string): string {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+export async function sendTripSuggestionEmail(
+    params: TripSuggestionEmailParams
+): Promise<{ sent: boolean; reason?: string }> {
+    const recipient = process.env.NEXT_EMAIL_ADD || "con.sol.082025@gmail.com";
+    if (!process.env.NEXT_EMAIL_ADD || !process.env.NEXT_EMAIL_SMTP) {
+        console.warn("[Trip Suggestion Email] NEXT_EMAIL_ADD or NEXT_EMAIL_SMTP missing; skipping SMTP send.");
+        return { sent: false, reason: "SMTP credentials not configured" };
+    }
+
+    const { destination, name, email, phone, suggestion, suggestionId } = params;
+    const safeDest = escapeHtml(destination);
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safePhone = phone ? escapeHtml(phone) : "Not provided";
+    const safeSuggestion = escapeHtml(suggestion).replace(/\n/g, "<br/>");
+
+    const subject = `New Trip Request for ${destination} — ${name} | CONSOUL INDIA`;
+    const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${subject}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0a0a0a;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0a0a;padding:30px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color:#111111;border-radius:16px;overflow:hidden;border:1px solid #2a2a2a;max-width:600px;width:100%;">
+          <tr>
+            <td style="background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 100%);padding:28px 36px;text-align:center;border-bottom:1px solid #2a2a2a;">
+              <p style="margin:0 0 6px;font-size:11px;color:#f97316;letter-spacing:2px;text-transform:uppercase;font-weight:700;">Explore India · Trip Request</p>
+              <h1 style="margin:0;font-size:22px;font-weight:700;color:#ffffff;">Someone Wants a Trip to ${safeDest}</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#18181b;border:1px solid #27272a;border-radius:12px;">
+                <tr>
+                  <td style="padding:16px 20px;border-bottom:1px solid #27272a;">
+                    <p style="margin:0 0 4px;font-size:11px;color:#a1a1aa;text-transform:uppercase;letter-spacing:1px;">Requested Location</p>
+                    <p style="margin:0;font-size:18px;color:#f97316;font-weight:700;">${safeDest}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:16px 20px;border-bottom:1px solid #27272a;">
+                    <p style="margin:0 0 6px;font-size:13px;color:#e4e4e7;"><strong>Traveler Name:</strong> ${safeName}</p>
+                    <p style="margin:0 0 6px;font-size:13px;color:#e4e4e7;"><strong>Email:</strong> <a href="mailto:${safeEmail}" style="color:#f97316;text-decoration:none;">${safeEmail}</a></p>
+                    <p style="margin:0;font-size:13px;color:#e4e4e7;"><strong>Phone / WhatsApp:</strong> ${safePhone}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:16px 20px;">
+                    <p style="margin:0 0 6px;font-size:11px;color:#a1a1aa;text-transform:uppercase;letter-spacing:1px;">Trip Suggestion / Details</p>
+                    <p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6;">${safeSuggestion}</p>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:18px 0 0;font-size:12px;color:#71717a;">Suggestion ID: #${escapeHtml(suggestionId)} &middot; Reply directly to this email to contact ${safeName}.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+    await transporter.sendMail({
+        from: `"CONSOUL INDIA Travel" <${process.env.NEXT_EMAIL_ADD}>`,
+        to: recipient,
+        replyTo: email,
+        subject,
+        html,
+    });
+
+    console.log(`[Trip Suggestion Email] Sent to ${recipient} for ${destination} from ${email}`);
+    return { sent: true };
+}

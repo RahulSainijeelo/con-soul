@@ -30,7 +30,7 @@ export function TripRowItem({ trip, index }: TripRowItemProps) {
     ? routeString.split(' - ').map((s: string) => s.trim())
     : [routeString];
 
-  const durationDays = trip.duration?.replace(/[^0-9]/g, '') || (trip.duration ? trip.duration : '7');
+  const durationDays = trip.duration?.match(/\d+/)?.[0] || (trip.duration ? trip.duration : '7');
   const countriesCount = trip.countriesCount || 1;
   const citiesCount = trip.citiesCount || (routeStops.length > 1 ? routeStops.length : 4);
   const transitMode = trip.mode === 'train' ? 'Train & Coach' : 'Force Urbania';

@@ -39,6 +39,19 @@ export async function GET(
             }
         }
 
+        // If still not found, check legacy aliases array so old bookmarked URLs stay working
+        if (!tripDoc.exists) {
+            const aliasQuery = await db.collection("trips")
+                .where("aliases", "array-contains", id)
+                .limit(1)
+                .get();
+            if (!aliasQuery.empty) {
+                tripDoc = aliasQuery.docs[0];
+                tripRef = tripDoc.ref;
+                id = tripDoc.id;
+            }
+        }
+
         if (!tripDoc.exists) {
             return NextResponse.json(
                 { error: "Trip not found" },
@@ -114,6 +127,7 @@ export async function PUT(
             duration,
             included,
             notIncluded,
+            itinerary,
             mode,
             price_3ac,
             price_sleeper,
@@ -139,6 +153,7 @@ export async function PUT(
             duration: duration || existingData.duration,
             included: included !== undefined ? included : existingData.included,
             notIncluded: notIncluded !== undefined ? notIncluded : existingData.notIncluded,
+            itinerary: itinerary !== undefined ? (Array.isArray(itinerary) ? itinerary : []) : (existingData.itinerary || []),
             mode: mode || existingData.mode,
             updatedAt: new Date().toISOString(),
         };
