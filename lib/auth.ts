@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
         signIn: '/auth/login',
     },
     theme: {
-        colorScheme: "dark",
+        colorScheme: "light",
     },
     callbacks: {
         async signIn({ user, account }) {
@@ -80,7 +80,10 @@ export const authOptions: NextAuthOptions = {
                     }
                 } catch (error) {
                     console.error("Error saving Google user to Firestore:", error);
-                    return false;
+                    // Gracefully allow login even if Firestore sync encounters an issue
+                    if (!user.id) {
+                        user.id = "g_" + Buffer.from(user.email).toString("hex").slice(0, 20);
+                    }
                 }
             }
             // Record login activity
@@ -99,25 +102,50 @@ export const authOptions: NextAuthOptions = {
             }
             return true;
         },
+        async redirect({ url, baseUrl }) {
+            // Allows relative callback URLs
+            if (url.startsWith("/")) {
+                return `${baseUrl}${url}`;
+            }
+            try {
+                const parsedUrl = new URL(url);
+                // Allow redirects to our production domain, Vercel deployments, or localhost
+                if (
+                    parsedUrl.hostname === "con-soul.in" ||
+                    parsedUrl.hostname.endsWith(".con-soul.in") ||
+                    parsedUrl.hostname.endsWith(".vercel.app") ||
+                    parsedUrl.hostname === "localhost" ||
+                    parsedUrl.hostname === "127.0.0.1"
+                ) {
+                    return url;
+                }
+            } catch {
+                // Ignore parse errors and fall back to baseUrl
+            }
+            return baseUrl;
+        },
         async session({ session, token }) {
             if (session?.user && token?.sub) {
                 (session.user as any).id = token.sub;
+                (session.user as any).role = (token as any).role || "customer";
             }
             return session;
         },
         async jwt({ token, user, account }) {
+            if (user) {
+                token.sub = user.id;
+            }
             if (account?.provider === "google" && user?.email) {
                 try {
                     const usersRef = db.collection("users");
                     const snapshot = await usersRef.where("email", "==", user.email).get();
                     if (!snapshot.empty) {
                         token.sub = snapshot.docs[0].id;
+                        (token as any).role = snapshot.docs[0].data()?.role || "customer";
                     }
                 } catch (err) {
                     console.error("Error fetching Google user in JWT callback:", err);
                 }
-            } else if (user) {
-                token.sub = user.id;
             }
             return token;
         }
