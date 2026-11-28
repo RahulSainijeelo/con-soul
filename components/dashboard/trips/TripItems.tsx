@@ -85,7 +85,7 @@ const TripItems: React.FC<TripItemsProps> = ({
         <h3 className="text-lg font-semibold text-white mb-2">No trips found</h3>
         <p className="text-gray-400 mb-6">Get started by creating your first trip.</p>
         <Link href="/dashboard/create-trip">
-          <Button className="bg-foreground hover:bg-foreground/80 text-black font-semibold">
+          <Button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
             Create New Trip
           </Button>
         </Link>

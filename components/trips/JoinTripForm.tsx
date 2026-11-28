@@ -351,19 +351,19 @@ export default function JoinTripForm({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Form Section */}
             <div className="space-y-6">
-                <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <Card className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] shadow-sm">
                     <CardHeader>
-                        <CardTitle className="text-foreground">Personal Details</CardTitle>
+                        <CardTitle className="text-xl font-bold uppercase tracking-tight text-[var(--color-ink)]">Personal Details</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div>
-                            <Label htmlFor="fullName" className="text-gray-300">Full Name</Label>
+                            <Label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Full Name</Label>
                             <Input
                                 id="fullName"
                                 name="fullName"
                                 value={formData.fullName}
                                 onChange={handleInputChange}
-                                className={`bg-black/50 border-white/10 text-white mt-1 ${errors.fullName ? 'border-red-500' : ''}`}
+                                className={`bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 mt-1 ${errors.fullName ? 'border-red-500' : ''}`}
                                 placeholder="As per Aadhaar"
                                 required
                                 disabled={paymentStep}
@@ -374,14 +374,14 @@ export default function JoinTripForm({
                         </div>
 
                         <div>
-                            <Label htmlFor="email" className="text-gray-300">Email</Label>
+                            <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Email</Label>
                             <Input
                                 id="email"
                                 name="email"
                                 type="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                className={`bg-black/50 border-white/10 text-white mt-1 ${errors.email ? 'border-red-500' : ''}`}
+                                className={`bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 mt-1 ${errors.email ? 'border-red-500' : ''}`}
                                 required
                                 disabled={paymentStep}
                             />
@@ -392,13 +392,13 @@ export default function JoinTripForm({
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <Label htmlFor="mobileNo" className="text-gray-300">Mobile Number</Label>
+                                <Label htmlFor="mobileNo" className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Mobile Number</Label>
                                 <Input
                                     id="mobileNo"
                                     name="mobileNo"
                                     value={formData.mobileNo}
                                     onChange={handleInputChange}
-                                    className={`bg-black/50 border-white/10 text-white mt-1 ${errors.mobileNo ? 'border-red-500' : ''}`}
+                                    className={`bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 mt-1 ${errors.mobileNo ? 'border-red-500' : ''}`}
                                     placeholder="10 digits"
                                     pattern="\d{10}"
                                     required
@@ -409,13 +409,13 @@ export default function JoinTripForm({
                                 )}
                             </div>
                             <div>
-                                <Label htmlFor="aadhaarNo" className="text-gray-300">Aadhaar Number</Label>
+                                <Label htmlFor="aadhaarNo" className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Aadhaar Number</Label>
                                 <Input
                                     id="aadhaarNo"
                                     name="aadhaarNo"
                                     value={formData.aadhaarNo}
                                     onChange={handleInputChange}
-                                    className={`bg-black/50 border-white/10 text-white mt-1 ${errors.aadhaarNo ? 'border-red-500' : ''}`}
+                                    className={`bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 mt-1 ${errors.aadhaarNo ? 'border-red-500' : ''}`}
                                     placeholder="12 digits"
                                     pattern="\d{12}"
                                     required
@@ -430,20 +430,20 @@ export default function JoinTripForm({
                         {/* Transport Mode Dropdown - Only for Train */}
                         {mode === "train" && (
                             <div>
-                                <Label htmlFor="transportMode" className="text-gray-300">Travel Class</Label>
+                                <Label htmlFor="transportMode" className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Travel Class</Label>
                                 <Select
                                     value={formData.transportMode}
                                     onValueChange={handleTransportModeChange}
                                     disabled={paymentStep}
                                 >
-                                    <SelectTrigger className={`bg-black/50 border-white/10 text-white mt-1 ${errors.transportMode ? 'border-red-500' : ''}`}>
+                                    <SelectTrigger className={`bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] text-[var(--color-ink)] mt-1 ${errors.transportMode ? 'border-red-500' : ''}`}>
                                         <SelectValue placeholder="Select travel class" />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-black border-white/10">
-                                        <SelectItem value="3ac" className="text-white hover:bg-white/10">
+                                    <SelectContent className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] text-[var(--color-ink)]">
+                                        <SelectItem value="3ac" className="text-[var(--color-ink)] hover:bg-[var(--color-border-subtle)]">
                                             3AC {price_3ac && `- ₹${price_3ac.toLocaleString()}`}
                                         </SelectItem>
-                                        <SelectItem value="sleeper" className="text-white hover:bg-white/10">
+                                        <SelectItem value="sleeper" className="text-[var(--color-ink)] hover:bg-[var(--color-border-subtle)]">
                                             Sleeper {price_sleeper && `- ₹${price_sleeper.toLocaleString()}`}
                                         </SelectItem>
                                     </SelectContent>
@@ -455,13 +455,13 @@ export default function JoinTripForm({
                         )}
 
                         <div>
-                            <Label className="text-gray-300">Upload Aadhaar Card</Label>
+                            <Label className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Upload Aadhaar Card</Label>
                             {errors.aadhaarImage && (
                                 <p className="text-red-500 text-sm mt-1">{errors.aadhaarImage}</p>
                             )}
                             <div className="mt-2">
                                 {formData.aadhaarImage ? (
-                                    <div className="relative group w-full h-48 bg-black/50 rounded-lg border border-white/10 overflow-hidden">
+                                    <div className="relative group w-full h-48 bg-[var(--color-canvas)] rounded-lg border border-[var(--color-border-subtle)] overflow-hidden">
                                         <img
                                             src={formData.aadhaarImage}
                                             alt="Aadhaar"
@@ -491,14 +491,14 @@ export default function JoinTripForm({
                                         />
                                         <label
                                             htmlFor="aadhaar-upload"
-                                            className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-foreground transition-colors ${uploadingAadhaar ? 'opacity-50' : ''}`}
+                                            className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-[var(--color-border-subtle)] hover:border-orange-500 rounded-lg cursor-pointer bg-[var(--color-canvas)] transition-colors ${uploadingAadhaar ? 'opacity-50' : ''}`}
                                         >
                                             {uploadingAadhaar ? (
-                                                <Loader2 className="h-8 w-8 text-foreground animate-spin" />
+                                                <Loader2 className="h-8 w-8 text-orange-500 animate-spin" />
                                             ) : (
                                                 <>
-                                                    <Upload className="h-8 w-8 text-gray-400 mb-2" />
-                                                    <span className="text-sm text-gray-400">Click to upload Aadhaar</span>
+                                                    <Upload className="h-8 w-8 text-[var(--color-ink-faint)] mb-2" />
+                                                    <span className="text-sm font-medium text-[var(--color-ink-muted)]">Click to upload Aadhaar</span>
                                                 </>
                                             )}
                                         </label>
@@ -512,40 +512,40 @@ export default function JoinTripForm({
 
             {/* Payment Section */}
             <div className="space-y-6">
-                <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+                <Card className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] shadow-sm">
                     <CardHeader>
-                        <CardTitle className="text-foreground flex items-center gap-2">
-                            <CreditCard className="h-5 w-5" />
+                        <CardTitle className="text-xl font-bold uppercase tracking-tight text-[var(--color-ink)] flex items-center gap-2">
+                            <CreditCard className="h-5 w-5 text-orange-500" />
                             Payment Summary
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {/* Amount Display */}
-                        <div className="bg-gradient-to-br from-foreground/10 to-yellow-900/10 p-6 rounded-xl border border-foreground/20 text-center">
+                        <div className="bg-orange-500/10 p-6 rounded-xl border border-orange-500/25 text-center">
                             {isPartialPayment() ? (
                                 <>
-                                    <p className="text-gray-400 mb-1 text-xs uppercase tracking-wide">Total Trip Price</p>
-                                    <p className="text-2xl font-semibold text-gray-300 line-through mb-3">₹{getTotalAmount().toLocaleString()}</p>
-                                    <p className="text-foreground mb-2 text-sm uppercase tracking-wide font-semibold">Pay Now — Registration Fee</p>
+                                    <p className="text-[var(--color-ink-faint)] mb-1 text-xs uppercase tracking-wider font-semibold">Total Trip Price</p>
+                                    <p className="text-2xl font-semibold text-[var(--color-ink-muted)] line-through mb-3">₹{getTotalAmount().toLocaleString()}</p>
+                                    <p className="text-orange-500 mb-2 text-xs uppercase tracking-wider font-bold">Pay Now — Registration Token</p>
                                     <div className="flex items-center justify-center gap-1">
-                                        <IndianRupee className="h-8 w-8 text-foreground" />
-                                        <p className="text-5xl font-bold text-foreground">{getPayableAmount().toLocaleString()}</p>
+                                        <IndianRupee className="h-8 w-8 text-[var(--color-ink)]" />
+                                        <p className="text-5xl font-black text-[var(--color-ink)]">{getPayableAmount().toLocaleString()}</p>
                                     </div>
-                                    <div className="mt-3 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                                        <p className="text-blue-300 text-sm">Remaining ₹{(getTotalAmount() - getPayableAmount()).toLocaleString()} payable later from My Trips</p>
+                                    <div className="mt-3 p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                                        <p className="text-emerald-600 dark:text-emerald-400 text-xs font-semibold">Remaining ₹{(getTotalAmount() - getPayableAmount()).toLocaleString()} payable 15 days before departure from My Trips</p>
                                     </div>
                                 </>
                             ) : (
                                 <>
-                                    <p className="text-gray-400 mb-2 text-sm uppercase tracking-wide">Total Amount to Pay</p>
+                                    <p className="text-[var(--color-ink-faint)] mb-2 text-xs uppercase tracking-wider font-semibold">Total Amount to Pay</p>
                                     <div className="flex items-center justify-center gap-1">
-                                        <IndianRupee className="h-8 w-8 text-foreground" />
-                                        <p className="text-5xl font-bold text-foreground">{getTotalAmount().toLocaleString()}</p>
+                                        <IndianRupee className="h-8 w-8 text-[var(--color-ink)]" />
+                                        <p className="text-5xl font-black text-[var(--color-ink)]">{getTotalAmount().toLocaleString()}</p>
                                     </div>
                                 </>
                             )}
                             {mode === "train" && formData.transportMode && (
-                                <p className="text-sm text-gray-400 mt-2">
+                                <p className="text-xs font-semibold text-[var(--color-ink-muted)] mt-2">
                                     ({formData.transportMode === "3ac" ? "3AC" : "Sleeper"} Class)
                                 </p>
                             )}
@@ -554,39 +554,39 @@ export default function JoinTripForm({
                         {/* Payment Info */}
                         <div className="space-y-3">
                             <div className="flex items-center gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                                <Shield className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                                <Shield className="h-5 w-5 text-blue-500 flex-shrink-0" />
                                 <div>
-                                    <p className="text-white text-sm font-medium">Secure Payment via Razorpay</p>
-                                    <p className="text-gray-400 text-xs">Your payment is protected by 256-bit SSL encryption</p>
+                                    <p className="text-sm font-semibold text-[var(--color-ink)]">Secure Payment via Razorpay</p>
+                                    <p className="text-xs text-[var(--color-ink-muted)]">Your payment is protected by 256-bit SSL encryption</p>
                                 </div>
                             </div>
 
                             <div className="space-y-2 text-sm">
-                                <div className="flex items-center gap-2 text-gray-400">
-                                    <CheckCircle2 className="h-4 w-4 text-green-400" />
+                                <div className="flex items-center gap-2 text-[var(--color-ink-muted)]">
+                                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                                     <span>UPI, Net Banking, Credit/Debit Cards accepted</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-gray-400">
-                                    <CheckCircle2 className="h-4 w-4 text-green-400" />
-                                    <span>Instant payment confirmation</span>
+                                <div className="flex items-center gap-2 text-[var(--color-ink-muted)]">
+                                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                    <span>Instant payment confirmation & receipt</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-gray-400">
-                                    <CheckCircle2 className="h-4 w-4 text-green-400" />
+                                <div className="flex items-center gap-2 text-[var(--color-ink-muted)]">
+                                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                                     <span>Booking ID sent to your email</span>
                                 </div>
                             </div>
 
                             {/* Refund Policy Box */}
                             <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-1">
-                                <div className="flex items-center gap-2 text-amber-400 font-semibold text-xs uppercase tracking-wide">
+                                <div className="flex items-center gap-2 text-amber-500 font-semibold text-xs uppercase tracking-wide">
                                     <ShieldAlert className="h-4 w-4" />
                                     Refund Policy Notice
                                 </div>
-                                <p className="text-gray-300 text-xs leading-relaxed">
-                                    Cancellations between <strong className="text-foreground font-medium">15 to 10 days</strong> prior to departure receive only <strong className="text-foreground font-medium">10% refund</strong> of registration fee. Cancellations <strong className="text-white font-medium">less than 10 days</strong> are strictly non-refundable.
+                                <p className="text-xs text-[var(--color-ink-muted)] leading-relaxed">
+                                    Cancellations between <strong className="text-[var(--color-ink)] font-semibold">15 to 10 days</strong> prior to departure receive only <strong className="text-[var(--color-ink)] font-semibold">10% refund</strong> of registration fee. Cancellations <strong className="text-[var(--color-ink)] font-semibold">less than 10 days</strong> are strictly non-refundable.
                                 </p>
                                 <div className="pt-1">
-                                    <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-foreground text-[11px] hover:underline font-medium inline-block">
+                                    <a href="/refund-policy" target="_blank" rel="noopener noreferrer" className="text-orange-500 text-[11px] hover:underline font-bold inline-block">
                                         Read complete cancellation policy →
                                     </a>
                                 </div>
@@ -594,24 +594,24 @@ export default function JoinTripForm({
                         </div>
 
                         {/* Booking summary */}
-                        <div className="bg-black/30 rounded-lg border border-white/5 p-4 space-y-2 text-sm">
-                            <p className="text-gray-400 font-medium mb-3">Booking for: <span className="text-white">{tripTitle}</span></p>
+                        <div className="bg-[var(--color-canvas)] rounded-xl border border-[var(--color-border-subtle)] p-4 space-y-2 text-sm">
+                            <p className="text-xs uppercase tracking-wider font-semibold text-[var(--color-ink-faint)] mb-2">Booking for: <span className="text-[var(--color-ink)] font-bold">{tripTitle}</span></p>
                             {formData.fullName && (
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Name</span>
-                                    <span className="text-white">{formData.fullName}</span>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-[var(--color-ink-muted)]">Name</span>
+                                    <span className="text-[var(--color-ink)] font-semibold">{formData.fullName}</span>
                                 </div>
                             )}
                             {formData.email && (
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Email</span>
-                                    <span className="text-white">{formData.email}</span>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-[var(--color-ink-muted)]">Email</span>
+                                    <span className="text-[var(--color-ink)] font-semibold">{formData.email}</span>
                                 </div>
                             )}
                             {formData.mobileNo && (
-                                <div className="flex justify-between">
-                                    <span className="text-gray-500">Mobile</span>
-                                    <span className="text-white">{formData.mobileNo}</span>
+                                <div className="flex justify-between text-xs">
+                                    <span className="text-[var(--color-ink-muted)]">Mobile</span>
+                                    <span className="text-[var(--color-ink)] font-semibold">{formData.mobileNo}</span>
                                 </div>
                             )}
                         </div>
@@ -628,14 +628,14 @@ export default function JoinTripForm({
                             variant="outline"
                             onClick={() => setPaymentStep(false)}
                             disabled={loading}
-                            className="border-white/10 text-gray-400 hover:text-white"
+                            className="border-[var(--color-border-subtle)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] rounded-full px-6"
                         >
                             Edit Details
                         </Button>
                         <Button
                             onClick={handleRazorpayPayment}
                             disabled={loading}
-                            className="bg-foreground hover:bg-foreground/80 text-black font-bold text-lg px-8 py-6"
+                            className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-base px-8 py-6 rounded-full shadow-lg shadow-orange-500/25 transition-all"
                         >
                             {loading ? (
                                 <>
@@ -655,7 +655,7 @@ export default function JoinTripForm({
                     <Button
                         onClick={handleProceedToPayment}
                         disabled={uploadingAadhaar}
-                        className="bg-foreground hover:bg-foreground/80 text-black font-bold text-lg px-8 py-6 w-full md:w-auto"
+                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-base px-8 py-6 rounded-full shadow-lg shadow-orange-500/25 transition-all w-full md:w-auto"
                     >
                         {uploadingAadhaar ? (
                             <>

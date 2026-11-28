@@ -35,54 +35,8 @@ a, button {
 }
 
 @layer base {
-  /* ── DARK MODE (default) ── */
+  /* ── LIGHT MODE (default) ── */
   :root,
-  .dark {
-    --background: 220 10% 7%;
-    --foreground: 40 10% 94%;
-
-    --card: 220 8% 10%;
-    --card-foreground: 40 10% 94%;
-
-    --popover: 220 8% 10%;
-    --popover-foreground: 40 10% 94%;
-
-    --primary: 40 10% 94%;
-    --primary-foreground: 220 10% 7%;
-
-    --secondary: 220 6% 13%;
-    --secondary-foreground: 40 10% 94%;
-
-    --muted: 220 6% 13%;
-    --muted-foreground: 220 4% 62%;
-
-    --accent: 40 5% 88%;
-    --accent-foreground: 220 10% 7%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 220 6% 15%;
-    --input: 220 6% 15%;
-    --ring: 220 5% 50%;
-
-    --radius: 0.25rem;
-
-    /* Semantic tokens */
-    --color-canvas: #111318;
-    --color-canvas-raised: #181b22;
-    --color-ink: #F3F0EA;
-    --color-ink-muted: rgba(243, 240, 234, 0.75);
-    --color-ink-faint: rgba(243, 240, 234, 0.48);
-    --color-border-subtle: rgba(255, 255, 255, 0.08);
-    --color-border-hover: rgba(255, 255, 255, 0.22);
-    --color-accent: #FFFFFF;
-
-    /* Typography — single font */
-    --font-primary: "Inter", sans-serif;
-  }
-
-  /* ── LIGHT MODE ── */
   .light {
     --background: 40 20% 97%;
     --foreground: 220 15% 10%;
@@ -112,6 +66,8 @@ a, button {
     --input: 40 10% 88%;
     --ring: 220 5% 50%;
 
+    --radius: 0.25rem;
+
     --color-canvas: #F8F6F2;
     --color-canvas-raised: #FFFFFF;
     --color-ink: #151820;
@@ -120,6 +76,49 @@ a, button {
     --color-border-subtle: rgba(0, 0, 0, 0.08);
     --color-border-hover: rgba(0, 0, 0, 0.22);
     --color-accent: #151820;
+
+    /* Typography — single font */
+    --font-primary: "Inter", sans-serif;
+  }
+
+  /* ── DARK MODE ── */
+  .dark {
+    --background: 220 10% 7%;
+    --foreground: 40 10% 94%;
+
+    --card: 220 8% 10%;
+    --card-foreground: 40 10% 94%;
+
+    --popover: 220 8% 10%;
+    --popover-foreground: 40 10% 94%;
+
+    --primary: 40 10% 94%;
+    --primary-foreground: 220 10% 7%;
+
+    --secondary: 220 6% 13%;
+    --secondary-foreground: 40 10% 94%;
+
+    --muted: 220 6% 13%;
+    --muted-foreground: 220 4% 62%;
+
+    --accent: 40 5% 88%;
+    --accent-foreground: 220 10% 7%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 6% 15%;
+    --input: 220 6% 15%;
+    --ring: 220 5% 50%;
+
+    --color-canvas: #111318;
+    --color-canvas-raised: #181b22;
+    --color-ink: #F3F0EA;
+    --color-ink-muted: rgba(243, 240, 234, 0.75);
+    --color-ink-faint: rgba(243, 240, 234, 0.48);
+    --color-border-subtle: rgba(255, 255, 255, 0.08);
+    --color-border-hover: rgba(255, 255, 255, 0.22);
+    --color-accent: #FFFFFF;
   }
 
   .theme {

@@ -185,7 +185,7 @@ function AdminTeamTab() {
           <button
             type="submit"
             disabled={submitting}
-            className="h-10 px-5 rounded-md bg-foreground text-black text-sm font-semibold hover:bg-foreground/90 transition-colors disabled:opacity-50 flex items-center gap-2 whitespace-nowrap"
+            className="h-10 px-5 rounded-md bg-orange-500 text-white text-sm font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center gap-2 whitespace-nowrap"
           >
             {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
             Grant Access

@@ -66,12 +66,12 @@ export default function JoinTripPage() {
     // Show loading state
     if (status === 'loading' || loading) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col">
+            <div className="min-h-screen bg-[var(--color-canvas)] text-[var(--color-ink)] flex flex-col font-sans">
                 <Header />
                 <main className="flex-grow flex items-center justify-center">
                     <div className="text-center">
-                        <div className="w-16 h-16 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">Loading...</p>
+                        <div className="w-12 h-12 border-3 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-sm uppercase tracking-wider text-[var(--color-ink-faint)]">Loading expedition...</p>
                     </div>
                 </main>
                 <Footer />
@@ -87,15 +87,15 @@ export default function JoinTripPage() {
     // Show error if trip not found
     if (error || !trip) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col">
+            <div className="min-h-screen bg-[var(--color-canvas)] text-[var(--color-ink)] flex flex-col font-sans">
                 <Header />
-                <main className="flex-grow flex items-center justify-center">
-                    <div className="text-center">
-                        <h1 className="text-2xl font-bold text-gold mb-4">Trip Not Found</h1>
-                        <p className="text-gray-400 mb-6">The trip you are looking for does not exist.</p>
+                <main className="flex-grow flex items-center justify-center px-4">
+                    <div className="text-center max-w-md mx-auto">
+                        <h1 className="text-2xl font-black uppercase tracking-tight text-[var(--color-ink)] mb-3">Expedition Not Found</h1>
+                        <p className="text-sm text-[var(--color-ink-muted)] mb-6">The expedition you are looking for does not exist or has departed.</p>
                         <button
                             onClick={() => router.push("/")}
-                            className="bg-gold hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-xl transition-colors"
+                            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full transition-all text-sm tracking-wide"
                         >
                             Back to Home
                         </button>
@@ -107,15 +107,18 @@ export default function JoinTripPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col">
+        <div className="min-h-screen bg-[var(--color-canvas)] text-[var(--color-ink)] flex flex-col font-sans">
             <Header />
             <main className="flex-grow container mx-auto px-4 py-8 mt-20">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl md:text-4xl font-display font-bold text-gold mb-2">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+                            Confirm Registration
+                        </span>
+                        <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-[var(--color-ink)] mb-2">
                             Join Trip: {trip.title}
                         </h1>
-                        <p className="text-gray-400">
+                        <p className="text-sm text-[var(--color-ink-muted)]">
                             {trip.destination} • {trip.duration}
                         </p>
                     </div>

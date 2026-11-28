@@ -57,8 +57,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FAFAFA' },
-    { media: '(prefers-color-scheme: dark)', color: '#0A0A0A' }
+    { media: '(prefers-color-scheme: light)', color: '#F8F6F2' },
+    { media: '(prefers-color-scheme: dark)', color: '#111318' }
   ],
   colorScheme: 'light dark',
 }
@@ -217,7 +217,7 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <ThemeProvider attribute="class" defaultTheme="dark" themes={["dark", "light"]} enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="light" themes={["light", "dark"]} enableSystem={false}>
           <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_Y2xlcmsuY29uLXNvdWwuaW4k'}>
             <div id="main-content">
               {children}

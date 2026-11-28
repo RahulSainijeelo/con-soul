@@ -24,8 +24,8 @@ const PORTAL_OPTIONS = [
     description: "Book upcoming expeditions, view tickets & emergency passes",
     href: "/auth/login",
     icon: Compass,
-    accent: "hover:border-white/40 dark:hover:border-white/40",
-    iconBg: "bg-white/10 text-white",
+    accent: "hover:border-orange-500/50",
+    iconBg: "bg-orange-500/10 text-orange-500",
   },
   {
     id: "ambassador",
@@ -34,8 +34,8 @@ const PORTAL_OPTIONS = [
     description: "Referral ledger, campus marketing kit & UPI commission payouts",
     href: "/auth/ambassador-login",
     icon: Award,
-    accent: "hover:border-orange-500/50 dark:hover:border-orange-500/50",
-    iconBg: "bg-orange-500/10 text-orange-400",
+    accent: "hover:border-orange-500/50",
+    iconBg: "bg-orange-500/10 text-orange-500",
   },
   {
     id: "team",
@@ -44,24 +44,24 @@ const PORTAL_OPTIONS = [
     description: "Expedition manifests, driver allocation & member approvals",
     href: "/sign-in",
     icon: ShieldCheck,
-    accent: "hover:border-emerald-500/50 dark:hover:border-emerald-500/50",
-    iconBg: "bg-emerald-500/10 text-emerald-400",
+    accent: "hover:border-emerald-500/50",
+    iconBg: "bg-emerald-500/10 text-emerald-500",
   },
 ];
 
 export function LoginModal({ open, onOpenChange }: LoginModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[440px] bg-[#111318] text-[#F3F0EA] border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl backdrop-blur-xl">
-        <DialogHeader className="text-left pb-4 border-b border-white/10">
-          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/50 mb-1">
+      <DialogContent className="sm:max-w-[440px] bg-[var(--color-canvas-raised)] text-[var(--color-ink)] border-[var(--color-border-subtle)] p-6 md:p-8 rounded-2xl shadow-2xl backdrop-blur-xl">
+        <DialogHeader className="text-left pb-4 border-b border-[var(--color-border-subtle)]">
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-500 mb-1">
             Access Portal
           </p>
-          <DialogTitle className="text-xl font-extrabold uppercase tracking-tight text-white">
+          <DialogTitle className="text-xl font-black uppercase tracking-tight text-[var(--color-ink)]">
             Choose Your Destination
           </DialogTitle>
-          <DialogDescription className="text-xs text-white/60 leading-relaxed pt-1">
-            Sign in to your dedicated workspace.
+          <DialogDescription className="text-xs text-[var(--color-ink-muted)] leading-relaxed pt-1">
+            Sign in to your dedicated CONSOUL workspace.
           </DialogDescription>
         </DialogHeader>
 
@@ -73,7 +73,7 @@ export function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 key={item.id}
                 href={item.href}
                 onClick={() => onOpenChange(false)}
-                className={`group flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/[0.03] transition-all duration-200 ${item.accent} hover:bg-white/[0.07]`}
+                className={`group flex items-center justify-between p-3.5 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-canvas)] transition-all duration-200 ${item.accent} hover:bg-[var(--color-border-subtle)]/40`}
               >
                 <div className="flex items-center gap-3.5 min-w-0">
                   <div
@@ -83,32 +83,32 @@ export function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold uppercase tracking-wide text-white group-hover:text-white">
+                      <span className="text-xs font-bold uppercase tracking-wide text-[var(--color-ink)] group-hover:text-orange-500 transition-colors">
                         {item.role}
                       </span>
-                      <span className="text-[9px] font-semibold uppercase px-1.5 py-0.5 rounded bg-white/10 text-white/70">
+                      <span className="text-[9px] font-semibold uppercase px-1.5 py-0.5 rounded bg-[var(--color-border-subtle)] text-[var(--color-ink-muted)]">
                         {item.badge}
                       </span>
                     </div>
-                    <p className="text-[11px] text-white/50 truncate max-w-[240px] mt-0.5">
+                    <p className="text-[11px] text-[var(--color-ink-muted)] truncate max-w-[240px] mt-0.5">
                       {item.description}
                     </p>
                   </div>
                 </div>
 
-                <ArrowRight className="w-4 h-4 text-white/30 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                <ArrowRight className="w-4 h-4 text-[var(--color-ink-faint)] group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
               </Link>
             );
           })}
         </div>
 
-        <div className="pt-4 mt-2 border-t border-white/10 text-center">
-          <p className="text-[11px] text-white/50">
+        <div className="pt-4 mt-2 border-t border-[var(--color-border-subtle)] text-center">
+          <p className="text-xs text-[var(--color-ink-muted)]">
             First time with CONSOUL?{" "}
             <Link
               href="/auth/register"
               onClick={() => onOpenChange(false)}
-              className="text-white font-semibold underline underline-offset-4 hover:opacity-80"
+              className="text-orange-500 font-bold hover:underline"
             >
               Create traveler account
             </Link>

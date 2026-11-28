@@ -403,7 +403,7 @@ export function ReviewForm({ tripId, isGuest, onSuccess }: ReviewFormProps) {
             <button 
                 type="submit" 
                 disabled={submitting || uploadingImages}
-                className="w-full py-4 mt-8 bg-foreground hover:bg-foreground/80 text-black font-display font-bold text-xl rounded-xl transition-all disabled:opacity-50"
+                className="w-full py-4 mt-8 bg-orange-500 hover:bg-orange-600 text-white font-display font-bold text-xl rounded-xl transition-all disabled:opacity-50 shadow-lg shadow-orange-500/25 cursor-pointer"
             >
                 {submitting ? 'Posting...' : 'Submit Review'}
             </button>

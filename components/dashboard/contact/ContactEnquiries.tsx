@@ -116,7 +116,7 @@ export function ContactEnquiries() {
                     variant="outline"
                     size="sm"
                     onClick={() => router.push(`/dashboard/bookings/${booking.id}`)}
-                    className="w-full md:w-auto border-foreground/30 text-foreground hover:bg-foreground hover:text-black transition-colors"
+                    className="w-full md:w-auto border-foreground/30 text-foreground hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors"
                   >
                     View Details
                   </Button>

@@ -104,42 +104,47 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col">
+        <div className="min-h-screen bg-[var(--color-canvas)] text-[var(--color-ink)] flex flex-col font-sans">
             <Header />
 
-            <main className="flex-grow flex items-center justify-center px-4 py-20 relative overflow-hidden">
-                {/* Background Elements */}
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-10" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+            <main className="flex-grow flex items-center justify-center px-4 py-24 md:py-28 relative overflow-hidden">
+                {/* Background Atmosphere */}
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-orange-500/5 pointer-events-none" />
 
                 <div className="w-full max-w-md relative z-10">
                     {/* Step: Email */}
                     {step === "email" && (
                         <>
-                            <div className="text-center mb-10">
-                                <div className="w-16 h-16 bg-foreground/10 border border-foreground/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <KeyRound className="w-8 h-8 text-foreground" />
+                            <div className="text-center mb-8">
+                                <div className="w-14 h-14 bg-orange-500/10 border border-orange-500/25 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <KeyRound className="w-6 h-6 text-orange-500" />
                                 </div>
-                                <h1 className="text-4xl font-display font-bold text-foreground mb-2">Forgot Password</h1>
-                                <p className="text-gray-400">Enter your email and we'll send you a reset code</p>
+                                <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-[var(--color-ink)] mb-2">
+                                    Forgot Password
+                                </h1>
+                                <p className="text-sm text-[var(--color-ink-muted)]">
+                                    Enter your registered email and we'll send a 6-digit verification code
+                                </p>
                             </div>
 
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-gold/5">
+                            <div className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] rounded-2xl p-6 sm:p-8 shadow-xl backdrop-blur-sm">
                                 {error && (
-                                    <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-200 text-sm text-center">
+                                    <div className="mb-6 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-500 text-sm font-medium text-center">
                                         {error}
                                     </div>
                                 )}
-                                <form onSubmit={handleSendCode} className="space-y-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-300 ml-1">Email Address</label>
+                                <form onSubmit={handleSendCode} className="space-y-5">
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)] ml-1">
+                                            Email Address
+                                        </label>
                                         <div className="relative">
-                                            <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-500" />
+                                            <Mail className="absolute left-4 top-3.5 h-4 w-4 text-[var(--color-ink-faint)]" />
                                             <input
                                                 type="email"
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
-                                                className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
+                                                className="w-full bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] rounded-xl py-3 pl-11 pr-4 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all outline-none"
                                                 placeholder="name@example.com"
                                                 required
                                             />
@@ -149,7 +154,7 @@ export default function ForgotPasswordPage() {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-foreground hover:bg-foreground/80 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 text-sm tracking-wide cursor-pointer disabled:opacity-60"
                                     >
                                         {isLoading ? (
                                             <span className="animate-pulse">Sending Code...</span>
@@ -161,9 +166,9 @@ export default function ForgotPasswordPage() {
                                     </button>
                                 </form>
 
-                                <p className="mt-8 text-center text-gray-400 text-sm">
+                                <p className="mt-8 text-center text-[var(--color-ink-muted)] text-sm">
                                     Remember your password?{" "}
-                                    <Link href="/auth/login" className="text-foreground hover:text-white font-semibold transition-colors">
+                                    <Link href="/auth/login" className="text-orange-500 hover:text-orange-600 font-bold hover:underline transition-colors">
                                         Sign In
                                     </Link>
                                 </p>
@@ -174,36 +179,40 @@ export default function ForgotPasswordPage() {
                     {/* Step: Enter Code */}
                     {step === "code" && (
                         <>
-                            <div className="text-center mb-10">
-                                <div className="w-16 h-16 bg-foreground/10 border border-foreground/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <ShieldCheck className="w-8 h-8 text-foreground" />
+                            <div className="text-center mb-8">
+                                <div className="w-14 h-14 bg-orange-500/10 border border-orange-500/25 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <ShieldCheck className="w-6 h-6 text-orange-500" />
                                 </div>
-                                <h1 className="text-4xl font-display font-bold text-foreground mb-2">Enter Code</h1>
-                                <p className="text-gray-400">
-                                    We've sent a 6-digit code to <span className="text-white font-medium">{email}</span>
+                                <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-[var(--color-ink)] mb-2">
+                                    Enter Code
+                                </h1>
+                                <p className="text-sm text-[var(--color-ink-muted)]">
+                                    We've sent a 6-digit code to <span className="text-[var(--color-ink)] font-semibold">{email}</span>
                                 </p>
                             </div>
 
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-gold/5">
+                            <div className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] rounded-2xl p-6 sm:p-8 shadow-xl backdrop-blur-sm">
                                 {devCode && (
-                                    <div className="mb-6 p-4 bg-foreground/10 border border-foreground/20 rounded-lg text-foreground text-sm text-center">
-                                        <span className="text-gray-400 text-xs block mb-1">Dev Mode — Your code:</span>
-                                        <span className="text-2xl font-mono font-bold tracking-widest">{devCode}</span>
+                                    <div className="mb-6 p-4 bg-orange-500/10 border border-orange-500/25 rounded-xl text-[var(--color-ink)] text-sm text-center">
+                                        <span className="text-[var(--color-ink-muted)] text-xs block mb-1">Dev Mode — Your code:</span>
+                                        <span className="text-2xl font-mono font-bold tracking-widest text-orange-500">{devCode}</span>
                                     </div>
                                 )}
                                 {error && (
-                                    <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-200 text-sm text-center">
+                                    <div className="mb-6 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-500 text-sm font-medium text-center">
                                         {error}
                                     </div>
                                 )}
-                                <form onSubmit={handleVerifyCode} className="space-y-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-300 ml-1">Reset Code</label>
+                                <form onSubmit={handleVerifyCode} className="space-y-5">
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)] ml-1">
+                                            Reset Code
+                                        </label>
                                         <input
                                             type="text"
                                             value={code}
                                             onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                                            className="w-full bg-black/50 border border-white/10 rounded-xl py-4 px-4 text-white text-center text-2xl font-mono tracking-[0.5em] placeholder:text-gray-600 placeholder:tracking-normal placeholder:text-base focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
+                                            className="w-full bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] rounded-xl py-3.5 px-4 text-[var(--color-ink)] text-center text-2xl font-mono tracking-[0.5em] placeholder:text-[var(--color-ink-faint)] placeholder:tracking-normal placeholder:text-base focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all outline-none"
                                             placeholder="Enter 6-digit code"
                                             maxLength={6}
                                             required
@@ -212,22 +221,22 @@ export default function ForgotPasswordPage() {
 
                                     <button
                                         type="submit"
-                                        className="w-full bg-foreground hover:bg-foreground/80 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 text-sm tracking-wide cursor-pointer"
                                     >
                                         Verify Code <ArrowRight className="w-4 h-4" />
                                     </button>
                                 </form>
 
-                                <div className="mt-6 flex items-center justify-between text-sm">
+                                <div className="mt-6 flex items-center justify-between text-xs">
                                     <button
                                         onClick={() => { setStep("email"); setError(""); setCode(""); setDevCode(""); }}
-                                        className="text-gray-400 hover:text-foreground transition-colors flex items-center gap-1"
+                                        className="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition-colors flex items-center gap-1 font-semibold"
                                     >
-                                        <ArrowLeft className="w-3 h-3" /> Change email
+                                        <ArrowLeft className="w-3.5 h-3.5" /> Change email
                                     </button>
                                     <button
                                         onClick={handleSendCode}
-                                        className="text-foreground hover:text-white transition-colors"
+                                        className="text-orange-500 hover:text-orange-600 font-semibold transition-colors"
                                     >
                                         Resend code
                                     </button>
@@ -239,30 +248,36 @@ export default function ForgotPasswordPage() {
                     {/* Step: New Password */}
                     {step === "newPassword" && (
                         <>
-                            <div className="text-center mb-10">
-                                <div className="w-16 h-16 bg-foreground/10 border border-foreground/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Lock className="w-8 h-8 text-foreground" />
+                            <div className="text-center mb-8">
+                                <div className="w-14 h-14 bg-orange-500/10 border border-orange-500/25 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <Lock className="w-6 h-6 text-orange-500" />
                                 </div>
-                                <h1 className="text-4xl font-display font-bold text-foreground mb-2">New Password</h1>
-                                <p className="text-gray-400">Create a strong new password for your account</p>
+                                <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-[var(--color-ink)] mb-2">
+                                    New Password
+                                </h1>
+                                <p className="text-sm text-[var(--color-ink-muted)]">
+                                    Create a strong new password for your account
+                                </p>
                             </div>
 
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-gold/5">
+                            <div className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] rounded-2xl p-6 sm:p-8 shadow-xl backdrop-blur-sm">
                                 {error && (
-                                    <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-200 text-sm text-center">
+                                    <div className="mb-6 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-500 text-sm font-medium text-center">
                                         {error}
                                     </div>
                                 )}
-                                <form onSubmit={handleResetPassword} className="space-y-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-300 ml-1">New Password</label>
+                                <form onSubmit={handleResetPassword} className="space-y-4">
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)] ml-1">
+                                            New Password
+                                        </label>
                                         <div className="relative">
-                                            <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-500" />
+                                            <Lock className="absolute left-4 top-3.5 h-4 w-4 text-[var(--color-ink-faint)]" />
                                             <input
                                                 type="password"
                                                 value={newPassword}
                                                 onChange={(e) => setNewPassword(e.target.value)}
-                                                className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
+                                                className="w-full bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] rounded-xl py-3 pl-11 pr-4 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all outline-none"
                                                 placeholder="Create a strong password"
                                                 minLength={6}
                                                 required
@@ -270,15 +285,17 @@ export default function ForgotPasswordPage() {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-300 ml-1">Confirm Password</label>
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)] ml-1">
+                                            Confirm Password
+                                        </label>
                                         <div className="relative">
-                                            <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-500" />
+                                            <Lock className="absolute left-4 top-3.5 h-4 w-4 text-[var(--color-ink-faint)]" />
                                             <input
                                                 type="password"
                                                 value={confirmPassword}
                                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                                className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-600 focus:border-foreground focus:ring-1 focus:ring-gold transition-all outline-none"
+                                                className="w-full bg-[var(--color-canvas)] border border-[var(--color-border-subtle)] rounded-xl py-3 pl-11 pr-4 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all outline-none"
                                                 placeholder="Confirm your password"
                                                 minLength={6}
                                                 required
@@ -289,7 +306,7 @@ export default function ForgotPasswordPage() {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-foreground hover:bg-foreground/80 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 text-sm tracking-wide cursor-pointer disabled:opacity-60"
                                     >
                                         {isLoading ? (
                                             <span className="animate-pulse">Resetting Password...</span>
@@ -307,21 +324,25 @@ export default function ForgotPasswordPage() {
                     {/* Step: Success */}
                     {step === "success" && (
                         <>
-                            <div className="text-center mb-10">
-                                <div className="w-16 h-16 bg-green-500/10 border border-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <CheckCircle2 className="w-8 h-8 text-green-500" />
+                            <div className="text-center mb-8">
+                                <div className="w-14 h-14 bg-green-500/10 border border-green-500/25 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <CheckCircle2 className="w-7 h-7 text-green-500" />
                                 </div>
-                                <h1 className="text-4xl font-display font-bold text-foreground mb-2">Password Reset!</h1>
-                                <p className="text-gray-400">Your password has been changed successfully</p>
+                                <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-[var(--color-ink)] mb-2">
+                                    Password Reset!
+                                </h1>
+                                <p className="text-sm text-[var(--color-ink-muted)]">
+                                    Your password has been changed successfully
+                                </p>
                             </div>
 
-                            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm shadow-2xl shadow-gold/5 text-center">
-                                <p className="text-gray-300 mb-6">
+                            <div className="bg-[var(--color-canvas-raised)] border border-[var(--color-border-subtle)] rounded-2xl p-6 sm:p-8 shadow-xl backdrop-blur-sm text-center">
+                                <p className="text-sm text-[var(--color-ink-muted)] mb-6">
                                     You can now sign in with your new password.
                                 </p>
                                 <button
                                     onClick={() => router.push("/auth/login")}
-                                    className="w-full bg-foreground hover:bg-foreground/80 text-black font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 text-sm tracking-wide cursor-pointer"
                                 >
                                     Go to Sign In <ArrowRight className="w-4 h-4" />
                                 </button>

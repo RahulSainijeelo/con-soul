@@ -1177,7 +1177,7 @@ export default function CreateTripPage() {
                         <Button
                             type="submit"
                             disabled={loading || uploadingImages}
-                            className="bg-foreground hover:bg-foreground/80 text-black font-semibold"
+                            className="bg-orange-500 hover:bg-orange-600 text-white font-semibold"
                         >
                             {loading ? "Creating..." : "Create Trip"}
                         </Button>

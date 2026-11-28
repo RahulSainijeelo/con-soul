@@ -275,7 +275,7 @@ export function ManageTrips() {
           </Button>
           <Link
             href="/dashboard/create-trip"
-            className="inline-flex items-center gap-2 px-6 py-3 font-medium bg-foreground hover:bg-foreground/80 text-black border-none rounded-lg text-sm shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 font-medium bg-orange-500 hover:bg-orange-600 text-white border-none rounded-lg text-sm shadow-sm transition-colors"
           >
             <PlusCircle className="h-4 w-4" />
             Create New Trip
